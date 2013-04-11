@@ -1,4 +1,5 @@
 
 public class David {
-    int variable = 1;
+   
+	public void test(){}
 }
