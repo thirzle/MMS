@@ -1,4 +1,4 @@
-package management;
+package controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+
+import management.User;
 
 public class UserDBController {
 
