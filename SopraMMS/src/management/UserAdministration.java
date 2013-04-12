@@ -9,10 +9,9 @@ public class UserAdministration {
 
     static UserDBController userDBController = new UserDBController();
 
-
+	// Constructor
     public UserAdministration() {
 
-	// Constructor
     }
 
 
