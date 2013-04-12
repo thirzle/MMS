@@ -69,15 +69,15 @@ public class UserDBController {
 			rightsArray = getRights(loginname);
 			instituteList = getInstitute(loginname);
 
-//			User user = new User(loginname, resultSet.getString("firstname"),
-//					resultSet.getString("lastname"),
-//					resultSet.getString("mail"), rightsArray,
-//					resultSet.getString("session"),
-//					resultSet.getString("faculty"), instituteList,
-//					resultSet.getString("represantative"),
-//					resultSet.getString("supervisor"),
-//					resultSet.getString("password"));
-//			userList.add(user);
+			User user = new User(loginname, resultSet.getString("firstname"),
+					resultSet.getString("lastname"),
+					resultSet.getString("mail"), rightsArray,
+					resultSet.getString("session"),
+					resultSet.getString("faculty"), instituteList,
+					resultSet.getString("represantative"),
+					resultSet.getString("supervisor"),
+					resultSet.getString("password"));
+			userList.add(user);
 		}
 		close();
 		return userList;
@@ -197,15 +197,15 @@ public class UserDBController {
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, loginname);
 				resultSetUsers = pStatement.executeQuery();
-//				userList.add(new User(resultSetUsers.getString("login"),
-//						resultSetUsers.getString("firstName"), resultSetUsers
-//								.getString("lastName"), resultSetUsers
-//								.getString("mail"), getRights(loginname),
-//						resultSetUsers.getString("sessoin"), resultSetUsers
-//								.getString("faculty"), getInstitute(loginname),
-//						resultSetUsers.getString("representative"),
-//						resultSetUsers.getString("supervisor"), resultSetUsers
-//								.getString("password")));
+				userList.add(new User(resultSetUsers.getString("login"),
+						resultSetUsers.getString("firstName"), resultSetUsers
+								.getString("lastName"), resultSetUsers
+								.getString("mail"), getRights(loginname),
+						resultSetUsers.getString("sessoin"), resultSetUsers
+								.getString("faculty"), getInstitute(loginname),
+						resultSetUsers.getString("representative"),
+						resultSetUsers.getString("supervisor"), resultSetUsers
+								.getString("password")));
 
 			}
 		} catch (SQLException e) {

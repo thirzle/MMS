@@ -9,7 +9,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String mail;
-    private Boolean[] rights;
+    private boolean[] rights;
     private String session;
     private String faculty;
     private String password;
@@ -19,7 +19,7 @@ public class User {
 
 
     public User(String login, String firstName, String lastName, String mail,
-	    Boolean[] rights, String session, String faculty,
+	    boolean[] rights, String session, String faculty,
 	    List<String> institute, String representative, String supervisor,
 	    String password) {
 
@@ -134,7 +134,7 @@ public class User {
     /**
      * @return the rights
      */
-    public Boolean[] getRights() {
+    public boolean[] getRights() {
 
 	return rights;
     }
@@ -144,7 +144,7 @@ public class User {
      * @param rights
      *            the rights to set
      */
-    public void setRights(Boolean[] rights) {
+    public void setRights(boolean[] rights) {
 
 	this.rights = rights;
     }
