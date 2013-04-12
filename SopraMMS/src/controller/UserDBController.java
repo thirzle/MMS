@@ -18,33 +18,24 @@ public class UserDBController {
 	private static String query = null;
 	private static PreparedStatement pStatement;
 	// CONNECTIONSTRING anpassen!!
-	static final String CONNECTIONSTRING = "jdbc:mysql://localhost/mms?user='root'&password=''";
-	static final int NUMBEROFRIGHTS = 5;
+	private static final String URL = "jdbc:mysql://localhost:3306/mms";
+	private static final String USER = "root";
+	private static final String PASSWORD = "";
+	private static final String DRIVER = "com.mysql.jdbc.Driver";
+	static final int NUMBEROFRIGHTS = 4;
 
 	public UserDBController() {
 
 		super();
 		connect();
-		resultSet = null;
-		try {
-			connection.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 	private void connect() {
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			connection = DriverManager.getConnection(CONNECTIONSTRING);
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Class.forName(DRIVER);
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,7 +50,8 @@ public class UserDBController {
 
 		ResultSet resultSetRights = null, resultSetInstitutes = null;
 		List<User> userList = null;
-		query = "SELECT * FROM User";
+		query = "SELECT * FROM user";
+		statement = connection.createStatement();
 		resultSet = statement.executeQuery(query);
 		while (resultSet.next()) {
 			boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
