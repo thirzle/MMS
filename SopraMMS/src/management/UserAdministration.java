@@ -17,7 +17,7 @@ public class UserAdministration {
 
 
     public User createUser(String login, String firstName, String lastName,
-	    String mail, Boolean[] rights, String session, String faculty,
+	    String mail, boolean[] rights, String session, String faculty,
 	    List<String> institute, String representative, String supervisor,
 	    String password) {
 
@@ -28,7 +28,7 @@ public class UserAdministration {
     }
 
 
-    public User changeRights(User user, Boolean[] newRights) {
+    public User changeRights(User user, boolean[] newRights) {
 
 	User newUser = user;
 	newUser.setRights(newRights);
