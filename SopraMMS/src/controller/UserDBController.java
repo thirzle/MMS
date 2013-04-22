@@ -9,10 +9,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import management.Module;
-
 import user.User;
-
 
 public class UserDBController {
 
@@ -28,12 +25,11 @@ public class UserDBController {
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	static final int NUMBEROFRIGHTS = 4;
 
+
 	public UserDBController() {
-
-		super();
 		connect();
-
 	}
+
 
 	private void connect() {
 
@@ -41,27 +37,27 @@ public class UserDBController {
 			Class.forName(DRIVER);
 			connection = DriverManager.getConnection(URL, USER, PASSWORD);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("driver not found");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("connection couldn't be established");
 		}
 
 	}
 
+
 	public List<User> getAllUsers() throws SQLException {
 
-		ResultSet resultSetRights = null, resultSetInstitutes = null;
 		List<User> userList = new LinkedList<User>();
+		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
+		List<String> instituteList = new LinkedList<String>();
+
 		query = "SELECT * FROM user";
 		statement = connection.createStatement();
 		resultSet = statement.executeQuery(query);
 		while (resultSet.next()) {
-			boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
-			List<String> instituteList = null;
 			String loginname = resultSet.getString("loginname");
-
 			rightsArray = getRights(loginname);
 			instituteList = getInstitute(loginname);
 
@@ -78,6 +74,12 @@ public class UserDBController {
 		close();
 		return userList;
 	}
+	
+//	TODO
+	public User getUser(String loginname){
+		return null;
+	}
+
 
 	public Boolean createUser(User user) {
 
@@ -101,6 +103,7 @@ public class UserDBController {
 		return true;
 
 	}
+
 
 	public Boolean changeUser(User oldUser, User newUser) {
 
@@ -135,6 +138,7 @@ public class UserDBController {
 		return true;
 	}
 
+
 	// deletes User
 	public boolean deleteUser(String loginname) {
 		query = "DELETE FROM User WHERE loginname=?";
@@ -150,6 +154,7 @@ public class UserDBController {
 		return true;
 
 	}
+
 
 	@SuppressWarnings("null")
 	public boolean[] getRights(String loginname) {
@@ -170,6 +175,7 @@ public class UserDBController {
 		close();
 		return rightsArray;
 	}
+
 
 	public void changeRights(User user, boolean[] newRights) {
 
@@ -201,8 +207,11 @@ public class UserDBController {
 		close();
 	}
 
-	@SuppressWarnings("null")
-	public List<User> getAllUsersFromInstitute(String institute) { // String institute = instituteID
+
+	public List<User> getAllUsersFromInstitute(String institute) { // String
+																	// institute
+																	// =
+																	// instituteID
 
 		List<User> userList = new LinkedList<User>();
 		query = "SELECT loginname FROM instituteaffiliatoin WHERE instituteID = ?";
@@ -219,7 +228,7 @@ public class UserDBController {
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, loginname);
 				resultSetUsers = pStatement.executeQuery();
-				
+
 				userList.add(new User(resultSetUsers.getString("login"),
 						resultSetUsers.getString("firstName"), resultSetUsers
 								.getString("lastName"), resultSetUsers
@@ -232,15 +241,17 @@ public class UserDBController {
 
 			}
 		} catch (SQLException e) {
-			System.out.println("Couldn't get all users from institute: " + institute);
+			System.out.println("Couldn't get all users from institute: "
+					+ institute);
 			e.printStackTrace();
 		}
 		close();
 		return userList;
 	}
 
+
 	public List<String> getInstitute(String loginname) {
-		List<String> instituteList = null;
+		List<String> instituteList = new LinkedList<String>();
 		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -251,14 +262,15 @@ public class UserDBController {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Couldn't get list of institutes from user: " + loginname);
+			System.out.println("Couldn't get list of institutes from user: "
+					+ loginname);
 		}
 		close();
 		return instituteList;
 	}
 
-	private void close() {
 
+	private void close() {
 		try {
 			pStatement.close();
 			statement.close();
@@ -268,5 +280,10 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't close connection.");
 		}
+	}
+	
+//	TODO
+	public User checkSession(String session){
+		return null;
 	}
 }
