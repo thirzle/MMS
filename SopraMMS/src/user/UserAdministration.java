@@ -14,12 +14,12 @@ public class UserAdministration {
 	}
 
 	// Creates an object User and send it to the database controller
-	public User createUser(String login, String firstName, String lastName,
+	public User createUser(String loginname, String firstName, String lastName,
 			String mail, boolean[] rights, String session, String faculty,
 			List<String> institute, String representative, String supervisor,
 			String password) {
 
-		User user = new User(login, firstName, lastName, mail, rights, session,
+		User user = new User(loginname, firstName, lastName, mail, rights, session,
 				faculty, institute, representative, supervisor, password);
 		userDBController.createUser(user);
 		return user;
@@ -101,7 +101,7 @@ public class UserAdministration {
 		return newUser;
 	}
 
-	public User getUser(String login) {
+	public User getUser(String loginname) {
 		// TODO fill Method
 
 		return new User();
@@ -113,7 +113,7 @@ public class UserAdministration {
 		return false;
 	}
 
-	public boolean sendNewPassword(String login)
+	public boolean sendNewPassword(String loginname)
 	{
 		//TODO fill Method
 		
@@ -127,14 +127,20 @@ public class UserAdministration {
 		return new User();
 	}
 	
-	public User login(String login, String password)
+	public User login(String loginname, String password, String session)
 	{
-		//TODO fill Method
+		User user = userDBController.getPassword(loginname); //Methode existiert in DB noch nicht
+		if(user!= null)
+		{
+			User newUser = user;
+			newUser.setSession(session);
+			userDBController.changeUser(user, newUser);
+		}
 		
 		return new User();
 	}
 	
-	public void logout(String login)
+	public void logout(String loginname)
 	{
 		//TODO fill Method
 	}
