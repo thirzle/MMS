@@ -11,12 +11,14 @@ public class Module {
 	private String instituteID;
 
 
-	public Module(String name, Date creationDate, Date modificationDate,
-			boolean approved) {
+	public Module(int moduleID, String name, Date creationDate, Date modificationDate,
+			boolean approved, String insituteID) {
+		this.moduleID = moduleID;
 		this.name = name;
 		this.creationDate = creationDate;
 		this.modificationDate = modificationDate;
 		this.approved = approved;
+		this.instituteID = insituteID;
 	}
 
 	public String getName() {
