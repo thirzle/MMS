@@ -19,8 +19,9 @@ public class UserAdministration {
 			List<String> institute, String representative, String supervisor,
 			String password) {
 
-		User user = new User(loginname, firstName, lastName, mail, rights, session,
-				faculty, institute, representative, supervisor, password);
+		User user = new User(loginname, firstName, lastName, mail, rights,
+				session, faculty, institute, representative, supervisor,
+				password);
 		userDBController.createUser(user);
 		return user;
 	}
@@ -113,35 +114,42 @@ public class UserAdministration {
 		return false;
 	}
 
-	public boolean sendNewPassword(String loginname)
-	{
-		//TODO fill Method
-		
+	public boolean sendNewPassword(String loginname) {
+		// TODO fill Method
+
 		return false;
 	}
-	
-	public User checkLogin(String sessionID)
-	{
-		//TODO fill Method
-		
-		return new User();
-	}
-	
-	public User login(String loginname, String password, String session)
-	{
-		User user = userDBController.getPassword(loginname); //Methode existiert in DB noch nicht
+
+	public User checkLogin(String session) {
+		// TODO Methode existiert in DB noch nicht
+		User user = userDBController.checkSession(session);
 		if(user!= null)
 		{
+			return user;
+		}
+		return null;
+	}
+
+	public User login(String loginname, String password, String session) {
+		// TODO Methode existiert in DB noch nicht
+		if (password.equals(userDBController.getPassword(loginname))) {
+			// TODO Methode existiert in DB noch nicht
+			User user = userDBController.getUser(loginname);
 			User newUser = user;
 			newUser.setSession(session);
 			userDBController.changeUser(user, newUser);
+			return newUser;
 		}
-		
-		return new User();
+		return null;
 	}
-	
-	public void logout(String loginname)
-	{
-		//TODO fill Method
+
+	public void logout(String loginname) {
+		// TODO Methode existiert in DB noch nicht
+		User user = userDBController.getUser(loginname);
+		if(user!= null)
+		{
+			user.setSession("");
+			userDBController.changeUser(user, user);
+		}
 	}
 }
