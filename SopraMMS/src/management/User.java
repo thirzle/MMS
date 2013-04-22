@@ -4,8 +4,8 @@ import java.util.List;
 
 public class User {
 
-    //
-    private String login;
+    //User-Attributes
+    private String login;		//loginname
     private String firstName;
     private String lastName;
     private String mail;
@@ -17,7 +17,7 @@ public class User {
     private String representative;
     private String supervisor;
 
-
+    //Constructor with all User-Attributes
     public User(String login, String firstName, String lastName, String mail,
 	    boolean[] rights, String session, String faculty,
 	    List<String> institute, String representative, String supervisor,
