@@ -4,21 +4,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome</title>
-<link rel="stylesheet" type="text/css" href="default.css">
+<title>Nachrichten</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/default.css">
 </head>
 <body>
-
-<div class="page">
+	<div class="page">
 		<div class="header">
-			<%@ include file="/guiElements/header.jsp" %>
+			<%@ include file="/guiElements/administrationHeader.jsp" %>
 		</div>
 		<div class="main">
 			<div class="menu">
-				<%@ include file="/guiElements/menu/courseSelection.jsp" %>
-				<%@ include file="/guiElements/menu/login.jsp" %>
+				<p>Du bist eingeloggt als:<%out.print(session.getAttribute("loginname"));%></p>
+				<p>
+					<a href="${pageContext.request.contextPath}/guiElements/menu/logout.jsp">Logout</a>
+				</p>
 			</div>
 			<div class="contentBox"></div>
+				<%@ include file="/guiElements/menu/administration/messages/messageContent.jsp" %>
 			</div>
 		<div class="footer">
 			<%@ include file="/guiElements/footer.jsp" %>
