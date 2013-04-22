@@ -7,13 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
-
-import javax.servlet.jsp.tagext.TryCatchFinally;
-
-import user.User;
-
-import com.sun.xml.internal.bind.v2.TODO;
 
 import management.Module;
 
@@ -45,51 +40,52 @@ public class ModuleDBController {
 		}
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModules() {
-		List<Module> modulelist = null;
+		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT * FROM module";
 		try {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
-						resultSet.getDate("creationdate"), resultSet
+				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules.");
 		}
-		return modulelist;
+		return moduleList;
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModulesByInstitute(String institute) {
-		List<Module> modulelist = null;
+		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM moduleinstituteaffiliation JOIN module ON moduleinstituteaffiliation.moduleID = module.moduleID WHERE instituteID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, institute);
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
-						resultSet.getDate("creationdate"), resultSet
+				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules by institute: "
 					+ institute);
 		}
-		return modulelist;
+		return moduleList;
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModulesByCourse(String course, String degree) {
-		List<Module> modulelist = null;
+		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM modulecourseaffiliation JOIN module ON modulecourseaffiliation.moduleID = module.moduleID WHERE courseID = ? AND degree = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -97,60 +93,64 @@ public class ModuleDBController {
 			pStatement.setString(2, degree);
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
-						resultSet.getDate("creationdate"), resultSet
+				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules by course: " + course
 					+ " and degree: " + degree);
 		}
-		return modulelist;
+		return moduleList;
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModulesByFaculty(String faculty) {
-		List<Module> modulelist = null;
+		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM modulefacultyaffiliation JOIN module ON modulefacultyaffiliation.moduleID = module.moduleID WHERE faulty = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, faculty);
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
-						resultSet.getDate("creationdate"), resultSet
+				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID")));
 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules by faculty: " + faculty);
 		}
-		return modulelist;
+		return moduleList;
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModulesByAuthor(String author) {
-		List<Module> modulelist = null;
+		List<Module> modueList = new LinkedList<Module>();
 		query = "SELECT * FROM module WHERE author = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, author);
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
-						resultSet.getDate("creationdate"), resultSet
+				modueList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules by author: " + author);
 		}
-		return modulelist;
+		return modueList;
 	}
 
 	public Module getModule(int moduleID, String name) {
@@ -160,10 +160,12 @@ public class ModuleDBController {
 			pStatement.setInt(1, moduleID);
 			resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				return new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
-						resultSet.getDate("creationdate"), resultSet
-						.getDate("modificationdate"), resultSet
-						.getBoolean("approvalstatus"), resultSet.getString("instituteID"));
+				return new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"),
+						resultSet.getDate("creationdate"),
+						resultSet.getDate("modificationdate"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getString("instituteID"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -172,90 +174,148 @@ public class ModuleDBController {
 		return null;
 	}
 
-	@SuppressWarnings("null")
+
 	public List<Module> getModifiedModules() {
-		List<Module> modulelist = null;
+		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE;";
 		try {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
-						resultSet.getDate("creationdate"), resultSet
+				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modified modules.");
 		}
-		return modulelist;
+		return moduleList;
 	}
 
-	@SuppressWarnings("null")
-	public List<Module> getModifiedModulesByInstitute(String institute) {
-		List<Module> modulelist = null;
-		query = "SELECT module.* FROM moduleinstituteaffiliation JOIN module ON moduleinstituteaffiliation.moduleID = module.moduleID WHERE instituteID = ? AND approvalstatus = ?";
+	public List<Module> getModifiedModulesByInstitute(String instituteID) {
+		List<Module> moduleList = new LinkedList<Module>();
+		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
+				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE"
+				+ "AND instituteID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, institute);
-			pStatement.setBoolean(2, false); // false oder true? TODO
+			pStatement.setString(1, instituteID);
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
-						resultSet.getDate("creationdate"), resultSet
+				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modified modules by institute: "
-					+ institute);
+					+ instituteID);
 		}
-		return modulelist;
+		return moduleList;
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModifiedModulesByAuthor(String author) {
-		List<Module> modulelist = null;
-		query = "SELECT * FROM module WHERE author = ? AND approvalstatus = ?";
+		List<Module> moduleList = new LinkedList<Module>();
+		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
+				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE"
+				+ "AND author = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, author);
-			pStatement.setBoolean(2, false); // false oder true? TODO
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
-						resultSet.getDate("creationdate"), resultSet
+				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modified modules by author: "
 					+ author);
 		}
-		return modulelist;
+		return moduleList;
 
 	}
 
-	// TODO
 	public List<Module> getRejectedModules() {
-		List<Module> modulelist = null;
-		return modulelist;
+		List<Module> moduleList = new LinkedList<Module>();
+		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
+				+ "WHERE declined = TRUE";
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
+								.getDate("modificationdate"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get rejected modules.");
+		}
+		return moduleList;
 	}
 
-	// TODO
-	public List<Module> getRejectedModulesByInstitute(String institute) {
-		List<Module> modulelist = null;
-		return modulelist;
+	public List<Module> getRejectedModulesByInstitute(String instituteID) {
+		List<Module> moduleList = new LinkedList<Module>();
+		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
+				+ "WHERE declined = TRUE AND instituteID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, instituteID);
+			resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
+								.getDate("modificationdate"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get rejected modules by institute: "
+					+ instituteID);
+		}
+		return moduleList;
 	}
 
-	// TODO
 	public List<Module> getRejectedModulesByAuthor(String author) {
-		List<Module> modulelist = null;
-		return modulelist;
+		List<Module> moduleList = new LinkedList<Module>();
+		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
+				+ "WHERE declined = TRUE AND author = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, author);
+			resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
+								.getDate("modificationdate"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get rejected modules by author: "
+					+ author);
+		}
+		return moduleList;
 	}
 
 	public boolean createModule(Module module) {
@@ -264,10 +324,9 @@ public class ModuleDBController {
 		Date creationDate = module.getCreationDate();
 		Date modificationDate = module.getModificationDate();
 		boolean approved = module.isApproved();
-		//String modulehandbook = module.getModulehandbook();
 		String instituteID = module.getInstituteID();
 
-		query = "INSERT INTO module VALUES (?,?,?,?,?,?)";
+		query = "INSERT INTO module VALUES (?,?,?,?,?,?);";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setInt(1, moduleID);
@@ -275,8 +334,7 @@ public class ModuleDBController {
 			pStatement.setDate(3, (java.sql.Date) creationDate);
 			pStatement.setDate(4, (java.sql.Date) modificationDate);
 			pStatement.setBoolean(5, approved);
-//			pStatement.setString(6, modulehandbook);
-			pStatement.setString(7, instituteID);
+			pStatement.setString(6, instituteID);
 			return pStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -291,11 +349,10 @@ public class ModuleDBController {
 		Date creationDate = module.getCreationDate();
 		Date modificationDate = module.getModificationDate();
 		boolean approved = module.isApproved();
-//		String modulehandbook = module.getModulehandbook();
 		String instituteID = module.getInstituteID();
 
 		query = "UPDATE module"
-				+ "SET moduleID = ?, name = ?, creationDate = ?, modificationDate = ?, approved = ?, modulehandbook = ?, instituteID = ?"
+				+ "SET moduleID = ?, name = ?, creationDate = ?, modificationDate = ?, approved = ?, instituteID = ?"
 				+ "WHERE moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -304,13 +361,12 @@ public class ModuleDBController {
 			pStatement.setDate(3, (java.sql.Date) creationDate);
 			pStatement.setDate(4, (java.sql.Date) modificationDate);
 			pStatement.setBoolean(5, approved);
-//			pStatement.setString(6, modulehandbook);
-			pStatement.setString(7, instituteID);
-			pStatement.setInt(8, moduleIDOld);
+			pStatement.setString(6, instituteID);
+			pStatement.setInt(7, moduleIDOld);
 			return pStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Couldn't change Module module: " + moduleID);
+			System.out.println("Couldn't change module: " + moduleID);
 		}
 		return false;
 
@@ -331,7 +387,8 @@ public class ModuleDBController {
 	}
 
 	// TODO
-	public String getModuleManual(String course, String degree, String version) {
+	public String getModuleManual(String courseID, String degree, String version) {
+
 		return null;
 	}
 

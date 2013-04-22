@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
+
+import management.Module;
 
 import user.User;
 
@@ -50,7 +53,7 @@ public class UserDBController {
 	public List<User> getAllUsers() throws SQLException {
 
 		ResultSet resultSetRights = null, resultSetInstitutes = null;
-		List<User> userList = null;
+		List<User> userList = new LinkedList<User>();
 		query = "SELECT * FROM user";
 		statement = connection.createStatement();
 		resultSet = statement.executeQuery(query);
@@ -201,7 +204,7 @@ public class UserDBController {
 	@SuppressWarnings("null")
 	public List<User> getAllUsersFromInstitute(String institute) { // String institute = instituteID
 
-		List<User> userList = null;
+		List<User> userList = new LinkedList<User>();
 		query = "SELECT loginname FROM instituteaffiliatoin WHERE instituteID = ?";
 		String loginname;
 		ResultSet resultSetUsers = null;
