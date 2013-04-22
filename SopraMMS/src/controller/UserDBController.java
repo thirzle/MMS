@@ -8,7 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import management.User;
+import user.User;
+
 
 public class UserDBController {
 

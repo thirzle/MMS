@@ -1,4 +1,4 @@
-package management;
+package user;
 
 import java.util.List;
 

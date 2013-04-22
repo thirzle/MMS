@@ -8,7 +8,6 @@ public class Module {
 	private Date modificationDate;
 	private boolean approved;
 	private int moduleID;
-	private String modulehandbook;
 	private String instituteID;
 
 
@@ -38,10 +37,6 @@ public class Module {
 
 	public int getModuleID() {
 		return moduleID;
-	}
-
-	public String getModulehandbook() {
-		return modulehandbook;
 	}
 
 	public String getInstituteID() {

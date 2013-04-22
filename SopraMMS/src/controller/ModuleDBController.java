@@ -11,10 +11,11 @@ import java.util.List;
 
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
+import user.User;
+
 import com.sun.xml.internal.bind.v2.TODO;
 
 import management.Module;
-import management.User;
 
 public class ModuleDBController {
 
@@ -174,16 +175,16 @@ public class ModuleDBController {
 	@SuppressWarnings("null")
 	public List<Module> getModifiedModules() {
 		List<Module> modulelist = null;
-		query = "SELECT * FROM module WHERE approvalstatus = ?";
+		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
+				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE;";
 		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setBoolean(1, false); // false oder true? TODO
-			resultSet = pStatement.executeQuery();
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				modulelist.add(new Module(resultSet.getString("name"),
 						resultSet.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("false"))); // false oder true? TODO
+								.getBoolean("apprvalstatus")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -239,19 +240,19 @@ public class ModuleDBController {
 
 	}
 
-// TODO
+	// TODO
 	public List<Module> getRejectedModules() {
 		List<Module> modulelist = null;
 		return modulelist;
 	}
 
-// TODO
+	// TODO
 	public List<Module> getRejectedModulesByInstitute(String institute) {
 		List<Module> modulelist = null;
 		return modulelist;
 	}
 
-// TODO
+	// TODO
 	public List<Module> getRejectedModulesByAuthor(String author) {
 		List<Module> modulelist = null;
 		return modulelist;
@@ -263,7 +264,7 @@ public class ModuleDBController {
 		Date creationDate = module.getCreationDate();
 		Date modificationDate = module.getModificationDate();
 		boolean approved = module.isApproved();
-		String modulehandbook = module.getModulehandbook();
+		//String modulehandbook = module.getModulehandbook();
 		String instituteID = module.getInstituteID();
 
 		query = "INSERT INTO module VALUES (?,?,?,?,?,?)";
@@ -274,7 +275,7 @@ public class ModuleDBController {
 			pStatement.setDate(3, (java.sql.Date) creationDate);
 			pStatement.setDate(4, (java.sql.Date) modificationDate);
 			pStatement.setBoolean(5, approved);
-			pStatement.setString(6, modulehandbook);
+//			pStatement.setString(6, modulehandbook);
 			pStatement.setString(7, instituteID);
 			return pStatement.execute();
 		} catch (SQLException e) {
@@ -290,7 +291,7 @@ public class ModuleDBController {
 		Date creationDate = module.getCreationDate();
 		Date modificationDate = module.getModificationDate();
 		boolean approved = module.isApproved();
-		String modulehandbook = module.getModulehandbook();
+//		String modulehandbook = module.getModulehandbook();
 		String instituteID = module.getInstituteID();
 
 		query = "UPDATE module"
@@ -303,13 +304,13 @@ public class ModuleDBController {
 			pStatement.setDate(3, (java.sql.Date) creationDate);
 			pStatement.setDate(4, (java.sql.Date) modificationDate);
 			pStatement.setBoolean(5, approved);
-			pStatement.setString(6, modulehandbook);
+//			pStatement.setString(6, modulehandbook);
 			pStatement.setString(7, instituteID);
 			pStatement.setInt(8, moduleIDOld);
 			return pStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Couldn't change Module module: "+moduleID);
+			System.out.println("Couldn't change Module module: " + moduleID);
 		}
 		return false;
 
@@ -323,11 +324,13 @@ public class ModuleDBController {
 			return pStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Couldn't delete module: "+module.getModuleID());
+			System.out.println("Couldn't delete module: "
+					+ module.getModuleID());
 		}
 		return false;
 	}
-// TODO
+
+	// TODO
 	public String getModuleManual(String course, String degree, String version) {
 		return null;
 	}
