@@ -40,7 +40,6 @@ public class ModuleDBController {
 		}
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModules() {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT * FROM module";
@@ -62,7 +61,6 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModulesByInstitute(String institute) {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM moduleinstituteaffiliation JOIN module ON moduleinstituteaffiliation.moduleID = module.moduleID WHERE instituteID = ?";
@@ -86,7 +84,6 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModulesByCourse(String course, String degree) {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM modulecourseaffiliation JOIN module ON modulecourseaffiliation.moduleID = module.moduleID WHERE courseID = ? AND degree = ?";
@@ -111,7 +108,6 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModulesByFaculty(String faculty) {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM modulefacultyaffiliation JOIN module ON modulefacultyaffiliation.moduleID = module.moduleID WHERE faulty = ?";
@@ -135,7 +131,6 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModulesByAuthor(String author) {
 		List<Module> modueList = new LinkedList<Module>();
 		query = "SELECT * FROM module WHERE author = ?";
@@ -179,7 +174,7 @@ public class ModuleDBController {
 		return null;
 	}
 
-	@SuppressWarnings("null")
+
 	public List<Module> getModifiedModules() {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
@@ -202,7 +197,6 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModifiedModulesByInstitute(String instituteID) {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
@@ -228,7 +222,6 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	@SuppressWarnings("null")
 	public List<Module> getModifiedModulesByAuthor(String author) {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
