@@ -53,10 +53,10 @@ public class ModuleDBController {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getString("name"),
+				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
 						resultSet.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus")));
+								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -74,10 +74,10 @@ public class ModuleDBController {
 			pStatement.setString(1, institute);
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getString("name"),
+				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
 						resultSet.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus")));
+								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -97,10 +97,10 @@ public class ModuleDBController {
 			pStatement.setString(2, degree);
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getString("name"),
+				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
 						resultSet.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus")));
+								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -119,10 +119,10 @@ public class ModuleDBController {
 			pStatement.setString(1, faculty);
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getString("name"),
+				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
 						resultSet.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus")));
+								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
 
 			}
 		} catch (SQLException e) {
@@ -141,10 +141,10 @@ public class ModuleDBController {
 			pStatement.setString(1, author);
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getString("name"),
+				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
 						resultSet.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus")));
+								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -160,10 +160,10 @@ public class ModuleDBController {
 			pStatement.setInt(1, moduleID);
 			resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				return new Module(resultSet.getString("name"),
-						resultSet.getDate("creationdate"),
-						resultSet.getDate("modificationdate"),
-						resultSet.getBoolean("approvalstatus"));
+				return new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
+						resultSet.getDate("creationdate"), resultSet
+						.getDate("modificationdate"), resultSet
+						.getBoolean("approvalstatus"), resultSet.getString("instituteID"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -181,10 +181,10 @@ public class ModuleDBController {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getString("name"),
+				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
 						resultSet.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("apprvalstatus")));
+								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -203,10 +203,10 @@ public class ModuleDBController {
 			pStatement.setBoolean(2, false); // false oder true? TODO
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getString("name"),
+				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
 						resultSet.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("false")));// false oder true? TODO
+								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -226,10 +226,10 @@ public class ModuleDBController {
 			pStatement.setBoolean(2, false); // false oder true? TODO
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulelist.add(new Module(resultSet.getString("name"),
+				modulelist.add(new Module(resultSet.getInt("moduleID"), resultSet.getString("name"),
 						resultSet.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
-								.getBoolean("false")));// false oder true? TODO
+								.getBoolean("approvalstatus"), resultSet.getString("instituteID")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
