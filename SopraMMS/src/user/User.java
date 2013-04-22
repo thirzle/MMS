@@ -18,6 +18,10 @@ public class User {
     private String supervisor;
 
 
+    public User()
+    {}
+    
+    
     public User(String login, String firstName, String lastName, String mail,
 	    boolean[] rights, String session, String faculty,
 	    List<String> institute, String representative, String supervisor,
