@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Welcome</title>
-<link rel="stylesheet" type="text/css" href="default.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/default.css">
 </head>
 <body>
 
@@ -15,8 +15,8 @@
 		</div>
 		<div class="main">
 			<div class="menu">
-				<%@ include file="/guiElements/menu/courseSelection.jsp" %>
-				<%@ include file="/guiElements/menu/login.jsp" %>
+				<%@ include file="/guiElements/courseSelection.jsp" %>
+				<%@ include file="/guiElements/Login/login.jsp" %>
 			</div>
 			<div class="contentBox"></div>
 			</div>
