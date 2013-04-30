@@ -11,13 +11,13 @@ $(function() {
 	<table id="userTable" class="tablesorter">
 		<thead>
 			<tr>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Age</th>
-				<th>Total</th>
-				<th>Discount</th>
-				<th>Difference</th>
-				<th>Date</th>
+				<th>Benutzername</th>
+				<th>Vorname</th>
+				<th>Nachname</th>
+				<th>Email</th>
+				<th>Recht</th>
+				<th>Institut</th>
+				<th>Supervisor</th>
 			</tr>
 		</thead>
 		<tbody id="userTableBody">

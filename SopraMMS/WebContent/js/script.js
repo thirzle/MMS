@@ -1,5 +1,4 @@
 function fillTable(object) {
-	alert("fillTable");
 	var rows = object.getElementsByTagName("loginname").length;
 	var cols = 7;
 	var body = document.getElementById("userTableBody");
@@ -7,7 +6,7 @@ function fillTable(object) {
 		var tr = document.createElement("tr");
 		for ( var j = 0; j < cols; j++) {
 			var td = document.createElement("td");
-			td.innerHTML = "cool";
+			td.innerHTML = object.firstChild.childNodes[j].firstChild.nodeValue;
 			tr.appendChild(td);
 		}
 		body.appendChild(tr);
@@ -24,10 +23,10 @@ function loadUsers() {
 	}
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4) {
-			alert(xmlhttp.responseText);
-			//fillTable(xmlhttp.responseXML);
+			//xmlhttp.responseXML.
+			fillTable(xmlhttp.responseXML);
 		}
 	};
-	xhr.open("GET", "/SopraMMS/Servlet/MMSServlet.java", true);
-	xhr.send(null);
+	xmlhttp.open("GET", "/SopraMMS/Servlet/MMSServlet.java", true);
+	xmlhttp.send(null);
 }
