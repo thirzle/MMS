@@ -1,7 +1,7 @@
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css" media="print, projection, screen" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-latest.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.tablesorter.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
+<link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
+<script type="text/javascript" src="/SopraMMS/js/jquery-latest.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/script.js"></script>
 <script type="text/javascript">
 loadUsers();
 $(function() {		

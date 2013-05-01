@@ -2,12 +2,14 @@ function fillTable(object) {
 	var rows = object.getElementsByTagName("loginname").length;
 	var cols = 7;
 	var body = document.getElementById("userTableBody");
+	var counter = 0;
 	for ( var i = 0; i < rows; i++) {
 		var tr = document.createElement("tr");
 		for ( var j = 0; j < cols; j++) {
 			var td = document.createElement("td");
-			td.innerHTML = object.firstChild.childNodes[j].firstChild.nodeValue;
+			td.innerHTML = object.firstChild.childNodes[counter].firstChild.nodeValue;
 			tr.appendChild(td);
+			counter++;
 		}
 		body.appendChild(tr);
 	}
