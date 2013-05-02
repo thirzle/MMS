@@ -286,4 +286,11 @@ public class UserDBController {
 	public User checkSession(String session){
 		return null;
 	}
+	
+	public String getPassword(String loginname)
+	{
+		
+		return "test";
+	}
+	
 }
