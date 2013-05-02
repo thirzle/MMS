@@ -4,6 +4,7 @@ $(document).ready(function() {
 	$(".menuEntry").click(function() {
 		$(".contentBox").load("adminMenu/"+$(this).attr('id')+"Content.jsp");
 		$("#navigation").children().remove(".temp");
+		$("#userManagement").children().remove();
 		$("#navigation").append("<navigation class='temp' >"+">"+$(this).text()+"</navigation>");
 	});
 	$(".logout").click(function() {
