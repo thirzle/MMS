@@ -8,10 +8,11 @@ function fillTable(object) {
 		for ( var j = 0; j < cols; j++) {
 			var td = document.createElement("td");
 			td.innerHTML = object.firstChild.childNodes[counter].firstChild.nodeValue;
+			td.setAttribute("class","userCell");
 			tr.appendChild(td);
 			counter++;
 		}
-		body.appendChild(tr);
+	body.appendChild(tr);
 	}
 }
 

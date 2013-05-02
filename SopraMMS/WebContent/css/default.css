@@ -88,6 +88,13 @@ body {
 	background-color: #55CCFF;	
 }
 
+.userManagementEntry {
+	font-size: 8pt;
+	margin-left: 5%;
+	margin-top: 5%; 
+	margin-bottom: 0px;
+}
+
 .menuEntry {
 	font-size: 10pt;
 	font-weight: normal;
