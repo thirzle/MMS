@@ -131,6 +131,7 @@ public class UserAdministration {
 	}
 
 	public User login(String loginname, String password, String session) {
+		/*
 		// TODO Methode existiert in DB noch nicht
 		if (password.equals(userDBController.getPassword(loginname))) {
 			// TODO Methode existiert in DB noch nicht
@@ -140,6 +141,7 @@ public class UserAdministration {
 			userDBController.changeUser(user, newUser);
 			return newUser;
 		}
+		*/
 		return null;
 	}
 

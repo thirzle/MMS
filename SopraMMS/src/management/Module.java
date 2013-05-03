@@ -1,6 +1,9 @@
 package management;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
 
 public class Module {
 	private String name;
@@ -9,6 +12,8 @@ public class Module {
 	private boolean approved;
 	private int moduleID;
 	private String instituteID;
+	
+	private List<Entry> entryList = new LinkedList<Entry>();
 
 
 	public Module(int moduleID, String name, Date creationDate,
@@ -49,6 +54,28 @@ public class Module {
 
 	public String getInstituteID() {
 		return instituteID;
+	}
+	
+	public List<Entry> getEntryList(){
+		return entryList;
+	}
+	
+	public void addTextualEntry(TextualEntry textualentry){
+		entryList.add(textualentry);
+	}
+	
+	public void addEffortEntry(EffortEntry effortentry){
+		entryList.add(effortentry);
+	}
+	
+	public void addCourseEntry(CourseEntry courseentry){
+		entryList.add(courseentry);
+	}
+	
+	@SuppressWarnings("unused")
+	private Date getCurrentDate(){
+		Date date = new Date();
+		return date;
 	}
 
 }

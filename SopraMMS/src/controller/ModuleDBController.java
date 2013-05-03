@@ -14,7 +14,7 @@ import management.Module;
 //
 public class ModuleDBController {
 
-	private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
+	private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms_db";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static Connection connection = null;
 	private static String query = null;
@@ -37,11 +37,17 @@ public class ModuleDBController {
 			System.out.println("driver not found");
 		}
 		try {
-			connection = DriverManager.getConnection(URL, "root", "");
+			connection = DriverManager.getConnection(URL, "root", "toor");
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 			System.out.println("connection couldn't be established");
+			return;
 		}
+		System.out.println("###########################################");
+		System.out.println("# seems to be connected...");
+		System.out.println("# URL: " + URL);
+		System.out.println("# DRIVER: " + DRIVER);
+		System.out.println("###########################################");
 	}
 
 //	load all available modules
