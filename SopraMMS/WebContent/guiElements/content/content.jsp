@@ -8,7 +8,7 @@
 </head>
 <body>
 	<center>
-		<h3>This is a h3 tag</h3>
+		<h3>Content</h3>
 	</center>
 </body>
 </html>

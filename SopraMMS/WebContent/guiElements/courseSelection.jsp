@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/MMS/default.css">
+<link rel="stylesheet" type="text/css" href="/SopraMMS/css/default.css">
 <div class="menuBox">
 	<h1>Modulhandbuch</h1>
 

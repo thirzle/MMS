@@ -5,26 +5,30 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Home</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/default.css">
+<link rel="stylesheet" type="text/css" href="/SopraMMS/css/default.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+</script>
+<script>
+
+</script>
 </head>
+
 <body>
 
 <div class="page">
 		<div class="header">
-			<%@ include file="/guiElements/administrationHeader.jsp" %>
+			<%@ include file="/guiElements/header.jsp" %>
 		</div>
 		<div class="main">
 			<div class="menu">
-				<%@ include file="/guiElements/menu/courseSelection.jsp" %>
-				<p>Du bist eingeloggt als:<%out.print(session.getAttribute("loginname"));%></p>
-				<p>
-					<a href="${pageContext.request.contextPath}/guiElements/menu/logout.jsp">Logout</a>
-				</p>
+				<%@ include file="/guiElements/courseSelection.jsp" %>
+				<%@ include file="/guiElements/admin/adminMenu/adminMenu.jsp" %>
 			</div>
-			<div class="contentBox"></div>
-				<%@ include file="/guiElements/content/content.jsp" %>
+			<div class="contentBox" id="contentBox">
+				<%@ include file="/guiElements/admin/adminMenu/startContent.jsp" %>
 			</div>
-		<div class="footer">
+		</div>
+		<div class="footer" id="footer">
 			<%@ include file="/guiElements/footer.jsp" %>
 		</div>
 </div>

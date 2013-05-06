@@ -9,4 +9,12 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+  	<servlet-name>MMSServlet</servlet-name>
+  	<servlet-class>Servlet.MMSServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MMSServlet</servlet-name>
+  	<url-pattern>/Servlet/*</url-pattern>
+  </servlet-mapping>
 </web-app>
