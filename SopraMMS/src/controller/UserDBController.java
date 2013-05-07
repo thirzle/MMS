@@ -18,18 +18,15 @@ public class UserDBController {
 	private static ResultSet resultSet;
 	private static String query = null;
 	private static PreparedStatement pStatement;
-	// CONNECTIONSTRING anpassen!!
 	private static final String URL = "jdbc:mysql://localhost:3306/mms";
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	static final int NUMBEROFRIGHTS = 4;
 
-
 	public UserDBController() {
 		connect();
 	}
-
 
 	private void connect() {
 
@@ -45,7 +42,6 @@ public class UserDBController {
 		}
 
 	}
-
 
 	public List<User> getAllUsers() throws SQLException {
 
@@ -74,12 +70,53 @@ public class UserDBController {
 		close();
 		return userList;
 	}
-	
-//	TODO
-	public User getUser(String loginname){
+
+
+	public User getUser(String loginname) {
+
+		String firstname, lastname, representative, mail, password, session, faculty, supervisor;
+		List<String> institutes = new LinkedList<String>();
+		boolean[] rights;
+		query = "SELECT * FROM user AS u"
+				+ "JOIN supervisor AS s ON u.loginname = s.username"
+				+ "WHERE u.loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			resultSet = pStatement.executeQuery();
+			resultSet.next();
+
+			firstname = resultSet.getString("firstname");
+			lastname = resultSet.getString("lastname");
+			representative = resultSet.getString("representative");
+			mail = resultSet.getString("mail");
+			password = resultSet.getString("password");
+			session = resultSet.getString("session");
+			faculty = resultSet.getString("facultyID");
+			supervisor = resultSet.getString("supervisor");
+			institutes = getInstitute(loginname);
+			rights = getRights(loginname);
+
+			query = "SELECT facultyID FROM institute WHERE instituteID = ?";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1,
+					((LinkedList<String>) institutes).getFirst());
+			resultSet = pStatement.executeQuery();
+			resultSet.next();
+			faculty = resultSet.getString(1);
+			
+			close();
+			return new User(loginname, firstname, lastname, mail, rights,
+					session, faculty, institutes, representative, supervisor,
+					password);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get user: "+loginname);
+		}
+		close();
 		return null;
 	}
-
 
 	public Boolean createUser(User user) {
 
@@ -103,7 +140,6 @@ public class UserDBController {
 		return true;
 
 	}
-
 
 	public Boolean changeUser(User oldUser, User newUser) {
 
@@ -138,7 +174,6 @@ public class UserDBController {
 		return true;
 	}
 
-
 	// deletes User
 	public boolean deleteUser(String loginname) {
 		query = "DELETE FROM User WHERE loginname=?";
@@ -154,7 +189,6 @@ public class UserDBController {
 		return true;
 
 	}
-
 
 	@SuppressWarnings("null")
 	public boolean[] getRights(String loginname) {
@@ -175,7 +209,6 @@ public class UserDBController {
 		close();
 		return rightsArray;
 	}
-
 
 	public void changeRights(User user, boolean[] newRights) {
 
@@ -206,7 +239,6 @@ public class UserDBController {
 		}
 		close();
 	}
-
 
 	public List<User> getAllUsersFromInstitute(String institute) { // String
 																	// institute
@@ -249,7 +281,6 @@ public class UserDBController {
 		return userList;
 	}
 
-
 	public List<String> getInstitute(String loginname) {
 		List<String> instituteList = new LinkedList<String>();
 		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
@@ -268,7 +299,74 @@ public class UserDBController {
 		close();
 		return instituteList;
 	}
+	
+	public boolean checkPassword(String loginname, String password){
+		
+		String correctPassword;
+		query = "SELECT password FROM user WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				correctPassword = resultSet.getString(1);
+//				TODO equals überschreiben??
+				close();
+				return correctPassword.equals(password);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't check password from user: "+loginname);
+		}
+		close();
+		return false;
+	}
+	
+	public boolean setPassword(String loginname, String password){
+		
+		query = "UPDATE user SET password = ? WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, password);
+			pStatement.setString(2, loginname);
+			pStatement.executeUpdate();
+			close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't set new password of user: "+loginname);
+		}
+		close();
+		return false;
+	}
 
+	public User checkSession(String session) {
+		User user;
+		query = "SELECT * FROM user WHERE session = ?";
+
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, session);
+			resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				user = new User(resultSet.getString("loginname"),
+						resultSet.getString("firstname"),
+						resultSet.getString("lastName"),
+						resultSet.getString("mail"),
+						resultSet.getString("password"));
+				user.setSession(session);
+				close();
+				return user;
+			}
+			close();
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't check session: " + session);
+		}
+
+		return null;
+	}
 
 	private void close() {
 		try {
@@ -280,10 +378,5 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't close connection.");
 		}
-	}
-	
-//	TODO
-	public User checkSession(String session){
-		return null;
 	}
 }
