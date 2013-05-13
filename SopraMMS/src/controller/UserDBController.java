@@ -25,10 +25,6 @@ public class UserDBController {
 	static final int NUMBEROFRIGHTS = 4;
 
 
-	public UserDBController() {
-		connect();
-	}
-
 
 	// establish connection
 	public void connect() {
@@ -49,7 +45,7 @@ public class UserDBController {
 
 	// get all user listed in database
 	public List<User> getAllUsers() {
-
+		connect();
 		List<User> userList = new LinkedList<User>();
 		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
 		List<String> instituteList = new LinkedList<String>();
@@ -85,7 +81,7 @@ public class UserDBController {
 
 	// find specified user by loginname
 	public User getUser(String loginname) {
-
+		connect();
 		String firstname, lastname, representative, mail, password, session, faculty, supervisor;
 		List<String> institutes = new LinkedList<String>();
 		boolean[] rights;
@@ -134,7 +130,7 @@ public class UserDBController {
 
 	// create new user in database
 	public Boolean createUser(User user) {
-
+		connect();
 		query = "INSERT INTO User VALUES(?,?,?,?,?,?)";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -160,7 +156,7 @@ public class UserDBController {
 
 	// change existing user in database
 	public Boolean changeUser(User oldUser, User newUser) {
-
+		connect();
 		String loginname = oldUser.getLogin();
 		query = "SELECT * FROM User WHERE loginname=?";
 		try {
@@ -196,6 +192,7 @@ public class UserDBController {
 
 	// deletes User
 	public boolean deleteUser(String loginname) {
+		connect();
 		query = "DELETE FROM User WHERE loginname=?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -209,14 +206,13 @@ public class UserDBController {
 			close();
 		}
 		return true;
-
 	}
 
 
 	@SuppressWarnings("null")
 	// get rights of specified user
 	public boolean[] getRights(String loginname) {
-
+		connect();
 		boolean[] rightsArray = null;
 		query = "SELECT rightsID FROM rightsaffiliation WHERE loginname = ?";
 		try {
@@ -239,7 +235,7 @@ public class UserDBController {
 
 	// change rights of specified user
 	public void changeRights(User user, boolean[] newRights) {
-
+		connect();
 		String loginname = user.getLogin();
 		// delete old rights
 		query = "DELETE FROM rightsaffiliation WHERE loginname = ?";
@@ -273,6 +269,7 @@ public class UserDBController {
 
 	// get all user of specified institute
 	public List<User> getAllUsersFromInstitute(String institute) {
+		connect();
 		List<User> userList = new LinkedList<User>();
 		query = "SELECT loginname FROM instituteaffiliatoin WHERE instituteID = ?";
 		String loginname;
@@ -313,6 +310,7 @@ public class UserDBController {
 
 	// get institute of existing user
 	public List<String> getInstitute(String loginname) {
+		connect();
 		List<String> instituteList = new LinkedList<String>();
 		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
 		try {
@@ -336,7 +334,7 @@ public class UserDBController {
 	// compare hashed password typed in with password in database of specified
 	// user
 	public boolean checkPassword(String loginname, String password) {
-
+		connect();
 		String correctPassword;
 		query = "SELECT password FROM user WHERE loginname = ?";
 		try {
@@ -362,7 +360,7 @@ public class UserDBController {
 
 	// change password of specified user
 	public boolean setPassword(String loginname, String password) {
-
+		connect();
 		query = "UPDATE user SET password = ? WHERE loginname = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -384,6 +382,7 @@ public class UserDBController {
 
 	// check if session of user is still valid
 	public User checkSession(String session) {
+		connect();
 		User user = null;
 		query = "SELECT * FROM user WHERE session = ?";
 

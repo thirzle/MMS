@@ -24,11 +24,6 @@ public class ModuleDBController {
 	private static Statement statement = null;
 
 
-	public ModuleDBController() {
-		connect();
-	}
-
-
 	// establish connection to database
 	public void connect() {
 		try {
@@ -54,6 +49,7 @@ public class ModuleDBController {
 
 	// load all available modules
 	public List<Module> getModules() {
+		connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT * FROM module";
 		try {
@@ -79,6 +75,7 @@ public class ModuleDBController {
 
 	// load all available modules by a chosen institute
 	public List<Module> getModulesByInstitute(String institute) {
+		connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM moduleinstituteaffiliation JOIN module ON moduleinstituteaffiliation.moduleID = module.moduleID WHERE instituteID = ?";
 		try {
@@ -107,6 +104,7 @@ public class ModuleDBController {
 	// load all available modules by a chosen course
 	// TODO
 	public List<Module> getModulesByCourse(String course, String degree) {
+		connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM modulecourseaffiliation JOIN module ON modulecourseaffiliation.moduleID = module.moduleID WHERE courseID = ? AND degree = ?";
 		try {
@@ -134,6 +132,7 @@ public class ModuleDBController {
 
 
 	public List<Module> getModulesByFaculty(String faculty) {
+		connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM modulefacultyaffiliation JOIN module ON modulefacultyaffiliation.moduleID = module.moduleID WHERE faulty = ?";
 		try {
@@ -161,6 +160,7 @@ public class ModuleDBController {
 
 	// load all available modules by a chosen author
 	public List<Module> getModulesByAuthor(String author) {
+		connect();
 		List<Module> modueList = new LinkedList<Module>();
 		query = "SELECT * FROM module WHERE author = ?";
 		try {
@@ -187,6 +187,7 @@ public class ModuleDBController {
 
 	// get a specified module
 	public Module getModule(int moduleID, String name) {
+		connect();
 		query = "SELECT * FROM module WHERE moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -212,6 +213,7 @@ public class ModuleDBController {
 
 	// load all modified modules
 	public List<Module> getModifiedModules() {
+		connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE;";
@@ -238,6 +240,7 @@ public class ModuleDBController {
 
 	// load all modified modules by a chosen institute
 	public List<Module> getModifiedModulesByInstitute(String instituteID) {
+		connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE"
@@ -267,6 +270,7 @@ public class ModuleDBController {
 
 	// load all modified modules by a chosen author
 	public List<Module> getModifiedModulesByAuthor(String author) {
+		connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE"
@@ -297,6 +301,7 @@ public class ModuleDBController {
 
 	// load all rejected modules
 	public List<Module> getRejectedModules() {
+		connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE declined = TRUE";
@@ -323,6 +328,7 @@ public class ModuleDBController {
 
 	// load all rejected modules by a chosen institute
 	public List<Module> getRejectedModulesByInstitute(String instituteID) {
+		connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE declined = TRUE AND instituteID = ?";
@@ -351,6 +357,7 @@ public class ModuleDBController {
 
 	// load all rejected modules by a chosen author
 	public List<Module> getRejectedModulesByAuthor(String author) {
+		connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE declined = TRUE AND author = ?";
@@ -379,6 +386,7 @@ public class ModuleDBController {
 
 	// create a new module in database
 	public boolean createModule(Module module) {
+		connect();
 		int moduleID = module.getModuleID();
 		String name = module.getName();
 		Date creationDate = module.getCreationDate();
@@ -408,6 +416,7 @@ public class ModuleDBController {
 
 	// change an existing module
 	public boolean changeModule(Module module, int moduleIDOld) {
+		connect();
 		int moduleID = module.getModuleID();
 		String name = module.getName();
 		Date creationDate = module.getCreationDate();
@@ -441,6 +450,7 @@ public class ModuleDBController {
 
 	// delete an existing module
 	public boolean deleteModule(Module module) {
+		connect();
 		query = "DELETE FROM module WHERE moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -460,6 +470,7 @@ public class ModuleDBController {
 	// TODO
 	// get a specified modulemanual
 	public String getModuleManual(String courseID, String degree, String version) {
+		connect();
 
 		return null;
 	}
