@@ -146,12 +146,14 @@ public class UserAdministration {
 
 
 	public User login(String loginname, String password, String session) {
+		
 		String pwhash = "" + password.hashCode();
 		System.out.println("##### Einloggen #####");
 		System.out.println("Loginname: " + loginname);
 		System.out.println("Passwort: " + password + " --> " + pwhash);
 
 		if (password.equals(userDBController.checkPassword(loginname, pwhash))) {
+
 			User user = userDBController.getUser(loginname);
 			User newUser = user;
 			newUser.setSession(session);
@@ -160,6 +162,8 @@ public class UserAdministration {
 			System.out.println("Login erfolgreich");
 			System.out.println("#####################");
 
+			System.out.println(newUser.getFirstName());
+			
 			return newUser;
 		} else {
 			System.out.println("Login fehlgeschlagen");

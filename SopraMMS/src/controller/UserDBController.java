@@ -31,7 +31,7 @@ public class UserDBController {
 
 
 	// establish connection
-	private void connect() {
+	public void connect() {
 
 		try {
 			Class.forName(DRIVER);
