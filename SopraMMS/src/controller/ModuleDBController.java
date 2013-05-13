@@ -421,9 +421,9 @@ public class ModuleDBController {
 
 	public void close() {
 		try {
-			pStatement.close();
-			statement.close();
-			resultSet.close();
+//			pStatement.close();
+//			statement.close();
+//			resultSet.close();
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
