@@ -17,8 +17,10 @@ public class User {
 	private String representative;
 	private String supervisor;
 
+
 	public User() {
 	}
+
 
 	public User(String loginname, String firstName, String lastName,
 			String mail, boolean[] rights, String session, String faculty,
@@ -39,6 +41,7 @@ public class User {
 		this.supervisor = supervisor;
 	}
 
+
 	// alternative constructor for User object
 	public User(String loginname, String firstName, String lastName,
 			String mail, String password) {
@@ -56,6 +59,7 @@ public class User {
 		this.supervisor = null;
 	}
 
+
 	/**
 	 * @return the login
 	 */
@@ -63,6 +67,7 @@ public class User {
 
 		return loginname;
 	}
+
 
 	/**
 	 * @param loginname
@@ -73,6 +78,7 @@ public class User {
 		this.loginname = loginname;
 	}
 
+
 	/**
 	 * @return the firstName
 	 */
@@ -80,6 +86,7 @@ public class User {
 
 		return firstName;
 	}
+
 
 	/**
 	 * @param firstName
@@ -90,6 +97,7 @@ public class User {
 		this.firstName = firstName;
 	}
 
+
 	/**
 	 * @return the lastName
 	 */
@@ -97,6 +105,7 @@ public class User {
 
 		return lastName;
 	}
+
 
 	/**
 	 * @param lastName
@@ -107,6 +116,7 @@ public class User {
 		this.lastName = lastName;
 	}
 
+
 	/**
 	 * @return the mail
 	 */
@@ -114,6 +124,7 @@ public class User {
 
 		return mail;
 	}
+
 
 	/**
 	 * @param mail
@@ -124,6 +135,7 @@ public class User {
 		this.mail = mail;
 	}
 
+
 	/**
 	 * @return the rights
 	 */
@@ -131,6 +143,7 @@ public class User {
 
 		return rights;
 	}
+
 
 	/**
 	 * @param rights
@@ -141,6 +154,7 @@ public class User {
 		this.rights = rights;
 	}
 
+
 	/**
 	 * @return the session
 	 */
@@ -148,6 +162,7 @@ public class User {
 
 		return session;
 	}
+
 
 	/**
 	 * @param session
@@ -158,6 +173,7 @@ public class User {
 		this.session = session;
 	}
 
+
 	/**
 	 * @return the faculty
 	 */
@@ -165,6 +181,7 @@ public class User {
 
 		return faculty;
 	}
+
 
 	/**
 	 * @param faculty
@@ -175,6 +192,7 @@ public class User {
 		this.faculty = faculty;
 	}
 
+
 	/**
 	 * @return the institute
 	 */
@@ -182,6 +200,7 @@ public class User {
 
 		return institute;
 	}
+
 
 	/**
 	 * @param institute
@@ -192,6 +211,7 @@ public class User {
 		this.institute = institute;
 	}
 
+
 	/**
 	 * @return the representative
 	 */
@@ -199,6 +219,7 @@ public class User {
 
 		return representative;
 	}
+
 
 	/**
 	 * @param representative
@@ -209,6 +230,7 @@ public class User {
 		this.representative = representative;
 	}
 
+
 	/**
 	 * @return the supervisor
 	 */
@@ -216,6 +238,7 @@ public class User {
 
 		return supervisor;
 	}
+
 
 	/**
 	 * @param supervisor
@@ -226,10 +249,12 @@ public class User {
 		this.supervisor = supervisor;
 	}
 
+
 	public String getPassword() {
 
 		return password;
 	}
+
 
 	public void setPassword(String password) {
 

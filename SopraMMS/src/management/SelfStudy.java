@@ -1,22 +1,25 @@
 package management;
 
 public class SelfStudy {
-	
+
 	@SuppressWarnings("unused")
 	private String title;
-	
+
 	private int time;
-	
-	public SelfStudy(String title, int time){
+
+
+	public SelfStudy(String title, int time) {
 		this.title = title;
 		this.time = time;
 	}
-	
-	public String toString(){
+
+
+	public String toString() {
 		return "to do...";
 	}
-	
-	public int getTime(){
+
+
+	public int getTime() {
 		return time;
 	}
 }

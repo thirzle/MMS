@@ -8,10 +8,12 @@ public class UserAdministration {
 
 	static UserDBController userDBController = new UserDBController();
 
+
 	// Constructor
 	public UserAdministration() {
 
 	}
+
 
 	// Creates an object User and send it to the database controller
 	public User createUser(String loginname, String firstName, String lastName,
@@ -26,11 +28,13 @@ public class UserAdministration {
 		return user;
 	}
 
+
 	// Gets an object User and send it to the database controller
 	public User createUser(User user) {
 		userDBController.createUser(user);
 		return user;
 	}
+
 
 	/*
 	 * Gets an object User which contains the loginname to identify the user and
@@ -44,6 +48,7 @@ public class UserAdministration {
 		return newUser;
 	}
 
+
 	/*
 	 * Gets an object User which contains the loginname to identify the user and
 	 * a String with the new mail address
@@ -55,12 +60,14 @@ public class UserAdministration {
 		return newUser;
 	}
 
+
 	public User changeFaculty(User user, String faculty) {
 		User newUser = user;
 		newUser.setFaculty(faculty);
 		userDBController.changeUser(user, newUser);
 		return newUser;
 	}
+
 
 	/*
 	 * Gets an object User which contains the loginname to identify the user and
@@ -73,6 +80,7 @@ public class UserAdministration {
 		return newUser;
 	}
 
+
 	public User changeRepresentative(User user, String representative) {
 		User newUser = user;
 		newUser.setRepresentative(representative);
@@ -80,12 +88,14 @@ public class UserAdministration {
 		return newUser;
 	}
 
+
 	public User changeSupervisor(User user, String supervisor) {
 		User newUser = user;
 		newUser.setRepresentative(supervisor);
 		userDBController.changeUser(user, newUser);
 		return newUser;
 	}
+
 
 	public User changeName(User user, String firstname, String lastname) {
 		User newUser = user;
@@ -95,6 +105,7 @@ public class UserAdministration {
 		return newUser;
 	}
 
+
 	public User changePassword(User user, String password) {
 		User newUser = user;
 		newUser.setRepresentative(password);
@@ -102,11 +113,13 @@ public class UserAdministration {
 		return newUser;
 	}
 
+
 	public User getUser(String loginname) {
 		// TODO fill Method
 
 		return new User();
 	}
+
 
 	public boolean deleteUser(User user) {
 		// TODO fill Method
@@ -114,11 +127,13 @@ public class UserAdministration {
 		return false;
 	}
 
+
 	public boolean sendNewPassword(String loginname) {
 		// TODO fill Method
 
 		return false;
 	}
+
 
 	public User checkLogin(String session) {
 		// TODO Methode existiert in DB noch nicht
@@ -128,6 +143,7 @@ public class UserAdministration {
 		}
 		return null;
 	}
+
 
 	public User login(String loginname, String password, String session) {
 		String pwhash = "" + password.hashCode();
@@ -151,6 +167,7 @@ public class UserAdministration {
 			return null;
 		}
 	}
+
 
 	public void logout(String loginname) {
 		User user = userDBController.getUser(loginname);

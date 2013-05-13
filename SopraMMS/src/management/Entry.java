@@ -4,16 +4,18 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public abstract class Entry {
-	
-	private int version;		//version number
-	private String timestamp;	//time stamp, FORMAT: hh:mm:ss a zzz
-	private boolean classification;		//Entry classification
+
+	private int version; // version number
+	private String timestamp; // time stamp, FORMAT: hh:mm:ss a zzz
+	private boolean classification; // Entry classification
 	private boolean approved;
 	private boolean rejected;
 	private String title;
-	
-	//use this when you import existing data
-	public Entry(int version, String timestamp, boolean classification, boolean approved, boolean rejected, String title){
+
+
+	// use this when you import existing data
+	public Entry(int version, String timestamp, boolean classification,
+			boolean approved, boolean rejected, String title) {
 		this.version = version;
 		this.timestamp = timestamp;
 		this.classification = classification;
@@ -21,57 +23,61 @@ public abstract class Entry {
 		this.rejected = rejected;
 		this.title = title;
 	}
-	
-	//use this to create a new entry
-	public Entry(String title){
-		//default init...
+
+
+	// use this to create a new entry
+	public Entry(String title) {
+		// default init...
 		this.version = 1;
 		this.timestamp = get_current_time();
 		this.classification = false;
 		this.approved = false;
 		this.rejected = false;
-		//actual data...
+		// actual data...
 		this.title = title;
 	}
 
 
+	private String get_current_time() {
+		Date current_date = new Date();
+		SimpleDateFormat time_format = new SimpleDateFormat("hh:mm:ss a zzz");
+		// with date:
+		// SimpleDateFormat date_and_time_format = new SimpleDateFormat
+		// ("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
 
-	private String get_current_time(){
-	      Date current_date = new Date( );
-	      SimpleDateFormat time_format = new SimpleDateFormat ("hh:mm:ss a zzz");
-	      //with date:
-	      //SimpleDateFormat date_and_time_format = new SimpleDateFormat ("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
-	      
-	    //returning current time:
+		// returning current time:
 		return time_format.format(current_date);
 	}
 
 
-
-	//GETTERS...
+	// GETTERS...
 
 	public int getVersion() {
 		return version;
 	}
 
+
 	public String getTimestamp() {
 		return timestamp;
 	}
+
 
 	public boolean isClassification() {
 		return classification;
 	}
 
+
 	public boolean isApproved() {
 		return approved;
 	}
+
 
 	public boolean isRejected() {
 		return rejected;
 	}
 
+
 	public String getTitle() {
 		return title;
 	}
 }
-

@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import management.Module;
+
 //
 public class ModuleDBController {
 
@@ -28,7 +29,7 @@ public class ModuleDBController {
 	}
 
 
-//	establish connection to database
+	// establish connection to database
 	public void connect() {
 		try {
 			Class.forName(DRIVER);
@@ -50,7 +51,8 @@ public class ModuleDBController {
 		System.out.println("###########################################");
 	}
 
-//	load all available modules
+
+	// load all available modules
 	public List<Module> getModules() {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT * FROM module";
@@ -68,11 +70,14 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules.");
+		} finally {
+			close();
 		}
 		return moduleList;
 	}
 
-//	load all available modules by a chosen institute
+
+	// load all available modules by a chosen institute
 	public List<Module> getModulesByInstitute(String institute) {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM moduleinstituteaffiliation JOIN module ON moduleinstituteaffiliation.moduleID = module.moduleID WHERE instituteID = ?";
@@ -92,12 +97,15 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules by institute: "
 					+ institute);
+		} finally {
+			close();
 		}
 		return moduleList;
 	}
 
-//	load all available modules by a chosen course
-//	TODO
+
+	// load all available modules by a chosen course
+	// TODO
 	public List<Module> getModulesByCourse(String course, String degree) {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM modulecourseaffiliation JOIN module ON modulecourseaffiliation.moduleID = module.moduleID WHERE courseID = ? AND degree = ?";
@@ -118,6 +126,8 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules by course: " + course
 					+ " and degree: " + degree);
+		} finally {
+			close();
 		}
 		return moduleList;
 	}
@@ -142,11 +152,14 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules by faculty: " + faculty);
+		} finally {
+			close();
 		}
 		return moduleList;
 	}
 
 
+	// load all available modules by a chosen author
 	public List<Module> getModulesByAuthor(String author) {
 		List<Module> modueList = new LinkedList<Module>();
 		query = "SELECT * FROM module WHERE author = ?";
@@ -165,11 +178,14 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules by author: " + author);
+		} finally {
+			close();
 		}
 		return modueList;
 	}
 
 
+	// get a specified module
 	public Module getModule(int moduleID, String name) {
 		query = "SELECT * FROM module WHERE moduleID = ?";
 		try {
@@ -187,11 +203,14 @@ public class ModuleDBController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get module: " + name);
+		} finally {
+			close();
 		}
 		return null;
 	}
 
 
+	// load all modified modules
 	public List<Module> getModifiedModules() {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
@@ -210,11 +229,14 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modified modules.");
+		} finally {
+			close();
 		}
 		return moduleList;
 	}
 
 
+	// load all modified modules by a chosen institute
 	public List<Module> getModifiedModulesByInstitute(String instituteID) {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
@@ -236,11 +258,14 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get modified modules by institute: "
 					+ instituteID);
+		} finally {
+			close();
 		}
 		return moduleList;
 	}
 
 
+	// load all modified modules by a chosen author
 	public List<Module> getModifiedModulesByAuthor(String author) {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
@@ -262,12 +287,15 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get modified modules by author: "
 					+ author);
+		} finally {
+			close();
 		}
 		return moduleList;
 
 	}
 
 
+	// load all rejected modules
 	public List<Module> getRejectedModules() {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
@@ -286,11 +314,14 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get rejected modules.");
+		} finally {
+			close();
 		}
 		return moduleList;
 	}
 
 
+	// load all rejected modules by a chosen institute
 	public List<Module> getRejectedModulesByInstitute(String instituteID) {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
@@ -311,11 +342,14 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get rejected modules by institute: "
 					+ instituteID);
+		} finally {
+			close();
 		}
 		return moduleList;
 	}
 
 
+	// load all rejected modules by a chosen author
 	public List<Module> getRejectedModulesByAuthor(String author) {
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
@@ -336,11 +370,14 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get rejected modules by author: "
 					+ author);
+		} finally {
+			close();
 		}
 		return moduleList;
 	}
 
 
+	// create a new module in database
 	public boolean createModule(Module module) {
 		int moduleID = module.getModuleID();
 		String name = module.getName();
@@ -362,11 +399,14 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't create module: " + name);
+		} finally {
+			close();
 		}
 		return false;
 	}
 
 
+	// change an existing module
 	public boolean changeModule(Module module, int moduleIDOld) {
 		int moduleID = module.getModuleID();
 		String name = module.getName();
@@ -391,12 +431,15 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't change module: " + moduleID);
+		} finally {
+			close();
 		}
 		return false;
 
 	}
 
 
+	// delete an existing module
 	public boolean deleteModule(Module module) {
 		query = "DELETE FROM module WHERE moduleID = ?";
 		try {
@@ -407,12 +450,15 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't delete module: "
 					+ module.getModuleID());
+		} finally {
+			close();
 		}
 		return false;
 	}
 
 
 	// TODO
+	// get a specified modulemanual
 	public String getModuleManual(String courseID, String degree, String version) {
 
 		return null;
@@ -421,9 +467,9 @@ public class ModuleDBController {
 
 	public void close() {
 		try {
-//			pStatement.close();
-//			statement.close();
-//			resultSet.close();
+			// pStatement.close();
+			// statement.close();
+			// resultSet.close();
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
