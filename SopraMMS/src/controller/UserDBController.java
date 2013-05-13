@@ -85,26 +85,25 @@ public class UserDBController {
 		String firstname, lastname, representative, mail, password, session, faculty, supervisor;
 		List<String> institutes = new LinkedList<String>();
 		boolean[] rights;
-		query = "SELECT * FROM user AS u"
-				+ "JOIN supervisor AS s ON u.loginname = s.username"
+		query = "SELECT * FROM user AS u "
+				+ "LEFT OUTER JOIN supervisor AS s ON u.loginname = s.username "
 				+ "WHERE u.loginname = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
 			resultSet = pStatement.executeQuery();
 			resultSet.next();
-
-			firstname = resultSet.getString("firstname");
 			lastname = resultSet.getString("lastname");
+			firstname = resultSet.getString("firstname");
 			representative = resultSet.getString("representative");
 			mail = resultSet.getString("mail");
 			password = resultSet.getString("password");
 			session = resultSet.getString("session");
-			faculty = resultSet.getString("facultyID");
 			supervisor = resultSet.getString("supervisor");
+			close();
 			institutes = getInstitute(loginname);
 			rights = getRights(loginname);
-
+			connect();
 			query = "SELECT facultyID FROM institute WHERE instituteID = ?";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1,
@@ -343,7 +342,6 @@ public class UserDBController {
 			resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				correctPassword = resultSet.getString(1);
-				// TODO equals überschreiben??
 				close();
 				return correctPassword.equals(password);
 			}

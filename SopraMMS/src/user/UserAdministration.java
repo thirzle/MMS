@@ -152,7 +152,9 @@ public class UserAdministration {
 		System.out.println("Loginname: " + loginname);
 		System.out.println("Passwort: " + password + " --> " + pwhash);
 
-		if (password.equals(userDBController.checkPassword(loginname, pwhash))) {
+		System.out.println("- userDBCon.checkPass"+userDBController.checkPassword(loginname, password));
+		
+		if (userDBController.checkPassword(loginname, pwhash)) {
 
 			User user = userDBController.getUser(loginname);
 			User newUser = user;
@@ -162,7 +164,6 @@ public class UserAdministration {
 			System.out.println("Login erfolgreich");
 			System.out.println("#####################");
 
-			System.out.println(newUser.getFirstName());
 			
 			return newUser;
 		} else {
