@@ -123,34 +123,39 @@ public class UserAdministration {
 	public User checkLogin(String session) {
 		// TODO Methode existiert in DB noch nicht
 		User user = userDBController.checkSession(session);
-		if(user!= null)
-		{
+		if (user != null) {
 			return user;
 		}
 		return null;
 	}
 
 	public User login(String loginname, String password, String session) {
-		/*
-		// TODO Methode existiert in DB noch nicht
-		if (password.equals(userDBController.getPassword(loginname))) {
-			// TODO Methode existiert in DB noch nicht
+		String pwhash = "" + password.hashCode();
+		System.out.println("##### Einloggen #####");
+		System.out.println("Loginname: " + loginname);
+		System.out.println("Passwort: " + password + " --> " + pwhash);
+
+		if (password.equals(userDBController.checkPassword(loginname, pwhash))) {
 			User user = userDBController.getUser(loginname);
 			User newUser = user;
 			newUser.setSession(session);
 			userDBController.changeUser(user, newUser);
+
+			System.out.println("Login erfolgreich");
+			System.out.println("#####################");
+
 			return newUser;
+		} else {
+			System.out.println("Login fehlgeschlagen");
+			System.out.println("#####################");
+			return null;
 		}
-		*/
-		return null;
 	}
 
 	public void logout(String loginname) {
-		// TODO Methode existiert in DB noch nicht
 		User user = userDBController.getUser(loginname);
-		if(user!= null)
-		{
-			user.setSession("");
+		if (user != null) {
+			user.setSession(null);
 			userDBController.changeUser(user, user);
 		}
 	}
