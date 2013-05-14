@@ -13,8 +13,8 @@
 		String sessionID = session.getId();
 		
 		// Here you put the check on the username and password
+		System.out.print(session.getAttribute("loginname"));
 		if (userAdmin.login(loginname, password, sessionID)!=null) {
-			
 			session.setAttribute("loginname", loginname);
 			session.setAttribute("session", sessionID);
 			response.sendRedirect("../admin/adminHome.jsp");
