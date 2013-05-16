@@ -1,5 +1,6 @@
 	<%
 		String loginname=(String)session.getAttribute("loginname");
+	System.out.println("Loginname (Logoutfile): "+loginname);
 		if(loginname!=null) {
 			out.println(loginname+" loged out");
 			session.removeAttribute("username");
@@ -9,5 +10,5 @@
 			out.println("You are already not login");
 		}
 	%>
-<meta http-equiv=refresh content="0; URL= ${pageContext.request.contextPath}/welcome.jsp">
+
 

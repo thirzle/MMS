@@ -4,8 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/default.css">
+<title>Error Page</title>
 </head>
 <body>
 
@@ -16,11 +15,8 @@
 		<div class="main">
 			<div class="menu">
 				<%@ include file="/guiElements/courseSelection.jsp" %>
-				<% if(session.getAttribute("loginname")==null)
-					{%>
-				<%@ include file="/guiElements/Login/login.jsp" %><%} else { %><%@ include file="/guiElements/Login/logout.jsp" %><%} %>
 			</div>
-			<div class="contentBox"></div>
+			<div class="contentBox"><h1>Error</h1></div>
 			</div>
 		<div class="footer">
 			<%@ include file="/guiElements/footer.jsp" %>
