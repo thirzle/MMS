@@ -7,8 +7,8 @@ $(document).ready(function(){
 	});
 });
 </script>
-<img src="/SopraMMS/images/textHeader.bmp" alt="Logo" align="left">
-<img src="/SopraMMS/images/imgHeader.bmp" alt="Logo" align="right">
+<img src="${pageContext.request.contextPath}/images/textHeader.bmp" alt="Logo" align="left">
+<img src="${pageContext.request.contextPath}/images/imgHeader.bmp" alt="Logo" align="right">
 <br>
 <div class="headerNavigation" id="navigation">
 	<navigation class="start">Startseite</navigation>

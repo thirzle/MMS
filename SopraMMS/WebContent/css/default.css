@@ -93,6 +93,15 @@ body {
 	margin-left: 5%;
 	margin-top: 5%; 
 	margin-bottom: 0px;
+	background-color: #FFFFFF;
+}
+
+.userManagementEntryContainer {
+	background-color: #FFFFFF;
+}
+
+.userManagementEntry:hover {
+	font-weight: bold;
 }
 
 .menuEntry {
@@ -153,11 +162,11 @@ li.treeMenu_closed ul {
 }
 
 ul.bullet1 {
-	list-style-image: url(/SopraMMS/images/bullet1.bmp);
+	list-style-image: url(../images/bullet1.bmp);
 }
 
 ul.bullet2 {
-	list-style-image: url(/SopraMMS/images/bullet2.bmp);
+	list-style-image: url(../images/bullet2.bmp);
 }
 
 
