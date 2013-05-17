@@ -6,9 +6,11 @@
 			session.removeAttribute("username");
 			session.removeAttribute("password");
 			session.invalidate();  
+			response.sendRedirect("/SopraMMS/welcome.jsp");
 		} else {
-			out.println("You are already not login");
+			%><img src="${pageContext.request.contextPath}/images/Teambild.jpg" alt="Logo" align="left"><%
+			out.println("you are already not login");
 		}
 	%>
-
+	
 

@@ -14,7 +14,9 @@
 </head>
 
 <body>
-
+<% String loginname = (String)session.getAttribute("loginname");
+	System.out.print(loginname);
+   if(loginname!=null) {%>
 <div class="page">
 		<div class="header">
 			<%@ include file="/guiElements/header.jsp" %>
@@ -31,6 +33,10 @@
 		<div class="footer" id="footer">
 			<%@ include file="/guiElements/footer.jsp" %>
 		</div>
+  <%} else {
+  		response.sendRedirect("/SopraMMS/guiElements/error.jsp");
+  	}
+  	%>
 </div>
 </body>
 </html>
