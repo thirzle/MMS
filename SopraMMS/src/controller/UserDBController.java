@@ -11,7 +11,7 @@ import java.util.List;
 
 import user.User;
 
-public class UserDBController {
+public class UserDBController {//irgendwas
 
 	private static Statement statement;
 	private static ResultSet resultSet;
