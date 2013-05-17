@@ -30,7 +30,7 @@
 	</td>
 	<td class='newCell' id='supervisorCell'>
 		<select form="addUserForm" name="supervisorSelect">
-		  <option value="0">Neuer Vorgesetzer</option>
+		  <option value="0">Neuer Stellvertreter</option>
 		</select>
 	</td>
 </tr>

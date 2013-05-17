@@ -54,6 +54,7 @@ $(document).ready(function() {
 			*
 			*/
 			$("#newUser").click(function() {
+				$("#saveButton").show();
 				if(newUserCompleted) {
 					newUserCompleted = false;
 					// neue Zeile wird an die Tabelle angehangt.
@@ -72,6 +73,7 @@ $(document).ready(function() {
 			 * 
 			 */		
 			$("#editUser").click(function() {
+				$("#saveButton").hide();
 				alert($(this).attr("id")+" was clicked");
 				$("#tmpRow").hide();
 				$("#controlBoard").children().remove();
@@ -82,6 +84,7 @@ $(document).ready(function() {
 			 * gewahlt sein, um diese Zeile / Benutzer zu loschen.
 			 */
 			$("#deleteUser").click(function() {
+				$("#saveButton").hide();
 				alert($(this).attr("id")+" was clicked");
 				$("#tmpRow").hide();
 				$("#controlBoard").children().remove();

@@ -1,6 +1,5 @@
 	<%
 		String loginname=(String)session.getAttribute("loginname");
-	System.out.println("Loginname (Logoutfile): "+loginname);
 		if(loginname!=null) {
 			out.println(loginname+" loged out");
 			session.removeAttribute("username");

@@ -15,7 +15,6 @@
 
 <body>
 <% String loginname = (String)session.getAttribute("loginname");
-	System.out.print(loginname);
    if(loginname!=null) {%>
 <div class="page">
 		<div class="header">
