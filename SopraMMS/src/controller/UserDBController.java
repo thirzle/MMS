@@ -13,7 +13,6 @@ import user.User;
 
 public class UserDBController {
 
-	private static Connection connection;
 	private static Statement statement;
 	private static ResultSet resultSet;
 	private static String query = null;
@@ -25,10 +24,9 @@ public class UserDBController {
 	static final int NUMBEROFRIGHTS = 4;
 
 
-
 	// establish connection
-	public void connect() {
-
+	public Connection connect() {
+		Connection connection = null;
 		try {
 			Class.forName(DRIVER);
 			connection = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -39,43 +37,37 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("connection couldn't be established");
 		}
+		return connection;
 
 	}
 
 
 	// get all user listed in database
 	public List<User> getAllUsers() {
-		connect();
+		Connection connection = connect();
 		List<User> userList = new LinkedList<User>();
 		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
 		List<String> instituteList = new LinkedList<String>();
 		try {
 			query = "SELECT * FROM user";
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery(query);
+			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				String loginname = resultSet.getString("loginname");
 				rightsArray = getRights(loginname);
-				connect();
 				instituteList = getInstitute(loginname);
-				connect();
 				User user = new User(loginname,
-						
-						resultSet.getString("lastname"),
 						resultSet.getString("firstname"),
+						resultSet.getString("lastname"),
 						resultSet.getString("mail"), rightsArray,
-						resultSet.getString("session"),
-						resultSet.getString("faculty"), instituteList,
-						resultSet.getString("represantative"),
-						resultSet.getString("supervisor"),
-						resultSet.getString("password"));		
+						instituteList, resultSet.getString("representative"));
 				userList.add(user);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("Couldn't get all Users");
 		} finally {
-			close();
+			close(connection);
 		}
 		return userList;
 	}
@@ -83,7 +75,7 @@ public class UserDBController {
 
 	// find specified user by loginname
 	public User getUser(String loginname) {
-		connect();
+		Connection connection = connect();
 		String firstname, lastname, representative, mail, password, session, faculty, supervisor;
 		List<String> institutes = new LinkedList<String>();
 		boolean[] rights;
@@ -93,7 +85,7 @@ public class UserDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			resultSet.next();
 			lastname = resultSet.getString("lastname");
 			firstname = resultSet.getString("firstname");
@@ -102,7 +94,7 @@ public class UserDBController {
 			password = resultSet.getString("password");
 			session = resultSet.getString("session");
 			supervisor = resultSet.getString("supervisor");
-			close();
+			close(connection);
 			institutes = getInstitute(loginname);
 			rights = getRights(loginname);
 			connect();
@@ -114,7 +106,7 @@ public class UserDBController {
 			resultSet.next();
 			faculty = resultSet.getString(1);
 
-			close();
+			close(connection);
 			return new User(loginname, firstname, lastname, mail, rights,
 					session, faculty, institutes, representative, supervisor,
 					password);
@@ -123,7 +115,7 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get user: " + loginname);
 		} finally {
-			close();
+			close(connection);
 		}
 		return null;
 	}
@@ -131,7 +123,7 @@ public class UserDBController {
 
 	// create new user in database
 	public Boolean createUser(User user) {
-		connect();
+		Connection connection = connect();
 		query = "INSERT INTO User VALUES(?,?,?,?,?,?)";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -147,7 +139,7 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("User couldn't be created.");
 		} finally {
-			close();
+			close(connection);
 		}
 		System.out.println("User created!");
 		return true;
@@ -157,7 +149,7 @@ public class UserDBController {
 
 	// change existing user in database
 	public Boolean changeUser(User oldUser, User newUser) {
-		connect();
+		Connection connection = connect();
 		String loginname = oldUser.getLogin();
 		query = "SELECT * FROM User WHERE loginname=?";
 		try {
@@ -185,7 +177,7 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("User " + loginname + " couldn't be changed.");
 		} finally {
-			close();
+			close(connection);
 		}
 		return true;
 	}
@@ -193,7 +185,7 @@ public class UserDBController {
 
 	// deletes User
 	public boolean deleteUser(String loginname) {
-		connect();
+		Connection connection = connect();
 		query = "DELETE FROM User WHERE loginname=?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -204,22 +196,21 @@ public class UserDBController {
 			System.out.println("User could not be deleted.");
 			return false;
 		} finally {
-			close();
+			close(connection);
 		}
 		return true;
 	}
 
 
-	@SuppressWarnings("null")
 	// get rights of specified user
 	public boolean[] getRights(String loginname) {
-		connect();
-		boolean[] rightsArray = null;
+		Connection connection = connect();
+		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
 		query = "SELECT rightsID FROM rightsaffiliation WHERE loginname = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			// set all rights listed in table rightsaffiliation
 			while (resultSet.next()) {
 				rightsArray[resultSet.getInt("rightsID")] = true;
@@ -227,8 +218,6 @@ public class UserDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get rights of user: " + loginname);
-		} finally {
-			//close();
 		}
 		return rightsArray;
 	}
@@ -236,7 +225,7 @@ public class UserDBController {
 
 	// change rights of specified user
 	public void changeRights(User user, boolean[] newRights) {
-		connect();
+		Connection connection = connect();
 		String loginname = user.getLogin();
 		// delete old rights
 		query = "DELETE FROM rightsaffiliation WHERE loginname = ?";
@@ -264,13 +253,13 @@ public class UserDBController {
 				}
 			}
 		}
-		close();
+		close(connection);
 	}
 
 
 	// get all user of specified institute
 	public List<User> getAllUsersFromInstitute(String institute) {
-		connect();
+		Connection connection = connect();
 		List<User> userList = new LinkedList<User>();
 		query = "SELECT loginname FROM instituteaffiliatoin WHERE instituteID = ?";
 		String loginname;
@@ -278,7 +267,7 @@ public class UserDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, institute);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 
 			while (resultSet.next()) {
 				loginname = resultSet.getString("loginname");
@@ -303,7 +292,7 @@ public class UserDBController {
 					+ institute);
 			e.printStackTrace();
 		} finally {
-			close();
+			close(connection);
 		}
 		return userList;
 	}
@@ -311,13 +300,13 @@ public class UserDBController {
 
 	// get institute of existing user
 	public List<String> getInstitute(String loginname) {
-		connect();
+		Connection connection = connect();
 		List<String> instituteList = new LinkedList<String>();
 		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				instituteList.add(resultSet.getString("instituteID"));
 			}
@@ -325,8 +314,6 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get list of institutes from user: "
 					+ loginname);
-		} finally {
-			//close();
 		}
 		return instituteList;
 	}
@@ -335,16 +322,16 @@ public class UserDBController {
 	// compare hashed password typed in with password in database of specified
 	// user
 	public boolean checkPassword(String loginname, String password) {
-		connect();
+		Connection connection = connect();
 		String correctPassword;
 		query = "SELECT password FROM user WHERE loginname = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				correctPassword = resultSet.getString(1);
-				close();
+				close(connection);
 				return correctPassword.equals(password);
 			}
 		} catch (SQLException e) {
@@ -352,7 +339,7 @@ public class UserDBController {
 			System.out.println("Couldn't check password from user: "
 					+ loginname);
 		} finally {
-			close();
+			close(connection);
 		}
 		return false;
 	}
@@ -360,21 +347,20 @@ public class UserDBController {
 
 	// change password of specified user
 	public boolean setPassword(String loginname, String password) {
-		connect();
+		Connection connection = connect();
 		query = "UPDATE user SET password = ? WHERE loginname = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, password);
 			pStatement.setString(2, loginname);
 			pStatement.executeUpdate();
-			close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't set new password of user: "
 					+ loginname);
 		} finally {
-			close();
+			close(connection);
 		}
 		return false;
 	}
@@ -382,14 +368,14 @@ public class UserDBController {
 
 	// check if session of user is still valid
 	public User checkSession(String session) {
-		connect();
+		Connection connection = connect();
 		User user = null;
 		query = "SELECT * FROM user WHERE session = ?";
 
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, session);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				user = new User(resultSet.getString("loginname"),
 						resultSet.getString("firstname"),
@@ -402,18 +388,15 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't check session: " + session);
 		} finally {
-			close();
+			close(connection);
 		}
 		return user;
 	}
 
 
 	// close connection
-	private void close() {
+	private void close(Connection connection) {
 		try {
-			// pStatement.close();
-			// statement.close();
-			// resultSet.close();
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -58,6 +58,22 @@ public class User {
 		this.representative = null;
 		this.supervisor = null;
 	}
+	
+	public User(String loginname, String firstName, String lastName,
+			String mail, boolean[] rights, List<String> institute, String representative) {
+
+		this.loginname = loginname;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.mail = mail;
+		this.password = null;
+		this.rights = rights;
+		this.session = null;
+		this.faculty = null;
+		this.institute = institute;
+		this.representative = representative;
+		this.supervisor = null;
+	}
 
 
 	/**
