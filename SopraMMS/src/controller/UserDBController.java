@@ -21,7 +21,7 @@ public class UserDBController {//irgendwas
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	static final int NUMBEROFRIGHTS = 4;
+	static final int NUMBEROFRIGHTS = 5;
 
 
 	// establish connection
@@ -94,10 +94,8 @@ public class UserDBController {//irgendwas
 			password = resultSet.getString("password");
 			session = resultSet.getString("session");
 			supervisor = resultSet.getString("supervisor");
-			close(connection);
 			institutes = getInstitute(loginname);
 			rights = getRights(loginname);
-			connect();
 			query = "SELECT facultyID FROM institute WHERE instituteID = ?";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1,
@@ -124,25 +122,45 @@ public class UserDBController {//irgendwas
 	// create new user in database
 	public Boolean createUser(User user) {
 		Connection connection = connect();
-		query = "INSERT INTO User VALUES(?,?,?,?,?,?)";
+		query = "INSERT INTO User VALUES(?,?,?,?,?,?,?)";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, user.getLogin());
 			pStatement.setString(2, user.getLastName());
 			pStatement.setString(3, user.getFirstName());
-			pStatement.setString(4, user.getMail());
-			pStatement.setString(5, user.getPassword());
-			pStatement.setString(6, user.getSession());
+			pStatement.setString(4, user.getRepresentative());
+			pStatement.setString(5, user.getMail());
+			pStatement.setString(6, user.getPassword());
+			pStatement.setString(7, user.getSession());
+			pStatement.execute();
 
-			pStatement.executeUpdate();
+			query = "INSERT INTO instituteaffiliation VALUES(?,?)";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, user.getLogin());
+			for (String institute : user.getInstitute()) {
+				pStatement.setString(2, institute);
+				pStatement.execute();
+			}
+			
+			query = "INSERT INTO rightsaffiliation VALUES(?,?)";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, user.getLogin());
+			for (int i = 0; i < NUMBEROFRIGHTS; i++) {
+				if(user.getRights()[i]){
+					pStatement.setInt(2, i);
+					pStatement.execute();
+				}
+			}
+			
+			System.out.println("User created!");
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("User couldn't be created.");
 		} finally {
 			close(connection);
 		}
-		System.out.println("User created!");
-		return true;
+		return false;
 
 	}
 
