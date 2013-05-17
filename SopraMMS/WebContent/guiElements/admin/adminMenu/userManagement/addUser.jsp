@@ -1,3 +1,4 @@
+<%@ page import="user.User" %>
 <% 
 String loginname = request.getParameter("loginCellText");
 String firstname = request.getParameter("firstnameCellText");
@@ -5,7 +6,7 @@ String lastname = request.getParameter("lastnameCellText");
 String email = request.getParameter("emailCellText");
 String rights = request.getParameter("rightsSelect");
 String institute = request.getParameter("instituteSelect");
-String supervisor = request.getParameter("supervisorSelect");
-
-System.out.println(rights);
+String representative = request.getParameter("representativeSelect");
+User user = new User(loginname,firstname,lastname,email,representative);
+System.out.println(user.toString());
 response.sendRedirect("/SopraMMS/guiElements/admin/adminHome.jsp");%>

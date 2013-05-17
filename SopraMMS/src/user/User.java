@@ -1,8 +1,24 @@
 package user;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class User {
+
+	/* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+
+	return "User [loginname=" + loginname + ", firstName=" + firstName
+		+ ", lastName=" + lastName + ", mail=" + mail + ", rights="
+		+ Arrays.toString(rights) + ", session=" + session
+		+ ", faculty=" + faculty + ", password=" + password
+		+ ", institute=" + institute + ", representative="
+		+ representative + ", supervisor=" + supervisor + "]";
+    }
+
 
 	//
 	private String loginname;
@@ -276,4 +292,5 @@ public class User {
 
 		this.password = password;
 	}
+	
 }

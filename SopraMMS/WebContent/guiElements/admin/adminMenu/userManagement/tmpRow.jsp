@@ -17,7 +17,7 @@
 		<div></div>
 	</td>
 	<td class='newCell' id='rightsCell'>
-		<select form="addUserForm" name="rightsSelect">
+		<select form="addUserForm" name="rightsSelect" id="s1">
 		  <option value="0">Modulverantwortlicher</option>
 		  <option value="1">Redakteur</option>
 		  <option value="2">Administrator</option>
@@ -28,8 +28,8 @@
 		  <option value="0">Default Institut</option>
 		</select>
 	</td>
-	<td class='newCell' id='supervisorCell'>
-		<select form="addUserForm" name="supervisorSelect">
+	<td class='newCell' id='representativeCell'>
+		<select form="addUserForm" name="representativeSelect">
 		  <option value="0">Neuer Stellvertreter</option>
 		</select>
 	</td>

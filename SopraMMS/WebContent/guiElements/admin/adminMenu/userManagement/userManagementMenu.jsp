@@ -4,7 +4,7 @@
 	<p class='userManagementEntry' id='deleteUser'>Benutzer löschen</p>
 </div>
 <script type="text/javascript">
-<!--
-$("#userManagement").children().hide();
-//-->
+
+	$("#userManagement").children().hide();
+
 </script>
