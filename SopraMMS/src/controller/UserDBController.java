@@ -56,17 +56,19 @@ public class UserDBController {
 			while (resultSet.next()) {
 				String loginname = resultSet.getString("loginname");
 				rightsArray = getRights(loginname);
+				connect();
 				instituteList = getInstitute(loginname);
-
+				connect();
 				User user = new User(loginname,
-						resultSet.getString("firstname"),
+						
 						resultSet.getString("lastname"),
+						resultSet.getString("firstname"),
 						resultSet.getString("mail"), rightsArray,
 						resultSet.getString("session"),
 						resultSet.getString("faculty"), instituteList,
 						resultSet.getString("represantative"),
 						resultSet.getString("supervisor"),
-						resultSet.getString("password"));
+						resultSet.getString("password"));		
 				userList.add(user);
 			}
 		} catch (SQLException e) {
@@ -226,7 +228,7 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get rights of user: " + loginname);
 		} finally {
-			close();
+			//close();
 		}
 		return rightsArray;
 	}
@@ -324,7 +326,7 @@ public class UserDBController {
 			System.out.println("Couldn't get list of institutes from user: "
 					+ loginname);
 		} finally {
-			close();
+			//close();
 		}
 		return instituteList;
 	}
