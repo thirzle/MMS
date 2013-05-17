@@ -70,16 +70,28 @@ public class LogicTest {
 		System.out.println("# 'Create a Module with several entries");
 		System.out.println("# and stores it into a PDF file' ");
 		System.out.println("#------------------------------------------");
+		
+		
+		//CREATE ULTRA HUGE MODULE to TEST PDF CREATION....
 
 		// id, name, creation, modification, approved, instituteid
-		Module test_module = new Module(1337, "test_module", new Date(),
+		Module test_module = new Module(1337, "Analysis I für Ingenieure und Informatiker", new Date(),
 				new Date(), false, "Institut007");
 
 		// version, timestamp, classification, approved, rejected, title, text
 		TextualEntry test_textualentry = new TextualEntry(42, "02:44:35",
 				false, false, false, "TextualEntryTitle: ",
-				"some strange text for test purposes...");
+				"some strange text for test purposes with a decent length so it [ultra_long_word_here_hehe] gets cut into a few lines. Seems it has not enough content so a few more chars should be added....");
 
+		TextualEntry test_textualentry2 = new TextualEntry(42, "02:44:35",
+				false, false, false, "TextualEntryTitle 2: ",
+				"some strange text for test purposes with a decent length so it [ultra_long_word_here_hehe] gets cut into a few lines. Seems it has not enough content so a few more chars should be added....");
+		
+		TextualEntry test_textualentry3 = new TextualEntry(42, "02:44:35",
+				false, false, false, "TextualEntryTitle 3: ",
+				"some strange text for test purposes with a decent length so it [ultra_long_word_here_hehe] gets cut into a few lines. Seems it has not enough content so a few more chars should be added....");
+
+		
 		// title, time
 		SelfStudy test_selfstudy1 = new SelfStudy("Selfstudy1: ", 3);
 
@@ -102,11 +114,32 @@ public class LogicTest {
 		test_module.addTextualEntry(test_textualentry);
 		test_module.addEffortEntry(test_effortentry);
 		test_module.addCourseEntry(test_courseentry);
+		test_module.addTextualEntry(test_textualentry2);
+		test_module.addTextualEntry(test_textualentry3);
+		test_module.addTextualEntry(test_textualentry2);
+		test_module.addTextualEntry(test_textualentry3);
+		test_module.addTextualEntry(test_textualentry2);
+		test_module.addTextualEntry(test_textualentry3);
+		test_module.addTextualEntry(test_textualentry2);
+		test_module.addTextualEntry(test_textualentry3);
+		test_module.addTextualEntry(test_textualentry2);
+		test_module.addTextualEntry(test_textualentry3);
+		test_module.addTextualEntry(test_textualentry2);
+		test_module.addTextualEntry(test_textualentry3);
+		test_module.addTextualEntry(test_textualentry2);
+		test_module.addTextualEntry(test_textualentry3);
+		test_module.addTextualEntry(test_textualentry2);
+		test_module.addTextualEntry(test_textualentry3);
+		test_module.addTextualEntry(test_textualentry2);
+		test_module.addTextualEntry(test_textualentry3);
+		
+		LinkedList<Module> module_list = new LinkedList<Module>();
+		module_list.add(test_module);
+		module_list.add(test_module);
 
 		SimplePdfCreator pdfcreator = new SimplePdfCreator();
 		try {
-			pdfcreator
-					.createModulePdf("C:/PDFBox_test/module.pdf", test_module);
+			pdfcreator.createModulePdf("C:/PDFBox_test/module.pdf", module_list);
 		} catch (COSVisitorException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
