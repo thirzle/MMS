@@ -7,5 +7,5 @@ String rights = request.getParameter("rightsSelect");
 String institute = request.getParameter("instituteSelect");
 String supervisor = request.getParameter("supervisorSelect");
 
-System.out.println(loginname);
+System.out.println(rights);
 response.sendRedirect("/SopraMMS/guiElements/admin/adminHome.jsp");%>
