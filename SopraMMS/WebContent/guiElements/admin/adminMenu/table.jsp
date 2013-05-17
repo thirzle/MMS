@@ -12,7 +12,6 @@
 	List<User> users = controller.getAllUsers();
 	//List<User> users = new ArrayList<User>();
 	%>
-	<form action="/SopraMMS/guiElements/admin/adminMenu//userManagement/addUser.jsp" method="post">
 		<table id="userTable" class="tablesorter" >
 			<thead>
 				<tr>
@@ -39,7 +38,7 @@
 			<%} %>
 			</tbody>
 		</table>
-		<input type="text" name="test" id="Testfeld" style=" float: right;"></input>
+	<form id="addUserForm" action="/SopraMMS/guiElements/admin/adminMenu/userManagement/addUser.jsp" method="post">
 		<input type="submit" name="speichern" id="saveButton" style=" float: right;"></input>
 	</form>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-latest.js"></script>

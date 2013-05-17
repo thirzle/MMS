@@ -169,7 +169,16 @@ ul.bullet2 {
 	list-style-image: url(../images/bullet2.bmp);
 }
 
+.newCell input {
+	background: #EEEEEE;
+	width: 98%; 
+	height: 100%;
+}
 
+.newCell div {
+	float: left;
+	vertical-align: middle;
+}
 
 /*---- Content ----*/
 .contentBox { /*background-color: gray;*/
