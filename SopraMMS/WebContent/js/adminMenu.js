@@ -109,7 +109,7 @@ $(document).ready(function() {
 	
 	
 	$(".logout").click(function() {
-		window.location.replace("../../guiElements/Login/logout.jsp");
+		window.location.replace("/SopraMMS/guiElements/Login/logout.jsp");
 	});
 	
 	

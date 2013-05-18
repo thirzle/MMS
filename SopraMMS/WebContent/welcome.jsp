@@ -17,16 +17,17 @@
 		<div class="main">
 			<div class="menu">
 				<%@ include file="/guiElements/courseSelection.jsp"%>
-				<%	String loginname = (String)session.getAttribute("loginname");
-				    if (loginname == null) {
-				%>
-					<%@ include file="/guiElements/Login/login.jsp"%>
 				<%
-				    } else {
-						if(loginname.equals("admin")) {
-							response.sendRedirect("/SopraMMS/guiElements/admin/adminHome.jsp");
-						}
-				    }
+					String loginname = (String) session.getAttribute("loginname");
+					if (loginname == null) {
+				%>
+				<%@ include file="/guiElements/Login/login.jsp"%>
+				<%
+					} else {
+
+						response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+
+					}
 				%>
 			</div>
 			<div class="contentBox"></div>
