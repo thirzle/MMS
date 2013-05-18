@@ -24,6 +24,16 @@ public class Module {
 		this.approved = approved;
 		this.instituteID = insituteID;
 	}
+	public Module(int moduleID, String name, Date creationDate,
+			Date modificationDate, boolean approved, String insituteID, List<Entry> entryList) {
+		this.moduleID = moduleID;
+		this.name = name;
+		this.creationDate = creationDate;
+		this.modificationDate = modificationDate;
+		this.approved = approved;
+		this.instituteID = insituteID;
+		this.entryList = entryList;
+	}
 
 
 	public String getName() {

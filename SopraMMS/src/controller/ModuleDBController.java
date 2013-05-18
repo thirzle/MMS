@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import management.CourseEntry;
+import management.Entry;
 import management.Module;
 
 //
@@ -40,22 +42,36 @@ public class ModuleDBController {
 		return connection;
 	}
 
-
+	//TODO
 	// load all available modules
 	public List<Module> getModules() {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT * FROM module";
+		List<Entry> entryList = new LinkedList<Entry>();
+		query = "SELECT moduleID FROM module";
+
 		try {
 			statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(query);
-			while (resultSet.next()) {
+			ResultSet rs = statement.executeQuery(query);
+			while(rs.next()){
+				query = "SELECT e.*, c.courseID FROM entry AS e "
+					+ "JOIN latestentry as l on e.entryID = l.entryID AND e.version = l.version " +
+					"JOIN courseentry AS c ON e.entryID = c.entryID AND e.version = c.version " +
+					"WHERE e.moduleID = ? AND e.type = 0 AND e.approval = false";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, rs.getString(1));
+				ResultSet resultSet = pStatement.executeQuery();
+				List<String> courses = new LinkedList<String>();
+				resultSet.next();
+				while (resultSet.next()) {
+					
+				}
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
 								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
 								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+								.getString("instituteID"), entryList));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -66,7 +82,7 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-
+	//TODO
 	// load all available modules by a chosen institute
 	public List<Module> getModulesByInstitute(String institute) {
 		Connection connection = connect();
@@ -124,7 +140,7 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-
+	//TODO
 	public List<Module> getModulesByFaculty(String faculty) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
@@ -151,12 +167,12 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-
+	//TODO
 	// load all available modules by a chosen author
 	public List<Module> getModulesByAuthor(String author) {
 		Connection connection = connect();
 		List<Module> modueList = new LinkedList<Module>();
-		query = "SELECT * FROM module WHERE author = ?";
+		query = "SELECT module.*, entry.author FROM module JOIN entry on module.moduleID = entry.moduleID WHERE entry.author = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, author);
@@ -178,7 +194,7 @@ public class ModuleDBController {
 		return modueList;
 	}
 
-
+	//TODO
 	// get a specified module
 	public Module getModule(int moduleID, String name) {
 		Connection connection = connect();
@@ -204,7 +220,7 @@ public class ModuleDBController {
 		return null;
 	}
 
-
+	//TODO
 	// load all modified modules
 	public List<Module> getModifiedModules() {
 		Connection connection = connect();
@@ -231,7 +247,7 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-
+	//TODO
 	// load all modified modules by a chosen institute
 	public List<Module> getModifiedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
@@ -261,7 +277,7 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-
+	//TODO
 	// load all modified modules by a chosen author
 	public List<Module> getModifiedModulesByAuthor(String author) {
 		Connection connection = connect();
@@ -292,7 +308,7 @@ public class ModuleDBController {
 
 	}
 
-
+	//TODO
 	// load all rejected modules
 	public List<Module> getRejectedModules() {
 		Connection connection = connect();
@@ -319,7 +335,7 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-
+	//TODO
 	// load all rejected modules by a chosen institute
 	public List<Module> getRejectedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
@@ -348,7 +364,7 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-
+	//TODO
 	// load all rejected modules by a chosen author
 	public List<Module> getRejectedModulesByAuthor(String author) {
 		Connection connection = connect();
@@ -375,6 +391,32 @@ public class ModuleDBController {
 			close(connection);
 		}
 		return moduleList;
+	}
+	
+	public CourseEntry getCoursesbyModule(String moduleID){
+		CourseEntry courseEntry = null;
+		query = "SELECT e.*, c.courseID FROM entry AS e "
+				+ "JOIN latestentry as l on e.entryID = l.entryID AND e.version = l.version " +
+				"JOIN courseentry AS c ON e.entryID = c.entryID AND e.version = c.version " +
+				"WHERE e.moduleID = ? AND e.type = 0 AND e.approval = false";
+		try {
+			Connection connection = connect();
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, moduleID);
+			ResultSet resultSet = pStatement.executeQuery();
+			List<String> courses = new LinkedList<String>();
+			resultSet.next();
+			courseEntry = new CourseEntry(resultSet.getInt("version"), resultSet.getDate("date").toString(), 
+					resultSet.getBoolean("classification"), resultSet.getBoolean("approvalstatus"),
+					resultSet.getBoolean("declined"), resultSet.getString("caption"));
+			courseEntry.addCourse(resultSet.getString("courseID"));
+			while (resultSet.next()) {
+				courseEntry.addCourse(resultSet.getString("courseID"));
+			}
+		}catch(SQLException e){
+			
+		}		
+		return courseEntry;
 	}
 
 
