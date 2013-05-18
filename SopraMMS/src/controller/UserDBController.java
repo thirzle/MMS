@@ -38,7 +38,6 @@ public class UserDBController {
 			System.out.println("connection couldn't be established");
 		}
 		return connection;
-
 	}
 
 
@@ -141,17 +140,17 @@ public class UserDBController {
 				pStatement.setString(2, institute);
 				pStatement.execute();
 			}
-			
+
 			query = "INSERT INTO rightsaffiliation VALUES(?,?)";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, user.getLogin());
 			for (int i = 0; i < NUMBEROFRIGHTS; i++) {
-				if(user.getRights()[i]){
+				if (user.getRights()[i]) {
 					pStatement.setInt(2, i);
 					pStatement.execute();
 				}
 			}
-			
+
 			System.out.println("User created!");
 			return true;
 		} catch (SQLException e) {
@@ -186,6 +185,7 @@ public class UserDBController {
 				pStatement.setString(6, newUser.getSession());
 				pStatement.setString(7, loginname);
 				pStatement.executeUpdate();
+				return true;
 			} else {
 				System.out.println("That user was not found!");
 				return false;
@@ -193,11 +193,10 @@ public class UserDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("User " + loginname + " couldn't be changed.");
-			return false;
 		} finally {
 			close(connection);
 		}
-		return true;
+		return false;
 	}
 
 
@@ -208,15 +207,14 @@ public class UserDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
-			pStatement.execute();
+			return pStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("User could not be deleted.");
-			return false;
 		} finally {
 			close(connection);
 		}
-		return true;
+		return false;
 	}
 
 
@@ -259,23 +257,23 @@ public class UserDBController {
 		// insert new rights
 		query = "INSERT INTO rightsaffiliation VALUES (?, ?)";
 		int i = 0;
-			try {
-				pStatement = connection.prepareStatement(query);
-				pStatement.setString(1, loginname);
-				for (; i < newRights.length; i++) {
-					if (newRights[i]) {
-						pStatement.setInt(2, i);
-						pStatement.execute();
-					}
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			for (; i < newRights.length; i++) {
+				if (newRights[i]) {
+					pStatement.setInt(2, i);
+					return pStatement.execute();
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("Couldn't insert right: " + i
-						+ " of user: " + loginname);
-				return false;
-				}
-		close(connection);
-		return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't insert right: " + i + " of user: "
+					+ loginname);
+		} finally {
+			close(connection);
+		}
+		return false;
 	}
 
 
@@ -303,9 +301,10 @@ public class UserDBController {
 								.getString("lastName"), resultSetUsers
 								.getString("mail"), getRights(loginname),
 						resultSetUsers.getString("session"), resultSetUsers
-								.getString("faculty"), getInstitutesByName(loginname),
-						resultSetUsers.getString("representative"),
-						resultSetUsers.getString("supervisor"), resultSetUsers
+								.getString("faculty"),
+						getInstitutesByName(loginname), resultSetUsers
+								.getString("representative"), resultSetUsers
+								.getString("supervisor"), resultSetUsers
 								.getString("password")));
 
 			}
@@ -336,6 +335,8 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get list of institutes from user: "
 					+ loginname);
+		} finally {
+			close(connection);
 		}
 		return instituteList;
 	}
@@ -414,8 +415,8 @@ public class UserDBController {
 		}
 		return user;
 	}
-	
-	
+
+
 	// get all institutes listed in databse
 	public List<String> getInstitutes() {
 		Connection connection = connect();
@@ -426,7 +427,7 @@ public class UserDBController {
 			resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				instituteList.add(resultSet.getString("name"));
-			}		
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get Institutes");
