@@ -89,16 +89,14 @@ body {
 }
 
 .userManagementEntry {
-	font-size: 8pt;
+	
 	margin-left: 5%;
-	margin-top: 5%; 
-	margin-bottom: 0px;
+
+	
 	background-color: #FFFFFF;
 }
 
-.userManagementEntryContainer {
-	background-color: #FFFFFF;
-}
+
 
 .userManagementEntry:hover {
 	font-weight: bold;
@@ -112,9 +110,12 @@ body {
 	padding: 0 0 5px 10px;
 	color: #000000;
 	background: #FFFFFF;
-	border-top: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
 	cursor: pointer;
+	
 }
+
+.userManagementEntryContainer p {list-style-image: url(../images/bullet1.bmp);}
 
 .logout {
 	font-size: 10pt;

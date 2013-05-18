@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	var UMOpend = false;
 	var newUserCompleted = true;
-	$.get("adminMenu/userManagement/userManagementMenu.jsp", function (data) {
+	$.get("admin/adminMenu/userManagement/userManagementMenu.jsp", function (data) {
 		$("#userManagement").append(data);
     });
 	//NAVIGATION
@@ -29,11 +29,12 @@ $(document).ready(function() {
 	
 	// Wenn der Menureiter 'start' geclickt wurde
 	$("#start").click(function() {
-		$(".contentBox").load("adminMenu/"+$(this).attr('id')+"Content.jsp");
+		$(".contentBox").load("homeContent.jsp");
 	});
-	
+	$(".userManagement div").click(function() {
+		
+	});
 	// Wenn der Menureiter 'Benutzerverwaltung' geclickt wurde
-	
 	$("#userManagement").click(function() {
 		/*
 		 * Wenn die Benutzerverwaltung noch nicht geoffnet ist, werden
@@ -41,11 +42,11 @@ $(document).ready(function() {
 		 * und der Inhalt in die contentBox eingehangt.
 		 */ 
 		if(!UMOpend) {
-			$(".contentBox").load("adminMenu/"+$(this).attr('id')+"Content.jsp");
+			$(".contentBox").load("admin/adminMenu/"+$(this).attr('id')+"Content.jsp");
 			UMOpend = true;
 			$(this).children().show();
 			$(this).css("background-color","#FFFFFF");
-		}
+		} 
 			/* NEW USER
 			* Die Benutzerverwaltung ist offen. Wenn der Reiter 'Neuer Benutzer' geclickt
 			* wird und noch es kein offener neuer Benutzer gibt, wird eine neue 
@@ -58,7 +59,7 @@ $(document).ready(function() {
 				if(newUserCompleted) {
 					newUserCompleted = false;
 					// neue Zeile wird an die Tabelle angehangt.
-					$.get("adminMenu/userManagement/tmpRow.jsp", function (data) {
+					$.get("admin/adminMenu/userManagement/tmpRow.jsp", function (data) {
 						$("#userTableBody").append(data);
 		            });
 				} else {
@@ -94,23 +95,16 @@ $(document).ready(function() {
 	
 	// Wenn der Menureiter 'Nachrichten' geclickt wurde
 	$("#messages").click(function() {
-		$(".contentBox").load("adminMenu/"+$(this).attr('id')+"Content.jsp");
+		$(".contentBox").load("admin/adminMenu/"+$(this).attr('id')+"Content.jsp");
 	});
 	
 	// Wenn der Menureiter 'Modulverwaltung' geclickt wurde
 	
 	
 	$("#modulManagement").click(function() {
-		$(".contentBox").load("adminMenu/"+$(this).attr('id')+"Content.jsp");
+		$(".contentBox").load("admin/adminMenu/"+$(this).attr('id')+"Content.jsp");
 	});
 	
-	
-	// Wenn der Menureiter 'Logout' geclickt wurde
-	
-	
-	$(".logout").click(function() {
-		window.location.replace("/SopraMMS/guiElements/Login/logout.jsp");
-	});
 	
 	
 	

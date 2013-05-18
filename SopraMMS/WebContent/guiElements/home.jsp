@@ -10,9 +10,9 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
 	
 </script>
-<script>
-	
-</script>
+
+
+<script type="text/javascript" src=" ${pageContext.request.contextPath}/js/menu.js"></script>
 </head>
 
 <body>
@@ -51,6 +51,7 @@
 				<%
 					}
 				%>
+				<%@ include file="/guiElements/generally/generallyMenu.jsp"%>
 				<%@ include file="/guiElements/Login/logout.jsp" %>
 			</div>
 			<div class="contentBox" id="contentBox">

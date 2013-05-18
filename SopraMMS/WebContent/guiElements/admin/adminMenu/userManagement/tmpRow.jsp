@@ -2,23 +2,23 @@
 <tr id="tmpRow" style="height: 30px;">
 	<td class="newCell" id="loginCell">
 		<input form="addUserForm" type='text' name="loginCellText"></input>
-		<div></div>
+		<div>Bitte einfügen</div>
 	</td>
 	<td class='newCell' id='firstnameCell'>
 		<input form="addUserForm" type='text' name="firstnameCellText"></input>
-		<div></div>
+		<div>Bitte einfügen</div>
 	</td>
 	<td class='newCell' id='lastnameCell'>
 		<input form="addUserForm" type='text' name="lastnameCellText"></input>
-		<div></div>
+		<div>Bitte einfügen</div>
 	</td>
 	<td class='newCell' id='emailCell'>
 		<input form="addUserForm" type='text' name="emailCellText"></input>
-		<div></div>
+		<div>Bitte einfügen</div>
 	</td>
 	<td class='newCell' id='rightsCell'>
 		<select form="addUserForm" name="rightsSelect" id="s1">
-		  <option value="0">Modulverantwortlicher</option>
+		  <option value="0">Modulver.</option>
 		  <option value="1">Redakteur</option>
 		  <option value="2">Administrator</option>
 		</select>
@@ -30,7 +30,7 @@
 	</td>
 	<td class='newCell' id='representativeCell'>
 		<select form="addUserForm" name="representativeSelect">
-		  <option value="0">Neuer Stellvertreter</option>
+		  <option value="0">Stellvertreter</option>
 		</select>
 	</td>
 </tr>
