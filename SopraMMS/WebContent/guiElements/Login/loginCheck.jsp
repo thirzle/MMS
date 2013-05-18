@@ -1,19 +1,36 @@
 
+<%@page import="user.User"%>
+<%@page import="user.UserAdministration"%>
 <%
 	String loginname = request.getParameter("loginname");
 	String password = request.getParameter("password");
-	out.println("Checking login<br>");
-	if (loginname == null || password == null) {
-		out.print("Invalid paramters ");
+	String sessionID = session.getId();
+	
+	UserAdministration userAdmin = new UserAdministration();
+	
+	if(session.getAttribute("loginname")==null)
+	{
+		// login
+		// Here you put the check on the username and password
+		User user = userAdmin.login(loginname, password, sessionID);
+		if (user != null) {
+			session.setAttribute("loginname", loginname);
+			session.setAttribute("rights", user.getRights());
+			
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		} else {
+			System.out.println("Invalid loginname and password");
+			response.sendRedirect("/SopraMMS/guiElements/error.jsp");
+		}
 	}
-
-	// Here you put the check on the username and password
-	if (loginname.toLowerCase().trim().equals("admin")
-			&& password.toLowerCase().trim().equals("admin")) {
-		session.setAttribute("loginname", loginname);
-		response.sendRedirect("/SopraMMS/guiElements/admin/adminHome.jsp");
-	} else {
-		out.println("Invalid loginname and password");
+	else if(userAdmin.checkLogin(sessionID).getLogin().equals(session.getAttribute("loginname").toString()))
+	{
+		System.out.println("User ist eingelogt Seite kann neu geladen werden");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+	}
+	else{
+		System.out.println("User ist nicht eingeloggt oder SessionID stimmt nicht");
 		response.sendRedirect("/SopraMMS/guiElements/error.jsp");
 	}
+	
 %>

@@ -14,7 +14,7 @@
 				<input name="password" type="password" size="33" />
 			</p>
 			<p class="menuContent">
-				<input type="submit" name="Submit" />
+				<input type="submit" name="Submit" value="Anmelden" />
 			</p>
 		</form>
 	</div>
