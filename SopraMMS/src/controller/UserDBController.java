@@ -11,7 +11,7 @@ import java.util.List;
 
 import user.User;
 
-public class UserDBController {//irgendwas
+public class UserDBController {
 
 	private static Statement statement;
 	private static ResultSet resultSet;
@@ -38,7 +38,6 @@ public class UserDBController {//irgendwas
 			System.out.println("connection couldn't be established");
 		}
 		return connection;
-
 	}
 
 
@@ -55,7 +54,7 @@ public class UserDBController {//irgendwas
 			while (resultSet.next()) {
 				String loginname = resultSet.getString("loginname");
 				rightsArray = getRights(loginname);
-				instituteList = getInstitute(loginname);
+				instituteList = getInstitutesByName(loginname);
 				User user = new User(loginname,
 						resultSet.getString("firstname"),
 						resultSet.getString("lastname"),
@@ -94,7 +93,7 @@ public class UserDBController {//irgendwas
 			password = resultSet.getString("password");
 			session = resultSet.getString("session");
 			supervisor = resultSet.getString("supervisor");
-			institutes = getInstitute(loginname);
+			institutes = getInstitutesByName(loginname);
 			rights = getRights(loginname);
 			query = "SELECT facultyID FROM institute WHERE instituteID = ?";
 			pStatement = connection.prepareStatement(query);
@@ -120,7 +119,7 @@ public class UserDBController {//irgendwas
 
 
 	// create new user in database
-	public Boolean createUser(User user) {
+	public boolean createUser(User user) {
 		Connection connection = connect();
 		query = "INSERT INTO User VALUES(?,?,?,?,?,?,?)";
 		try {
@@ -141,17 +140,17 @@ public class UserDBController {//irgendwas
 				pStatement.setString(2, institute);
 				pStatement.execute();
 			}
-			
+
 			query = "INSERT INTO rightsaffiliation VALUES(?,?)";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, user.getLogin());
 			for (int i = 0; i < NUMBEROFRIGHTS; i++) {
-				if(user.getRights()[i]){
+				if (user.getRights()[i]) {
 					pStatement.setInt(2, i);
 					pStatement.execute();
 				}
 			}
-			
+
 			System.out.println("User created!");
 			return true;
 		} catch (SQLException e) {
@@ -166,7 +165,7 @@ public class UserDBController {//irgendwas
 
 
 	// change existing user in database
-	public Boolean changeUser(User oldUser, User newUser) {
+	public boolean changeUser(User oldUser, User newUser) {
 		Connection connection = connect();
 		String loginname = oldUser.getLogin();
 		query = "SELECT * FROM User WHERE loginname=?";
@@ -185,8 +184,8 @@ public class UserDBController {//irgendwas
 				pStatement.setString(5, newUser.getPassword());
 				pStatement.setString(6, newUser.getSession());
 				pStatement.setString(7, loginname);
-
 				pStatement.executeUpdate();
+				return true;
 			} else {
 				System.out.println("That user was not found!");
 				return false;
@@ -197,7 +196,7 @@ public class UserDBController {//irgendwas
 		} finally {
 			close(connection);
 		}
-		return true;
+		return false;
 	}
 
 
@@ -208,15 +207,14 @@ public class UserDBController {//irgendwas
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
-			pStatement.execute();
+			return pStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("User could not be deleted.");
-			return false;
 		} finally {
 			close(connection);
 		}
-		return true;
+		return false;
 	}
 
 
@@ -242,7 +240,7 @@ public class UserDBController {//irgendwas
 
 
 	// change rights of specified user
-	public void changeRights(User user, boolean[] newRights) {
+	public boolean changeRights(User user, boolean[] newRights) {
 		Connection connection = connect();
 		String loginname = user.getLogin();
 		// delete old rights
@@ -254,24 +252,28 @@ public class UserDBController {//irgendwas
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 			System.out.println("Couldn't delete rights of user: " + loginname);
+			return false;
 		}
 		// insert new rights
 		query = "INSERT INTO rightsaffiliation VALUES (?, ?)";
-		for (int i = 0; i < newRights.length; i++) {
-			if (newRights[i]) {
-				try {
-					pStatement = connection.prepareStatement(query);
-					pStatement.setString(1, loginname);
+		int i = 0;
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			for (; i < newRights.length; i++) {
+				if (newRights[i]) {
 					pStatement.setInt(2, i);
-					pStatement.execute();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					System.out.println("Couldn't insert right: " + i
-							+ " of user: " + loginname);
+					return pStatement.execute();
 				}
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't insert right: " + i + " of user: "
+					+ loginname);
+		} finally {
+			close(connection);
 		}
-		close(connection);
+		return false;
 	}
 
 
@@ -299,9 +301,10 @@ public class UserDBController {//irgendwas
 								.getString("lastName"), resultSetUsers
 								.getString("mail"), getRights(loginname),
 						resultSetUsers.getString("session"), resultSetUsers
-								.getString("faculty"), getInstitute(loginname),
-						resultSetUsers.getString("representative"),
-						resultSetUsers.getString("supervisor"), resultSetUsers
+								.getString("faculty"),
+						getInstitutesByName(loginname), resultSetUsers
+								.getString("representative"), resultSetUsers
+								.getString("supervisor"), resultSetUsers
 								.getString("password")));
 
 			}
@@ -317,7 +320,7 @@ public class UserDBController {//irgendwas
 
 
 	// get institute of existing user
-	public List<String> getInstitute(String loginname) {
+	public List<String> getInstitutesByName(String loginname) {
 		Connection connection = connect();
 		List<String> instituteList = new LinkedList<String>();
 		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
@@ -332,6 +335,8 @@ public class UserDBController {//irgendwas
 			e.printStackTrace();
 			System.out.println("Couldn't get list of institutes from user: "
 					+ loginname);
+		} finally {
+			close(connection);
 		}
 		return instituteList;
 	}
@@ -409,6 +414,25 @@ public class UserDBController {//irgendwas
 			close(connection);
 		}
 		return user;
+	}
+
+
+	// get all institutes listed in databse
+	public List<String> getInstitutes() {
+		Connection connection = connect();
+		List<String> instituteList = new LinkedList<String>();
+		query = "SELECT name FROM institute";
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				instituteList.add(resultSet.getString("name"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get Institutes");
+		}
+		return instituteList;
 	}
 
 

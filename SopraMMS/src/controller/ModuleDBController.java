@@ -17,44 +17,38 @@ public class ModuleDBController {
 
 	private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	private static Connection connection = null;
+	private static final String USER = "root";
+	private static final String PASSWORD = "";
 	private static String query = null;
-	private static ResultSet resultSet = null;
 	private static PreparedStatement pStatement = null;
 	private static Statement statement = null;
 
 
 	// establish connection to database
-	public void connect() {
+	public Connection connect() {
+		Connection connection = null;
 		try {
 			Class.forName(DRIVER);
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			System.out.println("driver not found");
-		}
-		try {
-			connection = DriverManager.getConnection(URL, "root", "");
-		} catch (SQLException e1) {
-			e1.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println("connection couldn't be established");
-			return;
 		}
-		System.out.println("###########################################");
-		System.out.println("# seems to be connected...");
-		System.out.println("# URL: " + URL);
-		System.out.println("# DRIVER: " + DRIVER);
-		System.out.println("###########################################");
+		return connection;
 	}
 
 
 	// load all available modules
 	public List<Module> getModules() {
-		connect();
+		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT * FROM module";
 		try {
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery(query);
+			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -67,7 +61,7 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules.");
 		} finally {
-			close();
+			close(connection);
 		}
 		return moduleList;
 	}
@@ -75,13 +69,13 @@ public class ModuleDBController {
 
 	// load all available modules by a chosen institute
 	public List<Module> getModulesByInstitute(String institute) {
-		connect();
+		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM moduleinstituteaffiliation JOIN module ON moduleinstituteaffiliation.moduleID = module.moduleID WHERE instituteID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, institute);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -95,7 +89,7 @@ public class ModuleDBController {
 			System.out.println("Couldn't get modules by institute: "
 					+ institute);
 		} finally {
-			close();
+			close(connection);
 		}
 		return moduleList;
 	}
@@ -104,14 +98,14 @@ public class ModuleDBController {
 	// load all available modules by a chosen course
 	// TODO
 	public List<Module> getModulesByCourse(String course, String degree) {
-		connect();
+		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM modulecourseaffiliation JOIN module ON modulecourseaffiliation.moduleID = module.moduleID WHERE courseID = ? AND degree = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, course);
 			pStatement.setString(2, degree);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -125,20 +119,20 @@ public class ModuleDBController {
 			System.out.println("Couldn't get modules by course: " + course
 					+ " and degree: " + degree);
 		} finally {
-			close();
+			close(connection);
 		}
 		return moduleList;
 	}
 
 
 	public List<Module> getModulesByFaculty(String faculty) {
-		connect();
+		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.* FROM modulefacultyaffiliation JOIN module ON modulefacultyaffiliation.moduleID = module.moduleID WHERE faulty = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, faculty);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -152,7 +146,7 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules by faculty: " + faculty);
 		} finally {
-			close();
+			close(connection);
 		}
 		return moduleList;
 	}
@@ -160,13 +154,13 @@ public class ModuleDBController {
 
 	// load all available modules by a chosen author
 	public List<Module> getModulesByAuthor(String author) {
-		connect();
+		Connection connection = connect();
 		List<Module> modueList = new LinkedList<Module>();
 		query = "SELECT * FROM module WHERE author = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, author);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				modueList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -179,7 +173,7 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules by author: " + author);
 		} finally {
-			close();
+			close(connection);
 		}
 		return modueList;
 	}
@@ -187,12 +181,12 @@ public class ModuleDBController {
 
 	// get a specified module
 	public Module getModule(int moduleID, String name) {
-		connect();
+		Connection connection = connect();
 		query = "SELECT * FROM module WHERE moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setInt(1, moduleID);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				return new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"),
@@ -205,7 +199,7 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get module: " + name);
 		} finally {
-			close();
+			close(connection);
 		}
 		return null;
 	}
@@ -213,13 +207,13 @@ public class ModuleDBController {
 
 	// load all modified modules
 	public List<Module> getModifiedModules() {
-		connect();
+		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE;";
 		try {
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery(query);
+			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -232,7 +226,7 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get modified modules.");
 		} finally {
-			close();
+			close(connection);
 		}
 		return moduleList;
 	}
@@ -240,7 +234,7 @@ public class ModuleDBController {
 
 	// load all modified modules by a chosen institute
 	public List<Module> getModifiedModulesByInstitute(String instituteID) {
-		connect();
+		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE"
@@ -248,7 +242,7 @@ public class ModuleDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, instituteID);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -262,7 +256,7 @@ public class ModuleDBController {
 			System.out.println("Couldn't get modified modules by institute: "
 					+ instituteID);
 		} finally {
-			close();
+			close(connection);
 		}
 		return moduleList;
 	}
@@ -270,7 +264,7 @@ public class ModuleDBController {
 
 	// load all modified modules by a chosen author
 	public List<Module> getModifiedModulesByAuthor(String author) {
-		connect();
+		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE"
@@ -278,7 +272,7 @@ public class ModuleDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, author);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -292,7 +286,7 @@ public class ModuleDBController {
 			System.out.println("Couldn't get modified modules by author: "
 					+ author);
 		} finally {
-			close();
+			close(connection);
 		}
 		return moduleList;
 
@@ -301,13 +295,13 @@ public class ModuleDBController {
 
 	// load all rejected modules
 	public List<Module> getRejectedModules() {
-		connect();
+		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE declined = TRUE";
 		try {
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery(query);
+			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -320,7 +314,7 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get rejected modules.");
 		} finally {
-			close();
+			close(connection);
 		}
 		return moduleList;
 	}
@@ -328,14 +322,14 @@ public class ModuleDBController {
 
 	// load all rejected modules by a chosen institute
 	public List<Module> getRejectedModulesByInstitute(String instituteID) {
-		connect();
+		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE declined = TRUE AND instituteID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, instituteID);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -349,7 +343,7 @@ public class ModuleDBController {
 			System.out.println("Couldn't get rejected modules by institute: "
 					+ instituteID);
 		} finally {
-			close();
+			close(connection);
 		}
 		return moduleList;
 	}
@@ -357,14 +351,14 @@ public class ModuleDBController {
 
 	// load all rejected modules by a chosen author
 	public List<Module> getRejectedModulesByAuthor(String author) {
-		connect();
+		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
 				+ "WHERE declined = TRUE AND author = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, author);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -378,7 +372,7 @@ public class ModuleDBController {
 			System.out.println("Couldn't get rejected modules by author: "
 					+ author);
 		} finally {
-			close();
+			close(connection);
 		}
 		return moduleList;
 	}
@@ -386,7 +380,7 @@ public class ModuleDBController {
 
 	// create a new module in database
 	public boolean createModule(Module module) {
-		connect();
+		Connection connection = connect();
 		int moduleID = module.getModuleID();
 		String name = module.getName();
 		Date creationDate = module.getCreationDate();
@@ -408,7 +402,7 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't create module: " + name);
 		} finally {
-			close();
+			close(connection);
 		}
 		return false;
 	}
@@ -416,7 +410,7 @@ public class ModuleDBController {
 
 	// change an existing module
 	public boolean changeModule(Module module, int moduleIDOld) {
-		connect();
+		Connection connection = connect();
 		int moduleID = module.getModuleID();
 		String name = module.getName();
 		Date creationDate = module.getCreationDate();
@@ -441,7 +435,7 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't change module: " + moduleID);
 		} finally {
-			close();
+			close(connection);
 		}
 		return false;
 
@@ -450,7 +444,7 @@ public class ModuleDBController {
 
 	// delete an existing module
 	public boolean deleteModule(Module module) {
-		connect();
+		Connection connection = connect();
 		query = "DELETE FROM module WHERE moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -461,7 +455,7 @@ public class ModuleDBController {
 			System.out.println("Couldn't delete module: "
 					+ module.getModuleID());
 		} finally {
-			close();
+			close(connection);
 		}
 		return false;
 	}
@@ -470,17 +464,15 @@ public class ModuleDBController {
 	// TODO
 	// get a specified modulemanual
 	public String getModuleManual(String courseID, String degree, String version) {
-		connect();
+		Connection connection = connect();
 
+		close(connection);
 		return null;
 	}
 
 
-	public void close() {
+	public void close(Connection connection) {
 		try {
-			// pStatement.close();
-			// statement.close();
-			// resultSet.close();
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
