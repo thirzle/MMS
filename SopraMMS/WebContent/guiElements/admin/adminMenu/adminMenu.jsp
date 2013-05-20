@@ -19,7 +19,6 @@
 	$("#userManagement").children().hide();
 </script>
 <% Boolean reloadTable = session.getAttribute("task") == "reloadTable";
-   System.out.println("(adminMenu): reloadTabel(): "+reloadTable);
    if(reloadTable) { 
   	out.println("<script type='text/javascript'>$('.menu').ready(function(){$('.contentBox').load('admin/adminMenu/userManagementContent.jsp');});</script>");
    } %>

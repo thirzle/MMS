@@ -1,4 +1,10 @@
-
+<%@ page import="controller.UserDBController" %>
+<%@ page import="java.util.List" %>
+<%
+UserDBController controller = new UserDBController();
+List<String> institutes = controller.getInstitutes();
+int NUMBER_OF_INSTITUTES = institutes.size();
+%>
 <tr id="tmpRow" style="height: 30px;">
 	<td class="newCell" id="loginCell">
 		<input form="addUserForm" type='text' name="loginCellText"></input>
@@ -25,13 +31,12 @@
 	</td>
 	<td class='newCell' id='instituteCell'>
 		<select form="addUserForm" name="instituteSelect">
-		  <option value="0">Default Institut</option>
+		<% for(int i=0; i<NUMBER_OF_INSTITUTES; i++) { %>
+		  <option value=<%=i %>><%=institutes.get(i) %></option>
+		<%} %>
 		</select>
 	</td>
 	<td class='newCell' id='representativeCell'>
-		<select form="addUserForm" name="representativeSelect">
-		  <option value="0">Stellvertreter</option>
-		</select>
 	</td>
 </tr>
 <script type="text/javascript" src=" ${pageContext.request.contextPath}/js/script.js"></script>

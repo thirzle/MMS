@@ -11,12 +11,13 @@
 <%
 	// TODO - In Logik auslagern
 	List<User> users;
+	String[] status = {"Modulver.","Redakteur","Administrator","right[3]","right[4]","right[5]"};
 	try{
 		UserDBController controller = new UserDBController();
 		users = controller.getAllUsers();
 	} catch(NullPointerException e) {
 		users = new ArrayList<User>();
-	}
+	} 
 %>
 <table id="userTable" class="tablesorter">
 	<thead>
@@ -39,8 +40,28 @@
 			<td><%=users.get(i).getFirstName()%></td>
 			<td><%=users.get(i).getLastName()%></td>
 			<td><%=users.get(i).getMail()%></td>
-			<td>nicht implementiert</td>
-			<td>nicht implementiert</td>
+			<%	boolean[] rights = users.get(i).getRights();
+				String right = "";
+				for(int j=0; j<rights.length; j++) {
+				  if(rights[j]) {
+					  if(right != "") {
+				  		right += ";"+status[j];
+					  }else{
+						  right = status[j];
+					  }
+				  }
+			  	}%>
+			<td><%=right %></td>
+			<%List<String> institutes = users.get(i).getInstitute(); 
+			  String institute = "";
+			  for(int j=0; j<institutes.size(); j++) {
+				  if(institute != "") {
+					  	institute += ";"+institutes.get(j);;
+					  }else{
+						  institute = institutes.get(j);;
+					  }
+			  }%>
+			<td><%=institute %></td>
 			<td><%=users.get(i).getRepresentative()%></td>
 		</tr>
 		<%
