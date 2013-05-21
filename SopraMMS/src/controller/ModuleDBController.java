@@ -53,16 +53,16 @@ public class ModuleDBController {
 		try {
 			statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(query);
+			//get all entries except of course entries
 			while(rs.next()){
-				query = "SELECT e.*, c.courseID FROM entry AS e "
-					+ "JOIN latestentry as l on e.entryID = l.entryID AND e.version = l.version " +
-					"JOIN courseentry AS c ON e.entryID = c.entryID AND e.version = c.version " +
-					"WHERE e.moduleID = ? AND e.type = 0 AND e.approval = false";
+				query = "SELECT e.* FROM entry AS e JOIN latestentry as l " +
+						"on e.entryID = l.entryID AND e.version = l.version WHERE" +
+						" e.moduleID = ? AND e.type = 0 AND" +
+						" e.approvalstatus = false";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, rs.getString(1));
 				ResultSet resultSet = pStatement.executeQuery();
-				List<String> courses = new LinkedList<String>();
-				resultSet.next();
+				List<String> courses;
 				while (resultSet.next()) {
 					
 				}
@@ -501,13 +501,45 @@ public class ModuleDBController {
 		}
 		return false;
 	}
+	
+	//TODO
+	public CourseEntry getCoursesByModule(Module m){
+		CourseEntry courses;
+		Connection connection = connect();
+		query = "SELECT c.courseID e.* FROM courseentry AS c JOIN latestentry AS l" +
+				" ON c.entryID = l.entryID AND c.version = l.version JOIN entry " +
+				"AS e on c.entryID = e.entryID AND c.version = e.version" +
+				" WHERE e.moduleID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setInt(1, m.getModuleID());
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				courses = new CourseEntry(resultSet.getInt("version"),
+						resultSet.getTimestamp("timestamp").toString(), 
+						resultSet.getBoolean("classification"), 
+						resultSet.getBoolean("approvedstatus"), 
+						resultSet.getBoolean("declined"), 
+						resultSet.getString("caption"), 
+						resultSet.getString("courseID"));
+			}
+			while (resultSet.next()) {
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-
+		
+		
+		return courses;
+	}
 	// TODO
 	// get a specified modulemanual
 	public String getModuleManual(String courseID, String degree, String version) {
 		Connection connection = connect();
-
+		
 		close(connection);
 		return null;
 	}
