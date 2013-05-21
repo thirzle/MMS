@@ -21,7 +21,7 @@ $(document).ready(function() {
 		}
 		$("#navigation").children().remove(".temp");
 		if($(this).attr('class')=="menuEntry") {
-			$("#navigation").append("<navigation class='temp' >"+">"+$(this).clone().children().remove().end().text()+"</navigation>");
+			$("#navigation").append("<navigation class='temp' >"+">  "+$(this).clone().children().remove().end().text()+"</navigation>");
 		}
 	});
 	

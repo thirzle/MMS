@@ -21,7 +21,7 @@
 		} else {
 			System.out.println("Invalid loginname and password");
 			//TODO in bestehenden Content oeffnen und nicht neue Seite oeffnen
-			response.sendRedirect("/SopraMMS/guiElements/Login/loginFailed.jsp");
+			response.sendRedirect("/SopraMMS/guiElements/error.jsp");
 		}
 	} else if (userAdmin.checkLogin(sessionID).getLogin()
 			.equals(session.getAttribute("loginname").toString())) {

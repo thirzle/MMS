@@ -18,7 +18,7 @@
 <body>
 	<%
 		User user = (User) session.getAttribute("user");
-		if (user.getLogin() != null) {
+		if (user != null) {
 	%>
 	<div class="page">
 		<div class="header">
