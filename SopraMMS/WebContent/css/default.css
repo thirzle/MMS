@@ -4,14 +4,7 @@ h1 {
 	text-align: center;
 }
 
-.menuBox h1 {
-	text-align: left;
-	font-size: 11pt;
-	font-weight: bold;
-	color: #FFFFFF;
-	background: #91ACBC;
-	padding: 5px 0px 5px 10px;
-}
+
 
 body {
 	background: none repeat scroll 0 0 #E5EBEE;
@@ -74,6 +67,39 @@ body {
 .menuBox {
 	clear: both;
 	padding: 10px 0 0 0;
+}
+
+.menuBox h1 {
+	text-align: left;
+	font-size: 11pt;
+	font-weight: bold;
+	color: #FFFFFF;
+	background: #91ACBC;
+	padding: 5px 0px 5px 10px;
+}
+
+/*---- Menu Structure ----*/
+#nav {
+    padding-left: 30px;
+}
+
+#nav li {
+    cursor: default;
+	
+}
+
+#subNav li {
+    cursor: default;
+	list-style-image: url(../images/bullet2.bmp);
+}
+
+#nav ul {
+    display: none;
+    padding: 5px 0 0 20px;
+}
+
+.headerNavGenerally, .headerNavCourse  li {
+	list-style-image: url(../images/bullet1.bmp);
 }
 
 .adminMenu {
@@ -144,32 +170,6 @@ body {
 	float: left;
 }
 
-li.treeMenu_opened ul {
-	display: block;
-	
-}
-
-li.treeMenu_closed ul {
-	display: none;
-}
-
-.bullet1 {
-    padding-left: 30px;
-}
-
-.bullet2 {
-    padding-left: 20px;
-    padding-bottom: 5px;
-}
-
-ul.bullet1 {
-	list-style-image: url(../images/bullet1.bmp);
-}
-
-ul.bullet2 {
-	list-style-image: url(../images/bullet2.bmp);
-}
-
 .newCell input {
 	background: #EEEEEE;
 	width: 98%; 
@@ -212,3 +212,6 @@ ul.bullet2 {
 .tableClassHead {
 	width: 10px;
 }
+
+
+
