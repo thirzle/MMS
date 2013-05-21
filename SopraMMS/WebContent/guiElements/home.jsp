@@ -11,14 +11,14 @@
 	
 </script>
 
-
+<%@page import="user.User"%>
 <script type="text/javascript" src=" ${pageContext.request.contextPath}/js/menu.js"></script>
 </head>
 
 <body>
 	<%
-		String loginname = (String) session.getAttribute("loginname");
-		if (loginname != null) {
+		User user = (User) session.getAttribute("user");
+		if (user.getLogin() != null) {
 	%>
 	<div class="page">
 		<div class="header">
@@ -28,7 +28,7 @@
 			<div class="menu">
 				<%@ include file="/guiElements/courseSelection.jsp"%>
 				<%
-					boolean[] rights = (boolean[]) session.getAttribute("rights");
+					boolean[] rights = user.getRights();
 						if (rights[3]) {
 				%>
 				<%@ include file="/guiElements/admin/adminMenu/adminMenu.jsp"%>

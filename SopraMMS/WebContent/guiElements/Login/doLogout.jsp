@@ -4,7 +4,8 @@
 	if (_loginname != null) {
 		out.println(_loginname + " loged out");
 		session.removeAttribute("username");
-		session.removeAttribute("password");
+		session.removeAttribute("rights");
+		session.removeAttribute("user");
 		session.invalidate();
 		response.sendRedirect("/SopraMMS/welcome.jsp");
 	} else {
