@@ -25,7 +25,6 @@ public class ModuleDBController {
 	private static PreparedStatement pStatement = null;
 	private static Statement statement = null;
 
-
 	// establish connection to database
 	public Connection connect() {
 		Connection connection = null;
@@ -42,7 +41,7 @@ public class ModuleDBController {
 		return connection;
 	}
 
-	//TODO
+	// TODO
 	// load all available modules
 	public List<Module> getModules() {
 		Connection connection = connect();
@@ -53,18 +52,18 @@ public class ModuleDBController {
 		try {
 			statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(query);
-			//get all entries except of course entries
-			while(rs.next()){
-				query = "SELECT e.* FROM entry AS e JOIN latestentry as l " +
-						"on e.entryID = l.entryID AND e.version = l.version WHERE" +
-						" e.moduleID = ? AND e.type = 0 AND" +
-						" e.approvalstatus = false";
+			// get all entries except of course entries
+			while (rs.next()) {
+				query = "SELECT e.* FROM entry AS e JOIN latestentry as l "
+						+ "on e.entryID = l.entryID AND e.version = l.version WHERE"
+						+ " e.moduleID = ? AND e.type = 0 AND"
+						+ " e.approvalstatus = false";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, rs.getString(1));
 				ResultSet resultSet = pStatement.executeQuery();
 				List<String> courses;
 				while (resultSet.next()) {
-					
+
 				}
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
@@ -82,7 +81,7 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	//TODO
+	// TODO
 	// load all available modules by a chosen institute
 	public List<Module> getModulesByInstitute(String institute) {
 		Connection connection = connect();
@@ -109,7 +108,6 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-
 
 	// load all available modules by a chosen course
 	// TODO
@@ -140,7 +138,7 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	//TODO
+	// TODO
 	public List<Module> getModulesByFaculty(String faculty) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
@@ -167,7 +165,7 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	//TODO
+	// TODO
 	// load all available modules by a chosen author
 	public List<Module> getModulesByAuthor(String author) {
 		Connection connection = connect();
@@ -194,7 +192,7 @@ public class ModuleDBController {
 		return modueList;
 	}
 
-	//TODO
+	// TODO
 	// get a specified module
 	public Module getModule(int moduleID, String name) {
 		Connection connection = connect();
@@ -220,7 +218,7 @@ public class ModuleDBController {
 		return null;
 	}
 
-	//TODO
+	// TODO
 	// load all modified modules
 	public List<Module> getModifiedModules() {
 		Connection connection = connect();
@@ -247,7 +245,7 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	//TODO
+	// TODO
 	// load all modified modules by a chosen institute
 	public List<Module> getModifiedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
@@ -277,7 +275,7 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	//TODO
+	// TODO
 	// load all modified modules by a chosen author
 	public List<Module> getModifiedModulesByAuthor(String author) {
 		Connection connection = connect();
@@ -308,23 +306,30 @@ public class ModuleDBController {
 
 	}
 
-	//TODO
+	// TODO
 	// load all rejected modules
 	public List<Module> getRejectedModules() {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
+		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE declined = TRUE";
+		Module module;
 		try {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"),
+				module = new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
-								.getDate("creationdate"), resultSet
-								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+						.getDate("creationdate"), resultSet
+						.getDate("modificationdate"), resultSet
+						.getBoolean("approvalstatus"), resultSet
+						.getString("instituteID"));
+//				check for duplicate
+				System.out.println(moduleList.contains(module));
+				if(moduleList.contains(module)){
+					moduleList.add(module);
+					
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -335,12 +340,13 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	//TODO
 	// load all rejected modules by a chosen institute
+	// tested: check
 	public List<Module> getRejectedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
+		query = "SELECT module.*"
+				+ "FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE declined = TRUE AND instituteID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -364,12 +370,12 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	//TODO
-	// load all rejected modules by a chosen author
+	// load all rejected modules (entries) by a chosen author
+	// tested: check
 	public List<Module> getRejectedModulesByAuthor(String author) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
+		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE declined = TRUE AND author = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -392,13 +398,13 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-	
-	public CourseEntry getCoursesbyModule(String moduleID){
+
+	public CourseEntry getCoursesbyModule(String moduleID) {
 		CourseEntry courseEntry = null;
 		query = "SELECT e.*, c.courseID FROM entry AS e "
-				+ "JOIN latestentry as l on e.entryID = l.entryID AND e.version = l.version " +
-				"JOIN courseentry AS c ON e.entryID = c.entryID AND e.version = c.version " +
-				"WHERE e.moduleID = ? AND e.type = 0 AND e.approval = false";
+				+ "JOIN latestentry as l on e.entryID = l.entryID AND e.version = l.version "
+				+ "JOIN courseentry AS c ON e.entryID = c.entryID AND e.version = c.version "
+				+ "WHERE e.moduleID = ? AND e.type = 0 AND e.approval = false";
 		try {
 			Connection connection = connect();
 			pStatement = connection.prepareStatement(query);
@@ -406,19 +412,21 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			List<String> courses = new LinkedList<String>();
 			resultSet.next();
-			courseEntry = new CourseEntry(resultSet.getInt("version"), resultSet.getDate("date").toString(), 
-					resultSet.getBoolean("classification"), resultSet.getBoolean("approvalstatus"),
-					resultSet.getBoolean("declined"), resultSet.getString("caption"));
+			courseEntry = new CourseEntry(resultSet.getInt("version"),
+					resultSet.getDate("date").toString(),
+					resultSet.getBoolean("classification"),
+					resultSet.getBoolean("approvalstatus"),
+					resultSet.getBoolean("declined"),
+					resultSet.getString("caption"));
 			courseEntry.addCourse(resultSet.getString("courseID"));
 			while (resultSet.next()) {
 				courseEntry.addCourse(resultSet.getString("courseID"));
 			}
-		}catch(SQLException e){
-			
-		}		
+		} catch (SQLException e) {
+
+		}
 		return courseEntry;
 	}
-
 
 	// create a new module in database
 	public boolean createModule(Module module) {
@@ -448,7 +456,6 @@ public class ModuleDBController {
 		}
 		return false;
 	}
-
 
 	// change an existing module
 	public boolean changeModule(Module module, int moduleIDOld) {
@@ -483,7 +490,6 @@ public class ModuleDBController {
 
 	}
 
-
 	// delete an existing module
 	public boolean deleteModule(Module module) {
 		Connection connection = connect();
@@ -501,49 +507,47 @@ public class ModuleDBController {
 		}
 		return false;
 	}
-	
-	//TODO
-	public CourseEntry getCoursesByModule(Module m){
+
+	// TODO
+	public CourseEntry getCoursesByModule(Module m) {
 		CourseEntry courses = null;
 		Connection connection = connect();
-		query = "SELECT c.courseID e.* FROM courseentry AS c JOIN latestentry AS l" +
-				" ON c.entryID = l.entryID AND c.version = l.version JOIN entry " +
-				"AS e on c.entryID = e.entryID AND c.version = e.version" +
-				" WHERE e.moduleID = ?";
+		query = "SELECT c.courseID e.* FROM courseentry AS c JOIN latestentry AS l"
+				+ " ON c.entryID = l.entryID AND c.version = l.version JOIN entry "
+				+ "AS e on c.entryID = e.entryID AND c.version = e.version"
+				+ " WHERE e.moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setInt(1, m.getModuleID());
 			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
+			if (resultSet.next()) {
 				courses = new CourseEntry(resultSet.getInt("version"),
-						resultSet.getTimestamp("timestamp").toString(), 
-						resultSet.getBoolean("classification"), 
-						resultSet.getBoolean("approvedstatus"), 
-						resultSet.getBoolean("declined"), 
-						resultSet.getString("caption"), 
+						resultSet.getTimestamp("timestamp").toString(),
+						resultSet.getBoolean("classification"),
+						resultSet.getBoolean("approvedstatus"),
+						resultSet.getBoolean("declined"),
+						resultSet.getString("caption"),
 						resultSet.getString("courseID"));
 			}
 			while (resultSet.next()) {
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		
-		
 		return courses;
 	}
+
 	// TODO
 	// get a specified modulemanual
 	public String getModuleManual(String courseID, String degree, String version) {
 		Connection connection = connect();
-		
+
 		close(connection);
 		return null;
 	}
-
 
 	public void close(Connection connection) {
 		try {
