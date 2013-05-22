@@ -69,10 +69,8 @@
 		%>
 	</tbody>
 </table>
-<form id="addUserForm"
-	action="/SopraMMS/guiElements/admin/adminMenu/userManagement/addUser.jsp"
-	method="post">
-	<input type="submit" name="speichern" id="saveButton"
+<form id="addUserForm" action="SaveUser" method="get">
+	<input type="submit" name="Submit" id="saveButton"
 		style="float: right; display: none;" value="Speichern" ></input>
 </form>
 <script type="text/javascript"

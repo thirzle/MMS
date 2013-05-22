@@ -51,7 +51,11 @@
 				<%@ include file="/guiElements/Login/logout.jsp" %>
 			</div>
 			<div class="contentBox" id="contentBox">
-				<%@ include file="/guiElements/homeContent.jsp"%>
+				<%if(session.getAttribute("task")=="usertable") { %>
+					<%@ include file="/guiElements/admin/adminMenu/userManagementContent.jsp" %>
+				<%} else if(session.getAttribute("task")=="home") { %>
+					<%@ include file="/guiElements/homeContent.jsp"%>
+				<%} %>
 			</div>
 		</div>
 		<div class="footer" id="footer">
