@@ -83,17 +83,20 @@ body {
     padding-left: 30px;
 }
 
-#nav li {
+#nav li:hover {
     cursor: default;
-	
 }
 
 #subNav li {
-    cursor: default;
 	list-style-image: url(../images/bullet2.bmp);
 }
 
-#nav ul {
+#subNav li:hover {
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.nav ul {
     display: none;
     padding: 5px 0 0 20px;
 }
@@ -102,9 +105,6 @@ body {
 	list-style-image: url(../images/bullet1.bmp);
 }
 
-.expandAdministration:hover {
-	cursor: pointer;
-}
 
 .adminMenu {
 	padding: 0 0 0 0;

@@ -1,5 +1,3 @@
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/default.css">
 <div class="menuBox">
 	<h1>Allgemein</h1>
 
@@ -14,7 +12,7 @@
 	</script>
 
 
-	<ul id="nav">
+	<ul class="nav">
 		<div class="headerNavGenerally" ><li>Account verwalten</li></div>
 		<div class="expandGenerally">
 			<ul id="subNav">

@@ -13,7 +13,7 @@
 		});// $(document).ready
 	</script>
 
-	<ul id="nav">
+	<ul class="nav">
 		<div class="headerNavCourse" ><li>Ingenieurwissenschaften und Informatik</li></div>
 		<div class="expandCourse">
 			<ul id="subNav">
