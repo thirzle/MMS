@@ -504,7 +504,7 @@ public class ModuleDBController {
 	
 	//TODO
 	public CourseEntry getCoursesByModule(Module m){
-		CourseEntry courses;
+		CourseEntry courses = null;
 		Connection connection = connect();
 		query = "SELECT c.courseID e.* FROM courseentry AS c JOIN latestentry AS l" +
 				" ON c.entryID = l.entryID AND c.version = l.version JOIN entry " +
