@@ -19,7 +19,7 @@ int NUMBER_OF_INSTITUTES = institutes.size();
 		<div>Bitte einfügen</div>
 	</td>
 	<td class='newCell' id='emailCell'>
-		<input form="addUserForm" type='text' name="emailCellText"></input>
+		<input form="addUserForm" type='text' name="emailCellText" /> 
 		<div>Bitte einfügen</div>
 	</td>
 	<td class='newCell' id='rightsCell'>

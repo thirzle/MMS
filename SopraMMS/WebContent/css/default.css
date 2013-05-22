@@ -79,19 +79,19 @@ body {
 }
 
 /*---- Menu Structure ----*/
-#nav {
+.nav {
     padding-left: 30px;
 }
 
-#nav li:hover {
+.nav li:hover {
     cursor: default;
 }
 
-#subNav li {
+.subNav li {
 	list-style-image: url(../images/bullet2.bmp);
 }
 
-#subNav li:hover {
+.subNav li:hover {
 	font-weight: bold;
 	cursor: pointer;
 }
@@ -101,7 +101,7 @@ body {
     padding: 5px 0 0 20px;
 }
 
-.headerNavGenerally, .headerNavCourse, .headerNavAdministration  li {
+.headerNavGenerally, .headerNavCourse, .headerNavAdministration, .headerNavModul  li {
 	list-style-image: url(../images/bullet1.bmp);
 }
 

@@ -9,7 +9,6 @@
 	href="${pageContext.request.contextPath}/css/default.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <%@page import="user.User"%>
-<script type="text/javascript" src=" ${pageContext.request.contextPath}/js/menu.js"></script>
 </head>
 
 <body>
@@ -67,9 +66,7 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function() {
-	$(".menuHeader").click(function() {
-		
-	});
+	
 });
 </script>
 </html>

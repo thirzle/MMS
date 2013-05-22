@@ -25,7 +25,10 @@
 				});
 				$("#editUser").click(function() {
 					$("#saveButton").hide();
-					alert($(this).attr("id")+" was clicked");
+					$("#tmpRow").hide();
+				});
+				$("#deleteUser").click(function() {
+					$("#saveButton").hide();
 					$("#tmpRow").hide();
 				});
 			});
@@ -36,7 +39,7 @@
 	<ul class="nav">
 		<div class="headerNavAdministration" ><li>Benutzerverwaltung</li></div>
 		<div class="expandAdministration">
-			<ul id="subNav">
+			<ul class="subNav">
 				<li id="newUser">Neuer Benutzer</li>
 				<li id="editUser">Benutzer bearbeiten</li>
 				<li id="deleteUser">Benutzer löschen</li>

@@ -9,6 +9,7 @@
 				$(".expandCourse").toggleClass("expanded");
 				$(".expandCourse").children("ul:first").slideToggle("300");
 				e.stopPropagation();
+				$(".contentBox").load("/SopraMMS/guiElements/homeContent.jsp");
 			});
 		});// $(document).ready
 	</script>
@@ -16,7 +17,7 @@
 	<ul class="nav">
 		<div class="headerNavCourse" ><li>Ingenieurwissenschaften und Informatik</li></div>
 		<div class="expandCourse">
-			<ul id="subNav">
+			<ul class="subNav">
 				<strong>Bachelor</strong>
 				<li>Informatik</li>
 				<li>Medieninformatik</li>

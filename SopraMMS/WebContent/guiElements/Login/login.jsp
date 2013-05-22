@@ -1,5 +1,5 @@
 	<div class="menuBox">
-		<form action="guiElements/Login/loginCheck.jsp" method="post">
+		<form action="Login" method="get">
 			<h1>Login</h1>
 	
 			<h3>Benutzername:</h3>

@@ -1,4 +1,5 @@
 <%@ page import="user.User" %>
+<%@ page import="controller.UserDBController" %>
 <% 
 String loginname = request.getParameter("loginCellText");
 String firstname = request.getParameter("firstnameCellText");
@@ -11,4 +12,6 @@ System.out.println("(addUser.jsp) institute: "+institute);
 User user = new User(loginname,firstname,lastname,email,representative);
 session.setAttribute("task", "reloadTable");
 System.out.println(user.toString());
-response.sendRedirect("/SopraMMS/guiElements/home.jsp");%>
+response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+
+%>
