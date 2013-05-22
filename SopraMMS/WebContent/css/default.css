@@ -98,8 +98,12 @@ body {
     padding: 5px 0 0 20px;
 }
 
-.headerNavGenerally, .headerNavCourse  li {
+.headerNavGenerally, .headerNavCourse, .headerNavAdministration  li {
 	list-style-image: url(../images/bullet1.bmp);
+}
+
+.expandAdministration:hover {
+	cursor: pointer;
 }
 
 .adminMenu {
