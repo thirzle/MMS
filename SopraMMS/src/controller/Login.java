@@ -52,7 +52,7 @@ public class Login extends SessionCheck {
 			} else {
 				System.out.println("Invalid loginname and password");
 				//TODO in bestehenden Content oeffnen und nicht neue Seite oeffnen
-				response.sendRedirect("/SopraMMS/guiElements/error.jsp");
+				response.sendRedirect("/SopraMMS/welcome.jsp?loginStatus=failed");
 			}
 		} else if (userAdmin.checkLogin(sessionID).getLogin()
 				.equals(session.getAttribute("loginname").toString())) {

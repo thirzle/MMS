@@ -1,6 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#impressum").click(function(e) {
+	$(".impressum").click(function(e) {
 		$(".contentBox").load("/SopraMMS/guiElements/impressum.jsp");
 	});
 });
@@ -12,5 +12,5 @@ $(document).ready(function() {
 
 	<div class="footerNavigation">
 	
-		<navigation><a id="impressum">Impressum</a></navigation>
+		<navigation><a class="impressum">Impressum</a></navigation>
 	</div>
