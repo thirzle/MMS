@@ -9,15 +9,20 @@
 				e.stopPropagation();
 				$(".contentBox").load("/SopraMMS/guiElements/generally/generallyContent.jsp");
 			});
-		}); //$(document).ready
+			$(".changePassword").click(function(e) {
+					$(".contentBox").load("/SopraMMS/guiElements/generally/changePassword.jsp");
+			});
+		});
 	</script>
 
 
 	<ul class="nav">
-		<div class="headerNavGenerally" ><li>Account verwalten</li></div>
+		<div class="headerNavGenerally">
+			<li>Account verwalten</li>
+		</div>
 		<div class="expandGenerally">
 			<ul class="subNav">
-				<li>Passwort &auml;ndern</li>
+				<li class=changePassword>Passwort &auml;ndern</li>
 				<li>Stellvertreter</li>
 			</ul>
 		</div>

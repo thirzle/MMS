@@ -1,11 +1,42 @@
 @CHARSET "ISO-8859-1";
 
+/*---------------------------------------*/
+/*---- General fonts and text objects----*/
 h1 {
-	text-align: center;
+	background: none repeat scroll 0 0 #EDECE8;
+    font-size: 11pt;
+    font-weight: bold;
+    margin-top:20px;
+    padding: 5px 0px 5px 10px;
+    text-align: left;
 }
 
+h2 {
+	font-size: 9pt;
+	 padding: 5px 0px 0px 10px;
+}
 
+h3{
+	font-size: 8pt;
+	 padding: 5px 0px 0px 10px;
+}
 
+p{
+	max-width: 520px;
+}
+
+a {
+	cursor: pointer;
+}
+
+button {
+	float: right;
+	margin-top: 20px;
+	margin-right: 350px
+}
+
+/*--------------------*/
+/*---- Page Layout----*/
 body {
 	background: none repeat scroll 0 0 #E5EBEE;
 	padding: 5px;
@@ -29,6 +60,7 @@ body {
 	border-width: 1px 2px 2px 1px;
 }
 
+/*----------------*/
 /*---- Header ----*/
 .header { /*background-color: red;*/
 	width: 100%;
@@ -50,12 +82,50 @@ body {
 	padding-left: 10px;
 }
 
+/*--------------*/
 /*---- Main ----*/
 .main {
 	clear: both;
 	padding: 20px 0px 10px 0px;
 }
 
+/*-----------------*/
+/*---- Content ----*/
+.contentBox { /*background-color: gray;*/
+	float: left;
+	width: 800px;
+	padding: 20px 0px 10px 0px;
+	padding-left: 10px;
+}
+
+.contentBox a{
+	color: #1E6289;
+	text-decoration: underline;
+}
+
+.importantBox {
+	text-align: center;
+	width: 490px;
+	padding: 20px 15px 20px 15px;
+	background-color: #FFEEEE;
+}
+
+.footerNavigation {
+	background: #C4C0B4;
+	clear: both;
+	height: 25px;
+	width: 100%;
+	padding: 5px 0 0 0;
+}
+
+.footer navigation {
+	text-align: left;
+	font-size: 10pt;
+	color: #FFFFFF;
+	padding-left: 10px;
+}
+
+/*--------------*/
 /*---- Menu ----*/
 .menu { /*background-color: lime;*/
 	float: left;
@@ -76,6 +146,7 @@ body {
 	color: #FFFFFF;
 	background: #91ACBC;
 	padding: 5px 0px 5px 10px;
+	margin-top: 0px;
 }
 
 /*---- Menu Structure ----*/
@@ -186,27 +257,8 @@ body {
 	vertical-align: middle;
 }
 
-/*---- Content ----*/
-.contentBox { /*background-color: gray;*/
-	float: left;
-	width: 800px;
-	padding: 20px 0px 10px 0px;
-}
 
-.footerNavigation {
-	background: #C4C0B4;
-	clear: both;
-	height: 25px;
-	width: 100%;
-	padding: 5px 0 0 0;
-}
-
-.footer navigation {
-	text-align: left;
-	font-size: 10pt;
-	color: #FFFFFF;
-	padding-left: 10px;
-}
+/*---------------*/
 /*---- Table ----*/
 .tableClass {
 	width: 50%;

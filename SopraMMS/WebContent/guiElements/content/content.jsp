@@ -8,7 +8,7 @@
 </head>
 <body>
 	<center>
-		<h3>Content</h3>
+		<h1>Content</h1>
 	</center>
 </body>
 </html>
