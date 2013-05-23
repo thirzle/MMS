@@ -151,8 +151,6 @@ public class UserAdministration {
 		System.out.println("##### Einloggen #####");
 		System.out.println("Loginname: " + loginname);
 		System.out.println("Passwort: " + password + " --> " + pwhash);
-
-		System.out.println("- userDBCon.checkPass"+userDBController.checkPassword(loginname, password));
 		
 		if (userDBController.checkPassword(loginname, pwhash)) {
 

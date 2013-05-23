@@ -1,9 +1,11 @@
 <script type="text/javascript">
-$(document).ready(function() {
-	$(".lostPassword").click(function(e) {
-		$(".contentBox").load("/SopraMMS/guiElements/Login/sendNewPassword.jsp");
-	});
-});
+	$(document)
+			.ready(
+					function() {
+						$(".lostPassword")
+								.click(
+				function(e) {$(".contentBox").load()"/SopraMMS/guiElements/Login/sendNewPassword.jsp");
+						});});
 </script>
 
 <div class="menuBox">
@@ -12,12 +14,11 @@ $(document).ready(function() {
 
 		<%
 			String loginStatus = request.getParameter("loginStatus");
-			System.out.println(loginStatus);
 			if (loginStatus != null) {
 		%>
 		<p class="loginFailed">
-			Anmeldung fehlgeschlagen<br/>
-			&rarr;&emsp;<a class=lostPassword>Passwort vergessen</a>
+			Anmeldung fehlgeschlagen<br /> &rarr;&emsp;<a class=lostPassword>Passwort
+				vergessen</a>
 		</p>
 		<%
 			}
@@ -32,7 +33,7 @@ $(document).ready(function() {
 		<br>
 		<p class="menuContent">
 			<input name="password" type="password" size="32" />
-			
+
 		</p>
 		<p class="menuContent">
 			<input type="submit" name="Submit" value="Anmelden" />

@@ -8,6 +8,7 @@
 			$(".contentBox").load("/SopraMMS/guiElements/moduleSelection.jsp");
 		});
 	});
+
 </script>
 
 
@@ -18,7 +19,7 @@
 
 	<ul class="nav">
 		<div class="headerNavCourse">
-			<li><a>Ingenieurwissenschaften und Informatik</a></li>
+			<li>Ingenieurwissenschaften und Informatik</li>
 		</div>
 		<div class="expandCourse">
 			<ul class="subNav">
