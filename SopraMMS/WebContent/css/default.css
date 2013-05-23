@@ -4,24 +4,26 @@
 /*---- General fonts and text objects----*/
 h1 {
 	background: none repeat scroll 0 0 #EDECE8;
-    font-size: 11pt;
-    font-weight: bold;
-    margin-top:20px;
-    padding: 5px 0px 5px 10px;
-    text-align: left;
+	font-size: 11pt;
+	font-weight: bold;
+	margin-top: 20px;
+	padding: 5px 0px 5px 10px;
+	text-align: left;
 }
 
 h2 {
-	font-size: 9pt;
-	 padding: 5px 0px 0px 10px;
+	font-size: 9.5pt;
+	padding: 5px 0px 0px 10px;
+	padding-left: 0px;
 }
 
-h3{
+h3 {
 	font-size: 8pt;
-	 padding: 5px 0px 0px 10px;
+	padding: 5px 0px 0px 10px;
+	padding-left: 0px;
 }
 
-p{
+p {
 	max-width: 520px;
 }
 
@@ -98,7 +100,7 @@ body {
 	padding-left: 10px;
 }
 
-.contentBox a{
+.contentBox a {
 	color: #1E6289;
 	text-decoration: underline;
 }
@@ -149,13 +151,24 @@ body {
 	margin-top: 0px;
 }
 
+.loginFailed {
+	font-size: 10pt;
+	font-weight: normal;
+	font-family: Lucida Grande, Verdana, Arial, Sans-Serif;
+	margin: 0 0 0 0;
+	padding: 0 0 5px 10px;
+	color: #a52a2a;
+}
+
+.loginFailed a{text-decoration: underline; }
+
 /*---- Menu Structure ----*/
 .nav {
-    padding-left: 30px;
+	padding-left: 30px;
 }
 
 .nav li:hover {
-    cursor: default;
+	cursor: default;
 }
 
 .subNav li {
@@ -168,36 +181,31 @@ body {
 }
 
 .nav ul {
-    display: none;
-    padding: 5px 0 0 20px;
+	display: none;
+	padding: 5px 0 0 20px;
 }
 
-.headerNavGenerally, .headerNavCourse, .headerNavAdministration, .headerNavModul  li {
+.headerNavGenerally,.headerNavCourse,.headerNavAdministration,.headerNavModul  li
+	{
 	list-style-image: url(../images/bullet1.bmp);
 }
-
 
 .adminMenu {
 	padding: 0 0 0 0;
 }
 
-.menuEntry:hover{
-	background-color: #55CCFF;	
+.menuEntry:hover {
+	background-color: #55CCFF;
 }
 
-.logout:hover{
-	background-color: #55CCFF;	
+.logout:hover {
+	background-color: #55CCFF;
 }
 
 .userManagementEntry {
-	
 	margin-left: 5%;
-
-	
 	background-color: #FFFFFF;
 }
-
-
 
 .userManagementEntry:hover {
 	font-weight: bold;
@@ -213,10 +221,11 @@ body {
 	background: #FFFFFF;
 	border-bottom: 1px solid #CCCCCC;
 	cursor: pointer;
-	
 }
 
-.userManagementEntryContainer p {list-style-image: url(../images/bullet1.bmp);}
+.userManagementEntryContainer p {
+	list-style-image: url(../images/bullet1.bmp);
+}
 
 .logout {
 	font-size: 10pt;
@@ -247,7 +256,7 @@ body {
 
 .newCell input {
 	background: #EEEEEE;
-	width: 98%; 
+	width: 98%;
 	height: 100%;
 	margin-right: 5px;
 }
@@ -257,7 +266,6 @@ body {
 	vertical-align: middle;
 }
 
-
 /*---------------*/
 /*---- Table ----*/
 .tableClass {
@@ -265,9 +273,7 @@ body {
 	border: 1;
 	color: #24423F;
 }
+
 .tableClassHead {
 	width: 10px;
 }
-
-
-
