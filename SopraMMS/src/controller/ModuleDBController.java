@@ -138,11 +138,13 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	// TODO
+	// load all available modules by a chosen faculty
+	// tested: check
 	public List<Module> getModulesByFaculty(String faculty) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.* FROM modulefacultyaffiliation JOIN module ON modulefacultyaffiliation.moduleID = module.moduleID WHERE faulty = ?";
+		query = "SELECT module.* FROM modulefacultyaffiliation JOIN module "
+				+ "ON modulefacultyaffiliation.moduleID = module.moduleID WHERE facultyID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, faculty);
@@ -165,23 +167,37 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	// TODO
 	// load all available modules by a chosen author
+	// tested: check
 	public List<Module> getModulesByAuthor(String author) {
 		Connection connection = connect();
-		List<Module> modueList = new LinkedList<Module>();
-		query = "SELECT module.*, entry.author FROM module JOIN entry on module.moduleID = entry.moduleID WHERE entry.author = ?";
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Integer> temp = new LinkedList<Integer>();
+		Module module;
+		query = "SELECT module.*, entry.author FROM module JOIN entry ON module.moduleID = entry.moduleID"
+				+ " WHERE entry.author = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, author);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modueList.add(new Module(resultSet.getInt("moduleID"),
-						resultSet.getString("name"), resultSet
-								.getDate("creationdate"), resultSet
-								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"),
+						resultSet.getDate("creationdate"),
+						resultSet.getDate("modificationdate"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getString("instituteID"));
+				// check for duplicate
+				if (moduleList.isEmpty()) {
+					moduleList.add(module);
+					temp.add(module.getModuleID());
+				} else {
+					if (!temp.contains(module.getModuleID())) {
+						moduleList.add(module);
+						temp.add(module.getModuleID());
+					}
+
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -189,12 +205,12 @@ public class ModuleDBController {
 		} finally {
 			close(connection);
 		}
-		return modueList;
+		return moduleList;
 	}
 
-	// TODO
 	// get a specified module
-	public Module getModule(int moduleID, String name) {
+	// tested: check
+	public Module getModule(int moduleID) {
 		Connection connection = connect();
 		query = "SELECT * FROM module WHERE moduleID = ?";
 		try {
@@ -211,30 +227,43 @@ public class ModuleDBController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Couldn't get module: " + name);
+			System.out.println("Couldn't get module: " + moduleID);
 		} finally {
 			close(connection);
 		}
 		return null;
 	}
 
-	// TODO
 	// load all modified modules
+	// tested: check
 	public List<Module> getModifiedModules() {
 		Connection connection = connect();
-		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Integer> temp = new LinkedList<Integer>();
+		Module module;
+		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE;";
 		try {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"),
-						resultSet.getString("name"), resultSet
-								.getDate("creationdate"), resultSet
-								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"),
+						resultSet.getDate("creationdate"),
+						resultSet.getDate("modificationdate"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getString("instituteID"));
+				// check for duplicate
+				if (moduleList.isEmpty()) {
+					moduleList.add(module);
+					temp.add(module.getModuleID());
+				} else {
+					if (!temp.contains(module.getModuleID())) {
+						moduleList.add(module);
+						temp.add(module.getModuleID());
+					}
+
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -245,25 +274,37 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	// TODO
 	// load all modified modules by a chosen institute
+	// tested: check
 	public List<Module> getModifiedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
-		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
-				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE"
-				+ "AND instituteID = ?";
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Integer> temp = new LinkedList<Integer>();
+		Module module;
+		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
+				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE AND instituteID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, instituteID);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"),
-						resultSet.getString("name"), resultSet
-								.getDate("creationdate"), resultSet
-								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"),
+						resultSet.getDate("creationdate"),
+						resultSet.getDate("modificationdate"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getString("instituteID"));
+				// check for duplicate
+				if (moduleList.isEmpty()) {
+					moduleList.add(module);
+					temp.add(module.getModuleID());
+				} else {
+					if (!temp.contains(module.getModuleID())) {
+						moduleList.add(module);
+						temp.add(module.getModuleID());
+					}
+
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -275,25 +316,37 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	// TODO
 	// load all modified modules by a chosen author
+	// tested: check
 	public List<Module> getModifiedModulesByAuthor(String author) {
 		Connection connection = connect();
-		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.*" + "FROM module NATURAL JOIN entry"
-				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE"
-				+ "AND author = ?";
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Integer> temp = new LinkedList<Integer>();
+		Module module;
+		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
+				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE AND author = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, author);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"),
-						resultSet.getString("name"), resultSet
-								.getDate("creationdate"), resultSet
-								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"),
+						resultSet.getDate("creationdate"),
+						resultSet.getDate("modificationdate"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getString("instituteID"));
+				// check for duplicate
+				if (moduleList.isEmpty()) {
+					moduleList.add(module);
+					temp.add(module.getModuleID());
+				} else {
+					if (!temp.contains(module.getModuleID())) {
+						moduleList.add(module);
+						temp.add(module.getModuleID());
+					}
+
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -306,11 +359,12 @@ public class ModuleDBController {
 
 	}
 
-	// TODO
 	// load all rejected modules
+	// tested: check
 	public List<Module> getRejectedModules() {
 		Connection connection = connect();
-		List<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Integer> temp = new LinkedList<Integer>();
 		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE declined = TRUE";
 		Module module;
@@ -319,16 +373,21 @@ public class ModuleDBController {
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				module = new Module(resultSet.getInt("moduleID"),
-						resultSet.getString("name"), resultSet
-						.getDate("creationdate"), resultSet
-						.getDate("modificationdate"), resultSet
-						.getBoolean("approvalstatus"), resultSet
-						.getString("instituteID"));
-//				check for duplicate
-				System.out.println(moduleList.contains(module));
-				if(moduleList.contains(module)){
+						resultSet.getString("name"),
+						resultSet.getDate("creationdate"),
+						resultSet.getDate("modificationdate"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getString("instituteID"));
+				// check for duplicate
+				if (moduleList.isEmpty()) {
 					moduleList.add(module);
-					
+					temp.add(module.getModuleID());
+				} else {
+					if (!temp.contains(module.getModuleID())) {
+						moduleList.add(module);
+						temp.add(module.getModuleID());
+					}
+
 				}
 			}
 		} catch (SQLException e) {
@@ -342,9 +401,12 @@ public class ModuleDBController {
 
 	// load all rejected modules by a chosen institute
 	// tested: check
+	// TODO duplicate?
 	public List<Module> getRejectedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
-		List<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Integer> temp = new LinkedList<Integer>();
+		Module module;
 		query = "SELECT module.*"
 				+ "FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE declined = TRUE AND instituteID = ?";
@@ -353,12 +415,23 @@ public class ModuleDBController {
 			pStatement.setString(1, instituteID);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"),
-						resultSet.getString("name"), resultSet
-								.getDate("creationdate"), resultSet
-								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"),
+						resultSet.getDate("creationdate"),
+						resultSet.getDate("modificationdate"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getString("instituteID"));
+				// check for duplicate
+				if (moduleList.isEmpty()) {
+					moduleList.add(module);
+					temp.add(module.getModuleID());
+				} else {
+					if (!temp.contains(module.getModuleID())) {
+						moduleList.add(module);
+						temp.add(module.getModuleID());
+					}
+
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -374,7 +447,9 @@ public class ModuleDBController {
 	// tested: check
 	public List<Module> getRejectedModulesByAuthor(String author) {
 		Connection connection = connect();
-		List<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Integer> temp = new LinkedList<Integer>();
+		Module module;
 		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE declined = TRUE AND author = ?";
 		try {
@@ -382,12 +457,23 @@ public class ModuleDBController {
 			pStatement.setString(1, author);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"),
-						resultSet.getString("name"), resultSet
-								.getDate("creationdate"), resultSet
-								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"),
+						resultSet.getDate("creationdate"),
+						resultSet.getDate("modificationdate"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getString("instituteID"));
+				// check for duplicate
+				if (moduleList.isEmpty()) {
+					moduleList.add(module);
+					temp.add(module.getModuleID());
+				} else {
+					if (!temp.contains(module.getModuleID())) {
+						moduleList.add(module);
+						temp.add(module.getModuleID());
+					}
+
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -410,7 +496,7 @@ public class ModuleDBController {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, moduleID);
 			ResultSet resultSet = pStatement.executeQuery();
-			List<String> courses = new LinkedList<String>();
+			LinkedList<String> courses = new LinkedList<String>();
 			resultSet.next();
 			courseEntry = new CourseEntry(resultSet.getInt("version"),
 					resultSet.getDate("date").toString(),

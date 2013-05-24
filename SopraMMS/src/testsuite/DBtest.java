@@ -62,7 +62,7 @@ public class DBtest {
 		
 //		mController.getRejectedModulesByAuthor
 		LinkedList<Module> rejectedModuleList = (LinkedList) mController.getRejectedModulesByAuthor("hirzlet");
-		System.out.println("all rejected modules: ");
+		System.out.println("all rejected modules by author hirzlet: ");
 		for (Module module : rejectedModuleList) {
 			System.out.print(module.getName()+" ");
 		}
@@ -70,7 +70,7 @@ public class DBtest {
 		
 //		mController.getRejectedModulesByInstitute
 		rejectedModuleList = (LinkedList) mController.getRejectedModulesByInstitute("mi");
-		System.out.println("all rejected modules: ");
+		System.out.println("all rejected modules by institute mi: ");
 		for (Module module : rejectedModuleList) {
 			System.out.print(module.getName()+" ");
 		}
@@ -84,6 +84,50 @@ public class DBtest {
 		}
 		System.out.println();
 		
+//		mController.getModifiedModulesByAuthor
+		LinkedList<Module> modifiedModulesList = (LinkedList) mController.getModifiedModulesByAuthor("hirzlet");
+		System.out.println("modifiedModules by author: hirzlet");
+		for (Module module : modifiedModulesList) {
+			System.out.println(module.getName()+" ");
+		}
+		System.out.println();
+		
+//		mController.getModifiedModulesByInstitute
+		modifiedModulesList = (LinkedList) mController.getModifiedModulesByInstitute("mi");
+		System.out.println("modifiedModules by institute: mi");
+		for (Module module : modifiedModulesList) {
+			System.out.println(module.getName()+" ");
+		}
+		System.out.println();
+		
+//		mController.getModifiedModules
+		modifiedModulesList = (LinkedList) mController.getModifiedModules();
+		System.out.println("all modifiedModules: ");
+		for (Module module : modifiedModulesList) {
+			System.out.println(module.getName()+" ");
+		}
+		System.out.println();
+		
+//		mController.getModule
+		Module module = mController.getModule(42);
+		System.out.println("get module: Lineare Algebra");
+		System.out.println(module.getModuleID()+" "+module.getName()+" "+module.getInstituteID()+"\n");
+		
+//		mController.getModuleByAuthor
+		LinkedList<Module> moduleList = (LinkedList) mController.getModulesByAuthor("lehrd");
+		System.out.println("get modules by author: lehrd");
+		for (Module module2 : moduleList) {
+			System.out.println(module2.getName());
+		}
+		System.out.println();
+		
+//		mController.getModulesByFaculty
+		moduleList = (LinkedList) mController.getModulesByFaculty("in");
+		System.out.println("get modules by faculty: in");
+		for (Module module2 : moduleList) {
+			System.out.println(module2.getName());
+		}
+		System.out.println();
 	}
 
 }
