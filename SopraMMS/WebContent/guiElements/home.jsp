@@ -8,10 +8,12 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/default.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<%@ include file="/guiElements/fillContent.jsp"%>
 <%@page import="user.User"%>
 </head>
 
-<%@ include file="/guiElements/fillContent.jsp"%>
+
 
 <body>
 	<%
