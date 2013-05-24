@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import user.User;
+
 import management.CourseEntry;
 import management.Entry;
 import management.Module;
@@ -81,12 +83,12 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	// TODO
 	// load all available modules by a chosen institute
+//	tested: check
 	public List<Module> getModulesByInstitute(String institute) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.* FROM moduleinstituteaffiliation JOIN module ON moduleinstituteaffiliation.moduleID = module.moduleID WHERE instituteID = ?";
+		query = "SELECT module.* FROM module WHERE instituteID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, institute);

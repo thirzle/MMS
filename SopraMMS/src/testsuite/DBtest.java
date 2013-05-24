@@ -42,6 +42,10 @@ public class DBtest {
 		User user = uController.getUser("lehrd");
 		System.out.println("get user (lastname) lehrd: "+user.getLastName());
 		
+//		uController.getUser
+		user = uController.getUser("5BA1F9C933DA6ECAE7F6EB2F02790A4F", "926186098");
+		System.out.println("get user hirzlet: "+ user.getFirstName());
+		
 		boolean[] rightsT = {true, true, false, false, false};
 		LinkedList<String> instituteT = new LinkedList<String>();
 		instituteT.add("mi");
@@ -124,6 +128,22 @@ public class DBtest {
 //		mController.getModulesByFaculty
 		moduleList = (LinkedList) mController.getModulesByFaculty("in");
 		System.out.println("get modules by faculty: in");
+		for (Module module2 : moduleList) {
+			System.out.println(module2.getName());
+		}
+		System.out.println();
+
+//		mController.getModulesByInstitute
+		moduleList = (LinkedList) mController.getModulesByInstitute("theo");
+		System.out.println("get modules by intitute: theo");
+		for (Module module2 : moduleList) {
+			System.out.println(module2.getName());
+		}
+		System.out.println();
+		
+//		mController.getModules
+		moduleList = (LinkedList) mController.getModules();
+		System.out.println("get all modules:");
 		for (Module module2 : moduleList) {
 			System.out.println(module2.getName());
 		}

@@ -17,20 +17,20 @@ public class UserDBController {
 	private static ResultSet resultSet;
 	private static String query = null;
 	private static PreparedStatement pStatement;
-	
-	//Lokale Datenbank
+
+	// Lokale Datenbank
 	private static final String URL = "jdbc:mysql://localhost:3306/mms";
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
-	
-	//Datenbank auf db4free.net
-//	private static final String URL ="jdbc:mysql://db4free.net:3306/sopramms";
-//	private static final String USER ="teamaccount";
-//	private static final String PASSWORD ="6lsj7tdm";
-	
+
+	// Datenbank auf db4free.net
+	// private static final String URL
+	// ="jdbc:mysql://db4free.net:3306/sopramms";
+	// private static final String USER ="teamaccount";
+	// private static final String PASSWORD ="6lsj7tdm";
+
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	static final int NUMBEROFRIGHTS = 5;
-
 
 	// establish connection
 	public Connection connect() {
@@ -47,7 +47,6 @@ public class UserDBController {
 		}
 		return connection;
 	}
-
 
 	// get all user listed in database
 	public List<User> getAllUsers() {
@@ -78,7 +77,6 @@ public class UserDBController {
 		}
 		return userList;
 	}
-
 
 	// find specified user by loginname
 	public User getUser(String loginname) {
@@ -125,6 +123,28 @@ public class UserDBController {
 		return null;
 	}
 
+	// TODO
+	public User getUser(String session, String password) {
+		Connection connection = connect();
+		query = "SELECT * FROM user WHERE session = ? AND password = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, session);
+			pStatement.setString(2, password);
+			ResultSet resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				return new User(resultSet.getString("loginname"),
+						resultSet.getString("firstname"),
+						resultSet.getString("lastname"),
+						resultSet.getString("mail"), password);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get user by session and password");
+		}
+		return null;
+	}
 
 	// create new user in database
 	public boolean createUser(User user) {
@@ -171,7 +191,6 @@ public class UserDBController {
 
 	}
 
-
 	// change existing user in database
 	public boolean changeUser(User oldUser, User newUser) {
 		Connection connection = connect();
@@ -207,7 +226,6 @@ public class UserDBController {
 		return false;
 	}
 
-
 	// deletes User
 	public boolean deleteUser(String loginname) {
 		Connection connection = connect();
@@ -224,7 +242,6 @@ public class UserDBController {
 		}
 		return false;
 	}
-
 
 	// get rights of specified user
 	public boolean[] getRights(String loginname) {
@@ -245,7 +262,6 @@ public class UserDBController {
 		}
 		return rightsArray;
 	}
-
 
 	// change rights of specified user
 	public boolean changeRights(User user, boolean[] newRights) {
@@ -283,7 +299,6 @@ public class UserDBController {
 		}
 		return false;
 	}
-
 
 	// get all user of specified institute
 	public List<User> getAllUsersFromInstitute(String institute) {
@@ -326,7 +341,6 @@ public class UserDBController {
 		return userList;
 	}
 
-
 	// get institute of existing user
 	public List<String> getInstitutesByName(String loginname) {
 		Connection connection = connect();
@@ -348,7 +362,6 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
-
 
 	// compare hashed password typed in with password in database of specified
 	// user
@@ -375,7 +388,6 @@ public class UserDBController {
 		return false;
 	}
 
-
 	// change password of specified user
 	public boolean setPassword(String loginname, String password) {
 		Connection connection = connect();
@@ -395,7 +407,6 @@ public class UserDBController {
 		}
 		return false;
 	}
-
 
 	// check if session of user is still valid
 	public User checkSession(String session) {
@@ -424,7 +435,6 @@ public class UserDBController {
 		return user;
 	}
 
-
 	// get all institutes listed in databse
 	public List<String> getInstitutes() {
 		Connection connection = connect();
@@ -442,7 +452,6 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
-
 
 	// close connection
 	private void close(Connection connection) {
