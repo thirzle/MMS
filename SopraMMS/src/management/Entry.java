@@ -11,17 +11,18 @@ public abstract class Entry {
 	private boolean approved;
 	private boolean rejected;
 	private String title;
-
+	private int entryID;
 
 	// use this when you import existing data
-	public Entry(int version, String timestamp, boolean classification,
-			boolean approved, boolean rejected, String title) {
+	public Entry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, int entryID) {
 		this.version = version;
 		this.timestamp = timestamp;
 		this.classification = classification;
 		this.approved = approved;
 		this.rejected = rejected;
 		this.title = title;
+		this.entryID = entryID;
 	}
 
 

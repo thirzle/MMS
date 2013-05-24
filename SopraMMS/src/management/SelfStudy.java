@@ -3,13 +3,13 @@ package management;
 public class SelfStudy {
 
 	@SuppressWarnings("unused")
-	private String title;
+	private int selfstudyID;
 
 	private int time;
 
 
-	public SelfStudy(String title, int time) {
-		this.title = title;
+	public SelfStudy(int selfstudyID, int time) {
+		this.selfstudyID = selfstudyID;
 		this.time = time;
 	}
 

@@ -122,7 +122,7 @@ public class UserDBController {
 		return null;
 	}
 
-	// TODO
+//	tested: check
 	public User getUser(String session, String password) {
 		Connection connection = connect();
 		query = "SELECT * FROM user WHERE session = ? AND password = ?";
