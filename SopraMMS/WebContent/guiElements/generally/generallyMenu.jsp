@@ -10,9 +10,10 @@
 		$(document).ready(function() {
 			$(".changePassword").click(function(e) {
 			$(".contentBox").load("/SopraMMS/guiElements/generally/changePassword.jsp");});});
-	</script>
+</script>
 
-<% if(request.getParameterValues("generallyMenu")!=null){ %>
+<% 
+if(request.getParameterValues("generallyMenu")!=null){ %>
 	<script>
 		$(document).ready(function() {
 				$(".expandGenerally").toggleClass("expanded");

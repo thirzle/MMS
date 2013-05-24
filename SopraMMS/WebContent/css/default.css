@@ -105,6 +105,11 @@ body {
 	text-decoration: underline;
 }
 
+.contentBox error{
+	font-weight: normal;
+	color: #a52a2a;
+}
+
 .importantBox {
 	text-align: center;
 	width: 490px;

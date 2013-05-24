@@ -42,7 +42,6 @@ public class ChangePassword extends HttpServlet {
 		String oldPassword = request.getParameter("oldPassword");
 		String newPassword1 = request.getParameter("newPassword1");
 		String newPassword2 = request.getParameter("newPassword2");
-		System.out.println("oldPw"+oldPassword);
 		UserAdministration ua= new UserAdministration();
 		
 		if (!newPassword1.equals(newPassword2)) {
@@ -51,7 +50,7 @@ public class ChangePassword extends HttpServlet {
 		else{
 			User user = ua.checkPasswordBySession(request.getSession().toString(), oldPassword);
 			if(user==null){
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?generallyMenu=open&content=changedPwStatusOldOwWrong");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?generallyMenu=open&content=changedPwStatusOldPwWrong");
 			}
 			else{
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?generallyMenu=open&content=changedPwStatusdone");

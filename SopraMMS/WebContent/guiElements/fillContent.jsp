@@ -1,7 +1,8 @@
 <%
 String contentPage = request.getParameter("content")+"";
 
-if(contentPage.equals("changedPwStatusPw12Wrong")){
+
+if(contentPage.equals("changedPwStatusPw12Wrong")||contentPage.equals("changedPwStatusOldPwWrong")){
 	%>
 	<script>
 		$(document).ready(function() {
@@ -10,7 +11,7 @@ if(contentPage.equals("changedPwStatusPw12Wrong")){
 			
 <%
 }
-else if(contentPage.equals("changedPwStatusOldOwWrong")){
+else if(false){
 	%>
 	<script>
 		$(document).ready(function() {

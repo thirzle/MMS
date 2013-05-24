@@ -1,17 +1,5 @@
 <%@page import="user.User"%>
-<script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$(".btnChangePw")
-								.click(
-										function(e) {
-											$(".contentBox")
-													.load(
-															"/SopraMMS/guiElements/Login/sendNewPassword.jsp");
-										});
-					});
-</script>
+
 
 <h1>Passwort &auml;ndern</h1>
 <p>
@@ -19,12 +7,29 @@
 	<%
 	User user = (User) session.getAttribute("user");
 	out.println("" + user.getLastName() + "&nbsp;"
-			+ user.getFirstName() + "&nbsp;&rarr;&nbsp;"
-			+ user.getMail());
-	
-	
+	+ user.getFirstName() + "&nbsp;&rarr;&nbsp;"
+	+ user.getMail());
 %>
 </p>
+<%
+
+//TODO Parameter koennen nicht abgerufen werden
+String content = request.getParameter("changedPwStatusOldPwWrong");
+System.out.println(content);
+if(content.equals("changedPwStatusOldPwWrong")){
+%>
+<p>
+	<error>Das eingegebene Passwort war falsch</error>
+</p>
+<%
+	}else if(content.equals("changedPwStatusPw12Wrong")) {
+%>
+<p>
+	<error>Die</error>
+</p>
+<%
+	}
+%>
 <form action="/SopraMMS/ChangePassword" method="post">
 	<h3>Altes Passwort</h3>
 	<input name="oldPassword" type="password" size="30" maxlength="30">
