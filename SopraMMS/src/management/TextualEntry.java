@@ -6,10 +6,10 @@ public class TextualEntry extends Entry {
 
 
 	// invoke this constructor if you create a class with already existing data
-	public TextualEntry(int version, String timestamp, boolean classification,
-			boolean approved, boolean rejected, String title, String text) {
+	public TextualEntry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, int entryID, String text) {
 		// all parameters are related to abstract class Entry...
-		super(version, timestamp, classification, approved, rejected, title);
+		super(version, date, classification, approvalstatus, declined, entryID);
 		// actual data is text...
 		this.text = text;
 	}

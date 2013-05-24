@@ -13,8 +13,10 @@ import java.util.List;
 import user.User;
 
 import management.CourseEntry;
+import management.EffortEntry;
 import management.Entry;
 import management.Module;
+import management.SelfStudy;
 
 //
 public class ModuleDBController {
@@ -82,9 +84,31 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
+// TODO
+	public List<Entry> getEntryListOfModule(Module module){
+		Connection connection = connect();
+		LinkedList<Entry> entryList = new LinkedList<Entry>();
+		LinkedList<SelfStudy> selfStudyList = new LinkedList<SelfStudy>();
+		int entryID = 0;
+		query = "SELECT entry.* FROM entry WHERE entry.entryID IN " +
+				"(SELECT e.entryID FROM entry AS e JOIN courseentry AS ce ON e.entryID = ce.entryID " +
+				"JOIN selfstudy AS s ON e.entryID = s.entryID "+
+				"AND e.version = ce.version WHERE e.moduleID = ?)";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setInt(1, module.getModuleID());
+			ResultSet resultSet = pStatement.executeQuery();
+			while(resultSet.next()){
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get entryList of module: "+module.getModuleID());
+		}return null;
+	}
 
 	// load all available modules by a chosen institute
-//	tested: check
+	// tested: check
 	public List<Module> getModulesByInstitute(String institute) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
@@ -486,7 +510,7 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-
+//TODO
 	public CourseEntry getCoursesbyModule(String moduleID) {
 		CourseEntry courseEntry = null;
 		query = "SELECT e.*, c.courseID FROM entry AS e "
@@ -500,12 +524,12 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			LinkedList<String> courses = new LinkedList<String>();
 			resultSet.next();
-			courseEntry = new CourseEntry(resultSet.getInt("version"),
+		/*	courseEntry = new CourseEntry(resultSet.getInt("version"),
 					resultSet.getDate("date").toString(),
 					resultSet.getBoolean("classification"),
 					resultSet.getBoolean("approvalstatus"),
 					resultSet.getBoolean("declined"),
-					resultSet.getString("caption"));
+					resultSet.getString("caption"));*/
 			courseEntry.addCourse(resultSet.getString("courseID"));
 			while (resultSet.next()) {
 				courseEntry.addCourse(resultSet.getString("courseID"));
@@ -609,13 +633,13 @@ public class ModuleDBController {
 			pStatement.setInt(1, m.getModuleID());
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				courses = new CourseEntry(resultSet.getInt("version"),
+				/*courses = new CourseEntry(resultSet.getInt("version"),
 						resultSet.getTimestamp("timestamp").toString(),
 						resultSet.getBoolean("classification"),
 						resultSet.getBoolean("approvedstatus"),
 						resultSet.getBoolean("declined"),
 						resultSet.getString("caption"),
-						resultSet.getString("courseID"));
+						resultSet.getString("courseID"));*/
 			}
 			while (resultSet.next()) {
 

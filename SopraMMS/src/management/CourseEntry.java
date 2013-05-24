@@ -11,23 +11,23 @@ public class CourseEntry extends Entry {
 	// TODO
 
 
-	public CourseEntry(int version, String timestamp, boolean classification,
-			boolean approved, boolean rejected, String title, List<String> courses) {
-		super(version, timestamp, classification, approved, rejected, "Studiengänge");
+	public CourseEntry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, int entryID, List<String> courses) {
+		super(version, date, classification, approvalstatus, declined, entryID);
 		this.courses = courses;
 	}
 	
 	
-	public CourseEntry(int version, String timestamp, boolean classification,
-			boolean approved, boolean rejected, String title, String course) {
-		super(version, timestamp, classification, approved, rejected, "Studiengänge");
+	public CourseEntry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, int entryID, String course) {
+		super(version, date, classification, approvalstatus, declined, entryID);
 		courses.add(course);
 	}
 	
 	
-	public CourseEntry(int version, String timestamp, boolean classification,
-			boolean approved, boolean rejected, String title) {
-		super(version, timestamp, classification, approved, rejected, "Studiengänge");
+	public CourseEntry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, int entryID) {
+		super(version, date, classification, approvalstatus, declined, entryID);
 		courses = new LinkedList<String>();
 	}
 

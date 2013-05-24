@@ -10,10 +10,10 @@ public class EffortEntry extends Entry {
 	private List<SelfStudy> selfStudyList = new LinkedList<SelfStudy>();
 
 
-	public EffortEntry(int version, String timestamp, boolean classification,
-			boolean approved, boolean rejected, String title, int presenceTime,
+	public EffortEntry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, int entryID, int presenceTime,
 			List<SelfStudy> selfStudyList) {
-		super(version, timestamp, classification, approved, rejected, title);
+		super(version, date, classification, approvalstatus, declined, entryID);
 		this.presenceTime = presenceTime;
 		this.selfStudyList = selfStudyList;
 	}
