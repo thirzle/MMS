@@ -25,7 +25,7 @@
 	
 %>
 </p>
-<form action="/SopraMMS/ChangePassword" method="get">
+<form action="/SopraMMS/ChangePassword" method="post">
 	<h3>Altes Passwort</h3>
 	<input name="oldPassword" type="password" size="30" maxlength="30">
 

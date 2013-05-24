@@ -27,16 +27,7 @@ public class ChangePassword extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String oldPassword = request.getParameter("oldPassword");
-		String newPassword1 = request.getParameter("newPassword1");
-		String newPassword2 = request.getParameter("newPassword2");
-
-		UserAdministration ua= new UserAdministration();
-		
-		if (!newPassword1.equals(newPassword2)) {
-			response.sendRedirect("/SopraMMS/welcome.jsp?changedPwStatus=pw12wrong");
-		}
+		HttpServletResponse response) throws ServletException, IOException {
 		
 		
 	}
@@ -48,6 +39,24 @@ public class ChangePassword extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String oldPassword = request.getParameter("oldPassword");
+		String newPassword1 = request.getParameter("newPassword1");
+		String newPassword2 = request.getParameter("newPassword2");
+		System.out.println("oldPw"+oldPassword);
+		UserAdministration ua= new UserAdministration();
+		
+		if (!newPassword1.equals(newPassword2)) {
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?generallyMenu=open&content=changedPwStatusPw12Wrong");
+		}
+		else{
+			User user = ua.checkPasswordBySession(request.getSession().toString(), oldPassword);
+			if(user==null){
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?generallyMenu=open&content=changedPwStatusOldOwWrong");
+			}
+			else{
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?generallyMenu=open&content=changedPwStatusdone");
+			}
+		}
 	}
 
 }

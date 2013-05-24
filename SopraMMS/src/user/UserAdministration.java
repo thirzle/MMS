@@ -179,4 +179,8 @@ public class UserAdministration {
 			userDBController.changeUser(user, user);
 		}
 	}
+	
+	public User checkPasswordBySession(String session, String password){
+		return userDBController.getUser(session, password);
+	}
 }

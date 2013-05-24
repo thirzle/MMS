@@ -11,6 +11,8 @@
 <%@page import="user.User"%>
 </head>
 
+<%@ include file="/guiElements/fillContent.jsp"%>
+
 <body>
 	<%
 		User user = (User) session.getAttribute("user");
@@ -20,6 +22,7 @@
 		<div class="header">
 			<%@ include file="/guiElements/header.jsp"%>
 		</div>
+		
 		<div class="main">
 			<div class="menu">
 				<%@ include file="/guiElements/courseSelection.jsp"%>
