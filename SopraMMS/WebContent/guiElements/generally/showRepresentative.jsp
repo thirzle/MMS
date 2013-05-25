@@ -6,10 +6,11 @@
 <p>Ihr aktueller Stellvertreter:</p>
 <table>
 	<tr>
-		<td>Vorname:
-		<%
-		String representativeName = (String) session.getAttribute("representative");
-		User user = new UserAdministration().getUser(representativeName);
+		<td>Vorname: <%
+			//String representativeName = (String) session.getAttribute("representative");
+			String representativeName = "lehrd";
+			User user = new UserAdministration().getUser(representativeName);
+			out.println(user.getFirstName());
 		%>
 		</td>
 	</tr>

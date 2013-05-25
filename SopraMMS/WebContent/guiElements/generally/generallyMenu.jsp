@@ -10,6 +10,9 @@
 		$(document).ready(function() {
 			$(".changePassword").click(function(e) {
 			$(".contentBox").load("/SopraMMS/guiElements/generally/changePassword.jsp");});});
+		$(document).ready(function(){
+			$(".showRepresentative").click(function(e){
+			$(".contentBox").load("/SopraMMS/guiElements/generally/showRepresentative.jsp");});});
 </script>
 
 <% 
@@ -34,7 +37,7 @@ if(request.getParameterValues("generallyMenu")!=null){ %>
 		<div class="expandGenerally">
 			<ul class="subNav">
 				<li class=changePassword>Passwort &auml;ndern</li>
-				<li>Stellvertreter</li>
+				<li class=showRepresentative>Stellvertreter</li>
 			</ul>
 		</div>
 	</ul>
