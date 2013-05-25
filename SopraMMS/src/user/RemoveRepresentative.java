@@ -28,6 +28,11 @@ public class RemoveRepresentative extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		User user = (User) request.getSession().getAttribute("user");
+		UserAdministration ua = new UserAdministration();
+		if(ua.removeRepresentative(user)){
+			request.getSession().setAttribute("content", "removeRepresentative");
+		}
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
 	/**
