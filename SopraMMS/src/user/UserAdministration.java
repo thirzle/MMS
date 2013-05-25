@@ -178,6 +178,13 @@ public class UserAdministration {
 		}
 	}
 	
+	public String getFacultyName(User user){
+		return userDBController.getFacultyName(user);
+		
+	}
+	public List<String> getInstituteNames(User user){
+		return userDBController.getInstituteNames(user.getLogin());
+	}
 	public User checkPasswordBySession(String session, String password){
 		return userDBController.getUser(session, password);
 	}

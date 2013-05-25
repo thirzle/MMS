@@ -19,15 +19,16 @@ public class UserDBController {
 	private static PreparedStatement pStatement;
 
 	// Lokale Datenbank
-//	private static final String URL = "jdbc:mysql://localhost:3306/mms";
-//	private static final String USER = "root";
-//	private static final String PASSWORD = "";
+	private static final String URL = "jdbc:mysql://localhost:3306/mms";
+	private static final String USER = "root";
+	private static final String PASSWORD = "";
 
 	// Datenbank auf db4free.net
-	 private static final String URL ="jdbc:mysql://db4free.net:3306/sopramms";
-	 private static final String USER ="teamaccount";
-	 private static final String PASSWORD ="6lsj7tdm";
-
+	// private static final String URL =
+	// "jdbc:mysql://db4free.net:3306/sopramms";
+	// private static final String USER = "teamaccount";
+	// private static final String PASSWORD = "6lsj7tdm";
+	//
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	static final int NUMBEROFRIGHTS = 5;
 
@@ -122,7 +123,7 @@ public class UserDBController {
 		return null;
 	}
 
-//	tested: check
+	// tested: check
 	public User getUser(String session, String password) {
 		Connection connection = connect();
 		query = "SELECT * FROM user WHERE session = ? AND password = ?";
@@ -343,7 +344,7 @@ public class UserDBController {
 	// get institute of existing user
 	public List<String> getInstitutesByName(String loginname) {
 		Connection connection = connect();
-		List<String> instituteList = new LinkedList<String>();
+		LinkedList<String> instituteList = new LinkedList<String>();
 		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -358,6 +359,28 @@ public class UserDBController {
 					+ loginname);
 		} finally {
 			close(connection);
+		}
+		return instituteList;
+	}
+
+	// get institutenames of user
+	public List<String> getInstituteNames(String loginname) {
+		Connection connection = connect();
+		LinkedList<String> instituteList = new LinkedList<String>();
+		query = "SELECT i.name FROM institute AS i JOIN instituteaffiliation AS ia " +
+				"ON i.instituteID = ia.instituteID WHERE ia.loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				instituteList.add(resultSet.getString(1));
+			}
+			return instituteList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get names of institutes of user: "
+					+ loginname);
 		}
 		return instituteList;
 	}
@@ -450,6 +473,26 @@ public class UserDBController {
 			System.out.println("Couldn't get Institutes");
 		}
 		return instituteList;
+	}
+
+	// get facultyname of user
+	public String getFacultyName(User user) {
+		Connection connection = connect();
+		query = "SELECT f.name FROM faculty AS f JOIN institute AS i ON f.facultyID = i.facultyID "
+				+ "JOIN instituteaffiliation AS ia ON ia.instituteID = i.instituteID WHERE ia.loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, user.getLogin());
+			resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				return resultSet.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get faculty name of user: "
+					+ user.getLogin());
+		}
+		return null;
 	}
 
 	// close connection
