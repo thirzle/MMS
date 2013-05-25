@@ -115,9 +115,7 @@ public class UserAdministration {
 
 
 	public User getUser(String loginname) {
-		// TODO fill Method
-
-		return new User();
+		return userDBController.getUser(loginname);
 	}
 
 
