@@ -107,10 +107,9 @@ public class UserAdministration {
 
 
 	public User changePassword(User user, String password) {
-		User newUser = user;
-		newUser.setRepresentative(password);
-		userDBController.changeUser(user, newUser);
-		return newUser;
+		userDBController.setPassword(user.getLogin(), password);
+		user.setPassword(password);
+		return user;
 	}
 
 
@@ -178,7 +177,7 @@ public class UserAdministration {
 		}
 	}
 	
-	public User checkPasswordBySession(String session, String password){
-		return userDBController.getUser(session, password);
+	public boolean checkPassword(String loginname, String password){
+		return userDBController.checkPassword(loginname, password);
 	}
 }

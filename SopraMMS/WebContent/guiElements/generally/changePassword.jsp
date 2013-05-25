@@ -14,8 +14,8 @@
 <%
 
 //TODO Parameter koennen nicht abgerufen werden
-String content = request.getParameter("changedPwStatusOldPwWrong");
-System.out.println(content);
+String content = session.getAttribute("content")+"";
+session.setAttribute("content", null);
 if(content.equals("changedPwStatusOldPwWrong")){
 %>
 <p>
@@ -25,12 +25,17 @@ if(content.equals("changedPwStatusOldPwWrong")){
 	}else if(content.equals("changedPwStatusPw12Wrong")) {
 %>
 <p>
-	<error>Die</error>
+	<error>Die neuen Passw&ouml;rter stimmen nicht &uuml;ber ein</error>
 </p>
 <%
-	}
+	}else if(content.equals("changedPwStatusdone")){%>
+<p>
+	<h2>Das Passwort wurde erfolgreich ge&auml;ndert</h2>
+</p>
+<%
+}
 %>
-<form action="/SopraMMS/ChangePassword" method="post">
+<form action="/SopraMMS/ChangePassword" method="get">
 	<h3>Altes Passwort</h3>
 	<input name="oldPassword" type="password" size="30" maxlength="30">
 

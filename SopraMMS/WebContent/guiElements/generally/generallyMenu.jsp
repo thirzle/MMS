@@ -16,7 +16,8 @@
 </script>
 
 <% 
-if(request.getParameterValues("generallyMenu")!=null){ %>
+if(session.getAttribute("generallyMenu")!=null){
+	session.setAttribute("generallyMenu",null); %>
 	<script>
 		$(document).ready(function() {
 				$(".expandGenerally").toggleClass("expanded");

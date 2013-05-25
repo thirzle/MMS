@@ -194,14 +194,14 @@ public class UserDBController {
 	public boolean changeUser(User oldUser, User newUser) {
 		Connection connection = connect();
 		String loginname = oldUser.getLogin();
-		query = "SELECT * FROM User WHERE loginname=?";
+		query = "SELECT * FROM user WHERE loginname=?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
 			resultSet = pStatement.executeQuery();
 			// checks if user exists in database
 			if (resultSet.next()) {
-				query = "UPDATE User SET loginname=?, lastname=?, firstname=?, mail=?, password=?, session=? WHERE loginname=?";
+				query = "UPDATE user SET loginname=?, lastname=?, firstname=?, mail=?, password=?, session=? WHERE loginname=?";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, newUser.getLogin());
 				pStatement.setString(2, newUser.getLastName());
@@ -228,7 +228,7 @@ public class UserDBController {
 	// deletes User
 	public boolean deleteUser(String loginname) {
 		Connection connection = connect();
-		query = "DELETE FROM User WHERE loginname=?";
+		query = "DELETE FROM Uuer WHERE loginname=?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);

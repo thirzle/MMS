@@ -1,8 +1,8 @@
 <%
-String contentPage = request.getParameter("content")+"";
+String contentPage = session.getAttribute("content")+"";
 
 
-if(contentPage.equals("changedPwStatusPw12Wrong")||contentPage.equals("changedPwStatusOldPwWrong")){
+if(contentPage.equals("changedPwStatusPw12Wrong")||contentPage.equals("changedPwStatusOldPwWrong")||contentPage.equals("changedPwStatusdone")){
 	%>
 	<script>
 		$(document).ready(function() {
