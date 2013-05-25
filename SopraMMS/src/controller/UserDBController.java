@@ -124,24 +124,41 @@ public class UserDBController {
 	}
 
 	// tested: check
-	public User getUser(String session, String password) {
+//	public User getUser(String session, String password) {
+//		Connection connection = connect();
+//		query = "SELECT * FROM user WHERE session = ? AND password = ?";
+//		try {
+//			pStatement = connection.prepareStatement(query);
+//			pStatement.setString(1, session);
+//			pStatement.setString(2, password);
+//			ResultSet resultSet = pStatement.executeQuery();
+//			if (resultSet.next()) {
+//				return new User(resultSet.getString("loginname"),
+//						resultSet.getString("firstname"),
+//						resultSet.getString("lastname"),
+//						resultSet.getString("mail"), password);
+//			}
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			System.out.println("couldn't get user by session and password");
+//		}
+//		return null;
+//	}
+//	find user by email
+	public User getUserByEmail(String mail){
 		Connection connection = connect();
-		query = "SELECT * FROM user WHERE session = ? AND password = ?";
+		query = "SELECT loginname FROM user WHERE mail = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, session);
-			pStatement.setString(2, password);
+			pStatement.setString(1, mail);
 			ResultSet resultSet = pStatement.executeQuery();
-			if (resultSet.next()) {
-				return new User(resultSet.getString("loginname"),
-						resultSet.getString("firstname"),
-						resultSet.getString("lastname"),
-						resultSet.getString("mail"), password);
+			if(resultSet.next()){
+				return getUser(resultSet.getString(1));
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("couldn't get user by session and password");
+			System.out.println("couldn't get user by email: "+mail);
 		}finally {
 			close(connection);
 		}

@@ -43,8 +43,12 @@ public class DBtest {
 		System.out.println("get user (lastname) lehrd: "+user.getLastName());
 		
 //		uController.getUser
-		user = uController.getUser("5BA1F9C933DA6ECAE7F6EB2F02790A4F", "926186098");
-		System.out.println("get user hirzlet: "+ user.getFirstName());
+//		user = uController.getUser("5BA1F9C933DA6ECAE7F6EB2F02790A4F", "926186098");
+//		System.out.println("get user hirzlet: "+ user.getFirstName());
+		
+//		uController.getUser
+		user = uController.getUserByEmail("teresa.hirzle@uni-ulm.de");
+		System.out.println("get user by email: "+user.getLogin());
 		
 		boolean[] rightsT = {true, true, false, false, false};
 		LinkedList<String> instituteT = new LinkedList<String>();

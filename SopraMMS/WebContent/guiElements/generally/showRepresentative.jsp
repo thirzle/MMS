@@ -1,7 +1,15 @@
 <%@page import="user.UserAdministration"%>
 <%@page import="user.User"%>
 <%@page import="java.util.LinkedList"%>
-
+<script>
+		$(document).ready(function(){
+		$(".appointRepresentative").click(function(e){
+		$(".contentBox").load("/SopraMMS/guiElements/generally/appointRepresentative.jsp");});});
+		
+		$(document).ready(function(){
+		$(".removeRepresentative").click(function(e){
+		$(".contentBox").load("/SopraMMS/guiElements/generally/removeRepresentative.jsp");});});
+</script>
 
 <h1>Stellvertreter</h1>
 <p>Ihr aktueller Stellvertreter:</p>
@@ -69,3 +77,8 @@
 	</tr>
 	
 </table>
+
+<p>
+<input class = "appointRepresentative" type="submit" name="StellvertreterErnennen" value="Stellvertreter beantragen"/>
+<input class = "removeRepresentative" type="submit" name="StellvertreterEntfernen" value="Stellvertreter entfernen"/>
+</p> 
