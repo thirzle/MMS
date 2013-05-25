@@ -1,4 +1,4 @@
 <h1>Stellvertreter</h1>
-<p>Ihr Stellvertreter wurde erfolgreich entfernt!</p>
+<h2>Ihr Stellvertreter wurde erfolgreich entfernt!</h2>
 <%//TODO
 %>

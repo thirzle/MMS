@@ -11,11 +11,11 @@ if(contentPage.equals("changedPwStatusPw12Wrong")||contentPage.equals("changedPw
 			
 <%
 }
-else if(false){
+else if(contentPage.equals("applyRepresentative")){
 	%>
 	<script>
 		$(document).ready(function() {
-			$(".contentBox").load("/SopraMMS/guiElements/impressum.jsp");});
+			$(".contentBox").load("/SopraMMS/guiElements/generally/applyRepresentative.jsp");});
 	</script>
 			
 <%

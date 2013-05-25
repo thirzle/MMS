@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mail.EmailApache;
+import mail.EmailTelnet;
 
 /**
  * Servlet implementation class AppointRepresentative
@@ -31,27 +32,27 @@ public class AppointRepresentative extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("**************************************************");
-		System.out.println("**************************************************");
-		System.out.println("**************************************************");
-		System.out.println("**************************************************");
-		System.out.println("**************************************************");
-
-		System.out.println("AppointRepresentative.doGet");
 		String firstNameRep = request.getParameter("firstNameRep");
 		String lastNameRep = request.getParameter("lastNameRep");
 		String mailRep = request.getParameter("mailRep");
 		User user = (User) request.getSession().getAttribute("user");
-		String content = user.getFirstName() + " " +user.getLastName()+" moechte "+ firstNameRep+" "+lastNameRep +" zu seinem Stellvertreter ernennen";
-		EmailApache mail = new EmailApache();
-		mail.send_mail("Neuer Stellvertreter", "t.hirzle@web.de", content);
+
+		String content = user.getFirstName() + " " + user.getLastName() + " (E-Mail Adresse: "+mailRep+") "
+				+ " moechte " + firstNameRep + " " + lastNameRep
+				+ " zu seinem Stellvertreter ernennen";
+		EmailTelnet mail = new EmailTelnet();
+		mail.send_mail("Neuer Stellvertreter", "teresa.hirzle@uni-ulm.de",
+				content);
+		request.getSession().setAttribute("content", "applyRepresentative");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 }

@@ -1,10 +1,6 @@
 package user;
 
-import java.io.IOException;
 import java.util.List;
-
-import mail.EmailMercury;
-import mail.EmailTelnet;
 
 import controller.UserDBController;
 
@@ -115,27 +111,10 @@ public class UserAdministration {
 		return false;
 	}
 
-	public void sendNewPassword(String email) throws IOException {
-		User user = userDBController.getUserByEmail(email);
-		long newPassword = Math.round(Math.random()*100000);
-		int hashedPassword= Long.toString(newPassword).hashCode();
-		System.out.println("Password: "+newPassword+" -> "+hashedPassword);
-		userDBController.setPassword(user.getLogin(), hashedPassword+"");
-		EmailTelnet mail = new EmailTelnet();
-		StringBuilder text = new StringBuilder();
-		text.append("Sehr geehrte/geehrter Frau/Herr "+user.getLastName()+",\n");
-		text.append("\n");
-		text.append("Sie haben soeben ein neues Passwort für ihren Account (Benutzername: "+user.getLogin()+")im MMS beantragt.\n");
-		text.append("\n");
-		text.append("Ihr neues Passwort lautet: "+newPassword+"\n");
-		text.append("\n");
-		text.append("\n");
-		text.append("Bitte ändern Sie dieses generierte Passwort schnellstmöglich im Modul Management System.");
-		text.append("\n");
-		text.append("Mit freundlichen Grüßen\n");
-		text.append("MMS-TEAM\n");
-		
-		mail.send_mail("MMS - Neues Passwort", email,text.toString());
+	public boolean sendNewPassword(String loginname) {
+		// TODO fill Method
+
+		return false;
 	}
 
 	public User checkLogin(String session) {

@@ -16,7 +16,7 @@
 			<td><input name="mailRep" type="text" size="30" maxlength="30"></td>
 		</tr>
 	</table>
-</form>
 <input type="submit" name="cancel" value="Abbrechen" />
 <input class=".appointRepresentative" type="submit"
 	name="appointRepresentative" value="Zum Stellvertreter ernennen" />
+</form>

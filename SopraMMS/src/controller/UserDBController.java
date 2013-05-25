@@ -521,6 +521,13 @@ public class UserDBController {
 		}
 		return null;
 	}
+	
+//	remove representative of user
+	public boolean removeRepresentative(User user){
+		Connection connection = connect();
+		query = "";
+		return false;
+	}
 
 	// close connection
 	private void close(Connection connection) {
