@@ -38,24 +38,21 @@
 <form action="/SopraMMS/ChangePassword" method="get">
 	<table>
 		<tr>
-			<td>Altes Passwort</td>
+			<td>Altes Passwort:</td>
 			<td><input name="oldPassword" type="password" size="30"
 				maxlength="30"></td>
 		</tr>
 		<tr>
-			<td>Neues Passwort<</td>
+			<td>Neues Passwort:</td>
 			<td><input name="newPassword1" type="password" size="30"
 				maxlength="40"></td>
 		</tr>
 		<tr>
-			<td>Neues Passwort best&auml;tigen</td>
+			<td>Neues Passwort best&auml;tigen:</td>
 			<td><input name="newPassword2" type="password" size="30"
 				maxlength="40"></td>
 		</tr>
-		<tr>
-			<td></td>
-			<td><input type="submit" name="Submit"
-				value="Passwort &Auml;ndern" class="btnChangePw" /></td>
-		</tr>
-	</table>
+		
+	</table><input type="submit" name="Submit"
+				value="Passwort &Auml;ndern" class="btnChangePw" />
 </form>

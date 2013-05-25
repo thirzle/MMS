@@ -2,6 +2,8 @@ package user;
 
 import java.util.List;
 
+import mail.EmailMercury;
+
 import controller.UserDBController;
 
 public class UserAdministration {
@@ -111,10 +113,14 @@ public class UserAdministration {
 		return false;
 	}
 
-	public boolean sendNewPassword(String loginname) {
-		// TODO fill Method
-
-		return false;
+	public void sendNewPassword(String email) {
+		User user = new User();
+		long newPassword = Math.round(Math.random()*100000);
+		int hashedPassword= Long.toString(newPassword).hashCode();
+		System.out.println("Password: "+newPassword+" -> "+hashedPassword);
+		userDBController.setPassword(user.getLogin(), hashedPassword+"");
+		EmailMercury mail = new EmailMercury();
+		mail.send_mail("MMS - Neues Passwort", email, "Ihr neues Passwort lautet: "+newPassword);
 	}
 
 	public User checkLogin(String session) {

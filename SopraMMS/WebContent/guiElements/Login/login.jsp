@@ -4,7 +4,7 @@
 					function() {
 						$(".lostPassword")
 								.click(
-				function(e) {$(".contentBox").load()"/SopraMMS/guiElements/Login/sendNewPassword.jsp");
+				function(e) {$(".contentBox").load("/SopraMMS/guiElements/Login/sendNewPassword.jsp");
 						});});
 </script>
 
