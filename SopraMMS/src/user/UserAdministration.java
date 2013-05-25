@@ -123,17 +123,22 @@ public class UserAdministration {
 		userDBController.setPassword(user.getLogin(), hashedPassword+"");
 		EmailTelnet mail = new EmailTelnet();
 		StringBuilder text = new StringBuilder();
-		text.append("Sehr geehrte/geehrter Frau/Herr "+user.getLastName()+",\n");
+		text.append("Sehr geehrte/geehrter Frau/Herr "+user.getLastName()+",");
 		text.append("\n");
-		text.append("Sie haben soeben ein neues Passwort für ihren Account (Benutzername: "+user.getLogin()+")im MMS beantragt.\n");
 		text.append("\n");
-		text.append("Ihr neues Passwort lautet: "+newPassword+"\n");
+		text.append("Sie haben soeben ein neues Passwort für ihren Account (Benutzername: "+user.getLogin()+") im MMS beantragt.");
+		text.append("\n");
+		text.append("\n");
+		text.append("Ihr neues Passwort lautet: "+newPassword);
+		text.append("\n");
 		text.append("\n");
 		text.append("\n");
 		text.append("Bitte ändern Sie dieses generierte Passwort schnellstmöglich im Modul Management System.");
 		text.append("\n");
-		text.append("Mit freundlichen Grüßen\n");
-		text.append("MMS-TEAM\n");
+		text.append("\n");
+		text.append("Mit freundlichen Grüßen");
+		text.append("\n");
+		text.append("MMS-Team");
 		
 		mail.send_mail("MMS - Neues Passwort", email,text.toString());
 	}
