@@ -19,15 +19,15 @@ public class UserDBController {
 	private static PreparedStatement pStatement;
 
 	// Lokale Datenbank
-	private static final String URL = "jdbc:mysql://localhost:3306/mms";
-	private static final String USER = "root";
-	private static final String PASSWORD = "";
+//	private static final String URL = "jdbc:mysql://localhost:3306/mms";
+//	private static final String USER = "root";
+//	private static final String PASSWORD = "";
 
 	// Datenbank auf db4free.net
-	// private static final String URL =
-	// "jdbc:mysql://db4free.net:3306/sopramms";
-	// private static final String USER = "teamaccount";
-	// private static final String PASSWORD = "6lsj7tdm";
+	 private static final String URL =
+	 "jdbc:mysql://db4free.net:3306/sopramms";
+	 private static final String USER = "teamaccount";
+	 private static final String PASSWORD = "6lsj7tdm";
 	//
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	static final int NUMBEROFRIGHTS = 5;
@@ -142,6 +142,8 @@ public class UserDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("couldn't get user by session and password");
+		}finally {
+			close(connection);
 		}
 		return null;
 	}
@@ -259,6 +261,8 @@ public class UserDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get rights of user: " + loginname);
+		}finally {
+			close(connection);
 		}
 		return rightsArray;
 	}
@@ -381,6 +385,8 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("couldn't get names of institutes of user: "
 					+ loginname);
+		}finally {
+			close(connection);
 		}
 		return instituteList;
 	}
@@ -471,6 +477,8 @@ public class UserDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get Institutes");
+		}finally {
+			close(connection);
 		}
 		return instituteList;
 	}
@@ -491,6 +499,8 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("couldn't get faculty name of user: "
 					+ user.getLogin());
+		}finally {
+			close(connection);
 		}
 		return null;
 	}
