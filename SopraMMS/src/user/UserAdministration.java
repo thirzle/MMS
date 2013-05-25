@@ -171,9 +171,4 @@ public class UserAdministration {
 	public List<String> getInstituteNames(User user) {
 		return userDBController.getInstituteNames(user.getLogin());
 	}
-
-	public User checkPasswordBySession(String session, String password) {
-		return userDBController.getUser(session, password);
-
-	}
 }
