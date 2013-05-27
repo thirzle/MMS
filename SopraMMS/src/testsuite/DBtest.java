@@ -2,7 +2,9 @@ package testsuite;
 
 
 import java.util.LinkedList;
+import java.util.List;
 
+import management.Entry;
 import management.Module;
 
 import user.User;
@@ -23,6 +25,19 @@ public class DBtest {
 //		uController.getRights
 		boolean [] rights = uController.getRights("lehrd");
 		System.out.println("get rights of lehrd: "+rights[1]);
+		
+		List<Module> modules = mController.getModules();
+		for (Module module : modules) {
+			System.out.println("Modul: "+module.getName());
+			for (Entry entry : module.getEntryList()) {
+				System.out.println("Entry: "+entry.getTitle());
+			}
+		}
+		
+		
+		
+		
+		
 		
 //		uController.getInstitutesByName
 		LinkedList<String> stute = (LinkedList) uController.getInstitutesByName("lehrd");
