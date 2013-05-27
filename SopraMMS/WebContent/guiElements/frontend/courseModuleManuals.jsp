@@ -6,7 +6,7 @@
 
 
 	ModuleAdministration ma = new ModuleAdministration();
-	ma.getModuleManualPdfByCourse(course)
+	ma.getModuleManualPdfByCourse(course);
 %>
 
 <h1><%=course%></h1>
