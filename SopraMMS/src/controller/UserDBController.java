@@ -19,15 +19,15 @@ public class UserDBController {
 	private static PreparedStatement pStatement;
 
 	// Lokale Datenbank
-	private static final String URL = "jdbc:mysql://localhost:3306/mms";
-	private static final String USER = "root";
-	private static final String PASSWORD = "";
+//	private static final String URL = "jdbc:mysql://localhost:3306/mms";
+//	private static final String USER = "root";
+//	private static final String PASSWORD = "";
 
 	// Datenbank auf db4free.net
-//	 private static final String URL =
-//	 "jdbc:mysql://db4free.net:3306/sopramms";
-//	 private static final String USER = "teamaccount";
-//	 private static final String PASSWORD = "6lsj7tdm";
+	 private static final String URL =
+	 "jdbc:mysql://db4free.net:3306/sopramms";
+	 private static final String USER = "teamaccount";
+	 private static final String PASSWORD = "6lsj7tdm";
 	//
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	static final int NUMBEROFRIGHTS = 5;
