@@ -1,3 +1,4 @@
+<%@page import="org.bouncycastle.asn1.ocsp.ResponderID"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -56,9 +57,15 @@
 				<%@ include file="/guiElements/Login/logout.jsp" %>
 			</div>
 			<div class="contentBox" id="contentBox">
-				<%if(session.getAttribute("task")=="usertable") { %>
-					<%@ include file="/guiElements/admin/adminMenu/userManagementContent.jsp" %>
-				<%} else if(session.getAttribute("task")=="home") { %>
+				<%if(session.getAttribute("task")=="user") {%>
+				    <%
+				    Object users = session.getAttribute("users");
+				    System.out.println("(home.jsp): session.getAttribute('users') ="+users);
+				    if(users.equals(null)||users=="") {
+				    	response.sendRedirect("/SopraMMS/LoadUser");
+				    }%>
+				    <jsp:include page="/guiElements/admin/adminMenu/userManagementContent.jsp" />
+				  <%} else if(session.getAttribute("task")=="home") { %>
 					<%@ include file="/guiElements/homeContent.jsp"%>
 				<%} %>
 			</div>
