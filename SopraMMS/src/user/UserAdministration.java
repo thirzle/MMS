@@ -107,6 +107,10 @@ public class UserAdministration {
 	public User getUser(String loginname) {
 		return userDBController.getUser(loginname);
 	}
+	
+	public User getUserByMail(String mail){
+		return userDBController.getUserByEmail(mail);
+	}
 
 	public boolean deleteUser(User user) {
 		// TODO fill Method

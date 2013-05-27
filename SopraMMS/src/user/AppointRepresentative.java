@@ -37,7 +37,7 @@ public class AppointRepresentative extends HttpServlet {
 		String mailRep = request.getParameter("mailRep");
 
 		// check if representative exists
-		//new UserAdministration().
+		new UserAdministration().getUserByMail(mailRep);
 		
 		User user = (User) request.getSession().getAttribute("user");
 
