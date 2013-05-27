@@ -31,8 +31,16 @@ else if(contentPage.equals("removeRepresentative")){
 else if(contentPage.equals("showRepresentative")){
 	%>
 	<script>
-	$(document).ready(function(){
+		$(document).ready(function(){
 		$(".contentBox").load("/SopraMMS/guiElements/generally/showRepresentative.jsp");});
+	</script>
+	<%
+}
+else if(contentPage.equals("nR")){
+	%>
+	<script>
+		$(document).ready(function(){
+		$(".contentBox").load("/SopraMMS/guiElements/generally/showNoRepresentative.jsp");});
 	</script>
 	<%
 }

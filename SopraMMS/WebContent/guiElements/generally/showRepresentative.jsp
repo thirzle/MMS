@@ -34,61 +34,49 @@
 	<table>
 		<tr>
 			<td>Vorname:</td>
-			<td>
-				<%=session.getAttribute("firstnameRep")
-					//User user = (User) session.getAttribute("user");
-					//String representativeName = user.getRepresentative();
-					//String representativeName = "lehrd";
-					//User userR = new UserAdministration().getUser(representativeName);
-					//out.println(user.getFirstName());
-				%>
-			</td>
+			<td><%=session.getAttribute("firstnameRep")%></td>
 		</tr>
 		<tr>
 			<td>Nachname:</td>
-			<td>
-				<%=session.getAttribute("lastnameRep")%>
-			</td>
+			<td><%=session.getAttribute("lastnameRep")%></td>
 		</tr>
 		<tr>
 			<td>E-Mail:</td>
-			<td>
-				<%=session.getAttribute("emailRep")%>
-			</td>
+			<td><%=session.getAttribute("emailRep")%></td>
 		</tr>
 		<tr>
 			<td>Fakult&auml;t:</td>
-			<td>
-				<%=session.getAttribute("facRep")%>
-			</td>
+			<td><%=session.getAttribute("facRep")%></td>
 		</tr>
 		<tr>
-			<td>Institut:</td>
 			<%
-				//LinkedList<String> instituteList = (LinkedList) new UserAdministration()
-					//	.getInstituteNames(userR);
+				LinkedList<String> instituteList = (LinkedList) session
+						.getAttribute("inRep");
 			%>
-			<td>
-				<%
-					//out.println(instituteList.getFirst());
-					//instituteList.removeFirst();
-				%>
+			<td >Institut(e):</td>
+			<td >
+				<ul>
+					<li>
+						<%
+							out.println(instituteList.getFirst());
+							instituteList.removeFirst();
+						%>
+						
+					</li>
+					<%
+						for (String institute : instituteList) {
+					%>
+					<li>
+						<%
+							out.println(institute);
+						%>
+						<br>
+					</li>
+					<%
+						}
+					%>
+				</ul>
 			</td>
-			<%
-				//for (String institute : instituteList) {
-			%>
-		
-		<tr>
-			<td></td>
-			<td>
-				<%
-					//out.println(institute);
-				%>
-			</td>
-		</tr>
-		<%
-			//}
-		%>
 		</tr>
 
 	</table>
