@@ -36,7 +36,7 @@ else if(contentPage.equals("showRepresentative")){
 	</script>
 	<%
 }
-else if(contentPage.equals("nR")){
+else if(contentPage.equals("noRepresentative")){
 	%>
 	<script>
 		$(document).ready(function(){
