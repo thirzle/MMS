@@ -1,4 +1,7 @@
 
+<%@page import="java.util.List"%>
+<%@page import="frontend.CourseMenu"%>
+
 <script>
 	$(document).ready(function() {
 		$(".headerNavCourse").click(function(e) {
@@ -11,9 +14,11 @@
 
 </script>
 
+<% 
+	CourseMenu cm = new CourseMenu();
+	List<String> courses = cm.getCourses();
+%>
 
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/default.css">
 <div class="menuBox">
 	<h1>Modulhandbuch</h1>
 
@@ -23,15 +28,11 @@
 		</div>
 		<div class="expandCourse">
 			<ul class="subNav">
-				<strong>Bachelor</strong>
-				<li>Informatik</li>
-				<li>Medieninformatik</li>
-				<li>Informations-systemtechnik</li>
-				<li>Software Engineering</li>
-				<strong>Master</strong>
-				<li>Informatik</li>
-				<li>Medieninformatik</li>
-				<li>Informations-systemtechnik</li>
+				<%for(int i=0; i<courses.size();i++){
+	
+					out.print("<li class='"+i+"'>"+courses.get(i)+"</li>");
+					
+				} %>
 			</ul>
 		</div>
 	</ul>

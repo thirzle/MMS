@@ -19,7 +19,7 @@
 		</div>
 		<div class="main">
 			<div class="menu">
-				<%@ include file="/guiElements/courseSelection.jsp"%>
+				<%@ include file="/guiElements/frontend/courseSelection.jsp"%>
 				<%
 					String loginname = (String) session.getAttribute("loginname");
 					if (loginname == null) {
