@@ -5,17 +5,17 @@ import java.text.SimpleDateFormat;
 
 public abstract class Entry {
 
+	private int entryID;
 	private int version; // version number
 	private String timestamp; // time stamp, FORMAT: hh:mm:ss a zzz
 	private boolean classification; // Entry classification
 	private boolean approved;
 	private boolean rejected;
 	private String title;
-	private int entryID;
 
 	// use this when you import existing data
 	public Entry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, int entryID) {
+			boolean approvalstatus, boolean declined, int entryID, String title) {
 		this.version = version;
 		this.timestamp = timestamp;
 		this.classification = classification;

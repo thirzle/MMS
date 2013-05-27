@@ -7,9 +7,9 @@ public class TextualEntry extends Entry {
 
 	// invoke this constructor if you create a class with already existing data
 	public TextualEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, int entryID, String text) {
+			boolean approvalstatus, boolean declined, int entryID, String text, String title) {
 		// all parameters are related to abstract class Entry...
-		super(version, date, classification, approvalstatus, declined, entryID);
+		super(version, date, classification, approvalstatus, declined, entryID, title);
 		// actual data is text...
 		this.text = text;
 	}

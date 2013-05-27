@@ -11,9 +11,9 @@ public class EffortEntry extends Entry {
 
 
 	public EffortEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, int entryID, int presenceTime,
+			boolean approvalstatus, boolean declined, int entryID, String title, int presenceTime,
 			List<SelfStudy> selfStudyList) {
-		super(version, date, classification, approvalstatus, declined, entryID);
+		super(version, date, classification, approvalstatus, declined, entryID, title);
 		this.presenceTime = presenceTime;
 		this.selfStudyList = selfStudyList;
 	}
