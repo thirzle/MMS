@@ -1,8 +1,7 @@
-<%@ page import="controller.UserDBController" %>
-<%@ page import="java.util.List" %>
+
+<%@ page import="java.util.List, java.io.PrintWriter" %>
 <%
-UserDBController controller = new UserDBController();
-List<String> institutes = controller.getInstitutes();
+List<String> institutes = (List<String>) session.getAttribute("institutes");
 int NUMBER_OF_INSTITUTES = institutes.size();
 %>
 <tr id="tmpRow" style="height: 30px;">
