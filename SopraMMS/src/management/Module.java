@@ -24,8 +24,11 @@ public class Module {
 		this.approved = approved;
 		this.instituteID = insituteID;
 	}
+
+
 	public Module(int moduleID, String name, Date creationDate,
-			Date modificationDate, boolean approved, String insituteID, List<Entry> entryList) {
+			Date modificationDate, boolean approved, String insituteID,
+			List<Entry> entryList) {
 		this.moduleID = moduleID;
 		this.name = name;
 		this.creationDate = creationDate;
@@ -71,6 +74,11 @@ public class Module {
 	}
 
 
+	public void setEntryList(List<Entry> entryList) {
+		this.entryList = entryList;
+	}
+
+
 	public void addTextualEntry(TextualEntry textualentry) {
 		entryList.add(textualentry);
 	}
@@ -83,6 +91,15 @@ public class Module {
 
 	public void addCourseEntry(CourseEntry courseentry) {
 		entryList.add(courseentry);
+	}
+	
+	public void addEntryList(List<Entry> entries){
+		entryList.addAll(entries);
+	}
+
+	
+	public void addTextualEntryList(List<TextualEntry> entries){
+		entryList.addAll(entries);
 	}
 
 
