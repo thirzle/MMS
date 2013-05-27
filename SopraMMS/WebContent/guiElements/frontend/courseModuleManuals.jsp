@@ -8,6 +8,9 @@
 	ModuleAdministration ma = new ModuleAdministration();
 	List<String[]> pdfs = ma.getModuleManualPdfByCourse(course);
 
+	
+	
+	
 	// 0:Bachelor; 1:Master; 2:Lehramt; 3:Diplom;
 	boolean[] degree = new boolean[4];
 	for (String[] s : pdfs) {
