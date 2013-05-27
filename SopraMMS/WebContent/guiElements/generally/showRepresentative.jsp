@@ -36,10 +36,10 @@
 			<td>Vorname:</td>
 			<td>
 				<%
-					String representativeName = (String) session
-							.getAttribute("representative");
+					User user = (User) session.getAttribute("user");
+					String representativeName = user.getRepresentative();
 					//String representativeName = "lehrd";
-					User user = new UserAdministration().getUser(representativeName);
+					User userR = new UserAdministration().getUser(representativeName);
 					out.println(user.getFirstName());
 				%>
 			</td>
@@ -48,7 +48,7 @@
 			<td>Nachname:</td>
 			<td>
 				<%
-					out.println(user.getLastName());
+					out.println(userR.getLastName());
 				%>
 			</td>
 		</tr>
@@ -56,7 +56,7 @@
 			<td>E-Mail:</td>
 			<td>
 				<%
-					out.println(user.getMail());
+					out.println(userR.getMail());
 				%>
 			</td>
 		</tr>
@@ -64,7 +64,7 @@
 			<td>Fakult&auml;t:</td>
 			<td>
 				<%
-					out.println(new UserAdministration().getFacultyName(user));
+					out.println(new UserAdministration().getFacultyName(userR));
 				%>
 			</td>
 		</tr>
@@ -72,7 +72,7 @@
 			<td>Institut:</td>
 			<%
 				LinkedList<String> instituteList = (LinkedList) new UserAdministration()
-						.getInstituteNames(user);
+						.getInstituteNames(userR);
 			%>
 			<td>
 				<%

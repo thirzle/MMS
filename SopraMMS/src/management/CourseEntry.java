@@ -6,7 +6,7 @@ import java.util.List;
 public class CourseEntry extends Entry {
 
 	@SuppressWarnings("unused")
-	private List<String> courses = null;
+	private List<String> courses = new LinkedList<String>();
 
 	// TODO
 
