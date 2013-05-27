@@ -511,6 +511,7 @@ public class UserDBController {
 				"WHERE faculty = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1,facultyID);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				courses.add(resultSet.getString("description"));

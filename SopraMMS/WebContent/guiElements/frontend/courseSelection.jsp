@@ -30,7 +30,7 @@
 			<ul class="subNav">
 				<%for(int i=0; i<courses.size();i++){
 	
-					out.print("<li class='"+i+"'>"+courses.get(i)+"</li>");
+					out.print("<li class='"+i+"'><a href=/SopraMMS/CourseContent?pdf="+courses.get(i)+">"+courses.get(i)+"</a></li>");
 					
 				} %>
 			</ul>

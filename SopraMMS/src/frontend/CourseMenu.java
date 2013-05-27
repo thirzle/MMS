@@ -11,14 +11,7 @@ public class CourseMenu {
 
 	public List<String> getCourses() {
 		ArrayList<String> courses = new ArrayList<>();
-
-		// Muss noch durch .getCourses(fakultaet) erstetzt werden
-		courses.addAll(userDBController.getInstitutes());
-
-		for (String string : courses) {
-			System.out.println(string);
-		}
-		
+		courses.addAll(userDBController.getCoursesByFaculty("in"));	
 		return courses;
 	}
 

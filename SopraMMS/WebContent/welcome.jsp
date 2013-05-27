@@ -12,7 +12,6 @@
 
 </head>
 <body>
-
 	<div class="page">
 		<div class="header">
 			<%@ include file="/guiElements/header.jsp"%>
