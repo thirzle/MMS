@@ -654,8 +654,68 @@ public class ModuleDBController {
 	
 	
 	
-	public EffortEntry getEffortEntryByModule(){
-		return null;
+	public EffortEntry getEffortEntryByModule(Module m){
+		EffortEntry effort = null;
+		Connection connection = connect();
+		query = "SELECT e.*,  ef.presencetime" +
+				"FROM entry AS e JOIN effortentry AS ef ON e.entryID = ef.entryID" +
+				" AND e.version = ef.version JOIN latestentry AS l ON " +
+				"ef.entryID = l.entryID AND ef.version = l.version WHERE e.moduleID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setInt(1, m.getModuleID());
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				effort = new EffortEntry(resultSet.getInt("version"),
+						resultSet.getDate("date").toString(),
+						resultSet.getBoolean("classification"), resultSet.getBoolean("approvalstatus"),
+						resultSet.getBoolean("declined"), resultSet.getInt("entryID"), 
+						resultSet.getString("title"), resultSet.getInt("presencetime"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		query = "SELECT * " +
+				"FROM entry AS e JOIN effortentry AS ef ON e.entryID = ef.entryID" +
+				" AND e.version = ef.version JOIN latestentry AS l ON " +
+				"ef.entryID = l.entryID AND ef.version = l.version JOIN" +
+				" selfstudy AS s on ef.entryID = s.entryID AND" +
+				" ef.version = s.version " +
+				"WHERE e.moduleID = ?";
+		
+		return effort;
+	}
+	
+	
+	public List<String[]> getPDFListByCourse(String courseID){
+		List<String[]> pdfList = new LinkedList<String[]>();
+		Connection connection = connect();
+		query = "SELECT c.description, c.degree, p.semester, p.url" +
+				"FROM course AS c JOIN pdfmodulemanual AS p ON c.courseID = " +
+				"p.courseID " +
+				"WHERE c.courseID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, courseID);
+			ResultSet resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				pdfList.add(new String[] {resultSet.getString("description"),
+						resultSet.getString("degree"),
+						resultSet.getString("semester"), 
+						resultSet.getString("url")});
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(connection);
+		}
+		return pdfList;
+		
 		
 	}
 	
