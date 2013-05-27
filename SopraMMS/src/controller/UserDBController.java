@@ -14,7 +14,6 @@ import user.User;
 public class UserDBController {
 
 	private static Statement statement;
-	private static ResultSet resultSet;
 	private static String query = null;
 	private static PreparedStatement pStatement;
 
@@ -220,7 +219,7 @@ public class UserDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			// checks if user exists in database
 			if (resultSet.next()) {
 				query = "UPDATE user SET loginname=?, lastname=?, firstname=?, mail=?, password=?, session=? WHERE loginname=?";
@@ -492,7 +491,7 @@ public class UserDBController {
 		query = "SELECT name FROM institute";
 		try {
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery(query);
+			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				instituteList.add(resultSet.getString("name"));
 			}
@@ -504,6 +503,29 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
+	
+	
+	public List<String> getCoursesByFaculty(String facultyID){
+		Connection connection = connect();
+		List<String> courses = new LinkedList<String>();
+		query = "SELECT DISTINCT description FROM course JOIN faculty on course.faculty = faculty.facultyID " +
+				"WHERE faculty = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			ResultSet resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				courses.add(resultSet.getString("description"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get courses of faculty: "+facultyID);
+		}
+		finally{
+			close(connection);
+		}
+		return courses;
+	}
+	
 
 	// get facultyname of user
 	public String getFacultyName(User user) {
@@ -513,7 +535,7 @@ public class UserDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, user.getLogin());
-			resultSet = pStatement.executeQuery();
+			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				return resultSet.getString(1);
 			}

@@ -651,7 +651,15 @@ public class ModuleDBController {
 
 		return courses;
 	}
-
+	
+	
+	
+	public EffortEntry getEffortEntryByModule(){
+		return null;
+		
+	}
+	
+	
 	// TODO
 	// get a specified modulemanual
 	public String getModuleManual(String courseID, String degree, String version) {
