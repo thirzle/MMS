@@ -35,10 +35,15 @@ public class AppointRepresentative extends HttpServlet {
 		String firstNameRep = request.getParameter("firstNameRep");
 		String lastNameRep = request.getParameter("lastNameRep");
 		String mailRep = request.getParameter("mailRep");
+
+		// check if representative exists
+		//new UserAdministration().
+		
 		User user = (User) request.getSession().getAttribute("user");
 
-		String content = user.getFirstName() + " " + user.getLastName() + " (E-Mail Adresse: "+mailRep+") "
-				+ " moechte " + firstNameRep + " " + lastNameRep
+		String content = user.getFirstName() + " " + user.getLastName()
+				+ " (E-Mail Adresse: " + mailRep + ") " + " moechte "
+				+ firstNameRep + " " + lastNameRep
 				+ " zu seinem Stellvertreter ernennen";
 		EmailTelnet mail = new EmailTelnet();
 		mail.send_mail("Neuer Stellvertreter", "teresa.hirzle@uni-ulm.de",
