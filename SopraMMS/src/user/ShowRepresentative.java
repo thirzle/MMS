@@ -30,13 +30,11 @@ public class ShowRepresentative extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		User user = (User) request.getSession().getAttribute("user");
-//		String repName = user.getRepresentative();
-		String repName = "lehrd";
-		//String repName = "null";
-//		User userR = new UserAdministration().getUser(null);
-		User userR = null;
+		String repName = user.getRepresentative();
+		User userR = new UserAdministration().getUser(repName);
+//		there is no representative
 		if(userR == null){
-			request.getSession().setAttribute("content", "nR");
+			request.getSession().setAttribute("content", "noRepresentative");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
 		
