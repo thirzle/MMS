@@ -28,5 +28,13 @@ else if(contentPage.equals("removeRepresentative")){
 	</script>
 	<%
 }
+else if(contentPage.equals("showRepresentative")){
+	%>
+	<script>
+	$(document).ready(function(){
+		$(".contentBox").load("/SopraMMS/guiElements/generally/showRepresentative.jsp");});
+	</script>
+	<%
+}
 
 %>
