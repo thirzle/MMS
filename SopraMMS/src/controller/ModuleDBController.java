@@ -19,13 +19,20 @@ import management.Module;
 import management.SelfStudy;
 import management.TextualEntry;
 
-//
+	
 public class ModuleDBController {
-
-	private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
+	
+	//	local database
+	//private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
+	//private static final String USER = "root";
+	//private static final String PASSWORD = "";
+	
+	// db4free.net database
+	private static final String URL = "jdbc:mysql://db4free.net:3306/sopramms";
+	private static final String USER = "teamaccount";
+	private static final String PASSWORD = "6lsj7tdm";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	private static final String USER = "root";
-	private static final String PASSWORD = "";
+	
 	private static String query = null;
 	private static PreparedStatement pStatement = null;
 	private static Statement statement = null;
@@ -739,7 +746,7 @@ public class ModuleDBController {
 		Connection connection = connect();
 		query = "SELECT c.description, c.degree, p.semester, p.url "
 				+ "FROM course AS c JOIN pdfmodulemanual AS p ON c.courseID = "
-				+ "p.courseID and c.degree=p.degree " + "WHERE c.description = ?";
+				+ "p.courseID AND c.degree = p.degree WHERE c.description = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, description);
