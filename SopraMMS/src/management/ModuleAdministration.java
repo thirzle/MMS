@@ -1,5 +1,6 @@
 package management;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,5 +26,10 @@ public class ModuleAdministration {
 			}
 		}
 		return modules;
+	}
+	
+	public List<String[]> getModuleManualPdfByCourse(String course)
+	{
+		return moduleDBController.getPDFListByCourse(course);
 	}
 }

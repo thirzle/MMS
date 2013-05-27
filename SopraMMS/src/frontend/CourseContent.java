@@ -27,9 +27,8 @@ public class CourseContent extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(request.getParameter("pdf"));
-		
+		request.getSession().setAttribute("coursepdfs", request.getParameter("pdf"));
 		response.sendRedirect("/SopraMMS/welcome.jsp");
-		
 	}
 
 	/**

@@ -27,7 +27,6 @@
 		
 		<div class="main">
 			<div class="menu">
-				<%@ include file="/guiElements/frontend/courseSelection.jsp"%>
 				<%
 					boolean[] rights = user.getRights();
 						if (rights[3]) {

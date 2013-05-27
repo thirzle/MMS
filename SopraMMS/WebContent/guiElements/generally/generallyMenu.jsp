@@ -2,7 +2,7 @@
 		$(document).ready(function() {
 			$(".headerNavGenerally").click(function(e) {
 				$(".expandGenerally").toggleClass("expanded");
-				$(".expandGenerally").children("ul:first").slideToggle("300");
+				$(".expandGenerally").children("ul:first").slideToggle("fast");
 				e.stopPropagation();
 			});
 		});
@@ -18,7 +18,7 @@ if(session.getAttribute("generallyMenu")!=null){
 	<script>
 		$(document).ready(function() {
 				$(".expandGenerally").toggleClass("expanded");
-				$(".expandGenerally").children("ul:first").slideToggle("300");
+				$(".expandGenerally").children("ul:first").slideToggle(0);
 				e.stopPropagation();
 		});
 	</script><%} %>

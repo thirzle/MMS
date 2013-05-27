@@ -117,6 +117,26 @@ body {
 	background-color: #FFEEEE;
 }
 
+.pdfModuleManualBox li{
+	color: black;
+	width: 300px;
+	padding: 2px 15px 2px 10px;
+	list-style-image: url(../images/liLink.gif);
+cursor: pointer;
+	
+}
+
+.pdfModuleManualBox li:HOVER{
+		border-top: 1px dotted #CCCCDD;
+	border-bottom: 1px dotted #CCCCDD;
+	font-weight: bold;
+
+	
+}
+
+
+/*--------------*/
+/*----Footer----*/
 .footerNavigation {
 	background: #C4C0B4;
 	clear: both;
@@ -156,6 +176,10 @@ body {
 	margin-top: 0px;
 }
 
+.menuBox a{
+	color: black;
+	text-decoration: none;
+}
 
 .loginFailed {
 	font-size: 10pt;

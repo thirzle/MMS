@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/default.css">
 
-
+<%@ include file="/guiElements/fillContent.jsp"%>
 
 </head>
 <body>
@@ -33,16 +33,18 @@
 				%>
 			</div>
 			<div class="contentBox">
-				<h1>Modul Management System</h1>
-				<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-					diam nonumy eirmod tempor invidunt ut labore et dolore magna
-					aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-					duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-					sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-					consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-					ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
-					eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-					gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+				<%
+					if (session.getAttribute("coursepdfs") == null) {
+				%>
+				<h1>Startseite</h1>
+				<%
+					} else {
+						
+				%>
+					<%@ include file="/guiElements/frontend/courseModuleManuals.jsp"%>
+				<%
+					}
+				%>
 			</div>
 		</div>
 		<div class="footer">
