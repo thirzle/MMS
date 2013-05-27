@@ -30,6 +30,10 @@ public class ModuleAdministration {
 	
 	public List<String[]> getModuleManualPdfByCourse(String course)
 	{
-		return moduleDBController.getPDFListByCourse(course);
+		List<String[]> list = moduleDBController.getPDFListByCourse(course);
+		for (String[] strings : list) {
+			System.out.println("-> "+strings[1]+" "+strings[2]+" "+strings[3]+" "+strings[0]+" ");
+		}
+		return list;
 	}
 }

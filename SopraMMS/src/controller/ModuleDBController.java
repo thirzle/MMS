@@ -737,9 +737,9 @@ public class ModuleDBController {
 	public List<String[]> getPDFListByCourse(String description) {
 		List<String[]> pdfList = new LinkedList<String[]>();
 		Connection connection = connect();
-		query = "SELECT c.description, c.degree, p.semester, p.url"
+		query = "SELECT c.description, c.degree, p.semester, p.url "
 				+ "FROM course AS c JOIN pdfmodulemanual AS p ON c.courseID = "
-				+ "p.courseID " + "WHERE c.description = ?";
+				+ "p.courseID and c.degree=p.degree " + "WHERE c.description = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, description);
