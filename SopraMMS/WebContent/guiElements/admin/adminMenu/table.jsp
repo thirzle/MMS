@@ -9,15 +9,15 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="user.User"%>
 <%
-	// TODO - In Logik auslagern
+	System.out.println("(table.jsp): vor List<User> cast = "+session.getAttribute("users"));
 	List<User> users;
-	String[] status = {"Modulver.","Redakteur","Administrator","right[3]","right[4]","right[5]"};
-	try{
-		UserDBController controller = new UserDBController();
-		users = controller.getAllUsers();
+	try {
+	    users = (List<User>) session.getAttribute("users");
 	} catch(NullPointerException e) {
-		users = new ArrayList<User>();
-	} 
+	    users = new ArrayList<User>();
+	}
+	System.out.println("(table.jsp): users.toString() = "+users.toString());
+	String[] status = {"Modulver.","Redakteur","Administrator","right[3]","right[4]","right[5]"};
 %>
 <table id="userTable" class="tablesorter">
 	<thead>
@@ -66,12 +66,15 @@
 		</tr>
 		<%
 			}
-		%>
+		
+			if(session.getAttribute("addUser") == "true") {%>
+				<jsp:include page="userManagement/tmpRow.jsp" />
+		<% 	}%>
 	</tbody>
 </table>
 <form id="addUserForm" action="SaveUser" method="get">
 	<input type="submit" name="Submit" id="saveButton"
-		style="float: right; display: none;" value="Speichern" ></input>
+		style="float: right; display: none;" value="Speichern" />
 </form>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-latest.js"></script>

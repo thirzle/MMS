@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import user.User;
+
 /**
  * Servlet implementation class SessionCeck
  */
@@ -41,5 +43,20 @@ public class SessionCheck extends HttpServlet {
 			return true;
 		}
 		return false;
+	}
+	
+	protected boolean actionGranted(HttpServletRequest request, boolean[] rights) {
+	    HttpSession session = request.getSession();
+	    User user = (User) session.getAttribute("user");
+	    boolean[] userRights = user.getRights();
+	    boolean isGranted = true;
+	    for (int i = 0; i < rights.length; i++) {
+		if(rights[i]) {
+		    if(userRights[i]!=rights[i]) {
+			isGranted = false;
+		    }
+		}
+	    }
+	    return isGranted;
 	}
 }

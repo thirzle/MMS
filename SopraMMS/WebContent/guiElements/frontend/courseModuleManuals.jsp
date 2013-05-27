@@ -25,7 +25,6 @@
 		}
 	}
 %>
-
 <h1><%=course%></h1>
 
 <p>W&auml;hlen Sie aus den unteren Eintr&auml;gen ihr passendes
