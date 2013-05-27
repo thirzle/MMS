@@ -14,7 +14,7 @@
 		</div>
 		<div class="main">
 			<div class="menu">
-				<%@ include file="/guiElements/courseSelection.jsp"%>
+				<%@ include file="/guiElements/frontend/courseSelection.jsp"%>
 			</div>
 			<div class="contentBox">
 				<h1>Fehler</h1>

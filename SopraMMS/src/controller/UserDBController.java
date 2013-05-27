@@ -18,16 +18,14 @@ public class UserDBController {
 	private static PreparedStatement pStatement;
 
 	// Lokale Datenbank
-	private static final String URL = "jdbc:mysql://localhost:3306/mms";
-	private static final String USER = "root";
-	private static final String PASSWORD = "";
+	// private static final String URL = "jdbc:mysql://localhost:3306/mms";
+	// private static final String USER = "root";
+	// private static final String PASSWORD = "";
 
 	// Datenbank auf db4free.net
-//	 private static final String URL =
-//	 "jdbc:mysql://db4free.net:3306/sopramms";
-//	 private static final String USER = "teamaccount";
-//	 private static final String PASSWORD = "6lsj7tdm";
-	//
+	private static final String URL = "jdbc:mysql://db4free.net:3306/sopramms";
+	private static final String USER = "teamaccount";
+	private static final String PASSWORD = "6lsj7tdm";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	static final int NUMBEROFRIGHTS = 5;
 
@@ -123,42 +121,42 @@ public class UserDBController {
 	}
 
 	// tested: check
-//	public User getUser(String session, String password) {
-//		Connection connection = connect();
-//		query = "SELECT * FROM user WHERE session = ? AND password = ?";
-//		try {
-//			pStatement = connection.prepareStatement(query);
-//			pStatement.setString(1, session);
-//			pStatement.setString(2, password);
-//			ResultSet resultSet = pStatement.executeQuery();
-//			if (resultSet.next()) {
-//				return new User(resultSet.getString("loginname"),
-//						resultSet.getString("firstname"),
-//						resultSet.getString("lastname"),
-//						resultSet.getString("mail"), password);
-//			}
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			System.out.println("couldn't get user by session and password");
-//		}
-//		return null;
-//	}
-//	find user by email
-	public User getUserByEmail(String mail){
+	// public User getUser(String session, String password) {
+	// Connection connection = connect();
+	// query = "SELECT * FROM user WHERE session = ? AND password = ?";
+	// try {
+	// pStatement = connection.prepareStatement(query);
+	// pStatement.setString(1, session);
+	// pStatement.setString(2, password);
+	// ResultSet resultSet = pStatement.executeQuery();
+	// if (resultSet.next()) {
+	// return new User(resultSet.getString("loginname"),
+	// resultSet.getString("firstname"),
+	// resultSet.getString("lastname"),
+	// resultSet.getString("mail"), password);
+	// }
+	//
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	// System.out.println("couldn't get user by session and password");
+	// }
+	// return null;
+	// }
+	// find user by email
+	public User getUserByEmail(String mail) {
 		Connection connection = connect();
 		query = "SELECT loginname FROM user WHERE mail = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, mail);
 			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
+			if (resultSet.next()) {
 				return getUser(resultSet.getString(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("couldn't get user by email: "+mail);
-		}finally {
+			System.out.println("couldn't get user by email: " + mail);
+		} finally {
 			close(connection);
 		}
 		return null;
@@ -279,7 +277,7 @@ public class UserDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get rights of user: " + loginname);
-		}finally {
+		} finally {
 			close(connection);
 		}
 		return rightsArray;
@@ -393,8 +391,8 @@ public class UserDBController {
 	public List<String> getInstituteNames(String loginname) {
 		Connection connection = connect();
 		LinkedList<String> instituteList = new LinkedList<String>();
-		query = "SELECT i.name FROM institute AS i JOIN instituteaffiliation AS ia " +
-				"ON i.instituteID = ia.instituteID WHERE ia.loginname = ?";
+		query = "SELECT i.name FROM institute AS i JOIN instituteaffiliation AS ia "
+				+ "ON i.instituteID = ia.instituteID WHERE ia.loginname = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
@@ -407,13 +405,14 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("couldn't get names of institutes of user: "
 					+ loginname);
-		}finally {
+		} finally {
 			close(connection);
 		}
 		return instituteList;
 	}
 
-	// compare hashed password typed in with password in database of specified user
+	// compare hashed password typed in with password in database of specified
+	// user
 	public boolean checkPassword(String loginname, String password) {
 		Connection connection = connect();
 		String correctPassword;
@@ -498,7 +497,7 @@ public class UserDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get Institutes");
-		}finally {
+		} finally {
 			close(connection);
 		}
 		return instituteList;
@@ -543,14 +542,14 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("couldn't get faculty name of user: "
 					+ user.getLogin());
-		}finally {
+		} finally {
 			close(connection);
 		}
 		return null;
 	}
-	
-//	remove representative of user
-	public boolean removeRepresentative(User user){
+
+	// remove representative of user
+	public boolean removeRepresentative(User user) {
 		Connection connection = connect();
 		query = "UPDATE user SET representative = null WHERE loginname = ?";
 		try {
@@ -560,15 +559,16 @@ public class UserDBController {
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("couldn't remove representative of user: "+user.getLogin());
-		}
-		finally{
+			System.out.println("couldn't remove representative of user: "
+					+ user.getLogin());
+		} finally {
 			close(connection);
-		}return false;
+		}
+		return false;
 	}
-	
+
 	// roll back changes made in database if something went wrong
-	private void rollback(Connection connection){
+	private void rollback(Connection connection) {
 		try {
 			connection.rollback();
 		} catch (SQLException e) {
