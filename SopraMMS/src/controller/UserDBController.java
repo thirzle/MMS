@@ -168,16 +168,16 @@ public class UserDBController {
 	// create new user in database
 	public boolean createUser(User user) {
 		Connection connection = connect();
-		query = "INSERT INTO User VALUES(?,?,?,?,?,?,?)";
+		query = "INSERT INTO User VALUES(?,?,?,?,?,?)";
 		try {
+			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, user.getLogin());
 			pStatement.setString(2, user.getLastName());
 			pStatement.setString(3, user.getFirstName());
-			pStatement.setString(4, user.getRepresentative());
-			pStatement.setString(5, user.getMail());
-			pStatement.setString(6, user.getPassword());
-			pStatement.setString(7, user.getSession());
+			pStatement.setString(4, user.getMail());
+			pStatement.setString(5, user.getPassword());
+			pStatement.setString(6, user.getSession());
 			pStatement.execute();
 
 			query = "INSERT INTO instituteaffiliation VALUES(?,?)";
@@ -199,10 +199,12 @@ public class UserDBController {
 			}
 
 			System.out.println("User created!");
+			connection.commit();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("User couldn't be created.");
+			rollback(connection);
 		} finally {
 			close(connection);
 		}
@@ -291,12 +293,14 @@ public class UserDBController {
 		// delete old rights
 		query = "DELETE FROM rightsaffiliation WHERE loginname = ?";
 		try {
+			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
 			pStatement.execute();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 			System.out.println("Couldn't delete rights of user: " + loginname);
+			rollback(connection);
 			return false;
 		}
 		// insert new rights
@@ -311,10 +315,12 @@ public class UserDBController {
 					return pStatement.execute();
 				}
 			}
+			connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't insert right: " + i + " of user: "
 					+ loginname);
+			rollback(connection);
 		} finally {
 			close(connection);
 		}
@@ -408,8 +414,7 @@ public class UserDBController {
 		return instituteList;
 	}
 
-	// compare hashed password typed in with password in database of specified
-	// user
+	// compare hashed password typed in with password in database of specified user
 	public boolean checkPassword(String loginname, String password) {
 		Connection connection = connect();
 		String correctPassword;
@@ -538,6 +543,16 @@ public class UserDBController {
 		finally{
 			close(connection);
 		}return false;
+	}
+	
+	// roll back changes made in database if something went wrong
+	private void rollback(Connection connection){
+		try {
+			connection.rollback();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// close connection
