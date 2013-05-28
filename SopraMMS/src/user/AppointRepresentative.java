@@ -35,6 +35,11 @@ public class AppointRepresentative extends HttpServlet {
 		String firstNameRep = request.getParameter("firstNameRep");
 		String lastNameRep = request.getParameter("lastNameRep");
 		String mailRep = request.getParameter("mailRep");
+		System.out.println(mailRep == ""+"''''''''''''''''''''''''''''''''''''''''''");
+		if(firstNameRep.equals(null) || lastNameRep.equals(null)  || mailRep.equals(null) || firstNameRep.equals("") || lastNameRep.equals("") || mailRep.equals("")){
+			request.getSession().setAttribute("lessData", true);
+			request.getSession().setAttribute("content", "appointRepresentative");
+		}
 		
 		User user = (User) request.getSession().getAttribute("user");
 		User userR = new UserAdministration().getUserByMail(mailRep);
@@ -54,7 +59,9 @@ public class AppointRepresentative extends HttpServlet {
 		//if representative exists
 		else{
 			if(!userR.getFirstName().equals(firstNameRep) || !userR.getLastName().equals(lastNameRep)){
-				System.out.println("Benutzerdaten stimmten nicht überein");
+				System.out.println("falsche Daten**************************************");
+				request.getSession().setAttribute("wrongData", true);
+				request.getSession().setAttribute("content", "appointRepresentative");
 			}
 			else{
 				new UserAdministration().changeRepresentative(user, userR.getLogin());
