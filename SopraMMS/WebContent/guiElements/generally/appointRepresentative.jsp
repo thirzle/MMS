@@ -1,5 +1,5 @@
 <h1>Stellvertreter beantragen</h1>
-<form action="/SopraMMS/AppointRepresentative" method="get">
+<form id="appointR" action="/SopraMMS/AppointRepresentative" method="get">
 	<table>
 		<tr>
 			<td>Vorname:</td>
@@ -17,6 +17,6 @@
 		</tr>
 	</table>
 <input type="submit" name="cancel" value="Abbrechen" />
-<input class=".appointRepresentative" type="submit"
+<input class=".appointRepresentative" onclick="appointR.submit()" type="submit"
 	name="appointRepresentative" value="Zum Stellvertreter ernennen" />
 </form>

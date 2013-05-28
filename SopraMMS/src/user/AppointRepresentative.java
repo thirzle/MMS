@@ -35,20 +35,33 @@ public class AppointRepresentative extends HttpServlet {
 		String firstNameRep = request.getParameter("firstNameRep");
 		String lastNameRep = request.getParameter("lastNameRep");
 		String mailRep = request.getParameter("mailRep");
-
-		// check if representative exists
-		new UserAdministration().getUserByMail(mailRep);
 		
 		User user = (User) request.getSession().getAttribute("user");
+		User userR = new UserAdministration().getUserByMail(mailRep);
 
-		String content = user.getFirstName() + " " + user.getLastName()
-				+ " (E-Mail Adresse: " + mailRep + ") " + " moechte "
-				+ firstNameRep + " " + lastNameRep
-				+ " zu seinem Stellvertreter ernennen";
-		EmailTelnet mail = new EmailTelnet();
-		mail.send_mail("Neuer Stellvertreter", "teresa.hirzle@uni-ulm.de",
-				content);
-		request.getSession().setAttribute("content", "applyRepresentative");
+		//if representative doesn't exist
+		if(userR == null){
+			String content = user.getFirstName() + " " + user.getLastName()
+					+ " (E-Mail Adresse: " + mailRep + ") " + " moechte "
+					+ firstNameRep + " " + lastNameRep
+					+ " zu seinem Stellvertreter ernennen";
+			
+			EmailTelnet mail = new EmailTelnet();
+			mail.send_mail("Neuer Stellvertreter", "teresa.hirzle@uni-ulm.de",
+					content);
+			request.getSession().setAttribute("content", "applyRepresentative");
+		}
+		//if representative exists
+		else{
+			if(!userR.getFirstName().equals(firstNameRep) || !userR.getLastName().equals(lastNameRep)){
+				System.out.println("Benutzerdaten stimmten nicht überein");
+			}
+			else{
+				new UserAdministration().changeRepresentative(user, userR.getLogin());
+				request.getSession().setAttribute("content", "createdRepresentative");
+			}
+		}
+		
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
