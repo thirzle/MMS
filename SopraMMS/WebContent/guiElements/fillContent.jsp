@@ -44,5 +44,13 @@ else if(contentPage.equals("noRepresentative")){
 	</script>
 	<%
 }
+else if(contentPage.equals("createdRepresentative")){
+	%>
+	<script>
+	$(document).ready(function(){
+	$(".contentBox").load("/SopraMMS/guiElements/generally/createdRepresentative.jsp");})
+	</script>
+	<%
+}
 
 %>
