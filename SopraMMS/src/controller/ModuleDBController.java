@@ -19,24 +19,22 @@ import management.Module;
 import management.SelfStudy;
 import management.TextualEntry;
 
-	
 public class ModuleDBController {
-	
-	//	local database
-	//private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
-	//private static final String USER = "root";
-	//private static final String PASSWORD = "";
-	
+
+	// local database
+	// private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
+	// private static final String USER = "root";
+	// private static final String PASSWORD = "";
+
 	// db4free.net database
 	private static final String URL = "jdbc:mysql://db4free.net:3306/sopramms";
 	private static final String USER = "teamaccount";
 	private static final String PASSWORD = "6lsj7tdm";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	
+
 	private static String query = null;
 	private static PreparedStatement pStatement = null;
 	private static Statement statement = null;
-
 
 	// establish connection to database
 	public Connection connect() {
@@ -54,7 +52,6 @@ public class ModuleDBController {
 		return connection;
 	}
 
-
 	// load all available modules
 	public List<Module> getModules() {
 		Connection connection = connect();
@@ -66,7 +63,7 @@ public class ModuleDBController {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			// get all entries except of course entries
-				while (resultSet.next()) {
+			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
 						resultSet.getString("name"), resultSet
 								.getDate("creationdate"), resultSet
@@ -88,12 +85,17 @@ public class ModuleDBController {
 
 	// load all entries of a specified module
 	public List<Entry> getEntryListOfModule(Module module) {
-		module.addCourseEntry(getCourseEntryByModule(module));
-		module.addTextualEntryList(getTextualEntryByModule(module));
-		module.addEffortEntry(getEffortEntryByModule(module));
+		CourseEntry course = getCourseEntryByModule(module);
+		List<TextualEntry> textual = getTextualEntryByModule(module);
+		EffortEntry effort = getEffortEntryByModule(module);
+		if(course != null)
+			module.addCourseEntry(getCourseEntryByModule(module));
+		if(!textual.isEmpty())
+			module.addTextualEntryList(getTextualEntryByModule(module));
+		if(effort != null)
+			module.addEffortEntry(getEffortEntryByModule(module));
 		return module.getEntryList();
 	}
-
 
 	// load all available modules by a chosen institute
 	// tested: check
@@ -126,14 +128,13 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-
 	// load all available modules by a chosen course
 	// TODO
 	public List<Module> getModulesByCourse(String course, String degree) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.* FROM modulecourseaffiliation AS ma JOIN module AS m " +
-				"ON ma.moduleID = m.moduleID WHERE courseID = ? AND degree = ?";
+		query = "SELECT module.* FROM modulecourseaffiliation AS ma JOIN module AS m "
+				+ "ON ma.moduleID = m.moduleID WHERE courseID = ? AND degree = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, course);
@@ -159,7 +160,6 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-
 
 	// load all available modules by a chosen faculty
 	// tested: check
@@ -192,7 +192,6 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-
 
 	// load all available modules by a chosen author
 	// tested: check
@@ -238,7 +237,6 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-
 	// get a specified module
 	// tested: check
 	public Module getModule(int moduleID) {
@@ -257,7 +255,7 @@ public class ModuleDBController {
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"));
 			}
-			if(module!=null)
+			if (module != null)
 				module.setEntryList(getEntryListOfModule(module));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -267,7 +265,6 @@ public class ModuleDBController {
 		}
 		return module;
 	}
-
 
 	// load all modified modules
 	// tested: check
@@ -311,7 +308,6 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-
 
 	// load all modified modules by a chosen institute
 	// tested: check
@@ -357,7 +353,6 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-
 
 	// load all modified modules by a chosen author
 	// tested: check
@@ -405,7 +400,6 @@ public class ModuleDBController {
 
 	}
 
-	
 	// load all rejected modules
 	// tested: check
 	public List<Module> getRejectedModules() {
@@ -448,7 +442,6 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-
 
 	// load all rejected modules by a chosen institute
 	// tested: check
@@ -496,7 +489,6 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-
 	// load all rejected modules (entries) by a chosen author
 	// tested: check
 	public List<Module> getRejectedModulesByAuthor(String author) {
@@ -529,6 +521,9 @@ public class ModuleDBController {
 
 				}
 			}
+			for (Module modules : moduleList) {
+				modules.setEntryList(getEntryListOfModule(modules));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get rejected modules by author: "
@@ -538,7 +533,6 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-
 
 	// create a new module in database
 	public boolean createModule(Module module) {
@@ -563,12 +557,11 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't create module: " + name);
+			return false;
 		} finally {
 			close(connection);
 		}
-		return false;
 	}
-
 
 	// change an existing module
 	public boolean changeModule(Module module, int moduleIDOld) {
@@ -596,13 +589,12 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't change module: " + moduleID);
+			return false;
 		} finally {
 			close(connection);
 		}
-		return false;
 
 	}
-
 
 	// delete an existing module
 	public boolean deleteModule(Module module) {
@@ -616,49 +608,44 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't delete module: "
 					+ module.getModuleID());
+			return false;
 		} finally {
 			close(connection);
 		}
-		return false;
 	}
-//	TODO
-//	#################################
-//	#type = 0 steht für textualEntry#
-//	#################################
-//	TODO
-	public List<TextualEntry> getTextualEntryByModule(Module m){
+
+	public List<TextualEntry> getTextualEntryByModule(Module m) {
 		List<TextualEntry> entries = new LinkedList<TextualEntry>();
 		Connection connection = connect();
-		query = "SELECT e.*, t.text " +
-				"FROM entry AS e JOIN latestentry AS l ON e.entryID = l.entryID " +
-				"AND e.version = l.version JOIN textualentry AS t ON " +
-				"e.entryID = t.entryID AND e.version = t.version " +
-				"WHERE moduleID = ? AND e.type = 0";
+		query = "SELECT e.*, t.text "
+				+ "FROM entry AS e JOIN latestentry AS l ON e.entryID = l.entryID "
+				+ "AND e.version = l.version JOIN textualentry AS t ON "
+				+ "e.entryID = t.entryID AND e.version = t.version "
+				+ "WHERE moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setInt(1, m.getModuleID());
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				entries.add(new TextualEntry(resultSet.getInt("version"), 
-						resultSet.getDate("date").toString(), 
-						resultSet.getBoolean("classification"), 
-						resultSet.getBoolean("approvalstatus"), 
-						resultSet.getBoolean("declined"), 
-						resultSet.getInt("entryID"), 
-						resultSet.getString("title"), 
-						resultSet.getString("text")));
+				entries.add(new TextualEntry(resultSet.getInt("version"),
+						resultSet.getDate("date").toString(), resultSet
+								.getBoolean("classification"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getBoolean("declined"), resultSet
+								.getInt("entryID"), resultSet
+								.getString("title"), resultSet
+								.getString("text")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't load textual entries");
-		} finally{
+		} finally {
 			close(connection);
 		}
 		return entries;
 	}
-	
-	
+
 	public CourseEntry getCourseEntryByModule(Module m) {
 		CourseEntry courses = null;
 		Connection connection = connect();
@@ -694,7 +681,6 @@ public class ModuleDBController {
 		return courses;
 	}
 
-
 	public EffortEntry getEffortEntryByModule(Module m) {
 		EffortEntry effort = null;
 		List<SelfStudy> selfstudy = null;
@@ -722,33 +708,33 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't load effortentry");
 		}
-		query = "SELECT s.selfstudyID, s.time, s.title "
-				+ "FROM entry AS e JOIN selfstudy AS s ON e.entryID = s.entryID"
-				+ " AND e.version = s.version JOIN latestentry AS l ON "
-				+ "s.entryID = l.entryID AND s.version = l.version "
-				+ "WHERE e.moduleID = ?";
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setInt(1, m.getModuleID());
-			ResultSet resultSet = pStatement.executeQuery();
-			selfstudy = new LinkedList<SelfStudy>();
-			while (resultSet.next()) {
-				selfstudy
-						.add(new SelfStudy(resultSet.getInt("selfstudyID"),
-								resultSet.getInt("time"), resultSet
-										.getString("title")));
+		if(effort != null){
+			query = "SELECT s.selfstudyID, s.time, s.title "
+					+ "FROM entry AS e JOIN selfstudy AS s ON e.entryID = s.entryID"
+					+ " AND e.version = s.version JOIN latestentry AS l ON "
+					+ "s.entryID = l.entryID AND s.version = l.version "
+					+ "WHERE e.moduleID = ?";
+			try {
+				pStatement = connection.prepareStatement(query);
+				pStatement.setInt(1, m.getModuleID());
+				ResultSet resultSet = pStatement.executeQuery();
+				selfstudy = new LinkedList<SelfStudy>();
+				while (resultSet.next()) {
+					selfstudy
+							.add(new SelfStudy(resultSet.getInt("selfstudyID"),
+										resultSet.getInt("time"), resultSet
+											.getString("title")));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Couldn't load selfstudies");
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Couldn't load selfstudies");
+			close(connection);
+			 effort.setSelfStudyList(selfstudy);
 		}
-		close(connection);
-		//effort.setSelfStudyList(selfstudy);
-
 		return effort;
 	}
-
 
 	public List<String[]> getPDFListByCourse(String description) {
 		List<String[]> pdfList = new LinkedList<String[]>();
@@ -775,7 +761,6 @@ public class ModuleDBController {
 		}
 		return pdfList;
 	}
-
 
 	// TODO
 	// get a specified modulemanual
@@ -805,7 +790,6 @@ public class ModuleDBController {
 		}
 		return null;
 	}
-
 
 	public void close(Connection connection) {
 		try {

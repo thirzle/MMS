@@ -21,23 +21,11 @@ public class DBtest {
 		// TODO Auto-generated method stub
 		UserDBController uController = new UserDBController();
 		ModuleDBController mController = new ModuleDBController();
+
 		
 //		uController.getRights
 		boolean [] rights = uController.getRights("lehrd");
-		System.out.println("get rights of lehrd: "+rights[1]);
-		
-		List<Module> modules = mController.getModules();
-		for (Module module : modules) {
-			System.out.println("Modul: "+module.getName());
-			for (Entry entry : module.getEntryList()) {
-				System.out.println("Entry: "+entry.getTimestamp());
-			}
-		}
-		
-		
-		
-		
-		
+		System.out.println("get rights of lehrd: "+rights[1]);		
 		
 //		uController.getInstitutesByName
 		LinkedList<String> stute = (LinkedList) uController.getInstitutesByName("lehrd");
