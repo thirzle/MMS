@@ -218,8 +218,9 @@ body {
 	padding: 5px 0 0 20px;
 }
 
-.headerNavGenerally,.headerNavCourse,.headerNavAdministration,.headerNavModul  li
+.headerNavGenerally,.headerNavCourse,.headerNavAdministration,.headerNavModul,.errorNav,  li
 	{
+	cursor: pointer;
 	list-style-image: url(../images/bullet1.bmp);
 }
 

@@ -78,6 +78,7 @@
 			}
 		%>
 	</div>
+	<a href="/SopraMMS/guiElements/error.jsp">Error</a>
 </body>
 <script type="text/javascript">
 $(document).ready(function() {

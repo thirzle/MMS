@@ -18,7 +18,7 @@
 			UserAdministration ua = new UserAdministration();
 			ua.logout(user.getLogin());
 		} catch (Exception e) {
-			System.err.print("User konnte nicht mehr ausgelogt werden");
+			System.err.println("User konnte nicht mehr ausgelogt werden");
 
 		}
 		session.invalidate();
@@ -30,7 +30,11 @@
 		</div>
 		<div class="main">
 			<div class="menu">
-				<%@ include file="/guiElements/frontend/courseSelection.jsp"%>
+				<div class="menuBox">
+					<h1>MMS</h1><div class="errorNav">
+					<ul><li>
+					<a href="/SopraMMS/welcome.jsp">Startseite</a></li></ul></div>
+				</div>
 			</div>
 			<div class="contentBox">
 				<h1>Fehler</h1>
@@ -39,7 +43,7 @@
 				<p>
 					Bitte kehren Sie zur <a href="/SopraMMS/welcome.jsp">Startseite</a>
 					zur&uuml;ck. <br />Sollte dies nicht klappen starten Sie Ihren
-					Browser neu und laden Sie danach das MMS erneut.
+					Browser neu und laden Sie danach das Modul Management System erneut.
 				</p>
 
 			</div>
