@@ -34,14 +34,22 @@
 			</div>
 			<div class="contentBox">
 				<%
-					if (session.getAttribute("coursepdfs") == null) {
+					if (session.getAttribute("contentWelcome") == null) {
 				%>
 				<h1>Startseite</h1>
 				<%
-					} else {
-						
+					} else if (session.getAttribute("contentWelcome").equals(
+							"createNewPassword")
+							|| session.getAttribute("contentWelcome").equals(
+									"ceateNewPwNotEqual")
+							|| session.getAttribute("contentWelcome").equals(
+									"ceateNewPwDone")) {
 				%>
-					<%@ include file="/guiElements/frontend/courseModuleManuals.jsp"%>
+				<%@ include file="/guiElements/Login/createNewPassword.jsp"%>
+				<%
+					} else {
+				%>
+				<%@ include file="/guiElements/frontend/courseModuleManuals.jsp"%>
 				<%
 					}
 				%>

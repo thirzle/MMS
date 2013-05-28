@@ -14,5 +14,4 @@
 	</table><br/>
 	<input type="submit" value="Neues Passwort beantragen">
 </form>
-<p class=importantBox>Bitte &auml;ndern sie das Ihnen zugesandte
-	Password schnellstm&ouml;glich.</p>
+<p class=importantBox>Bitte &auml;ndern sie &uuml;ber den zugesandten Link Ihr Passwort schnellstm&ouml;glich</p>

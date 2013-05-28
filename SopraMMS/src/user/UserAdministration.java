@@ -118,13 +118,17 @@ public class UserAdministration {
 		return false;
 	}
 
-	public void sendNewPassword(String email) throws IOException {
+	public void sendNewPasswordLink(String email) throws IOException {
 		User user = userDBController.getUserByEmail(email);
-		long newPassword = Math.round(Math.random()*100000);
-		int hashedPassword= Long.toString(newPassword).hashCode();
-		System.out.println("Password: "+newPassword+" -> "+hashedPassword);
-		userDBController.setPassword(user.getLogin(), hashedPassword+"");
+		
+		String newLink = Math.random()*1000000000*Math.PI+""+Math.round(Math.random()*100000)+""+(Math.random()*1000000000*Math.PI);
+		
+		userDBController.setForgotPwdByMail(email,newLink);
+
+		String url="localhost:8080/SopraMMS/CreateNewPassword?link="+newLink;		
+		
 		EmailTelnet mail = new EmailTelnet();
+		
 		StringBuilder text = new StringBuilder();
 		text.append("Sehr geehrte/geehrter Frau/Herr "+user.getLastName()+",");
 		text.append("\n");
@@ -132,8 +136,9 @@ public class UserAdministration {
 		text.append("Sie haben soeben ein neues Passwort für ihren Account (Benutzername: "+user.getLogin()+") im MMS beantragt.");
 		text.append("\n");
 		text.append("\n");
-		text.append("Ihr neues Passwort lautet: "+newPassword);
+		text.append("Bitte rufen Sie folgenden Link auf und ändern Sie ihr Password.");
 		text.append("\n");
+		text.append(url);
 		text.append("\n");
 		text.append("\n");
 		text.append("Bitte ändern Sie dieses generierte Passwort schnellstmöglich im Modul Management System.");
@@ -145,6 +150,17 @@ public class UserAdministration {
 		
 		mail.send_mail("MMS - Neues Passwort", email,text.toString());
 	}
+	
+	public User checkNewPasswordLink(String link)
+	{
+		return userDBController.getUserByForgotPwd(link);
+	}
+	
+	public void deleteNewPasswordLink(String loginname)
+	{
+		userDBController.removeForgotPwdByLoginname(loginname);
+	}
+	
 
 	public User checkLogin(String session) {
 		// TODO Methode existiert in DB noch nicht

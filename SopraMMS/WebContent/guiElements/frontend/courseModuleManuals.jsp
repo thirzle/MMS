@@ -2,8 +2,8 @@
 <%@page import="java.util.List"%>
 <%@page import="management.ModuleAdministration"%>
 <%
-	String course = (String) session.getAttribute("coursepdfs");
-	session.removeAttribute("coursepdfs");
+	String course = (String) session.getAttribute("contentWelcome");
+	session.removeAttribute("contentWelcome");
 
 	ModuleAdministration ma = new ModuleAdministration();
 	List<String[]> pdfs = ma.getModuleManualPdfByCourse(course);

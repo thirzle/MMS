@@ -31,7 +31,7 @@ public class SendNewPassword extends HttpServlet {
 		String email = request.getParameter("email");
 		UserAdministration ua = new UserAdministration();
 		try {
-			ua.sendNewPassword(email);
+			ua.sendNewPasswordLink(email);
 		} catch (IOException e) {
 			e.printStackTrace();
 			response.sendRedirect("http://localhost:8080/SopraMMS/guiElements/error.jsp");

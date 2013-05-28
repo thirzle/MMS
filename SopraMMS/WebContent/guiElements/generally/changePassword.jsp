@@ -12,7 +12,7 @@
 %>
 </p>
 <%
-	//TODO Parameter koennen nicht abgerufen werden
+	
 	String content = session.getAttribute("content") + "";
 	session.setAttribute("content", null);
 	if (content.equals("changedPwStatusOldPwWrong")) {
