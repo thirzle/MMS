@@ -20,6 +20,16 @@ else if(contentPage.equals("applyRepresentative")){
 			
 <%
 }
+
+else if(contentPage.equals("appointRepresentative")){
+	%>
+	<script>
+		$(document).ready(function() {
+			$(".contentBox").load("/SopraMMS/guiElements/generally/appointRepresentative.jsp");});
+	</script>
+			
+<%
+}
 else if(contentPage.equals("removeRepresentative")){
 	%>
 	<script>
@@ -48,7 +58,7 @@ else if(contentPage.equals("createdRepresentative")){
 	%>
 	<script>
 	$(document).ready(function(){
-	$(".contentBox").load("/SopraMMS/guiElements/generally/createdRepresentative.jsp");})
+	$(".contentBox").load("/SopraMMS/guiElements/generally/createdRepresentative.jsp");});
 	</script>
 	<%
 }

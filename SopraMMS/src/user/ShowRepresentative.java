@@ -32,6 +32,7 @@ public class ShowRepresentative extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user");
 		String repName = user.getRepresentative();
 		User userR = new UserAdministration().getUser(repName);
+		
 //		there is no representative
 		if(userR == null){
 			request.getSession().setAttribute("content", "noRepresentative");
