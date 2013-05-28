@@ -735,7 +735,7 @@ public class ModuleDBController {
 			System.out.println("Couldn't load selfstudies");
 		}
 		close(connection);
-		effort.setSelfStudyList(selfstudy);
+		//effort.setSelfStudyList(selfstudy);
 
 		return effort;
 	}

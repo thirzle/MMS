@@ -567,6 +567,52 @@ public class UserDBController {
 		}
 		return false;
 	}
+	
+	
+	public Boolean setForgotPwdByMail(String mail, String forgotPwd){
+		Connection connection = connect();
+		query = "UPDATE user SET forgotpwd = ? WHERE mail = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, forgotPwd);
+			pStatement.setString(2, mail);
+			return pStatement.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}finally{
+			close(connection);
+		}
+	}
+	
+	
+	public User getUserByForgotPwd(String forgotPwd){
+		Connection connection = connect();
+		User user = null;
+		query = "SELECT * FROM user WHERE forgotpwd = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, forgotPwd);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				user = new User(resultSet.getString("loginname"), 
+						resultSet.getString("firstname"), 
+						resultSet.getString("lastname"), 
+						resultSet.getString("mail"), 
+						resultSet.getString("password"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return user;
+		}finally{
+			close(connection);
+		}
+		return user;
+	}
+	
 
 	// roll back changes made in database if something went wrong
 	private void rollback(Connection connection) {
