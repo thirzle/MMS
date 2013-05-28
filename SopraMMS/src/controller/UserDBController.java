@@ -588,6 +588,23 @@ public class UserDBController {
 	}
 	
 	
+	public Boolean removeForgotPwdByLoginname(String loginname){
+		Connection connection = connect();
+		query = "UPDATE user SET forgotpwd = null WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			return pStatement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}finally{
+			close(connection);
+		}
+	}
+	
+	
 	public User getUserByForgotPwd(String forgotPwd){
 		Connection connection = connect();
 		User user = null;

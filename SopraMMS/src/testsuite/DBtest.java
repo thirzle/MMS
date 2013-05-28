@@ -30,7 +30,7 @@ public class DBtest {
 		for (Module module : modules) {
 			System.out.println("Modul: "+module.getName());
 			for (Entry entry : module.getEntryList()) {
-				System.out.println("Entry: "+entry.getVersion());
+				System.out.println("Entry: "+entry.getTimestamp());
 			}
 		}
 		
