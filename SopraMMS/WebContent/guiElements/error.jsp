@@ -1,3 +1,5 @@
+<%@page import="user.UserAdministration"%>
+<%@page import="user.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -9,6 +11,18 @@
 	href="${pageContext.request.contextPath}/css/default.css">
 </head>
 <body>
+
+	<%
+		try {
+			User user = (User) session.getAttribute("user");
+			UserAdministration ua = new UserAdministration();
+			ua.logout(user.getLogin());
+		} catch (Exception e) {
+			System.err.print("User konnte nicht mehr ausgelogt werden");
+
+		}
+		session.invalidate();
+	%>
 
 	<div class="page">
 		<div class="header">
