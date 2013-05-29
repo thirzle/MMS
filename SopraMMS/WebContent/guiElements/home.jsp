@@ -10,7 +10,7 @@
 	href="${pageContext.request.contextPath}/css/default.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<%@ include file="/guiElements/fillContent.jsp"%>
+
 <%@page import="user.User"%>
 </head>
 
@@ -56,6 +56,7 @@
 				<%@ include file="/guiElements/Login/logout.jsp" %>
 			</div>
 			<div class="contentBox" id="contentBox">
+				<jsp:include page="/guiElements/content.jsp"></jsp:include>
 			</div>
 		</div>
 		<div class="footer" id="footer">
