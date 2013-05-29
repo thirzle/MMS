@@ -41,11 +41,13 @@
 		</tr>
 		<tr>
 			<td>E-Mail:</td>
-			<td><input name="mailRep" type="text" size="30" maxlength="30"></td>
+			<td><input name="mailRep" type="email" size="30" maxlength="30"></td>
 		</tr>
 	</table>
-	<%//TODO %>
-	<button class="cancelButton">Abbrechen</button> 
-	<input onclick="appointR.submit()" type="submit" name="appointRepresentative" value="Zum Stellvertreter ernennen" />
-
+	<%
+		//TODO Abbrechen
+	%>
+	
+	<input onclick="appointR.submit()" type="submit"
+		name="appointRepresentative" value="Zum Stellvertreter ernennen" />
 </form>
