@@ -56,17 +56,6 @@
 				<%@ include file="/guiElements/Login/logout.jsp" %>
 			</div>
 			<div class="contentBox" id="contentBox">
-				<%if(session.getAttribute("task")=="user") {%>
-				    <%
-				    Object users = session.getAttribute("users");
-				    System.out.println("(home.jsp): session.getAttribute('users') ="+users);
-				    if(users.equals(null)||users=="") {
-				    	response.sendRedirect("/SopraMMS/LoadUser");
-				    }%>
-				    <jsp:include page="/guiElements/admin/adminMenu/userManagementContent.jsp" />
-				  <%} else if(session.getAttribute("task")=="home") { %>
-					<%@ include file="/guiElements/homeContent.jsp"%>
-				<%} %>
 			</div>
 		</div>
 		<div class="footer" id="footer">

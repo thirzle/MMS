@@ -61,6 +61,35 @@ else if(contentPage.equals("createdRepresentative")){
 	$(".contentBox").load("/SopraMMS/guiElements/generally/createdRepresentative.jsp");});
 	</script>
 	<%
+} else if(contentPage.equals("user")) {
+	%>
+	<script >
+	$(document).ready(function() {
+		$(".contentBox").load("/SopraMMS/guiElements/admin/adminMenu/userManagementContent.jsp");
+		$(".expandAdministration").toggleClass("expanded");
+		$(".expandAdministration").children("ul:first").slideToggle("fast");
+		e.stopPropagation();
+	});
+	</script>
+	<%
+	session.setAttribute("content", "home");
+} else if(contentPage.equals("home")) {
+	%>
+	<script >
+	$(document).ready(function() {
+		$(".contentBox").load("/SopraMMS/guiElements/homeContent.jsp");
+	});
+	</script>
+	<%
+} else if(contentPage.equals("addUser")) {
+	%>
+	<script >
+	$(document).ready(function() {
+		$(".contentBox").load("/SopraMMS/guiElements/admin/adminMenu/userManagementContent.jsp");
+		
+	});
+	</script>
+	<%
 }
 
 %>
