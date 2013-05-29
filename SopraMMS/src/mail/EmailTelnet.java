@@ -31,7 +31,6 @@ public class EmailTelnet extends HttpServlet {
 
     public static void send_mail(String subject, String mail_address_to, String content) throws IOException {
 	mail_transfer(mail_address_from, mail_address_from, mail_address_to, mail_address_to, subject, content + mail_footer);
-
     }
 
     private synchronized final static void mail_transfer(String mail_address_from, String mail_from, String mail_address_to, String mail_to, String subject, String content) throws IOException {
