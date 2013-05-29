@@ -39,4 +39,17 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
 }
+.newCell input {
+	background: #EEEEEE;
+	margin-right: 5px;
+}
+
+.newUserTable {
+	width: 100%;
+}
+
+.newCell div {
+	float: left;
+	vertical-align: middle;
+}
 

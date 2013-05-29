@@ -37,13 +37,22 @@ public class SaveUser extends SessionCheck {
 		String email = request.getParameter("emailCellText");
 		String rights = request.getParameter("rightsSelect");
 		String institute = request.getParameter("instituteSelect");
-		session.setAttribute("task", "user");
-		System.out.println("(addUser.jsp) loginname: "+loginname);
-		System.out.println("(addUser.jsp) firstname: "+firstname);
-		System.out.println("(addUser.jsp) lastname: "+lastname);
-		System.out.println("(addUser.jsp) email: "+email);
-		System.out.println("(addUser.jsp) rights: "+rights);
-		System.out.println("(addUser.jsp) institute: "+institute);
+		session.setAttribute("content", "editUser");
+		
+		// TODO
+		/*
+		 * Der User kann initialisiert werden und gespeichert werden.
+		 */
+		System.out.println("(SaveUser.java) loginname: "+loginname);
+		System.out.println("(SaveUser.java) firstname: "+firstname);
+		System.out.println("(SaveUser.java) lastname: "+lastname);
+		System.out.println("(SaveUser.java) email: "+email);
+		System.out.println("(SaveUser.java) rights: "+rights);
+		System.out.println("(SaveUser.java) institute: "+institute);
+		/*
+		 * 
+		 * 
+		 */
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 

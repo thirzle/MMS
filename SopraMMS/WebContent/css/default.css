@@ -288,19 +288,6 @@ body {
 	float: left;
 }
 
-.newCell input {
-	background: #EEEEEE;
-	margin-right: 5px;
-}
-
-.newUserTable {
-	width: 100%;
-}
-
-.newCell div {
-	float: left;
-	vertical-align: middle;
-}
 
 /*---------------*/
 /*---- Table ----*/

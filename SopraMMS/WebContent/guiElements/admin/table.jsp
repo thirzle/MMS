@@ -1,14 +1,12 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css" type="text/css"
 	media="print, projection, screen" />
-
-
+	
 <%@ page import="model.UserDBController"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="user.User"%>
 <%
-	System.out.println("(table.jsp): vor List<User> cast = "+session.getAttribute("users"));
 	List<User> users;
 	try {
 	    users = (List<User>) session.getAttribute("users");
