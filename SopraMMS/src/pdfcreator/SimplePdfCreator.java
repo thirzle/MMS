@@ -101,6 +101,10 @@ public class SimplePdfCreator {
 	    contentStream.endText();
 	    contentStream.close();
 
+	    // LIST OF CONTENT HERE ...
+
+	    // TODO:
+
 	    // NEXT PAGE
 
 	    System.out.println("> module_list size:  " + module_list.size());
@@ -126,10 +130,80 @@ public class SimplePdfCreator {
 		module_contentStream.endText();
 		module_contentStream.close();
 
-		List<Entry> entrylist = module_list.get(i).getEntryList();
-		int x = 80;
+		// set curser to content pos...
+		int x = 50;
 		int y = 650;
+
+		// Kuerzel/ Nummer:
+
+		// TITLE FIRST...
+		x = 50;
+		module_contentStream.beginText();
+		module_contentStream.setFont(font_bold, 12);
+		module_contentStream.moveTextPositionByAmount(x, y);
+		module_contentStream.drawString("K\u00FCrzel/Nummer:");
+		module_contentStream.endText();
+		module_contentStream.close();
+
+		x = 220;
+		module_contentStream.beginText();
+		module_contentStream.setFont(font_normal, 12);
+		module_contentStream.moveTextPositionByAmount(x, y);
+		module_contentStream.drawString(module_list.get(i).getModuleID() + "");
+		module_contentStream.endText();
+		module_contentStream.close();
+		y -= 24;
+
+		// Leistungspunkte:
+
+		// MUESSEN BERECHNET WERDEN....
+
+		// TITLE FIRST...
+		x = 50;
+		module_contentStream.beginText();
+		module_contentStream.setFont(font_bold, 12);
+		module_contentStream.moveTextPositionByAmount(x, y);
+		module_contentStream.drawString("Leistungspunkte:");
+		module_contentStream.endText();
+		module_contentStream.close();
+
+		// TODO:
+		x = 220;
+		module_contentStream.beginText();
+		module_contentStream.setFont(font_normal, 12);
+		module_contentStream.moveTextPositionByAmount(x, y);
+		module_contentStream.drawString("to do...");
+		module_contentStream.endText();
+		module_contentStream.close();
+		y -= 24;
+
+		// Semesterwochenstunden:
+
+		// MUESSEN BERECHNET WERDEN....
+
+		// TITLE FIRST...
+		x = 50;
+		module_contentStream.beginText();
+		module_contentStream.setFont(font_bold, 12);
+		module_contentStream.moveTextPositionByAmount(x, y);
+		module_contentStream.drawString("Semesterwochenstunden:");
+		module_contentStream.endText();
+		module_contentStream.close();
+
+		// TODO:
+		x = 220;
+		module_contentStream.beginText();
+		module_contentStream.setFont(font_normal, 12);
+		module_contentStream.moveTextPositionByAmount(x, y);
+		module_contentStream.drawString("to do...");
+		module_contentStream.endText();
+		module_contentStream.close();
+		y -= 24;
+
+		List<Entry> entrylist = module_list.get(i).getEntryList();
 		for (int j = 0; j < entrylist.size(); j++) {
+
+		    boolean title_exists = false;
 
 		    // TITLE FIRST...
 		    x = 50;
@@ -139,44 +213,114 @@ public class SimplePdfCreator {
 		    module_contentStream.drawString(entrylist.get(j).getTitle());
 		    module_contentStream.endText();
 		    module_contentStream.close();
+		    if (entrylist.get(j).getTitle().length() > 0) {
+			title_exists = true;
+		    }
 
 		    // CONTENT...
-		    x = 200;
+		    x = 220;
 
-		    // if conent fits into one line
-		    if (font_bold.getStringWidth(entrylist.get(j).toString()) / 1000 * font_size < page.getMediaBox().getWidth() - 250) {
+		    if (!title_exists) {
+			y += 6;
+		    }
+
+		    // check if entry is an effort entry...
+		    if (entrylist.get(j).getClass() == EffortEntry.class) {
+
+			EffortEntry effent = (EffortEntry) entrylist.get(j);
 
 			module_contentStream.beginText();
 			module_contentStream.setFont(font_normal, 12);
 			module_contentStream.moveTextPositionByAmount(x, y);
-			module_contentStream.drawString(entrylist.get(j).toString());
+			module_contentStream.drawString("Pr\u00E4senzzeit: " + effent.getTime() + " h");
 			module_contentStream.endText();
 			module_contentStream.close();
-			y -= 22;
-		    }// else divide it into smaller pieces and print it ...
-		    else {
-			System.out.println("> Dividing text by this width:  " + (int) (page.getMediaBox().getWidth()));
-			LinkedList<String> string_list = divide_string(entrylist.get(j).toString(), page.getMediaBox().getWidth(), font_normal, font_size);
-			for (int k = 0; k < string_list.size(); k++) {
+			y -= 17;
+
+			// IF the page end is reached create a new page
+			// and
+			// work on it
+			if (y < 50) {
+			    page = new PDPage();
+			    doc.addPage(page);
+			    module_contentStream = new PDPageContentStream(doc, page);
+			    y = 720;
+			}
+			
+			
+			module_contentStream.beginText();
+			module_contentStream.setFont(font_normal, 12);
+			module_contentStream.moveTextPositionByAmount(x, y);
+			module_contentStream.drawString("Vor- und Nachbereitung: " + effent.getSelfStudyList().get(0).getTime() + " h");
+			module_contentStream.endText();
+			module_contentStream.close();
+			y -= 17;
+
+			// IF the page end is reached create a new page
+			// and
+			// work on it
+			if (y < 50) {
+			    page = new PDPage();
+			    doc.addPage(page);
+			    module_contentStream = new PDPageContentStream(doc, page);
+			    y = 720;
+			}
+			
+			
+			module_contentStream.beginText();
+			module_contentStream.setFont(font_normal, 12);
+			module_contentStream.moveTextPositionByAmount(x, y);
+			module_contentStream.drawString("Summe: " + (effent.getTime() + effent.getSelfStudyList().get(0).getTime()) + " h");
+			module_contentStream.endText();
+			module_contentStream.close();
+			y -= 17;
+
+			// IF the page end is reached create a new page
+			// and
+			// work on it
+			if (y < 50) {
+			    page = new PDPage();
+			    doc.addPage(page);
+			    module_contentStream = new PDPageContentStream(doc, page);
+			    y = 720;
+			}
+
+			y -= 7;
+		    } else {
+			// if content fits into one line
+			if (font_bold.getStringWidth(entrylist.get(j).toString()) / 1000 * font_size < page.getMediaBox().getWidth() - 250) {
 			    module_contentStream.beginText();
 			    module_contentStream.setFont(font_normal, 12);
 			    module_contentStream.moveTextPositionByAmount(x, y);
-			    module_contentStream.drawString(string_list.get(k));
+			    module_contentStream.drawString(entrylist.get(j).toString());
 			    module_contentStream.endText();
 			    module_contentStream.close();
-			    y -= 18;
+			    y -= 24;
+			}// else divide it into smaller pieces and print it ...
+			else {
+			    System.out.println("> Dividing text by this width:  " + (int) (page.getMediaBox().getWidth()));
+			    LinkedList<String> string_list = divide_string(entrylist.get(j).toString(), page.getMediaBox().getWidth(), font_normal, font_size);
+			    for (int k = 0; k < string_list.size(); k++) {
+				module_contentStream.beginText();
+				module_contentStream.setFont(font_normal, 12);
+				module_contentStream.moveTextPositionByAmount(x, y);
+				module_contentStream.drawString(string_list.get(k));
+				module_contentStream.endText();
+				module_contentStream.close();
+				y -= 17;
 
-			    // IF the page end is reached create a new page and
-			    // work on it
-			    if (y < 50) {
-				page = new PDPage();
-				doc.addPage(page);
-				module_contentStream = new PDPageContentStream(doc, page);
-				y = 650;
+				// IF the page end is reached create a new page
+				// and
+				// work on it
+				if (y < 50) {
+				    page = new PDPage();
+				    doc.addPage(page);
+				    module_contentStream = new PDPageContentStream(doc, page);
+				    y = 720;
+				}
 			    }
-
+			    y -= 7;
 			}
-			y -= 4;
 		    }
 
 		    // next line
@@ -187,7 +331,7 @@ public class SimplePdfCreator {
 			page = new PDPage();
 			doc.addPage(page);
 			module_contentStream = new PDPageContentStream(doc, page);
-			y = 650;
+			y = 720;
 		    }
 
 		}
