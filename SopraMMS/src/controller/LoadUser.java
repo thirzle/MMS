@@ -38,7 +38,7 @@ public class LoadUser extends SessionCheck {
 		List<User> users = controller.getAllUsers();
 		System.out.println("(LoadUser.java): users = "+users);
 		session.setAttribute("users", users);
-		session.setAttribute("task", "user");
+		session.setAttribute("content", "user");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 

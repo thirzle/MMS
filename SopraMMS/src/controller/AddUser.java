@@ -41,7 +41,7 @@ public class AddUser extends SessionCheck {
 		    List<String> institutes = controller.getInstitutes();
 		    //
 		    session.setAttribute("institutes", institutes);
-		    session.setAttribute("task", "user");
+		    session.setAttribute("content", "addUser");
 		    session.setAttribute("addUser", "true");
 		    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		} else {
