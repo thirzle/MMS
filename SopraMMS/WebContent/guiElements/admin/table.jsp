@@ -1,10 +1,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css" type="text/css"
 	media="print, projection, screen" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/script.js"></script>
 
-<%@ page import="controller.UserDBController"%>
+
+<%@ page import="model.UserDBController"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="user.User"%>
@@ -68,10 +67,7 @@
 		%>
 	</tbody>
 </table>
-<form id="addUserForm" action="SaveUser" method="get">
-	<input type="submit" name="Submit" id="saveButton"
-		style="float: right; display: none;" value="Speichern" />
-</form>
+
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-latest.js"></script>
 <script type="text/javascript"

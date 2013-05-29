@@ -3,28 +3,27 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.UserDBController;
-
 import user.User;
 
 /**
- * Servlet implementation class AddUser
+ * Servlet implementation class DeleteUser
  */
-@WebServlet("/NewUser")
-public class NewUser extends SessionCheck {
+@WebServlet("/DeleteUser")
+public class DeleteUser extends SessionCheck implements Servlet {
 	private static final long serialVersionUID = 1L;
        
     /**
-     * @see HttpServlet#HttpServlet()
+     * @see SessionCheck#SessionCheck()
      */
-    public NewUser() {
+    public DeleteUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,24 +32,14 @@ public class NewUser extends SessionCheck {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    System.out.println("(AddUser.java): doGet() called");
-	    HttpSession session = request.getSession();
-	    boolean[] rights = {false,false,false,true,false};
-		if(isLoggedIn(request, response) && actionGranted(request, rights)) {
-		    //TODO
-		    //in die Logik auslagern
-		    UserDBController controller = new UserDBController();
-		    List<String> institutes = controller.getInstitutes();
-		    //
-		    session.setAttribute("institutes", institutes);
-		    session.setAttribute("content", "newUser");
-		    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-		} else {
-		    // not logged in or access denied!
-		    System.out.println("(Access denied): You are not logged in or permitted");
-		}
+    	HttpSession session = request.getSession();	    	
+		UserDBController controller = new UserDBController();
+		List<User> users = controller.getAllUsers();
+		session.setAttribute("users", users);
+		session.setAttribute("content", "editUser");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
-	
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

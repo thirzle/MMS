@@ -290,9 +290,11 @@ body {
 
 .newCell input {
 	background: #EEEEEE;
-	width: 98%;
-	height: 100%;
 	margin-right: 5px;
+}
+
+.newUserTable {
+	width: 100%;
 }
 
 .newCell div {

@@ -28,7 +28,7 @@ if(contentPage.equals("changedPwStatusPw12Wrong")||contentPage.equals("changedPw
 %>
 	<jsp:include page="/guiElements/generally/createdRepresentative.jsp"></jsp:include>
 <%
-} else if(contentPage.equals("user")) {
+} else if(contentPage.equals("editUser")) {
 %>
 	<jsp:include page="/guiElements/admin/userManagementContent.jsp"></jsp:include>
 <%
@@ -38,7 +38,7 @@ if(contentPage.equals("changedPwStatusPw12Wrong")||contentPage.equals("changedPw
 <%
 } else if(contentPage.equals("newUser")) {
 %>
-	<jsp:include page="/guiElements/admin/userManagementContent.jsp"></jsp:include>
+	<jsp:include page="/guiElements/admin/newUser.jsp"></jsp:include>
 <%
 }
 %>
