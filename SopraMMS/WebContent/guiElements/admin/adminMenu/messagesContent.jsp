@@ -8,5 +8,7 @@
 </head>
 <body>
 	<h3>Nachrichten</h3>
+	
+	test
 </body>
 </html>
