@@ -62,7 +62,16 @@ body {
 	border-width: 1px 2px 2px 1px;
 }
 
-/*----------------*/
+/*---- Message ----*/
+.newMessage {
+	text-align: left;
+	font-size: 15pt;
+	font-weight: bold;
+	color: #FFFFFF;
+	background: #91ACBC;
+	padding: 5px 0px 5px 10px;
+}
+
 /*---- Header ----*/
 .header { /*background-color: red;*/
 	width: 100%;
@@ -236,6 +245,8 @@ body {
 	background-color: #55CCFF;
 }
 
+
+
 .userManagementEntry {
 	margin-left: 5%;
 	background-color: #FFFFFF;
@@ -299,4 +310,21 @@ body {
 
 .tableClassHead {
 	width: 10px;
+}
+
+/*---- Message ----*/
+.messageManagementEntry {
+	font-size: 8pt;
+	margin-left: 5%;
+	margin-top: 5%; 
+	margin-bottom: 0px;
+	background-color: #FFFFFF;
+}
+
+.messageEntryContainer {
+	background-color: #FFFFFF;
+}
+
+.messageManagementEntry:hover {
+	font-weight: bold;
 }
