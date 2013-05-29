@@ -11,7 +11,7 @@
 								$(".expandAdministration").toggleClass(
 										"expanded");
 								$(".expandAdministration").children("ul:first")
-										.slideToggle("300");
+										.slideToggle("fast");
 								e.stopPropagation();
 							});
 				}); //$(document).ready

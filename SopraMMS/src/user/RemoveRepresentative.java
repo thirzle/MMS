@@ -33,6 +33,7 @@ public class RemoveRepresentative extends HttpServlet {
 			user.setRepresentative(null);
 			request.getSession().setAttribute("content", "removeRepresentative");
 		}
+		request.getSession().setAttribute("generallyMenu", "open");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 

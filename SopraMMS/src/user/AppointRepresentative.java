@@ -68,7 +68,7 @@ public class AppointRepresentative extends HttpServlet {
 				request.getSession().setAttribute("content", "createdRepresentative");
 			}
 		}
-		
+		request.getSession().setAttribute("generallyMenu", "open");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 

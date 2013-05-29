@@ -32,9 +32,9 @@ public class SendNewPassword extends HttpServlet {
 		UserAdministration ua = new UserAdministration();
 		try {
 			ua.sendNewPasswordLink(email);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("http://localhost:8080/SopraMMS/guiElements/error.jsp");
+			response.sendRedirect("SopraMMS/guiElements/error.jsp");
 		}
 		response.sendRedirect("/SopraMMS/welcome.jsp");
 	}

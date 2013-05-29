@@ -21,7 +21,9 @@ if(session.getAttribute("generallyMenu")!=null){
 				$(".expandGenerally").children("ul:first").slideToggle(0);
 				e.stopPropagation();
 		});
-	</script><%} %>
+	</script><%}
+		session.removeAttribute("generallyMenu"); 
+%>
 	
 
 

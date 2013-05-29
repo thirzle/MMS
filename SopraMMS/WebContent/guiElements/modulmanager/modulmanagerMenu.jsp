@@ -5,7 +5,7 @@
 		$(document).ready(function() {
 			$(".headerNavModul").click(function(e) {
 				$(".expandModul").toggleClass("expanded");
-				$(".expandModul").children("ul:first").slideToggle("300");
+				$(".expandModul").children("ul:first").slideToggle("fast");
 				e.stopPropagation();
 				$(".contentBox").load("/SopraMMS/guiElements/homeContent.jsp");
 			});

@@ -125,25 +125,21 @@ public class UserAdministration {
 		
 		userDBController.setForgotPwdByMail(email,newLink);
 
-		String url="localhost:8080/SopraMMS/CreateNewPassword?link="+newLink;		
+		String url="http://localhost:8080/SopraMMS/CreateNewPassword?link="+newLink;		
 		
 		EmailTelnet mail = new EmailTelnet();
 		
 		StringBuilder text = new StringBuilder();
 		text.append("Sehr geehrte/geehrter Frau/Herr "+user.getLastName()+",");
-		text.append("\n");
-		text.append("\n");
-		text.append("Sie haben soeben ein neues Passwort für ihren Account (Benutzername: "+user.getLogin()+") im MMS beantragt.");
-		text.append("\n");
-		text.append("\n");
+		text.append("\n\n");
+text.append("Sie haben soeben ein neues Passwort für ihren Account (Benutzername: "+user.getLogin()+") im MMS beantragt.");
+		text.append("\n\n");
 		text.append("Bitte rufen Sie folgenden Link auf und ändern Sie ihr Password.");
-		text.append("\n");
+		text.append("\n\n");
 		text.append(url);
-		text.append("\n");
-		text.append("\n");
+		text.append("\n\n");
 		text.append("Bitte ändern Sie dieses generierte Passwort schnellstmöglich im Modul Management System.");
-		text.append("\n");
-		text.append("\n");
+		text.append("\n\n\n");
 		text.append("Mit freundlichen Grüßen");
 		text.append("\n");
 		text.append("MMS-Team");
