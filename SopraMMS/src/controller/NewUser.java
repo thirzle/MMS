@@ -10,19 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.UserDBController;
+
 import user.User;
 
 /**
  * Servlet implementation class AddUser
  */
 @WebServlet("/AddUser")
-public class AddUser extends SessionCheck {
+public class NewUser extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddUser() {
+    public NewUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,8 +43,7 @@ public class AddUser extends SessionCheck {
 		    List<String> institutes = controller.getInstitutes();
 		    //
 		    session.setAttribute("institutes", institutes);
-		    session.setAttribute("content", "addUser");
-		    session.setAttribute("addUser", "true");
+		    session.setAttribute("content", "newUser");
 		    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		} else {
 		    // not logged in or access denied!

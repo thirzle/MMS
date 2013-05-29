@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import mail.EmailTelnet;
+import model.UserDBController;
 
-import controller.UserDBController;
 
 public class UserAdministration {
 

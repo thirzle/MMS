@@ -6,11 +6,11 @@ import java.util.List;
 
 import management.Entry;
 import management.Module;
+import model.ModuleDBController;
+import model.UserDBController;
 
 import user.User;
 
-import controller.ModuleDBController;
-import controller.UserDBController;
 
 public class DBtest {
 

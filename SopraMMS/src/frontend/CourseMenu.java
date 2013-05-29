@@ -3,7 +3,8 @@ package frontend;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.UserDBController;
+import model.UserDBController;
+
 
 public class CourseMenu {
 

@@ -8,8 +8,8 @@ import java.util.List;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 
 import management.*;
+import model.ModuleDBController;
 import pdfcreator.*;
-import controller.ModuleDBController;
 
 public class LogicTest {
 

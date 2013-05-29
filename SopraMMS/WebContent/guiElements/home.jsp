@@ -13,9 +13,6 @@
 
 <%@page import="user.User"%>
 </head>
-
-
-
 <body>
 	<%
 		User user = (User) session.getAttribute("user");
@@ -32,7 +29,7 @@
 					boolean[] rights = user.getRights();
 						if (rights[3]) {
 				%>
-				<%@ include file="/guiElements/admin/adminMenu/adminMenu.jsp"%>
+				<%@ include file="/guiElements/admin/adminMenu.jsp"%>
 				<%
 					}
 						if (rights[1]) {

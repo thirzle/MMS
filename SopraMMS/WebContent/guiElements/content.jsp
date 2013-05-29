@@ -30,15 +30,15 @@ if(contentPage.equals("changedPwStatusPw12Wrong")||contentPage.equals("changedPw
 <%
 } else if(contentPage.equals("user")) {
 %>
-	<jsp:include page="/guiElements/admin/adminMenu/userManagementContent.jsp"></jsp:include>
+	<jsp:include page="/guiElements/admin/userManagementContent.jsp"></jsp:include>
 <%
 } else if(contentPage.equals("home")) {
 %>
 	<jsp:include page="/guiElements/homeContent.jsp"></jsp:include>
 <%
-} else if(contentPage.equals("addUser")) {
+} else if(contentPage.equals("newUser")) {
 %>
-	<jsp:include page="/guiElements/admin/adminMenu/userManagementContent.jsp"></jsp:include>
+	<jsp:include page="/guiElements/admin/userManagementContent.jsp"></jsp:include>
 <%
 }
 %>

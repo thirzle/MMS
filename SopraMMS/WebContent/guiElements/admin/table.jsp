@@ -16,7 +16,6 @@
 	} catch(NullPointerException e) {
 	    users = new ArrayList<User>();
 	}
-	System.out.println("(table.jsp): users.toString() = "+users.toString());
 	String[] status = {"Modulver.","Redakteur","Administrator","right[3]","right[4]","right[5]"};
 %>
 <table id="userTable" class="tablesorter">
@@ -66,10 +65,7 @@
 		</tr>
 		<%
 			}
-		
-			if(session.getAttribute("addUser") == "true") {%>
-				<jsp:include page="userManagement/tmpRow.jsp" />
-		<% 	}%>
+		%>
 	</tbody>
 </table>
 <form id="addUserForm" action="SaveUser" method="get">

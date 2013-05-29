@@ -20,11 +20,11 @@
 
 	<ul class="nav">
 		<div class="headerNavAdministration">
-			<li><a href="/SopraMMS/LoadUser">Benutzerverwaltung</a></li>
+			<li>Benutzerverwaltung</li>
 		</div>
 		<div class="expandAdministration">
 			<ul class="subNav">
-				<li id="newUser"><a href="/SopraMMS/AddUser">Neuer
+				<li id="newUser"><a href="/SopraMMS/NewUser">Neuer
 						Benutzer</a></li>
 				<li id="editUser"><a href="/SopraMMS/EditUser">Benutzer
 						bearbeiten</a></li>
