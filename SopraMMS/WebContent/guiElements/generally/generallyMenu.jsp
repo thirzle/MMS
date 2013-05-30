@@ -11,17 +11,9 @@
 										});
 					});
 	//Lisa
-	$(document)
-			.ready(
-					function() {
-						$(".newMsg")
-								.click(
-										function(e) {
-											$(".contentBox")
-													.load(
-															"/SopraMMS/guiElements/generally/newMessageContent.jsp");
-										});
-					});
+	$(document).ready(function() {
+		$(".newMsg").click(function(e) {
+		$(".contentBox").load("/SopraMMS/guiElements/generally/newMessage.jsp");});});
 </script>
 
 <%
