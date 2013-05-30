@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/default.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>newMessage</title>
+<title>Neue Nachricht</title>
 </head>
 <div class="menuBox">
 <body>

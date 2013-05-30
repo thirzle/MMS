@@ -52,9 +52,6 @@ if(session.getAttribute("generallyMenu")!=null){
 		<div class="expandGenerally">
 			<ul class="subNav">
 				<li class=newMsg>Neue Nachricht</li>
-				<form id="send" action="/SopraMMS/sendContent" method="get" >
-					<li class=sendMsg onclick="showR.submit()">Gesendet</li>
-				</form>
 			</ul>
 		</div>
 	</ul>
