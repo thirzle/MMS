@@ -29,16 +29,19 @@ public class CreateNewPassword extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		UserAdministration ua = new UserAdministration();
-		User user = ua.checkNewPasswordLink(request.getParameter("link"));
-		if(user==null)
-		{
+		try {
+			User user = ua.checkNewPasswordLink(request.getParameter("link"));
+			if (user!=null) {
+				request.getSession().setAttribute("userCreatNewPassword", user);
+				request.getSession().setAttribute("content", "createNewPassword");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			}else{
+				response.sendRedirect("/SopraMMS/guiElements/error.jsp");
+			}
+		
+		} catch (Exception e) {
 			response.sendRedirect("/SopraMMS/guiElements/error.jsp");
-		}
-		else{
-			request.getSession().setAttribute("user", user);
-			request.getSession().setAttribute("content", "createNewPassword");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-		}
+		}	
 		
 	}
 

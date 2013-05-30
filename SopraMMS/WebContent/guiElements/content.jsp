@@ -24,6 +24,7 @@
 	}else if (contentPage.equals("createNewPassword")
 	|| contentPage.equals("ceateNewPwNotEqual")
 	|| contentPage.equals("ceateNewPwDone")) {
+
 %>
 <jsp:include page="/guiElements/Login/createNewPassword.jsp"></jsp:include>
 <%

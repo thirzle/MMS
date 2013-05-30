@@ -34,13 +34,14 @@ public class AcceptNewPassword extends HttpServlet {
 					"ceateNewPwNotEqual");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		} else {
-			User user = (User) (request.getSession().getAttribute("user"));
+			User user = (User) (request.getSession().getAttribute("userCreatNewPassword"));
 			ua.changePassword(user, newPassword1.hashCode() + "");
 
 			ua.deleteNewPasswordLink(user.getLogin());
 
 			request.getSession().setAttribute("content",
 					"ceateNewPwDone");
+			request.getSession().removeAttribute("userCreatNewPassword");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 
 		}
