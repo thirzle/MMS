@@ -29,7 +29,7 @@
 		</tr>
 		<tr>
 			<th align="left" colspan="2">Nachricht:</th>
-			<th align="left" colspan="4"><textarea cols="90" rows="20"
+			<th align="left" colspan="4"><textarea cols="77" rows="20"
 					name="message"></textarea></th>
 		</tr>
 	</table>
@@ -38,8 +38,7 @@
 			<td><input type="hidden" name="action" value="send"> <input
 				type="SUBMIT" value="Senden">
 			</td>
-			<td><input type="hidden" name="action" value="cancel"> <input
-				type="SUBMIT" value="Abbrechen"></td>
+			<td><input type="button" name="Cancel" value="Abbrechen" onclick="window.location = '/SopraMMS/guiElements/home.jsp' " /></td>
 	</table>
 	</form>
 	</body>

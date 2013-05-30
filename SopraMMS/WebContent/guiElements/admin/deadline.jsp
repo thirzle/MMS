@@ -46,6 +46,6 @@
 			</td>
 		</tr>
 	</table><br/>
-<form name="submit" action="/SopraMMS/NewDeadline" method="get">
+<form name="submit" action="/SopraMMS/Deadline" method="get">
 	<input type="submit" value="Neuen Stichtag festlegen">
 </form>
