@@ -40,7 +40,7 @@ int NUMBER_OF_INSTITUTES = institutes.size();
 		<tr>
 			<td>Institut:</td>
 			<td>
-				<select form="newUserForm" name="institutesSelect" id="instituteSelect" style="width: 270px">
+				<select form="newUserForm" name="instituteSelect" id="instituteSelect" style="width: 270px">
 					<% for(int i=0; i<NUMBER_OF_INSTITUTES;i++) { %>
 						<option value=<%=i %>><%=institutes.get(i) %></option>
 					<%} %>

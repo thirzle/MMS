@@ -10,10 +10,7 @@
 	List<User> users;
 	try {
 	    users = (List<User>) session.getAttribute("users");
-	} catch(NullPointerException e) {
-	    users = new ArrayList<User>();
-	}
-	String[] status = {"Modulver.","Redakteur","Administrator","right[3]","right[4]","right[5]"};
+		String[] status = {"Modulver.","Redakteur","Administrator","Recht auf Stellv.","Dezernat II","right[5]"};
 %>
 <table id="userTable" class="tablesorter">
 	<thead>
@@ -28,7 +25,7 @@
 		</tr>
 	</thead>
 	<tbody id="userTableBody">
-		<%
+		<%	
 			for(int i=0; i<users.size();i++) {
 		%>
 		<tr>
@@ -62,6 +59,9 @@
 		</tr>
 		<%
 			}
+		} catch(NullPointerException e) {
+		    System.out.println("(table.jsp): ACHTUNG USER IST NULL");
+		}
 		%>
 	</tbody>
 </table>
