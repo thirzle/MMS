@@ -30,6 +30,7 @@
 						bearbeiten</a></li>
 				<li id="deleteUser"><a href="/SopraMMS/DeleteUser">Benutzer
 						löschen</a></li>
+				<li id="generatePDF"><a href="/SopraMMS/GeneratePDF">PDF generieren</a></li>
 			</ul>
 		</div>
 	</ul>
