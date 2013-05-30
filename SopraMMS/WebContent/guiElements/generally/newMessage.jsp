@@ -10,7 +10,7 @@
 <div class="menuBox">
 <body>
 	<h1>Neue Nachricht</h1>
-	<form method="POST" action="/SopraMMS/EmailTelnet" name="mail">
+	<form method="POST" action="/SopraMMS/Mail">
 	<table cellpadding="10" cellspacing="10">
 		<tr>
 			<th align="left" colspan="2">Absender:</th>
