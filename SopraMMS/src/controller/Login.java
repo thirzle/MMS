@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import management.Deadline;
+
 import user.User;
 import user.UserAdministration;
 
@@ -41,16 +43,19 @@ public class Login extends SessionCheck {
 			// login
 			// Here you put the check on the username and password
 			User user = userAdmin.login(loginname, password, sessionID);
+			Deadline deadline = userAdmin.getDeadlinebyFaculty(user.getFaculty());
 			if (user != null) {
 				session.setAttribute("user", user);
 				session.setAttribute("loginname", loginname);
 				session.setAttribute("rights", user.getRights());
 				session.setAttribute("email", user.getMail());
 				session.setAttribute("content", "home");
+				session.setAttribute("deadline", deadline.getDeadline());
+				session.setAttribute("beginremember", deadline.getBeginremember());
 
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			} else {
-				System.out.println("Invalid loginname and password");
+				System.out.println("Invalid loginname or password");
 				//TODO in bestehenden Content oeffnen und nicht neue Seite oeffnen
 				response.sendRedirect("/SopraMMS/welcome.jsp?loginStatus=failed");
 			}
