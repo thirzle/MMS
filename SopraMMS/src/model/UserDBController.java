@@ -708,6 +708,68 @@ public class UserDBController {
 		return null;
 	}
 	
+	
+	
+	public List<String[]> getNews(int type){
+		List<String[]> news = new LinkedList<String[]>();
+		Connection connection = connect();
+		query = "SELECT * FROM news WHERE type = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			ResultSet resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				news.add(new String[]{resultSet.getString("title"), 
+						resultSet.getString("content"), 
+						resultSet.getString("author")});
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Couldn't load news");
+		}finally{
+			close(connection);
+		}
+		return news;
+	}
+	
+	public boolean addNews(String title, String content, String author, int type){
+		Connection connection = connect();
+		query = "INSERT INTO news VALUES (?,?,?,?)";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, title);
+			pStatement.setString(2, content);
+			pStatement.setString(3, author);
+			pStatement.setInt(4, type);
+			return pStatement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Couldn't add news");
+			return false;
+		} finally{
+			close(connection);
+		}
+	}
+	
+	
+	public boolean deleteNews(String title){
+		Connection connection = connect();
+		query = "DELETE FROM news WHERE title = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, title);
+			return pStatement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Couldn't delete news");
+			return false;
+		} finally{
+			close(connection);
+		}
+	}
+	
 
 	// close connection
 	private void close(Connection connection) {
