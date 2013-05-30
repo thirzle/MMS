@@ -62,16 +62,6 @@ body {
 	border-width: 1px 2px 2px 1px;
 }
 
-/*---- Message ----*/
-.newMessage {
-	text-align: left;
-	font-size: 15pt;
-	font-weight: bold;
-	color: #FFFFFF;
-	background: #91ACBC;
-	padding: 5px 0px 5px 10px;
-}
-
 /*---- Header ----*/
 .header { /*background-color: red;*/
 	width: 100%;
@@ -327,4 +317,13 @@ body {
 
 .messageManagementEntry:hover {
 	font-weight: bold;
+}
+
+.newMessage {
+	text-align: left;
+	font-size: 15pt;
+	font-weight: bold;
+	color: #FFFFFF;
+	background: #91ACBC;
+	padding: 5px 0px 5px 10px;
 }
