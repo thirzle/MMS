@@ -1,7 +1,14 @@
+<script>
+$(document).ready(function() {
+		$("#addNews").click(function(e) {
+		$(".contentBox").load("/SopraMMS/guiElements/admin/creatNews.jsp");
+		});
+});
+</script>
+
+
 <div class="menuBox">
 	<h1>Administrator</h1>
-
-
 
 	<ul class="nav">
 		<div class="headerNavAdminAccount">
@@ -17,6 +24,17 @@
 						löschen</a></li>
 			</ul>
 		</div>
+		
+		<div class="headerNavAdminNews">
+			<li>Neuichkeiten</li>
+		</div>
+		<div class="expandAdminNews">
+			<ul class="subNav">
+				<li id="showNews"><a href="/SopraMMS/ShowNews">&Uuml;bersicht Neuichkeiten</a></li>
+				<li id="addNews">Neuichkeit verfassen</li>
+			</ul>
+		</div>
+		
 		<div class="headerNavAdminModule">
 			<li>Modulhandbuchverwaltung</li>
 		</div>
@@ -27,3 +45,4 @@
 		</div>
 	</ul>
 </div>
+

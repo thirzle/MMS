@@ -14,7 +14,7 @@
 	System.out.println("Seiteninhalt: "+contentPage);
 	if (contentPage.equals("start")) {
 %>
-<jsp:include page="/guiElements/homeContent.jsp"></jsp:include>
+<jsp:include page="/guiElements/frontend/frontendContent.jsp"></jsp:include>
 <%
 	} 
 	else if(contentPage.equals("contentPdf")){
@@ -64,7 +64,7 @@
 <%
 	} else if (contentPage.equals("home")) {
 %>
-<jsp:include page="/guiElements/homeContent.jsp"></jsp:include>
+<jsp:include page="/guiElements/backendContent.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("newUser")) {
 %>

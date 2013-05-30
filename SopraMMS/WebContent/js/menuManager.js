@@ -77,6 +77,32 @@ $(document).ready(function() {
 	}
 });
 
+// Neuichkeiten 
+$(document).ready(function() {
+	$(".headerNavAdminNews").click(function(e) {
+		var exp = sessionStorage.getItem('expAdminNews');
+		if (exp == 'true') {
+			$(".expandAdminNews").toggleClass("expanded", false);
+			sessionStorage.setItem('expAdminNews', 'false');
+		} else {
+			$(".expandAdminNews").toggleClass("expanded", true);
+			sessionStorage.setItem('expAdminNews', 'true');
+		}
+		$(".expandAdminNews").children("ul:first").slideToggle("fast");
+	});
+});
+
+$(document).ready(function() {
+	var exp = sessionStorage.getItem('expAdminNews');
+	if (exp == 'true') {
+		$(".expandAdminNews").toggleClass("expanded", false);
+		$(".expandAdminNews").children("ul:first").slideToggle(0);
+	} else {
+		$(".expandAdminNews").toggleClass("expanded", true);
+
+	}
+});
+
 
 // Modulhandbuchverwaltung
 $(document).ready(function() {

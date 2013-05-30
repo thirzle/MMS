@@ -1,5 +1,5 @@
 
-<div>
+
 
 	<h1>Home Content</h1>
 	<h2>Lorem ipsum</h2>
@@ -9,22 +9,20 @@
 		aliquyam erat, sed diam voluptua.
 	</p>
 	<h1>Home Content</h1>
+	<h2>Aenean massa</h2>
 	<p>At vero eos et accusam et justo duo dolores et ea rebum. Stet
 		clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
 		sit amet.Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 		Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque
 		penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 		Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-		Nulla consequat massa quis enim. Donec pede justo, fringilla vel,
+		Nulla consequat massa quis enim. <a>Donec pede justo</a>, fringilla vel,
 		aliquet nec, vulputate eget, arcu.</p>
-	<div class=importantBox><h2>In enim justo</h2> Rhoncus ut, imperdiet a,
-		venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
-		Integer tincidunt. <a>Cras dapibus</a> Vivamus elementum semper nisi. Aenean
-		vulputate eleifend tellus.</div>
+	<h2>Lorem ipsum</h2>
 	<p>Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
 	Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
 	Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean
-	imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper
+	imperdiet. Etiam ultricies <a>eirmod tempor</a> nisi vel augue. Curabitur ullamcorper
 	ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus
 	eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing
 	sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar,
@@ -36,4 +34,3 @@
 	</p>
 
 
-</div>
