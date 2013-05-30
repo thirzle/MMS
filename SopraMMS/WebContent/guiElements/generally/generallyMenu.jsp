@@ -12,7 +12,7 @@
 			$(".contentBox").load("/SopraMMS/guiElements/generally/changePassword.jsp");});});
 		//Lisa
 		$(document).ready(function() {
-			$(".newMessage").click(function(e) {
+			$(".newMsg").click(function(e) {
 			$(".contentBox").load("/SopraMMS/guiElements/generally/newMessageContent.jsp");});});
 </script>
 

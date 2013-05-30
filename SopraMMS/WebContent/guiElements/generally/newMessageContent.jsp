@@ -7,7 +7,7 @@
 		console.log("4321");
 	}
 	$(document).ready(function() {
-		popup('newMessage.jsp')
+		popup('/SopraMMS/guiElements/generally/newMessage.jsp');
 		console.log("1234");
 	});
 </script>
