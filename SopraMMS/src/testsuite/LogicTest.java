@@ -213,6 +213,7 @@ public class LogicTest {
 		TextualEntry test_textualentry26 = new TextualEntry(42, "02:44:35",
 			false, false, false, 1,"Notenbildung: ", "Ergebnis der Schriftlichen Prüfung");
 		
+		
 		test_module.addTextualEntry(test_textualentry1);
 		test_module.addTextualEntry(test_textualentry2);
 		test_module.addTextualEntry(test_textualentry3);
@@ -245,6 +246,21 @@ public class LogicTest {
 		test_module.addTextualEntry(test_textualentry24);
 		test_module.addTextualEntry(test_textualentry25);
 		test_module.addTextualEntry(test_textualentry26);
+		
+		
+		//Erweiterte Testfaelle:
+		TextualEntry test_textualentry27 = new TextualEntry(42, "02:44:35",
+			false, false, false, 1," ", " ");
+		
+		TextualEntry test_textualentry28 = new TextualEntry(42, "02:44:35",
+			false, false, false, 1,"Testf\u00E4lle: ", " ");
+		
+		TextualEntry test_textualentry29 = new TextualEntry(42, "02:44:35",
+			false, false, false, 1,"Langer Punkt: ", "- Das ist ein extrem langer Punkt, der auf mehrere Zeilen aufgeteilt werden sollte um zu testen ob die String-spillter-Methode ihren Job richtig erledigt und den Text einrückt :D");
+		
+		test_module.addTextualEntry(test_textualentry27);
+		test_module.addTextualEntry(test_textualentry28);
+		test_module.addTextualEntry(test_textualentry29);
 		
 	
 		

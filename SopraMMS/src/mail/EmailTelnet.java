@@ -18,23 +18,22 @@ public class EmailTelnet {
     private static int port = 25;
 
     // account / authentication settings
-    
-    //braucht man nicht, man ist im uni netzwerk, also gehts ohne...
-    //private static String user_name = "benutzer_name";
-    //private static String user_password = "passwort";
 
-	private static String mail_address_from = "adresse@gmail.com";
-	private static String mail_from = mail_address_from;
+    // braucht man nicht, man ist im uni netzwerk, also gehts ohne...
+    // private static String user_name = "benutzer_name";
+    // private static String user_password = "passwort";
+
+    private static String mail_address_from = "adresse@gmail.com";
+    private static String mail_from = mail_address_from;
 
     private static String mail_footer = "\n\nDo not reply...";
-    
 
     public static void send_mail(String mail_address_from, String mail_from, String subject, String mail_address_to, String content) throws IOException {
 	mail_transfer(mail_address_from, mail_from, mail_address_to, mail_address_to, subject, content + mail_footer);
     }
-    
+
     public static void send_mail(String subject, String mail_address_to, String content) throws IOException {
-    mail_transfer(mail_address_from, mail_from, mail_address_to, mail_address_to, subject, content + mail_footer);
+	mail_transfer(mail_address_from, mail_from, mail_address_to, mail_address_to, subject, content + mail_footer);
     }
 
     private synchronized final static void mail_transfer(String mail_address_from, String mail_from, String mail_address_to, String mail_to, String subject, String content) throws IOException {
