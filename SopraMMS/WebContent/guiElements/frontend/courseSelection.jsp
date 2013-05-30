@@ -45,10 +45,8 @@
 			<ul class="subNav">
 				<%
 					for (int i = 0; i < courses.size(); i++) {
-						session.setAttribute("content", "contentPdf");
-						out.print("<li><a href=/SopraMMS/guiElements/home.jsp?contentPdf="
+						out.print("<li> <a href=/SopraMMS/CourseSelection?contentPdf="
 								+ courses.get(i) + ">" + courses.get(i) + "</a></li>");
-
 					}
 				%>
 			</ul>

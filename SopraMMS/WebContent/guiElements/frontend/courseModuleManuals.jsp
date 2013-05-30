@@ -2,9 +2,9 @@
 <%@page import="java.util.List"%>
 <%@page import="management.ModuleAdministration"%>
 <%
-	System.out.println(request.getParameter("contentPdf"));
 	String course = (String) request.getParameter("contentPdf");
 	session.removeAttribute("content");
+	System.out.println(session.getAttribute("content"));
 
 	ModuleAdministration ma = new ModuleAdministration();
 	List<String[]> pdfs = ma.getModuleManualPdfByCourse(course);
