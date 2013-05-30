@@ -11,7 +11,7 @@ public class CourseMenu {
 	static UserDBController userDBController = new UserDBController();
 
 	public List<String> getCourses() {
-		ArrayList<String> courses = new ArrayList<>();
+		ArrayList<String> courses = new ArrayList<String>();
 		courses.addAll(userDBController.getCoursesByFaculty("in"));	
 		return courses;
 	}
