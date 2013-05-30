@@ -211,10 +211,25 @@ text.append("Sie haben soeben ein neues Passwort für ihren Account (Benutzername
 
 	public String getFacultyName(User user) {
 		return userDBController.getFacultyName(user);
-
+	}
+	
+	public List<String> getAllFacultiesByName(){
+		return userDBController.getFacultiesByName();
+	}
+	
+	public List<String> getAllFacultiesID(){
+		return userDBController.getFacultiesID();
+	}
+	
+	public List<String> getAllInstitutesByName(){
+		return userDBController.getInstitutes();
 	}
 
 	public List<String> getInstituteNames(User user) {
 		return userDBController.getInstituteNames(user.getLogin());
+	}
+	
+	public List<String> getCoursesByFaculty(String facultyID){
+		return userDBController.getCoursesByFaculty(facultyID);
 	}
 }

@@ -7,9 +7,16 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.nio.charset.Charset;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import user.User;
 
 @SuppressWarnings("serial")
+@WebServlet("/EmailTelnet")
 public class EmailTelnet extends HttpServlet {
 
     private static BufferedOutputStream os = null;
@@ -25,9 +32,22 @@ public class EmailTelnet extends HttpServlet {
     //private static String user_name = "benutzer_name";
     //private static String user_password = "passwort";
 
-    private static String mail_address_from = "adresse@gmail.com";
+	private static String mail_address_from = "adresse@gmail.com";
 
     private static String mail_footer = "\n\nDo not reply...";
+    
+    @Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		User user = (User) req.getSession().getAttribute("user");
+		String mail_address_from = user.getMail();
+		String mail_from = (user.getFirstName()+" "+user.getLastName());
+		String mail_address_to = req.getParameter("mailto");
+		String subject = req.getParameter("subject");
+		String content = req.getParameter("message");
+		send_mail(subject, mail_address_to, content);
+		super.doPost(req, resp);
+	}
 
     public static void send_mail(String subject, String mail_address_to, String content) throws IOException {
 	mail_transfer(mail_address_from, mail_address_from, mail_address_to, mail_address_to, subject, content + mail_footer);
