@@ -32,6 +32,7 @@ public class EditUser extends SessionCheck implements Servlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("(EditUser.java): Begin doget()");
     	HttpSession session = request.getSession();	    	
 		UserDBController controller = new UserDBController();
 		List<User> users = controller.getAllUsers();
