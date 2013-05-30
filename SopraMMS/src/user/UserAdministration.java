@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import mail.EmailTelnet;
+import management.Deadline;
 import model.UserDBController;
 
 
@@ -203,6 +204,10 @@ text.append("Sie haben soeben ein neues Passwort für ihren Account (Benutzername
 			user.setSession(null);
 			userDBController.changeUser(user, user);
 		}
+	}
+	
+	public Deadline getDeadlinebyFaculty(String facultyID){
+		return userDBController.getDeadlineByFaculty(facultyID);
 	}
 
 	public boolean checkPassword(String loginname, String password) {
