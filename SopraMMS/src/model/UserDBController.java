@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
+
+import management.Deadline;
 
 import user.User;
 
@@ -682,6 +685,29 @@ public class UserDBController {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public Deadline getDeadlineByFaculty(String facultyID){
+		Connection connection = connect();
+		query = "SELECT * FROM deadline where facultyID = ?";
+		
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, facultyID);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				return new Deadline(resultSet.getDate("deadline"),
+						resultSet.getDate("beginremember"),
+						resultSet.getInt("tolerance"), 
+						resultSet.getString("facultyID"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 
 	// close connection
 	private void close(Connection connection) {

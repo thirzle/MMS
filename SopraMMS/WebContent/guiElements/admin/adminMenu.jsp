@@ -43,6 +43,9 @@ $(document).ready(function() {
 				<li id="generatePDF"><a href="/SopraMMS/GeneratePDF">PDF generieren</a></li>
 			</ul>
 		</div>
+		<div class="headerNavAdministration">
+			<li>Stichtag</li>
+		</div>
 	</ul>
 </div>
 
