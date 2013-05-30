@@ -1,6 +1,7 @@
 
 <%
 	String contentPage;
+	Object user = session.getAttribute("user");
 	if (session.getAttribute("content") == null) {
 		contentPage = "start";
 		if(request.getParameter("contentPdf")!=null)
@@ -11,7 +12,7 @@
 		contentPage = session.getAttribute("content").toString();
 	}
 	
-	System.out.println("Seiteninhalt: "+contentPage);
+	System.out.println("(content.jsp): Seiteninhalt: "+contentPage);
 	if (contentPage.equals("start")) {
 %>
 <jsp:include page="/guiElements/frontend/frontendContent.jsp"></jsp:include>

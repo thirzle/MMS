@@ -53,7 +53,7 @@ public class SaveUser extends SessionCheck {
 		 * 
 		 * 
 		 */
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		response.sendRedirect("/SopraMMS/EditUser");
 	}
 
 	/**
