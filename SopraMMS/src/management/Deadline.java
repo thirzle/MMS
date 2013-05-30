@@ -44,12 +44,12 @@ public class Deadline {
 	}
 	
 	
-	public static Date getDeadline() {
+	public Date getDeadline() {
 		return deadline;
 	}
 
 
-	public static void setDeadline(Date deadline) {
+	public void setDeadline(Date deadline) {
 		Deadline.deadline = deadline;
 	}
 
