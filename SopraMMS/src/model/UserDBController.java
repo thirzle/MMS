@@ -716,6 +716,7 @@ public class UserDBController {
 		query = "SELECT * FROM news WHERE type = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
+			pStatement.setInt(1, type);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				news.add(new String[]{resultSet.getString("title"), 
