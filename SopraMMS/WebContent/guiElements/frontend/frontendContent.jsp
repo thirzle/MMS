@@ -1,3 +1,4 @@
+<%@page import="java.util.LinkedList"%>
 <%@page import="java.util.List"%>
 <%@page import="user.UserAdministration"%>
 <h1>Home Content</h1>
@@ -9,11 +10,12 @@
 
 <% 
 	UserAdministration ua = new UserAdministration();
-	List<String[]> list = ua.getNews(true);
+	LinkedList<String[]> list = new LinkedList(); 
+	list.addAll(ua.getNews(true));
 	
 	for(String [] entry: list){
 		out.println("<h1>"+entry[0]+"</h1>");
 		out.println("<p>"+entry[1]+"</p>");
-		out.println("<author>"+entry[2]+"</author>");
+		out.println("<author> Autor: "+entry[2]+"</author>");
 	}
 %>

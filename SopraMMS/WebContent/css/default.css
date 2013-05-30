@@ -109,6 +109,12 @@ body {
 	color: #a52a2a;
 }
 
+.contentBox author{
+	font-weight: lighter;
+	font-style: italic;
+	color: gray;
+}
+
 .importantBox {
 	text-align: center;
 	width: 490px;
