@@ -1,6 +1,7 @@
-<%@page import="user.UserAdministration"%>
+<%@page import="user.UserAdministration,java.util.List"%>
 <%
-LinkedList<String> facList = new UserAdministration(). 
+UserAdministration ua = new UserAdministration();
+List<String> facList = ua.getAllFacultiesByName();
 %>
 
 <h1>Neues Modulhandbuch erstellen</h1>
