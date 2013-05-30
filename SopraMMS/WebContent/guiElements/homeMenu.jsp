@@ -1,10 +1,12 @@
-
 <%
-	User user = (User) session.getAttribute("user");
+	//Initialization
+	User user = null;
+	if (session.getAttribute("user") != null) {
+		user = (User) session.getAttribute("user");
+	}
 %>
 
 <%@ include file="/guiElements/frontend/courseSelection.jsp"%>
-
 
 <%
 	if (user != null) {
@@ -34,7 +36,6 @@
 <%
 	}
 %>
-
 <%
 	if (user == null) {
 %>

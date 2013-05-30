@@ -1,28 +1,13 @@
 <div class="menuBox">
 	<h1>Administrator</h1>
 
-	<script>
-		var newUserCompleted = true;
-		$(document).ready(
-				function() {
-					$(".headerNavAdministration").click(
-							function(e) {
-								
-								$(".expandAdministration").toggleClass(
-										"expanded");
-								$(".expandAdministration").children("ul:first")
-										.slideToggle("fast");
-								e.stopPropagation();
-							});
-				}); //$(document).ready
-	</script>
 
 
 	<ul class="nav">
-		<div class="headerNavAdministration">
+		<div class="headerNavAdminAccount">
 			<li>Benutzerverwaltung</li>
 		</div>
-		<div class="expandAdministration">
+		<div class="expandAdminAccount">
 			<ul class="subNav">
 				<li id="newUser"><a href="/SopraMMS/NewUser">Neuer
 						Benutzer</a></li>
@@ -30,6 +15,13 @@
 						bearbeiten</a></li>
 				<li id="deleteUser"><a href="/SopraMMS/DeleteUser">Benutzer
 						löschen</a></li>
+			</ul>
+		</div>
+		<div class="headerNavAdminModule">
+			<li>Modulhandbuchverwaltung</li>
+		</div>
+		<div class="expandAdminModule">
+			<ul class="subNav">
 				<li id="generatePDF"><a href="/SopraMMS/GeneratePDF">PDF generieren</a></li>
 			</ul>
 		</div>

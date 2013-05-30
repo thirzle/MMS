@@ -13,7 +13,7 @@
 		session.removeAttribute("task");
 		session.removeAttribute("representative");
 		session.invalidate();
-		response.sendRedirect("/SopraMMS/welcome.jsp");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	} else {
 %><img src="${pageContext.request.contextPath}/images/Teambild.jpg"
 	alt="Logo" align="left">

@@ -3,10 +3,15 @@
 	String contentPage;
 	if (session.getAttribute("content") == null) {
 		contentPage = "start";
+		if(request.getParameter("contentPdf")!=null)
+		{
+			contentPage="contentPdf";
+		}
 	} else {
 		contentPage = session.getAttribute("content").toString();
 	}
-
+	
+	System.out.println("Seiteninhalt: "+contentPage);
 	if (contentPage.equals("start")) {
 %>
 <jsp:include page="/guiElements/homeContent.jsp"></jsp:include>
@@ -19,6 +24,7 @@
 	}else if (contentPage.equals("createNewPassword")
 	|| contentPage.equals("ceateNewPwNotEqual")
 	|| contentPage.equals("ceateNewPwDone")) {
+
 %>
 <jsp:include page="/guiElements/Login/createNewPassword.jsp"></jsp:include>
 <%

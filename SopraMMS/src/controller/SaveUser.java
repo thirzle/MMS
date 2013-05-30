@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import user.User;
+import user.UserAdministration;
 
 /**
  * Servlet implementation class SaveUser
@@ -16,14 +17,13 @@ import user.User;
 @WebServlet("/SaveUser")
 public class SaveUser extends SessionCheck {
 	private static final long serialVersionUID = 1L;
-       
+    private UserAdministration ua;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public SaveUser() {
         super();
-        // TODO Auto-generated constructor stub
-        // 
+        ua = new UserAdministration();
     }
 
 	/**

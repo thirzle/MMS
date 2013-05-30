@@ -3,15 +3,14 @@
 
 
 <%
-	if (session.getAttribute("contentWelcome").equals(
-			"createNewPassword")
-			|| session.getAttribute("contentWelcome").equals(
+	if (session.getAttribute("content").equals("createNewPassword")
+			|| session.getAttribute("content").equals(
 					"ceateNewPwNotEqual")) {
 %>
 <p>
 	Sie legen ein neues Passwort
 	<%
-	User user = (User) session.getAttribute("user");
+	User user = (User) session.getAttribute("userCreatNewPassword");
 		if (user != null) {
 			out.println(" f&uuml;r " + user.getLastName() + "&nbsp;"
 					+ user.getFirstName());
@@ -20,15 +19,15 @@
 </p>
 
 <%
-	if (session.getAttribute("contentWelcome").equals(
-				"ceateNewPwNotEqual")) {
+	if (session.getAttribute("content")
+				.equals("ceateNewPwNotEqual")) {
 %>
 
 <error>Die beiden Passw&ouml;rter stimmen nicht &uuml;berein</error>
 
 <%
 	}
-		session.removeAttribute("contentWelcome");
+		session.removeAttribute("content");
 %>
 
 <form action="/SopraMMS/AcceptNewPassword" method="get">
@@ -50,9 +49,8 @@
 </form>
 
 <%
-	} else if (session.getAttribute("contentWelcome").equals(
-			"ceateNewPwDone")) {
-		session.removeAttribute("contentWelcome");
+	} else if (session.getAttribute("content").equals("ceateNewPwDone")) {
+		session.removeAttribute("content");
 %>
 
 <h3>Ihr Passwort wurde erfolgreich ge&auml;ndert</h3>

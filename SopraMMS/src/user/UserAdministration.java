@@ -122,7 +122,7 @@ public class UserAdministration {
 	public void sendNewPasswordLink(String email) throws IOException {
 		User user = userDBController.getUserByEmail(email);
 		
-		String newLink = Math.random()*1000000000*Math.PI+""+Math.round(Math.random()*100000)+""+(Math.random()*1000000000*Math.PI);
+		String newLink = Math.random()*1000000000*Math.PI+""+Math.random()*1000000000*Math.PI+""+(Math.random()*1000000000*Math.PI);
 		
 		userDBController.setForgotPwdByMail(email,newLink);
 
@@ -133,13 +133,13 @@ public class UserAdministration {
 		StringBuilder text = new StringBuilder();
 		text.append("Sehr geehrte/geehrter Frau/Herr "+user.getLastName()+",");
 		text.append("\n\n");
-text.append("Sie haben soeben ein neues Passwort für ihren Account (Benutzername: "+user.getLogin()+") im MMS beantragt.");
+text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername: "+user.getLogin()+") im MMS beantragt.");
 		text.append("\n\n");
-		text.append("Bitte rufen Sie folgenden Link auf und ändern Sie ihr Password.");
+		text.append("Bitte rufen Sie folgenden Link auf und ändern Sie ihr Passwort.");
 		text.append("\n\n");
 		text.append(url);
 		text.append("\n\n");
-		text.append("Bitte ändern Sie dieses generierte Passwort schnellstmöglich im Modul Management System.");
+		text.append("Sollten Sie kein Passwort für Ihren Account beantragt haben ignorieren Sie diese E-Mail.");
 		text.append("\n\n\n");
 		text.append("Mit freundlichen Grüßen");
 		text.append("\n");
