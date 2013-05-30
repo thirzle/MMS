@@ -1,6 +1,7 @@
 package user;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import mail.EmailTelnet;
@@ -236,5 +237,34 @@ text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername
 	
 	public List<String> getCoursesByFaculty(String facultyID){
 		return userDBController.getCoursesByFaculty(facultyID);
+	}
+	
+	
+	//News
+	
+	// true -> public
+	// false -> private
+	public List<String[]> getNews(boolean type)
+	{
+		List<String[]> list = new LinkedList<>();
+		list.addAll(userDBController.getNews(0));
+		if(type){
+			list.addAll(userDBController.getNews(1));
+		}
+		else{
+			list.addAll(userDBController.getNews(2));
+		}
+		return list;
+		
+	}
+	
+	public void deleteNews(String title)
+	{
+		userDBController.deleteNews(title);
+	}
+	
+	public void addNews(String[] data, int type)
+	{
+		userDBController.addNews(data[0],data[1],data[2],type);
 	}
 }
