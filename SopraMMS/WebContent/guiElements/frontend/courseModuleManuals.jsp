@@ -2,7 +2,9 @@
 <%@page import="java.util.List"%>
 <%@page import="management.ModuleAdministration"%>
 <%
-	String course = (String) session.getAttribute("contentWelcome");
+	System.out.println(request.getParameter("contentPdf"));
+	//String course = (String) session.getAttribute("contentWelcome");
+	String course = (String) request.getParameter("contentPdf");
 	session.removeAttribute("contentWelcome");
 
 	ModuleAdministration ma = new ModuleAdministration();

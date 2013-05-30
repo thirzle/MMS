@@ -7,7 +7,7 @@ $(document).ready(function(){
 	});
 });
 </script>
-<a href="/SopraMMS/welcome.jsp"><img src="${pageContext.request.contextPath}/images/textHeader.bmp" alt="Logo" align="left"></a>
+<a href="/SopraMMS/guiElements/home.jsp"><img src="${pageContext.request.contextPath}/images/textHeader.bmp" alt="Logo" align="left"></a>
 <img src="${pageContext.request.contextPath}/images/imgHeader.bmp" alt="Logo" align="right">
 <br>
 <div class="headerNavigation" id="navigation">

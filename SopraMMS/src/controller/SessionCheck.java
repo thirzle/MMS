@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +40,7 @@ public class SessionCheck extends HttpServlet {
 	
 	protected boolean isLoggedIn(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
-		if(session.getAttribute("loginname")!=null) {
+		if(session.getAttribute("user")!=null) {
 			return true;
 		}
 		return false;

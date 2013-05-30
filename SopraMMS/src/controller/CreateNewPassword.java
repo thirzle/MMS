@@ -36,8 +36,8 @@ public class CreateNewPassword extends HttpServlet {
 		}
 		else{
 			request.getSession().setAttribute("user", user);
-			request.getSession().setAttribute("contentWelcome", "createNewPassword");
-			response.sendRedirect("/SopraMMS/welcome.jsp");
+			request.getSession().setAttribute("content", "createNewPassword");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
 		
 	}

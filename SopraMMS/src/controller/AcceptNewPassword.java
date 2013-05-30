@@ -30,18 +30,18 @@ public class AcceptNewPassword extends HttpServlet {
 		UserAdministration ua = new UserAdministration();
 
 		if (!newPassword1.equals(newPassword2)) {
-			request.getSession().setAttribute("contentWelcome",
+			request.getSession().setAttribute("content",
 					"ceateNewPwNotEqual");
-			response.sendRedirect("/SopraMMS/welcome.jsp");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		} else {
 			User user = (User) (request.getSession().getAttribute("user"));
 			ua.changePassword(user, newPassword1.hashCode() + "");
 
 			ua.deleteNewPasswordLink(user.getLogin());
 
-			request.getSession().setAttribute("contentWelcome",
+			request.getSession().setAttribute("content",
 					"ceateNewPwDone");
-			response.sendRedirect("/SopraMMS/welcome.jsp");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 
 		}
 

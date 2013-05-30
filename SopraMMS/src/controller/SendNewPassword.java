@@ -38,7 +38,7 @@ public class SendNewPassword extends HttpServlet {
 			e.printStackTrace();
 			response.sendRedirect("SopraMMS/guiElements/error.jsp");
 		}
-		response.sendRedirect("/SopraMMS/welcome.jsp");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
 	/**

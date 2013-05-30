@@ -11,23 +11,25 @@
 			e.stopPropagation();
 		});
 	});
-
 </script>
 
-<% 
-if(session.getAttribute("coursepdfs")!=null){
-	 %>
-	<script>
-		$(document).ready(function() {
-				$(".expandCourse").toggleClass("expanded");
-				$(".expandCourse").children("ul:first").slideToggle(0);
-				
-		});
-	</script><%} %>
+<%
+	if(session.getAttribute("coursepdfs")!=null){
+%>
+<script>
+	$(document).ready(function() {
+		$(".expandCourse").toggleClass("expanded");
+		$(".expandCourse").children("ul:first").slideToggle(0);
+
+	});
+</script>
+<%
+	}
+%>
 
 
 
-<% 
+<%
 	CourseMenu cm = new CourseMenu();
 	List<String> courses = cm.getCourses();
 %>
@@ -41,11 +43,14 @@ if(session.getAttribute("coursepdfs")!=null){
 		</div>
 		<div class="expandCourse">
 			<ul class="subNav">
-				<%for(int i=0; i<courses.size();i++){
-	
-					out.print("<li><a href=/SopraMMS/CourseContent?pdf="+courses.get(i)+">"+courses.get(i)+"</a></li>");
-					
-				} %>
+				<%
+					for (int i = 0; i < courses.size(); i++) {
+						session.setAttribute("content", "contentPdf");
+						out.print("<li><a href=/SopraMMS/guiElements/home.jsp?contentPdf="
+								+ courses.get(i) + ">" + courses.get(i) + "</a></li>");
+
+					}
+				%>
 			</ul>
 		</div>
 	</ul>

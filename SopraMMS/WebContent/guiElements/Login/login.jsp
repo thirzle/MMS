@@ -9,7 +9,7 @@
 </script>
 
 <div class="menuBox">
-	<form action="Login" method="get">
+	<form action="/SopraMMS/Login" method="get">
 		<h1>Login</h1>
 
 		<%
