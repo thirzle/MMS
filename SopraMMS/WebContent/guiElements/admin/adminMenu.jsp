@@ -41,10 +41,8 @@ $(document).ready(function() {
 		<div class="expandAdminModule">
 			<ul class="subNav">
 				<li id="generatePDF"><a href="/SopraMMS/GeneratePDF">PDF generieren</a></li>
+				<li><a href="/SopraMMS/NewDeadline">Stichtag</a></li>
 			</ul>
-		</div>
-		<div class="headerNavAdministration">
-			<li>Stichtag</li>
 		</div>
 	</ul>
 </div>
