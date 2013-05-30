@@ -630,6 +630,48 @@ public class UserDBController {
 		return user;
 	}
 	
+	public List<String> getFacultiesByName(){
+		Connection connection = connect();
+		LinkedList<String> facList = new LinkedList<String>();
+		query = "SELECT * FROM faculty";
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while(resultSet.next()){
+				facList.add(resultSet.getString("name"));
+			}
+			return facList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get names of faculties");
+		}
+		finally{
+			close(connection);
+		}
+		return facList;
+	}
+	
+	public List<String> getFacultiesID(){
+		Connection connection = connect();
+		LinkedList<String> facList = new LinkedList<String>();
+		query = "SELECT * FROM faculty";
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while(resultSet.next()){
+				facList.add(resultSet.getString("facultyID"));
+			}
+			return facList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get IDs of faculties");
+		}
+		finally{
+			close(connection);
+		}
+		return facList;
+	}
+	
 
 	// roll back changes made in database if something went wrong
 	private void rollback(Connection connection) {

@@ -47,7 +47,6 @@ public class Login extends SessionCheck {
 				session.setAttribute("rights", user.getRights());
 				session.setAttribute("email", user.getMail());
 				session.setAttribute("content", "home");
-				session.setAttribute("representative", user.getRepresentative());
 
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			} else {
