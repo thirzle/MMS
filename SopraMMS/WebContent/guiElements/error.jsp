@@ -33,7 +33,7 @@
 				<div class="menuBox">
 					<h1>MMS</h1><div class="errorNav">
 					<ul><li>
-					<a href="/SopraMMS/welcome.jsp">Startseite</a></li></ul></div>
+					<a href="/SopraMMS/guiElements/home.jsp">Startseite</a></li></ul></div>
 				</div>
 			</div>
 			<div class="contentBox">
@@ -41,7 +41,7 @@
 
 				<h3>Es ist ein Fehler aufgetreten.</h3>
 				<p>
-					Bitte kehren Sie zur <a href="/SopraMMS/welcome.jsp">Startseite</a>
+					Bitte kehren Sie zur <a href="/SopraMMS/guiElements/home.jsp">Startseite</a>
 					zur&uuml;ck. <br />Sollte dies nicht klappen starten Sie Ihren
 					Browser neu und laden Sie danach das Modul Management System erneut.
 				</p>

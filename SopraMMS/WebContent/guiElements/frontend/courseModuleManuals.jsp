@@ -3,9 +3,8 @@
 <%@page import="management.ModuleAdministration"%>
 <%
 	System.out.println(request.getParameter("contentPdf"));
-	//String course = (String) session.getAttribute("contentWelcome");
 	String course = (String) request.getParameter("contentPdf");
-	session.removeAttribute("contentWelcome");
+	session.removeAttribute("content");
 
 	ModuleAdministration ma = new ModuleAdministration();
 	List<String[]> pdfs = ma.getModuleManualPdfByCourse(course);
