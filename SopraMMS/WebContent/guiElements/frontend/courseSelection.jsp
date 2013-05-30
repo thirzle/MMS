@@ -3,32 +3,6 @@
 <%@page import="frontend.CourseMenu"%>
 
 
-<script>
-	$(document).ready(function() {
-		$(".headerNavCourse").click(function(e) {
-			$(".expandCourse").toggleClass("expanded");
-			$(".expandCourse").children("ul:first").slideToggle("fast");
-			e.stopPropagation();
-		});
-	});
-</script>
-
-<%
-	if(session.getAttribute("coursepdfs")!=null){
-%>
-<script>
-	$(document).ready(function() {
-		$(".expandCourse").toggleClass("expanded");
-		$(".expandCourse").children("ul:first").slideToggle(0);
-
-	});
-</script>
-<%
-	}
-%>
-
-
-
 <%
 	CourseMenu cm = new CourseMenu();
 	List<String> courses = cm.getCourses();

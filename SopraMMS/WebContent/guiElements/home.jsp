@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/default.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
+<script type="text/javascript" src="/SopraMMS/js/menuManager.js"></script>
 </head>
 <body>
 	<div class="page">
