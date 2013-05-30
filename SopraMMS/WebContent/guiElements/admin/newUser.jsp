@@ -60,7 +60,7 @@ int NUMBER_OF_INSTITUTES = institutes.size();
 
 <script type="text/javascript">
 $("#rightsSelect").multipleSelect(); 
-$("#institutesSelect").multipleSelect(); 
+$("#instituteSelect").multipleSelect(); 
 $(".expandAdministration").toggleClass("expanded");
 $(".expandAdministration").children("ul:first").slideToggle("fast");
 e.stopPropagation();
