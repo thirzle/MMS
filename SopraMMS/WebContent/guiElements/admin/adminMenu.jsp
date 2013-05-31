@@ -3,6 +3,9 @@ $(document).ready(function() {
 		$("#addNews").click(function(e) {
 		$(".contentBox").load("/SopraMMS/guiElements/admin/creatNews.jsp");
 		});
+		$("#showNews").click(function(e) {
+			$(".contentBox").load("/SopraMMS/guiElements/admin/showNews.jsp");
+			});
 });
 </script>
 
@@ -30,7 +33,7 @@ $(document).ready(function() {
 		</div>
 		<div class="expandAdminNews">
 			<ul class="subNav">
-				<li id="showNews"><a href="/SopraMMS/ShowNews">&Uuml;bersicht Neuigkeiten</a></li>
+				<li id="showNews">&Uuml;bersicht Neuigkeiten</li>
 				<li id="addNews">Neuigkeit verfassen</li>
 			</ul>
 		</div>

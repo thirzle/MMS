@@ -701,12 +701,15 @@ public class UserDBController {
 		return null;
 	}
 
-	public List<String[]> getNews(boolean type) {
+	public List<String[]> getNews(int type) {
 		List<String[]> news = new LinkedList<String[]>();
 		Connection connection = connect();
-		if (type) {
+		if(type==0){
+			query = "SELECT * FROM news";
+		}
+		else if (type==1) {
 			query = "SELECT * FROM news WHERE visibility = 0 OR visibility = 1 ";
-		} else {
+		} else if(type==2){
 			query = "SELECT * FROM news WHERE visibility = 0 OR visibility = 2 ";
 		}
 		try {
@@ -717,7 +720,7 @@ public class UserDBController {
 				SimpleDateFormat dateformat = new SimpleDateFormat("dd.MM.yyyy");
 
 				news.add(new String[] { resultSet.getString("title"),
-						resultSet.getString("content"), dateformat.format(date) });
+						resultSet.getString("content"), dateformat.format(date),resultSet.getInt("visibility")+""});
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

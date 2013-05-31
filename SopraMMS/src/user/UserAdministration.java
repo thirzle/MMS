@@ -247,7 +247,7 @@ text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername
 	
 	// true -> public
 	// false -> private
-	public List<String[]> getNewsByType(boolean type)
+	public List<String[]> getNewsByType(int type)
 	{
 		return userDBController.getNews(type);
 		
