@@ -771,6 +771,27 @@ public class UserDBController {
 		}
 	}
 	
+	
+	public String convertInstituteToID(String instituteID){
+		Connection connection = connect();
+		query = "SELECT instituteID FROM  institute WHERE name = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, instituteID);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				return resultSet.getString("name");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally{
+			close(connection);
+		}
+		return null;
+	}
+	
 
 	// close connection
 	private void close(Connection connection) {
