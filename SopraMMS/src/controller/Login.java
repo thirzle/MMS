@@ -63,6 +63,7 @@ public class Login extends SessionCheck {
 				.equals(session.getAttribute("loginname").toString())) {
 			System.out
 					.println("User ist eingelogt Seite kann neu geladen werden");
+			session.setAttribute("content", "home");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		} else {
 			System.out
