@@ -6,26 +6,27 @@
 	.getAttribute("courses");
 %>
 
-<h1>Neue PDF erstellen</h1>
-<p>
-	<%
-		out.println(faculty);
-	%>
-</p>
-<p>W&auml;hlen Sie einen Studiengang aus:</p>
-<select id="course" style="width: 270px">
-	<%
-		for (int i = 0; i < courses.size(); i++) {
-	%>
-	<option value=<%=i%>><%="Bachelor  "+courses.get(i)%></option>
-	<option value=<%=courses.size()+i %>><%="Master  "+courses.get(i) %></option>
-	<%
-		}
-	%>
-</select><br><br>
-
-<form id="showEntries" onsubmit="setValues()"action="/SopraMMS/ShowEntries" method="get">
-	<input type="submit" name="Submit" id="showEntries" value="Eintr&auml;ge anzeigen"/>
+<form id="showEntries" onsubmit="setValues()"
+	action="/SopraMMS/ShowEntries" method="get">
+	<h1>Neue PDF erstellen</h1>
+	<p>
+		<%
+			out.println(faculty);
+		%>
+	</p>
+	<p>W&auml;hlen Sie einen Studiengang aus:</p>
+	<select name="course" id="course" style="width: 270px">
+		<%
+			for (int i = 0; i < courses.size(); i++) {
+		%>
+		<option value=<%=i%>><%="Bachelor-"+courses.get(i)%></option>
+		<option value=<%=courses.size()+i%>><%="Master-"+courses.get(i)%></option>
+		<%
+			}
+		%>
+	</select><br>
+	<br> <input type="submit" name="Submit" id="showEntries"
+		value="Eintr&auml;ge anzeigen" />
 </form>
 
 <script>
