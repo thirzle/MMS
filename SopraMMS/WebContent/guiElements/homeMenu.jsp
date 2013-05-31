@@ -38,6 +38,7 @@
 %>
 <%
 	if (user == null) {
+		session.setAttribute("content","start");
 %>
 <%@ include file="/guiElements/Login/login.jsp"%>
 <%
