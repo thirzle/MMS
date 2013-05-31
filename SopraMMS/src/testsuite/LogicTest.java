@@ -78,6 +78,7 @@ public class LogicTest {
 				new Date(), false, "Institut007", "Subject007");
 		
 		
+		
 
 		TextualEntry test_textualentry1 = new TextualEntry(42, "02:44:35",
 				false, false, false, 1 ,"Englischer Titel: ",
