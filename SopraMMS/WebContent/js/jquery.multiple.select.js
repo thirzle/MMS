@@ -13,7 +13,6 @@
 		var that = this;
 		this.$el = $el.hide();
 		this.options = options;
-		
 		this.$parent = $('<div class="ms-parent"></div>');
 		this.$choice = $('<div class="ms-choice"><span class="placeholder">' + 
 			options.placeholder + '</span><div></div></div>');
@@ -149,6 +148,10 @@
 			this.options.isopen = false;
 			this.$choice.find('>div').removeClass('open');
 			this.$drop.hide();
+		},
+		
+		change: function(values) {
+			html.push('<div>'+values+'</div>');
 		},
 		
 		update: function() {
