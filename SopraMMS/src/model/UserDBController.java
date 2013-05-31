@@ -772,15 +772,18 @@ public class UserDBController {
 	}
 	
 	
-	public String convertInstituteToID(String instituteID){
+	public List<String> convertInstituteToID(List<String> instituteName){
 		Connection connection = connect();
-		query = "SELECT instituteID FROM  institute WHERE name = ?";
+		List<String> instituteID = new LinkedList<String>();
+		query = "SELECT instituteID FROM institute WHERE name = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, instituteID);
-			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
-				return resultSet.getString("name");
+			for (String string : instituteName) {
+				pStatement.setString(1, string);
+				ResultSet resultSet = pStatement.executeQuery();
+				if(resultSet.next()){
+					instituteID.add(resultSet.getString("instituteID"));
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -789,7 +792,7 @@ public class UserDBController {
 		} finally{
 			close(connection);
 		}
-		return null;
+		return instituteID;
 	}
 	
 
