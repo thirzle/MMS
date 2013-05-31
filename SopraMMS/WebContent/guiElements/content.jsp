@@ -72,9 +72,9 @@
 %>
 <jsp:include page="/guiElements/admin/generatePDF.jsp"></jsp:include>
 <%
-	}else if (contentPage.equals("deadline")) {
+	} else if (contentPage.equals("deadline")) {
 %>
 <jsp:include page="/guiElements/admin/deadline.jsp"></jsp:include>
 <%
-			}
+	} 
 %>
