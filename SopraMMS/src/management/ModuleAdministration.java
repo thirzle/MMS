@@ -37,4 +37,12 @@ public class ModuleAdministration {
 		}
 		return list;
 	}
+	
+	public List<Entry> getEntryListOfModule(Module module){
+		return moduleDBController.getEntryListOfModule(module);
+	}
+	
+	public List<Module> getModulesByCourse(String course, String degree){
+		return moduleDBController.getModulesByCourse(course, degree);
+	}
 }

@@ -4,34 +4,31 @@
 	Object user = session.getAttribute("user");
 	if (session.getAttribute("content") == null) {
 		contentPage = "start";
-		if(request.getParameter("contentPdf")!=null)
-		{
-			contentPage="contentPdf";
+		if (request.getParameter("contentPdf") != null) {
+			contentPage = "contentPdf";
 		}
 	} else {
 		contentPage = session.getAttribute("content").toString();
 	}
-	
-	System.out.println("(content.jsp): Seiteninhalt: "+contentPage);
+
+	System.out.println("(content.jsp): Seiteninhalt: " + contentPage);
 	if (contentPage.equals("start")) {
 %>
 <jsp:include page="/guiElements/frontend/frontendContent.jsp"></jsp:include>
 <%
-	} 
-	else if(contentPage.equals("contentPdf")){
+	} else if (contentPage.equals("contentPdf")) {
 %>
-	<jsp:include page="/guiElements/frontend/courseModuleManuals.jsp"></jsp:include>
+<jsp:include page="/guiElements/frontend/courseModuleManuals.jsp"></jsp:include>
 <%
-	}else if (contentPage.equals("createNewPassword")
-	|| contentPage.equals("ceateNewPwNotEqual")
-	|| contentPage.equals("ceateNewPwDone")) {
-
+	} else if (contentPage.equals("createNewPassword")
+			|| contentPage.equals("ceateNewPwNotEqual")
+			|| contentPage.equals("ceateNewPwDone")) {
 %>
 <jsp:include page="/guiElements/Login/createNewPassword.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("changedPwStatusPw12Wrong")
-	|| contentPage.equals("changedPwStatusOldPwWrong")
-	|| contentPage.equals("changedPwStatusdone")) {
+			|| contentPage.equals("changedPwStatusOldPwWrong")
+			|| contentPage.equals("changedPwStatusdone")) {
 %>
 <jsp:include page="/guiElements/generally/changePassword.jsp"></jsp:include>
 <%
@@ -70,6 +67,10 @@
 	} else if (contentPage.equals("newUser")) {
 %>
 <jsp:include page="/guiElements/admin/newUser.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("generatePDF")) {
+%>
+<jsp:include page="/guiElements/admin/generatePDF.jsp"></jsp:include>
 <%
 	}
 %>
