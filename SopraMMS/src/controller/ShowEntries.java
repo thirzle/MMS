@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.LinkedList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,8 +36,21 @@ public class ShowEntries extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		ModuleAdministration mAdmin = new ModuleAdministration();
-		String fullCourse = request.getParameter("course");
-		String[] course = fullCourse.split(" ");
+		UserAdministration uAdmin = new UserAdministration();
+		LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
+		LinkedList<String> courses = (LinkedList) uAdmin.getCoursesByFaculty(facListID.getFirst());
+		
+		String[] courseArray = new String[2*courses.size()];
+		for (int i = 0; i < courses.size().; i++) {
+			courseArray[i] = "Bachelor-"+courses.get(i);
+		}
+		for (int j = courses.size(); j < courseArray.length; j++) {
+			courseArray[j] = 
+		}
+		
+		String fullCourse = request.getParameter("course");		
+		System.out.println(fullCourse+"****************************");
+		String[] course = fullCourse.split("-");
 		System.out.println("***************course: " + course[0] +" "+course[1]);
 //		alle Module die zu einem Studiengang gehören laden
 //		LinkedList<Module> = (LinkedList) mAdmin.getModulesByCourse(course[1], course[0]);
