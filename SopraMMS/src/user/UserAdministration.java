@@ -36,6 +36,7 @@ public class UserAdministration {
 		List<String> institutes = userDBController.convertInstituteToID(user.getInstitute());
 		user.setInstitute(institutes);
 		userDBController.createUser(user);
+		
 		return user;
 	}
 
