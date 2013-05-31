@@ -16,10 +16,5 @@ public class CourseMenu {
 		return courses;
 	}
 
-	
-	public static void main(String [] args)
-	{
-		CourseMenu im = new CourseMenu();
-		im.getCourses();
-	}
+
 }

@@ -246,23 +246,9 @@ text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername
 	
 	// true -> public
 	// false -> private
-	public String[][] getNews(boolean type)
+	public List<String[]> getNewsByType(boolean type)
 	{
-		List<String[]> list = new LinkedList<String[]>();
-		list.addAll(userDBController.getNews(0));
-		if(type){
-			list.addAll(userDBController.getNews(1));
-		}
-		else{
-			list.addAll(userDBController.getNews(2));
-		}
-		
-		String[][] array = new String[list.size()][3];
-		for (int i = 0; i < array.length; i++) {
-			array[i]=list.get(i);
-		}
-		
-		return array;
+		return userDBController.getNews(type);
 		
 	}
 	

@@ -508,30 +508,27 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
-	
-	
-	public List<String> getCoursesByFaculty(String facultyID){
+
+	public List<String> getCoursesByFaculty(String facultyID) {
 		Connection connection = connect();
 		List<String> courses = new LinkedList<String>();
-		query = "SELECT DISTINCT description FROM course JOIN faculty on course.faculty = faculty.facultyID " +
-				"WHERE faculty = ?";
+		query = "SELECT DISTINCT description FROM course JOIN faculty on course.faculty = faculty.facultyID "
+				+ "WHERE faculty = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1,facultyID);
+			pStatement.setString(1, facultyID);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				courses.add(resultSet.getString("description"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Couldn't get courses of faculty: "+facultyID);
-		}
-		finally{
+			System.out.println("Couldn't get courses of faculty: " + facultyID);
+		} finally {
 			close(connection);
 		}
 		return courses;
 	}
-	
 
 	// get facultyname of user
 	public String getFacultyName(User user) {
@@ -573,9 +570,8 @@ public class UserDBController {
 		}
 		return false;
 	}
-	
-	
-	public Boolean setForgotPwdByMail(String mail, String forgotPwd){
+
+	public Boolean setForgotPwdByMail(String mail, String forgotPwd) {
 		Connection connection = connect();
 		query = "UPDATE user SET forgotpwd = ? WHERE mail = ?";
 		try {
@@ -583,18 +579,17 @@ public class UserDBController {
 			pStatement.setString(1, forgotPwd);
 			pStatement.setString(2, mail);
 			return pStatement.execute();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
-		}finally{
+		} finally {
 			close(connection);
 		}
 	}
-	
-	
-	public Boolean removeForgotPwdByLoginname(String loginname){
+
+	public Boolean removeForgotPwdByLoginname(String loginname) {
 		Connection connection = connect();
 		query = "UPDATE user SET forgotpwd = null WHERE loginname = ?";
 		try {
@@ -605,13 +600,12 @@ public class UserDBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
-		}finally{
+		} finally {
 			close(connection);
 		}
 	}
-	
-	
-	public User getUserByForgotPwd(String forgotPwd){
+
+	public User getUserByForgotPwd(String forgotPwd) {
 		Connection connection = connect();
 		User user = null;
 		query = "SELECT * FROM user WHERE forgotpwd = ?";
@@ -619,65 +613,62 @@ public class UserDBController {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, forgotPwd);
 			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
-				user = new User(resultSet.getString("loginname"), 
-						resultSet.getString("firstname"), 
-						resultSet.getString("lastname"), 
-						resultSet.getString("mail"), 
+			if (resultSet.next()) {
+				user = new User(resultSet.getString("loginname"),
+						resultSet.getString("firstname"),
+						resultSet.getString("lastname"),
+						resultSet.getString("mail"),
 						resultSet.getString("password"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return user;
-		}finally{
+		} finally {
 			close(connection);
 		}
 		return user;
 	}
-	
-	public List<String> getFacultiesByName(){
+
+	public List<String> getFacultiesByName() {
 		Connection connection = connect();
 		LinkedList<String> facList = new LinkedList<String>();
 		query = "SELECT * FROM faculty";
 		try {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
-			while(resultSet.next()){
+			while (resultSet.next()) {
 				facList.add(resultSet.getString("name"));
 			}
 			return facList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("couldn't get names of faculties");
-		}
-		finally{
+		} finally {
 			close(connection);
 		}
 		return facList;
 	}
-	
-	public List<String> getFacultiesID(){
+
+	public List<String> getFacultiesID() {
 		Connection connection = connect();
 		LinkedList<String> facList = new LinkedList<String>();
 		query = "SELECT * FROM faculty";
 		try {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
-			while(resultSet.next()){
+			while (resultSet.next()) {
 				facList.add(resultSet.getString("facultyID"));
 			}
 			return facList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("couldn't get IDs of faculties");
-		}
-		finally{
+		} finally {
 			close(connection);
 		}
 		return facList;
 	}
-	
 
 	// roll back changes made in database if something went wrong
 	private void rollback(Connection connection) {
@@ -688,20 +679,19 @@ public class UserDBController {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public Deadline getDeadlineByFaculty(String facultyID){
+
+	public Deadline getDeadlineByFaculty(String facultyID) {
 		Connection connection = connect();
 		query = "SELECT * FROM deadline where facultyID = ?";
-		
+
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, facultyID);
 			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
+			if (resultSet.next()) {
 				return new Deadline(resultSet.getDate("deadline"),
 						resultSet.getDate("beginremember"),
-						resultSet.getInt("tolerance"), 
+						resultSet.getInt("tolerance"),
 						resultSet.getString("facultyID"));
 			}
 		} catch (SQLException e) {
@@ -710,36 +700,36 @@ public class UserDBController {
 		}
 		return null;
 	}
-	
-	
-	
-	public List<String[]> getNews(int type){
+
+	public List<String[]> getNews(boolean type) {
 		List<String[]> news = new LinkedList<String[]>();
 		Connection connection = connect();
-		query = "SELECT * FROM news WHERE visibility = ?";
+		if (type) {
+			query = "SELECT * FROM news WHERE visibility = 0 OR visibility = 1 ";
+		} else {
+			query = "SELECT * FROM news WHERE visibility = 0 OR visibility = 2 ";
+		}
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setInt(1, type);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				Date date= resultSet.getDate("timestamp");
+				Date date = resultSet.getDate("timestamp");
 				SimpleDateFormat dateformat = new SimpleDateFormat("dd.MM.yyyy");
-				
-				news.add(new String[]{resultSet.getString("title"), 
-						resultSet.getString("content"), 
-						dateformat.format(date)});
+
+				news.add(new String[] { resultSet.getString("title"),
+						resultSet.getString("content"), dateformat.format(date) });
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't load news");
-		}finally{
+		} finally {
 			close(connection);
 		}
 		return news;
 	}
-	
-	public boolean addNews(String title, String content, String author, int type){
+
+	public boolean addNews(String title, String content, String author, int type) {
 		Connection connection = connect();
 		query = "INSERT INTO news VALUES (?,?,?,?)";
 		try {
@@ -754,13 +744,12 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't add news");
 			return false;
-		} finally{
+		} finally {
 			close(connection);
 		}
 	}
-	
-	
-	public boolean deleteNews(String title){
+
+	public boolean deleteNews(String title) {
 		Connection connection = connect();
 		query = "DELETE FROM news WHERE title = ?";
 		try {
@@ -772,13 +761,12 @@ public class UserDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't delete news");
 			return false;
-		} finally{
+		} finally {
 			close(connection);
 		}
 	}
-	
-	
-	public List<String> convertInstituteToID(List<String> instituteName){
+
+	public List<String> convertInstituteToID(List<String> instituteName) {
 		Connection connection = connect();
 		List<String> instituteID = new LinkedList<String>();
 		query = "SELECT instituteID FROM institute WHERE name = ?";
@@ -787,7 +775,7 @@ public class UserDBController {
 			for (String string : instituteName) {
 				pStatement.setString(1, string);
 				ResultSet resultSet = pStatement.executeQuery();
-				if(resultSet.next()){
+				if (resultSet.next()) {
 					instituteID.add(resultSet.getString("instituteID"));
 				}
 			}
@@ -795,12 +783,11 @@ public class UserDBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
-		} finally{
+		} finally {
 			close(connection);
 		}
 		return instituteID;
 	}
-	
 
 	// close connection
 	private void close(Connection connection) {
