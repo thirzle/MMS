@@ -1,5 +1,7 @@
 package pdfcreator;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.apache.pdfbox.exceptions.COSVisitorException;
@@ -474,10 +476,12 @@ public class SimplePdfCreator {
 		doc.addPage(content_page_list.get(i));
 	    }
 
-	    doc.save(file);
+	    FileOutputStream foFileOutputStream = new FileOutputStream(new File(file));
+	    doc.save(foFileOutputStream);
 	} finally {
 	    if (doc != null) {
 		doc.close();
+		System.out.println("fertsch");
 	    }
 	}
     }
