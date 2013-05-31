@@ -109,10 +109,13 @@ body {
 	color: #a52a2a;
 }
 
-.contentBox author{
+.contentBoxDate{
+	padding-right: 280px;
+	text-align: right;
 	font-weight: lighter;
 	font-style: italic;
-	color: gray;
+	font-size: 7pt;
+	color: #888899;
 }
 
 .importantBox {

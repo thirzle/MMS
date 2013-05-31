@@ -7,8 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.ibm.icu.text.SimpleDateFormat;
 
 import management.Deadline;
 
@@ -713,15 +716,18 @@ public class UserDBController {
 	public List<String[]> getNews(int type){
 		List<String[]> news = new LinkedList<String[]>();
 		Connection connection = connect();
-		query = "SELECT * FROM news WHERE type = ?";
+		query = "SELECT * FROM news WHERE visibility = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setInt(1, type);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
+				Date date= resultSet.getDate("timestamp");
+				SimpleDateFormat dateformat = new SimpleDateFormat("dd.MM.yyyy");
+				
 				news.add(new String[]{resultSet.getString("title"), 
 						resultSet.getString("content"), 
-						resultSet.getString("author")});
+						dateformat.format(date)});
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -8,11 +8,11 @@
 </p>
 
 <% 
-//  UserAdministration ua = new UserAdministration();
-//  List<String[]> list = ua.getNews(true);
-//  for(String [] entry: list){
-//  	out.println("<h1>"+entry[0]+"</h1>");
-//  	out.println("<p>"+entry[1]+"</p>");
-//  	out.println("<author> Autor: "+entry[2]+"</author>");
-//  }
+ UserAdministration ua = new UserAdministration();
+ 	String[][] list = ua.getNews(true);
+  for(int i =0;i<list.length;i++){
+ 	out.println("<h1>"+list[i][0]+"</h1>");
+ 	out.println("<p>"+list[i][1]+"</p>");
+  	out.println("<div class='contentBoxDate'> Erstellt am "+list[i][2]+"</div>");
+  } 
 %>
