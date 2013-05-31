@@ -34,14 +34,13 @@ public class ShowEntries extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		UserAdministration uAdmin = new UserAdministration();
 		LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
 		LinkedList<String> courses = (LinkedList) uAdmin.getCoursesByFaculty(facListID.getFirst());
 		
-//		alle Kurse der fakultät in courseArray[] gespeichert
+//		all courses of faculty in courseArray[]
 		String[] courseArray = new String[2*courses.size()];
 		for (int i = 0; i < courses.size(); i++) {
 			courseArray[i] = "Bachelor "+courses.get(i);
@@ -53,12 +52,10 @@ public class ShowEntries extends HttpServlet {
 		String fullCourse = request.getParameter("course");
 		String course = courseArray[Integer.parseInt(fullCourse)];
 		String[] splitCourse = course.split(" ");
-//		alle Module die zu einem Studiengang gehören laden
-		LinkedList<Module> moduleList= (LinkedList) mAdmin.getModulesByCourse(splitCourse[1], splitCourse[0]);
-		for (Module module : moduleList) {
-			System.out.println("Module: "+module);
-		}
-	
+//		load all modules of course
+		LinkedList<Module> moduleList= (LinkedList) mAdmin.getModulesByCourse(mAdmin.getCourseID(splitCourse[1]), splitCourse[0]);
+		
+		
 		
 	}
 

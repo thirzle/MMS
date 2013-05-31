@@ -10,22 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import management.Module;
-import management.ModuleAdministration;
-
 import user.UserAdministration;
 
 /**
- * Servlet implementation class GeneratePDF
+ * Servlet implementation class CreatePDF
  */
-@WebServlet("/GeneratePDF")
-public class GeneratePDF extends HttpServlet {
+@WebServlet("/CreatePDF")
+public class CreatePDF extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GeneratePDF() {
+    public CreatePDF() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,27 +31,20 @@ public class GeneratePDF extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		ModuleAdministration mAdmin = new ModuleAdministration();
+
 		UserAdministration uAdmin = new UserAdministration();
+		HttpSession session = request.getSession();
+		
+		LinkedList<String> facListNames = (LinkedList) uAdmin.getAllFacultiesByName();
 		LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
 		LinkedList<String> courses = (LinkedList) uAdmin.getCoursesByFaculty(facListID.getFirst());
+		 
+		session.setAttribute("faculty", facListNames.getFirst());
+		session.setAttribute("courses", courses);
 		
-//		all courses of faculty in courseArray[]
-		String[] courseArray = new String[2*courses.size()];
-		for (int i = 0; i < courses.size(); i++) {
-			courseArray[i] = "Bachelor "+courses.get(i);
-		}
-		for (int j = 0; j < courses.size(); j++) {
-			courseArray[j+courses.size()] = "Master "+courses.get(j);
-		}
-		
-		String fullCourse = request.getParameter("course");
-		String course = courseArray[Integer.parseInt(fullCourse)];
-		String[] splitCourse = course.split(" ");
-//		load all modules of course
-		LinkedList<Module> moduleList= (LinkedList) mAdmin.getModulesByCourse(mAdmin.getCourseID(splitCourse[1]), splitCourse[0]);
+
+		session.setAttribute("content", "generatePDF");
+	    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
 	/**
