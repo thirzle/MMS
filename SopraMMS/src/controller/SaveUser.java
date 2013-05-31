@@ -57,8 +57,8 @@ public class SaveUser extends SessionCheck {
 			// Die erhaltenen Institute und Rechte stehen in einem String gespeichert
 			// dieser wird hier getrennt und entsprechend Institute und Rechte extrahiert
 			if(emptyInputs.isEmpty()) {
-				char[] splitetInstitutes = paras[5].toCharArray();
-				char[] splitetRights = paras[4].toCharArray();
+				char[] splitetInstitutes = names[5].toCharArray();
+				char[] splitetRights = names[4].toCharArray();
 				boolean[] finalRights = {false,false,false,false,false};
 				List<String> finalInstitutes = new ArrayList<String>();
 				try {
@@ -79,13 +79,17 @@ public class SaveUser extends SessionCheck {
 				}
 				// Der Benutzer mit den erhaltenen Attributen kann erzeugt werden
 				User user = new User(names[0],names[1],names[2],names[3],finalRights,finalInstitutes,"");
-				user.setPassword("hartwig");
+				user.setPassword("hartwig".hashCode()+"");
 				System.out.println("create user "+user.toString());
-				ua.createUser(user);
-				session.removeAttribute("emptyInputs");
-				session.setAttribute("content", "editUser");
-				response.sendRedirect("/SopraMMS/EditUser");
-				System.out.println("User successfully transmitted to UserAdministration!");
+				if(!finalInstitutes.isEmpty()){
+					ua.createUser(user);
+					session.removeAttribute("emptyInputs");
+					session.setAttribute("content", "editUser");
+					response.sendRedirect("/SopraMMS/EditUser");
+					System.out.println("User successfully transmitted to UserAdministration!");
+				} else {
+					System.out.println("there was an error converting institutes");
+				}
 			} else {
 				// Ein oder mehrere Felder waren nicht gefuellt
 				session.setAttribute("notEmptyInputs", notEmptyInputs);
