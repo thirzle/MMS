@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -79,7 +78,6 @@ public class SaveUser extends SessionCheck {
 				}
 				// Der Benutzer mit den erhaltenen Attributen kann erzeugt werden
 				User user = new User(names[0],names[1],names[2],names[3],finalRights,finalInstitutes,"");
-				user.setPassword("hartwig".hashCode()+"");
 				System.out.println("create user "+user.toString());
 				if(!finalInstitutes.isEmpty()){
 					ua.createUser(user);
@@ -93,7 +91,7 @@ public class SaveUser extends SessionCheck {
 						session.setAttribute("errormessage", "Failed to send new password link!");
 						System.out.println("(SaveUser.java.94): failed to sendNewPasswordLink to email: "+names[3]);
 					} finally {
-						response.sendRedirect("/SopraMMS/EditUser");
+						response.sendRedirect("/SopraMMS/LoadUser");
 					}
 				} else {
 					System.out.println("there was an error converting institutes");
