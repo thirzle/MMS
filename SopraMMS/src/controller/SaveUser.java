@@ -79,7 +79,6 @@ public class SaveUser extends SessionCheck {
 				}
 				// Der Benutzer mit den erhaltenen Attributen kann erzeugt werden
 				User user = new User(names[0],names[1],names[2],names[3],finalRights,finalInstitutes,"");
-				user.setPassword("hartwig".hashCode()+"");
 				System.out.println("create user "+user.toString());
 				if(!finalInstitutes.isEmpty()){
 					ua.createUser(user);
