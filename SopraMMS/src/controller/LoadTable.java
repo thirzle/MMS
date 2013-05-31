@@ -41,7 +41,7 @@ public class LoadTable extends SessionCheck implements Servlet {
 		UserDBController controller = new UserDBController();
 		List<User> users = controller.getAllUsers();
 		session.setAttribute("users", users);
-		session.setAttribute("content", "editUser");
+		session.setAttribute("content", "loadTable");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 

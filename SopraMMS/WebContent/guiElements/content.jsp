@@ -56,7 +56,7 @@
 %>
 <jsp:include page="/guiElements/generally/createdRepresentative.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("editUser")) {
+	} else if (contentPage.equals("loadTable")) {
 %>
 <jsp:include page="/guiElements/admin/userManagementContent.jsp"></jsp:include>
 <%
@@ -75,6 +75,10 @@
 	} else if (contentPage.equals("deadline")) {
 %>
 <jsp:include page="/guiElements/admin/deadline.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("editUser")) {
+%>
+<jsp:include page="/guiElements/admin/editUser.jsp"></jsp:include>
 <%
 	} 
 %>

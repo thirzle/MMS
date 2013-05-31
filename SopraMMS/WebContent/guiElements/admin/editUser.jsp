@@ -1,26 +1,15 @@
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List, user.User" %>
 <%
 List<String> institutes = (List<String>) session.getAttribute("institutes");
-List<String> emptyInputs = (List<String>) session.getAttribute("emptyInputs");
-List<String[]> notEmptyInputs = (List<String[]>) session.getAttribute("notEmptyInputs");
-int NUMBER_OF_INSTITUTES = institutes.size();
-boolean empty_loginCellText = false;
-boolean empty_firstnameCellText = false;
-boolean empty_lastnameCellText = false;
-boolean empty_emailCellText = false;
-boolean empty_rightsSelect = false;
-boolean empty_instituteSelect = false;
-if(emptyInputs != null) {
-	for(String string : emptyInputs) {
-		empty_loginCellText = string == "loginCellText" || empty_loginCellText ;
-		empty_firstnameCellText = string == "firstnameCellText" || empty_firstnameCellText;
-		empty_lastnameCellText = string == "lastnameCellText" || empty_lastnameCellText;
-		empty_emailCellText = string == "emailCellText" || empty_emailCellText;
-		empty_rightsSelect = string == "rightsSelect"|| empty_rightsSelect;
-		empty_instituteSelect = string == "instituteSelect" || empty_instituteSelect;
-	}
+User user = (User) session.getAttribute("user");
+List<String> userInstitutes = null;
+boolean[] userRights = null;
+if(user != null) {
+	userInstitutes = user.getInstitute();
+	userRights = user.getRights();
 }
+int NUMBER_OF_INSTITUTES = institutes.size();
 %>
 <script type="text/javascript" src="/SopraMMS/js/jquery.multiple.select.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/multiple-select.css">
@@ -32,15 +21,9 @@ if(emptyInputs != null) {
 			<td><input class="inputField" form="newUserForm" type='text' id="loginCellText" name="loginCellText"/></td>
 			<td>
 			<%
-				if(empty_loginCellText) {
-							out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
-				} else if(notEmptyInputs != null) {
-					for(String[] string : notEmptyInputs) {
-						if(string[0] == "loginCellText") {
-							out.print("<textarea style='display: none;' id='tmpLoginname'>"+string[1]+"</textarea>");
-						}
-					}
-				}
+			if(user != null) {
+				out.print("<textarea style='display: none;' id='tmpLoginname'>"+user.getLogin()+"</textarea>");
+			}
 			%>
 			</td>
 		</tr>
@@ -49,14 +32,8 @@ if(emptyInputs != null) {
 			<td><input class="inputField" form="newUserForm" type='text' id="firstnameCellText" name="firstnameCellText"/></td>
 			<td>
 			<%
-			if(empty_firstnameCellText) {
-				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
-			} else if(notEmptyInputs != null) {
-				for(String[] string : notEmptyInputs) {
-					if(string[0] == "firstnameCellText") {
-						out.print("<textarea style='display: none;' id='tmpFirstname'>"+string[1]+"</textarea>");
-					}
-				}
+			if(user != null) {
+				out.print("<textarea style='display: none;' id='tmpFirstname'>"+user.getFirstName()+"</textarea>");
 			}
 			%>
 			</td>
@@ -66,14 +43,8 @@ if(emptyInputs != null) {
 			<td><input class="inputField" form="newUserForm" type='text' id="lastnameCellText" name="lastnameCellText"/></td>
 			<td>
 			<%
-			if(empty_lastnameCellText) {
-				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
-			} else if(notEmptyInputs != null) {
-				for(String[] string : notEmptyInputs) {
-					if(string[0] == "lastnameCellText") {
-						out.print("<textarea style='display: none;' id='tmpLastname'>"+string[1]+"</textarea>");
-					}
-				}
+			if(user != null) {
+				out.print("<textarea style='display: none;' id='tmpLastname'>"+user.getLastName()+"</textarea>");
 			}
 			%>
 			</td>
@@ -83,14 +54,8 @@ if(emptyInputs != null) {
 			<td><input class="inputField" form="newUserForm" type='text' id="emailCellText" name="emailCellText" style="width: 270px"/></td>
 			<td>
 			<%
-			if(empty_emailCellText) {
-				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
-			} else if(notEmptyInputs != null) {
-				for(String[] string : notEmptyInputs) {
-					if(string[0] == "emailCellText") {
-						out.print("<textarea style='display: none;' id='tmpEmail'>"+string[1]+"</textarea>");
-					}
-				}
+			if(user != null) {
+				out.print("<textarea style='display: none;' id='tmpEmail'>"+user.getMail()+"</textarea>");
 			}
 			%>
 			</td>
@@ -108,8 +73,14 @@ if(emptyInputs != null) {
 			</td>
 			<td>
 			<%
-			if(empty_rightsSelect) {
-				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			if(userRights != null) {
+				String text = "";
+				for(int i=0;i<userRights.length;i++){
+					if(userRights[i]) {
+						text += ""+i;
+					}
+				}
+				out.print("<textarea style='display: none;' id='rightsSelectText'>"+text+"</textarea>");
 			}
 			%>
 			</td>
@@ -125,8 +96,13 @@ if(emptyInputs != null) {
 			</td>
 			<td>
 			<%
-			if(empty_instituteSelect) {
-				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			if(institutes != null && userInstitutes != null) {
+				String text = "";
+				for( String string : userInstitutes) {
+					int index = institutes.indexOf(string);
+					text += ""+index;
+				}
+				out.print("<textarea style='display: none;' id='instituteSelectText'>"+text+"</textarea>");
 			}
 			%>
 			</td>
@@ -145,10 +121,18 @@ if(emptyInputs != null) {
 </div>
 
 <script type="text/javascript">
+
+//$('#select2').multipleSelect('setSelects', [1, 3]);
+
+
+
 $("#loginCellText").val($("#tmpLoginname").html());
 $("#firstnameCellText").val($("#tmpFirstname").html());
 $("#lastnameCellText").val($("#tmpLastname").html());
 $("#emailCellText").val($("#tmpEmail").html());
+var rightsText = $("#rightsSelectText").html();
+var instituteText = $("#instituteSelectText").html();
+// WEITER MACHEN
 function setValues() {
 	var instituteSelectselectedIndex = $('#instituteSelect').multipleSelect('getSelects');
 	var rightsSelectselectedIndex = $('#rightsSelect').multipleSelect('getSelects');
@@ -157,9 +141,6 @@ function setValues() {
 	
 	instituteLabel.html(instituteSelectselectedIndex);
 	rightsLabel.html(rightsSelectselectedIndex);
-}
-function isEmpty(element) {
-	
 }
 $("#rightsSelect").multipleSelect(); 
 $("#instituteSelect").multipleSelect(); 

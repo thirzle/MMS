@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import model.UserDBController;
 import user.User;
+import user.UserAdministration;
 
 /**
  * Servlet implementation class EditUser
@@ -32,13 +33,23 @@ public class EditUser extends SessionCheck implements Servlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("(EditUser.java): Begin doget()");
-    	HttpSession session = request.getSession();	    	
-		UserDBController controller = new UserDBController();
-		List<User> users = controller.getAllUsers();
-		session.setAttribute("users", users);
-		session.setAttribute("content", "editUser");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+    	HttpSession session = request.getSession();	
+    	UserAdministration ua = new UserAdministration();
+    	List<String> institutes = ua.getAllInstitutes();
+    	if(institutes != null && !institutes.isEmpty()) {
+    		session.setAttribute("institutes", institutes);
+    	} else {
+    		System.out.println("(EditUser.java): null value");
+    	}
+    	String loginname = request.getParameter("selectedRow").toString();
+    	if(loginname != "" ) {
+    		User user = ua.getUser(loginname);
+    		if(user != null) {
+    			session.setAttribute("user", user);
+    			session.setAttribute("content", "editUser");
+    		}
+    	}
+    	
 	}
 
 	/**
