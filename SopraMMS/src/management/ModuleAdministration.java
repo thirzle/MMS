@@ -13,7 +13,17 @@ public class ModuleAdministration {
 	List<Module> moduleList;
 	ModuleDBController moduleDBController = new ModuleDBController();
 	
-	//TODO
+	//TODO:
+	// - Modulhandbuch Titelseiten Daten:
+	//	- Fakultaet
+	//	- Bachelor/Master Sudiengang(name)
+	//	- Pruefungsordnung
+	//	- letzte Aenderungen
+	//	- Name der Person die zuletzt bearbeitet hat...
+	//	- Semester des Modulhandbuchs
+	//	- basierend auf Revision ???
+	
+	
 	public List<Module> getModifiedModules(User user){
 		List<Module> modules = new LinkedList<Module>();
 		List<Entry> entries = new LinkedList<Entry>();
