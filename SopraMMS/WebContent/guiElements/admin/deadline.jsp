@@ -37,15 +37,15 @@
 		<tr>
 			<td>Neuer Stichtag:</td>
 			<td>
-				<input form="submit" type="date" id="deadline" />
+				<input form="deadline" type="date" id="deadline" />
 		</tr>
 		<tr>			
 			<td>Erinnerungsbeginn:</td>
 			<td>
-				<input form="submit" type="date" id="rememberbegin" />
+				<input form="deadline" type="date" id="rememberbegin" />
 			</td>
 		</tr>
-	</table><br/>
-<form name="submit" action="/SopraMMS/Deadline" method="get">
+	</table>
+<form name="deadline" action="/SopraMMS/Deadline" method="get">
 	<input type="submit" value="Neuen Stichtag festlegen">
 </form>
