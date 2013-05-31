@@ -43,8 +43,8 @@ public class Login extends SessionCheck {
 			// login
 			// Here you put the check on the username and password
 			User user = userAdmin.login(loginname, password, sessionID);
-			Deadline deadline = userAdmin.getDeadlinebyFaculty(user.getFaculty());
 			if (user != null) {
+				Deadline deadline = userAdmin.getDeadlinebyFaculty(user.getFaculty());
 				session.setAttribute("user", user);
 				session.setAttribute("loginname", loginname);
 				session.setAttribute("rights", user.getRights());
