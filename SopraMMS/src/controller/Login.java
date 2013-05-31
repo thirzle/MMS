@@ -43,8 +43,8 @@ public class Login extends SessionCheck {
 			// login
 			// Here you put the check on the username and password
 			User user = userAdmin.login(loginname, password, sessionID);
-			Deadline deadline = userAdmin.getDeadlinebyFaculty(user.getFaculty());
 			if (user != null) {
+				Deadline deadline = userAdmin.getDeadlinebyFaculty(user.getFaculty());
 				session.setAttribute("user", user);
 				session.setAttribute("loginname", loginname);
 				session.setAttribute("rights", user.getRights());
@@ -63,6 +63,7 @@ public class Login extends SessionCheck {
 				.equals(session.getAttribute("loginname").toString())) {
 			System.out
 					.println("User ist eingelogt Seite kann neu geladen werden");
+			session.setAttribute("content", "home");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		} else {
 			System.out

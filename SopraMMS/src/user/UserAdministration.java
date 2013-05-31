@@ -33,10 +33,7 @@ public class UserAdministration {
 
 	// Gets an object User and send it to the database controller
 	public User createUser(User user) {
-		List<String> institutes = user.getInstitute();
-		for (String string : institutes) {
-			string = userDBController.convertInstituteToID(string);
-		}
+		List<String> institutes = userDBController.convertInstituteToID(user.getInstitute());
 		user.setInstitute(institutes);
 		userDBController.createUser(user);
 		return user;
