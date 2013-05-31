@@ -790,6 +790,24 @@ public class ModuleDBController {
 		}
 		return null;
 	}
+	
+	public String getCourseID(String course){
+		Connection connection = connect();
+		query = "SELECT courseID FROM course WHERE description = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, course);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				return resultSet.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get courseID of course: " + course);
+		}finally{
+			close(connection);
+		}return null;
+	}
 
 	public void close(Connection connection) {
 		try {
