@@ -9,7 +9,7 @@
  	<link rel="stylesheet" href="/resources/demos/style.css" />
  	<script>
  		$(function() {
-		$( "#deadline" ).datepicker();
+		$( "#deadline" ).DatePicker();
 		$( "#rememberbegin" ).datepicker();
 		});
 	</script>
