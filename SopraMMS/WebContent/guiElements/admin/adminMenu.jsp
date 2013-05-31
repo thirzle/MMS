@@ -18,7 +18,7 @@ $(document).ready(function() {
 			<ul class="subNav">
 				<li id="newUser"><a href="/SopraMMS/NewUser">Neuer
 						Benutzer</a></li>
-				<li id="editUser"><a href="/SopraMMS/EditUser">Benutzer
+				<li id="editUser"><a href="/SopraMMS/LoadTable">Benutzer
 						bearbeiten</a></li>
 				<li id="deleteUser"><a href="/SopraMMS/DeleteUser">Benutzer
 						löschen</a></li>

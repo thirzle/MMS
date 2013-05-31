@@ -28,7 +28,7 @@
 		<%	
 			for(int i=0; i<users.size();i++) {
 		%>
-		<tr>
+		<tr id=<%=users.get(i).getLogin() %>>
 			<td><%=users.get(i).getLogin()%></td>
 			<td><%=users.get(i).getFirstName()%></td>
 			<td><%=users.get(i).getLastName()%></td>
@@ -65,16 +65,10 @@
 		%>
 	</tbody>
 </table>
-
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/jquery-latest.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/jquery.tablesorter.js"></script>
-<script type="text/javascript">
-	$(function() {
-		$("#userTable").tablesorter({
-			sortList : [ [ 0, 0 ], [ 2, 1 ] ],
-			widgets : [ 'zebra' ]
-		});
-	});
-</script>
+<form name="editUserForm" action="/SopraMMS/EditUser" method="get">
+	<input name="selectedRow" form="editUserForm" type="text" value="Bearbeiten" style="display:none;"/>
+	<input name="editUserButton" form="editUserForm" type="submit" value="Bearbeiten" />
+</form>
+<script type="text/javascript" src="/SopraMMS/js/jquery-latest.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.usertable.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>

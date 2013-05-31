@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -92,7 +91,7 @@ public class SaveUser extends SessionCheck {
 						session.setAttribute("errormessage", "Failed to send new password link!");
 						System.out.println("(SaveUser.java.94): failed to sendNewPasswordLink to email: "+names[3]);
 					} finally {
-						response.sendRedirect("/SopraMMS/EditUser");
+						response.sendRedirect("/SopraMMS/LoadUser");
 					}
 				} else {
 					System.out.println("there was an error converting institutes");

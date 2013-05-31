@@ -233,6 +233,14 @@ text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername
 	public List<String> getAllInstitutesByName(){
 		return userDBController.getInstitutes();
 	}
+	
+	public List<String> getAllInstitutes() {
+		return userDBController.getInstitutes();
+	}
+	
+	public List<User> getAllUsers() {
+		return userDBController.getAllUsers();
+	}
 
 	public List<String> getInstituteNames(User user) {
 		return userDBController.getInstituteNames(user.getLogin());
