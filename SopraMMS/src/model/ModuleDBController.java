@@ -69,7 +69,8 @@ public class ModuleDBController {
 								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
 								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+								.getString("instituteID"),
+								resultSet.getString("subject")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -88,11 +89,11 @@ public class ModuleDBController {
 		CourseEntry course = getCourseEntryByModule(module);
 		List<TextualEntry> textual = getTextualEntryByModule(module);
 		EffortEntry effort = getEffortEntryByModule(module);
-		if(course != null)
+		if (course != null)
 			module.addCourseEntry(getCourseEntryByModule(module));
-		if(!textual.isEmpty())
+		if (!textual.isEmpty())
 			module.addTextualEntryList(getTextualEntryByModule(module));
-		if(effort != null)
+		if (effort != null)
 			module.addEffortEntry(getEffortEntryByModule(module));
 		return module.getEntryList();
 	}
@@ -113,7 +114,8 @@ public class ModuleDBController {
 								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
 								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+								.getString("instituteID"),
+								resultSet.getString("subject")));
 			}
 			for (Module module : moduleList) {
 				module.setEntryList(getEntryListOfModule(module));
@@ -132,24 +134,38 @@ public class ModuleDBController {
 	// TODO
 	public List<Module> getModulesByCourse(String course, String degree) {
 		Connection connection = connect();
-		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.* FROM modulecourseaffiliation AS ma JOIN module AS m "
-				+ "ON ma.moduleID = m.moduleID WHERE courseID = ? AND degree = ?";
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Integer> temp = new LinkedList<Integer>();
+		Module module = null;
+		query = "SELECT m.* FROM modulecourseaffiliation AS ma JOIN module AS m "
+				+ "ON ma.moduleID = m.moduleID WHERE ma.courseID = ? AND ma.degree = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, course);
 			pStatement.setString(2, degree);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"),
-						resultSet.getString("name"), resultSet
-								.getDate("creationdate"), resultSet
-								.getDate("modificationdate"), resultSet
-								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getString("name"),
+						resultSet.getDate("creationdate"),
+						resultSet.getDate("modificationdate"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getString("instituteID"),
+						resultSet.getString("subject"));
+				// check for duplicate
+				if (moduleList.isEmpty()) {
+					moduleList.add(module);
+					temp.add(module.getModuleID());
+				} else {
+					if (!temp.contains(module.getModuleID())) {
+						moduleList.add(module);
+						temp.add(module.getModuleID());
+					}
+				}
 			}
-			for (Module module : moduleList) {
-				module.setEntryList(getEntryListOfModule(module));
+
+			for (Module module1 : moduleList) {
+				module1.setEntryList(getEntryListOfModule(module1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -178,7 +194,8 @@ public class ModuleDBController {
 								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
 								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID")));
+								.getString("instituteID"),
+								resultSet.getString("subject")));
 
 			}
 			for (Module module : moduleList) {
@@ -212,7 +229,8 @@ public class ModuleDBController {
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
-						resultSet.getString("instituteID"));
+						resultSet.getString("instituteID"),
+						resultSet.getString("subject"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -253,7 +271,8 @@ public class ModuleDBController {
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
-						resultSet.getString("instituteID"));
+						resultSet.getString("instituteID"),
+						resultSet.getString("subject"));
 			}
 			if (module != null)
 				module.setEntryList(getEntryListOfModule(module));
@@ -284,7 +303,8 @@ public class ModuleDBController {
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
-						resultSet.getString("instituteID"));
+						resultSet.getString("instituteID"),
+						resultSet.getString("subject"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -328,7 +348,8 @@ public class ModuleDBController {
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
-						resultSet.getString("instituteID"));
+						resultSet.getString("instituteID"),
+						resultSet.getString("subject"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -373,7 +394,8 @@ public class ModuleDBController {
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
-						resultSet.getString("instituteID"));
+						resultSet.getString("instituteID"),
+						resultSet.getString("subject"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -418,7 +440,8 @@ public class ModuleDBController {
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
-						resultSet.getString("instituteID"));
+						resultSet.getString("instituteID"),
+						resultSet.getString("subject"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -463,7 +486,8 @@ public class ModuleDBController {
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
-						resultSet.getString("instituteID"));
+						resultSet.getString("instituteID"),
+						resultSet.getString("subject"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -508,7 +532,8 @@ public class ModuleDBController {
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
-						resultSet.getString("instituteID"));
+						resultSet.getString("instituteID"),
+						resultSet.getString("subject"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -708,7 +733,7 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't load effortentry");
 		}
-		if(effort != null){
+		if (effort != null) {
 			query = "SELECT s.selfstudyID, s.time, s.title "
 					+ "FROM entry AS e JOIN selfstudy AS s ON e.entryID = s.entryID"
 					+ " AND e.version = s.version JOIN latestentry AS l ON "
@@ -720,10 +745,10 @@ public class ModuleDBController {
 				ResultSet resultSet = pStatement.executeQuery();
 				selfstudy = new LinkedList<SelfStudy>();
 				while (resultSet.next()) {
-					selfstudy
-							.add(new SelfStudy(resultSet.getInt("selfstudyID"),
-										resultSet.getInt("time"), resultSet
-											.getString("title")));
+					selfstudy.add(new SelfStudy(
+							resultSet.getInt("selfstudyID"), resultSet
+									.getInt("time"), resultSet
+									.getString("title")));
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -731,7 +756,7 @@ public class ModuleDBController {
 				System.out.println("Couldn't load selfstudies");
 			}
 			close(connection);
-			 effort.setSelfStudyList(selfstudy);
+			effort.setSelfStudyList(selfstudy);
 		}
 		return effort;
 	}
@@ -790,23 +815,24 @@ public class ModuleDBController {
 		}
 		return null;
 	}
-	
-	public String getCourseID(String course){
+
+	public String getCourseID(String course) {
 		Connection connection = connect();
 		query = "SELECT courseID FROM course WHERE description = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, course);
 			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
+			if (resultSet.next()) {
 				return resultSet.getString(1);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("couldn't get courseID of course: " + course);
-		}finally{
+		} finally {
 			close(connection);
-		}return null;
+		}
+		return null;
 	}
 
 	public void close(Connection connection) {

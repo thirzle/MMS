@@ -7,7 +7,7 @@
 %>
 
 <form id="showEntries" onsubmit="setValues()"
-	action="/SopraMMS/ShowEntries" method="get">
+	action="/SopraMMS/GeneratePDF" method="get">
 	<h1>Neue PDF erstellen</h1>
 	<p>
 		<%
@@ -26,7 +26,8 @@
 		%>
 	</select><br>
 	<br> <input type="submit" name="Submit" id="showEntries"
-		value="Eintr&auml;ge anzeigen" />
+	<%//TODO PDF automatisieren %>
+		value="Modulhandbuch erstellen" />
 </form>
 
 <script>

@@ -40,7 +40,7 @@ $(document).ready(function() {
 		</div>
 		<div class="expandAdminModule">
 			<ul class="subNav">
-				<li id="generatePDF"><a href="/SopraMMS/GeneratePDF">PDF generieren</a></li>
+				<li id="generatePDF"><a href="/SopraMMS/CreatePDF">PDF generieren</a></li>
 				<li id="deadline"><a href="/SopraMMS/Deadline">Stichtag</a></li>
 			</ul>
 		</div>
