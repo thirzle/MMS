@@ -26,12 +26,12 @@ $(document).ready(function() {
 		</div>
 		
 		<div class="headerNavAdminNews">
-			<li>Neuichkeiten</li>
+			<li>Neuigkeiten</li>
 		</div>
 		<div class="expandAdminNews">
 			<ul class="subNav">
-				<li id="showNews"><a href="/SopraMMS/ShowNews">&Uuml;bersicht Neuichkeiten</a></li>
-				<li id="addNews">Neuichkeit verfassen</li>
+				<li id="showNews"><a href="/SopraMMS/ShowNews">&Uuml;bersicht Neuigkeiten</a></li>
+				<li id="addNews">Neuigkeit verfassen</li>
 			</ul>
 		</div>
 		
@@ -41,7 +41,7 @@ $(document).ready(function() {
 		<div class="expandAdminModule">
 			<ul class="subNav">
 				<li id="generatePDF"><a href="/SopraMMS/GeneratePDF">PDF generieren</a></li>
-				<li><a href="/SopraMMS/NewDeadline">Stichtag</a></li>
+				<li id="deadline"><a href="/SopraMMS/Deadline">Stichtag</a></li>
 			</ul>
 		</div>
 	</ul>
