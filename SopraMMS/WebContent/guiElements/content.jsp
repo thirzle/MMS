@@ -16,15 +16,15 @@
 %>
 <jsp:include page="/guiElements/frontend/frontendContent.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("contentPdf")) {
-%>
-<jsp:include page="/guiElements/frontend/courseModuleManuals.jsp"></jsp:include>
-<%
 	} else if (contentPage.equals("createNewPassword")
 			|| contentPage.equals("ceateNewPwNotEqual")
 			|| contentPage.equals("ceateNewPwDone")) {
 %>
 <jsp:include page="/guiElements/Login/createNewPassword.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("contentPdf")) {
+%>
+<jsp:include page="/guiElements/frontend/courseModuleManuals.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("changedPwStatusPw12Wrong")
 			|| contentPage.equals("changedPwStatusOldPwWrong")
