@@ -83,10 +83,18 @@ public class SaveUser extends SessionCheck {
 				System.out.println("create user "+user.toString());
 				if(!finalInstitutes.isEmpty()){
 					ua.createUser(user);
-					session.removeAttribute("emptyInputs");
-					session.setAttribute("content", "editUser");
-					response.sendRedirect("/SopraMMS/EditUser");
-					System.out.println("User successfully transmitted to UserAdministration!");
+					try{
+						ua.sendNewPasswordLink(names[3]);
+						session.removeAttribute("emptyInputs");
+						session.setAttribute("content", "editUser");
+						System.out.println("User successfully transmitted to UserAdministration!");
+					} catch(Exception e) {
+						e.printStackTrace();
+						session.setAttribute("errormessage", "Failed to send new password link!");
+						System.out.println("(SaveUser.java.94): failed to sendNewPasswordLink to email: "+names[3]);
+					} finally {
+						response.sendRedirect("/SopraMMS/EditUser");
+					}
 				} else {
 					System.out.println("there was an error converting institutes");
 				}

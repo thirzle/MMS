@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import user.UserAdministration;
 
@@ -30,6 +31,7 @@ public class SendNewPassword extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		String email = request.getParameter("email");
 		UserAdministration ua = new UserAdministration();
 		try {
@@ -38,6 +40,7 @@ public class SendNewPassword extends HttpServlet {
 			e.printStackTrace();
 			response.sendRedirect("SopraMMS/guiElements/error.jsp");
 		}
+		session.setAttribute("content", "start");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
