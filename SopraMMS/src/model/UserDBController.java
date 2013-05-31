@@ -168,7 +168,7 @@ public class UserDBController {
 	// create new user in database
 	public boolean createUser(User user) {
 		Connection connection = connect();
-		query = "INSERT INTO User VALUES(?,?,?,?,?,?)";
+		query = "INSERT INTO user (loginname, lastname, firstname, mail, password, session) VALUES(?,?,?,?,?,?)";
 		try {
 			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
