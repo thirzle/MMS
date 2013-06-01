@@ -508,6 +508,26 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
+	
+	// get all institutes listed in databse
+		public List<String> getInstituteID() {
+			Connection connection = connect();
+			List<String> instituteList = new LinkedList<String>();
+			query = "SELECT instituteID FROM institute";
+			try {
+				statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(query);
+				while (resultSet.next()) {
+					instituteList.add(resultSet.getString("name"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Couldn't get Institutes");
+			} finally {
+				close(connection);
+			}
+			return instituteList;
+		}
 
 	public List<String> getCoursesByFaculty(String facultyID) {
 		Connection connection = connect();

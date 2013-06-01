@@ -2,7 +2,7 @@
 <%@ page import="java.util.List, user.User" %>
 <%
 List<String> institutes = (List<String>) session.getAttribute("institutes");
-User user = (User) session.getAttribute("user");
+User user = (User) session.getAttribute("userToEdit");
 List<String> userInstitutes = null;
 boolean[] userRights = null;
 if(user != null) {
@@ -13,7 +13,7 @@ int NUMBER_OF_INSTITUTES = institutes.size();
 %>
 <script type="text/javascript" src="/SopraMMS/js/jquery.multiple.select.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/multiple-select.css">
-<h1>Neuen Benutzer anlegen</h1>
+<h1>Benutzer bearbeiten</h1>
 <div>
 	<table>
 		<tr>
@@ -77,7 +77,7 @@ int NUMBER_OF_INSTITUTES = institutes.size();
 				String text = "";
 				for(int i=0;i<userRights.length;i++){
 					if(userRights[i]) {
-						text += ""+i;
+						text += i+",";
 					}
 				}
 				out.print("<textarea style='display: none;' id='rightsSelectText'>"+text+"</textarea>");
@@ -99,8 +99,9 @@ int NUMBER_OF_INSTITUTES = institutes.size();
 			if(institutes != null && userInstitutes != null) {
 				String text = "";
 				for( String string : userInstitutes) {
+					System.out.println("(editUser.jsp):string="+string);
 					int index = institutes.indexOf(string);
-					text += ""+index;
+					text += index+",";
 				}
 				out.print("<textarea style='display: none;' id='instituteSelectText'>"+text+"</textarea>");
 			}
@@ -132,18 +133,15 @@ $("#lastnameCellText").val($("#tmpLastname").html());
 $("#emailCellText").val($("#tmpEmail").html());
 var rightsText = $("#rightsSelectText").html();
 var instituteText = $("#instituteSelectText").html();
-// WEITER MACHEN
-function setValues() {
-	var instituteSelectselectedIndex = $('#instituteSelect').multipleSelect('getSelects');
-	var rightsSelectselectedIndex = $('#rightsSelect').multipleSelect('getSelects');
-	var instituteLabel = $("#instituteLabel");
-	var rightsLabel = $("#rightsLabel");
-	
-	instituteLabel.html(instituteSelectselectedIndex);
-	rightsLabel.html(rightsSelectselectedIndex);
+alert(instituteText);
+var split = rightsText.split(",");
+var rights = new Array();
+for ( var i = 0; i < split.length-1; i++) {
+	rights[i] = split[i];
 }
 $("#rightsSelect").multipleSelect(); 
 $("#instituteSelect").multipleSelect(); 
+$('#rightsSelect').multipleSelect('setSelects', rights);
 $(".expandAdministration").toggleClass("expanded");
 $(".expandAdministration").children("ul:first").slideToggle("fast");
 e.stopPropagation();

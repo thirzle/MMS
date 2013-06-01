@@ -12,9 +12,11 @@
 	    users = (List<User>) session.getAttribute("users");
 		String[] status = {"Modulver.","Redakteur","Administrator","Recht auf Stellv.","Dezernat II","right[5]"};
 %>
+<form name="editUserForm" action="/SopraMMS/EditUser" method="get">
 <table id="userTable" class="tablesorter">
 	<thead>
 		<tr>
+			<th></th>
 			<th>Benutzername</th>
 			<th>Vorname</th>
 			<th>Nachname</th>
@@ -28,7 +30,8 @@
 		<%	
 			for(int i=0; i<users.size();i++) {
 		%>
-		<tr id=<%=users.get(i).getLogin() %>>
+		<tr>
+			<td><input type="radio" name="selectedRowID" value='<%=users.get(i).getLogin() %>'/></td>
 			<td><%=users.get(i).getLogin()%></td>
 			<td><%=users.get(i).getFirstName()%></td>
 			<td><%=users.get(i).getLastName()%></td>
@@ -65,10 +68,10 @@
 		%>
 	</tbody>
 </table>
-<form name="editUserForm" action="/SopraMMS/EditUser" method="get">
-	<input name="selectedRow" form="editUserForm" type="text" value="Bearbeiten" style="display:none;"/>
-	<input name="editUserButton" form="editUserForm" type="submit" value="Bearbeiten" />
+	<input type="submit" value="Bearbeiten"/>
 </form>
+
+
 <script type="text/javascript" src="/SopraMMS/js/jquery-latest.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.usertable.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>

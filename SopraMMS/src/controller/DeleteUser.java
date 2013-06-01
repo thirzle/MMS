@@ -33,7 +33,7 @@ public class DeleteUser extends SessionCheck implements Servlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	System.out.println("(DeleteUser.java): //TODO");
-		response.sendRedirect("/SopraMMS/LoadUser");
+		response.sendRedirect("/SopraMMS/LoadTable");
 	}
 
 	/**
