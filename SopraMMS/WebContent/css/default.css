@@ -325,8 +325,8 @@ body {
 }
 
 
-/*---------------*/
-/*---- Table ----*/
+/*--------------------------------*/
+/*---- Table - UserManagement ----*/
 .tableClass {
 	width: 50%;
 	border: 1;
@@ -336,6 +336,24 @@ body {
 .tableClassHead {
 	width: 10px;
 }
+
+/*--------------------------*/
+/*---- Table - ShowNews ----*/
+.showNewsTable h2,h3, a{
+	  display: inline;
+	  font-style: normal;
+	  font-weight: normal;
+	  font-size: 10pt;
+	  color: black;
+}
+
+.showNewsTable th{
+	text-align: left;
+	padding: 0px 20px 10px 0px;
+}
+
+
+
 
 /*---- Message ----*/
 .messageManagementEntry {

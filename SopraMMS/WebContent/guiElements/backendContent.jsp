@@ -2,7 +2,7 @@
 <%@page import="user.UserAdministration"%>
 <%
 	UserAdministration ua = new UserAdministration();
-	List<String[]> list = ua.getNewsByType(true);
+	List<String[]> list = ua.getNewsByType(2);
 	for (String[] entry : list) {
 		out.println("<h1>" + entry[0] + "</h1>");
 		out.println("<p>" + entry[1] + "</p>");
