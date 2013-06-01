@@ -705,12 +705,12 @@ public class UserDBController {
 		List<String[]> news = new LinkedList<String[]>();
 		Connection connection = connect();
 		if(type==0){
-			query = "SELECT * FROM news";
+			query = "SELECT * FROM news ORDER by timestamp DESC";
 		}
 		else if (type==1) {
-			query = "SELECT * FROM news WHERE visibility = 0 OR visibility = 1 ";
+			query = "SELECT * FROM news WHERE visibility = 0 OR visibility = 1  ORDER by timestamp DESC";
 		} else if(type==2){
-			query = "SELECT * FROM news WHERE visibility = 0 OR visibility = 2 ";
+			query = "SELECT * FROM news WHERE visibility = 0 OR visibility = 2  ORDER by timestamp DESC";
 		}
 		try {
 			pStatement = connection.prepareStatement(query);
@@ -732,15 +732,14 @@ public class UserDBController {
 		return news;
 	}
 
-	public boolean addNews(String title, String content, String author, int type) {
+	public boolean addNews(String title, String content, int type) {
 		Connection connection = connect();
-		query = "INSERT INTO news VALUES (?,?,?,?)";
+		query = "INSERT INTO news (title,content,visibility) VALUES (?,?,?)";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, title);
 			pStatement.setString(2, content);
-			pStatement.setString(3, author);
-			pStatement.setInt(4, type);
+			pStatement.setInt(3, type);
 			return pStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -769,6 +768,25 @@ public class UserDBController {
 		}
 	}
 
+	public int numberOfNews()
+	{
+		Connection connection = connect();
+		query = "SELECT COUNT(title) AS number FROM news";
+		try {
+			pStatement = connection.prepareStatement(query);
+			ResultSet rs= pStatement.executeQuery();
+			rs.next();
+			return rs.getInt("number");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Couldn't delete news");
+			return 0;
+		} finally {
+			close(connection);
+		}
+	}
+	
 	public List<String> convertInstituteToID(List<String> instituteName) {
 		Connection connection = connect();
 		List<String> instituteID = new LinkedList<String>();

@@ -8,7 +8,6 @@ import mail.EmailTelnet;
 import management.Deadline;
 import model.UserDBController;
 
-
 public class UserAdministration {
 
 	static UserDBController userDBController = new UserDBController();
@@ -33,10 +32,11 @@ public class UserAdministration {
 
 	// Gets an object User and send it to the database controller
 	public User createUser(User user) {
-		List<String> institutes = userDBController.convertInstituteToID(user.getInstitute());
+		List<String> institutes = userDBController.convertInstituteToID(user
+				.getInstitute());
 		user.setInstitute(institutes);
 		userDBController.createUser(user);
-		
+
 		return user;
 	}
 
@@ -112,8 +112,8 @@ public class UserAdministration {
 	public User getUser(String loginname) {
 		return userDBController.getUser(loginname);
 	}
-	
-	public User getUserByMail(String mail){
+
+	public User getUserByMail(String mail) {
 		return userDBController.getUserByEmail(mail);
 	}
 
@@ -125,19 +125,24 @@ public class UserAdministration {
 
 	public void sendNewPasswordLink(String email) throws IOException {
 		User user = userDBController.getUserByEmail(email);
-		
-		String newLink = Math.random()*1000000000*Math.PI+""+Math.random()*1000000000*Math.PI+""+(Math.random()*1000000000*Math.PI);
-		
-		userDBController.setForgotPwdByMail(email,newLink);
 
-		String url="http://localhost:8080/SopraMMS/CreateNewPassword?link="+newLink;		
-		
+		String newLink = Math.random() * 1000000000 * Math.PI + ""
+				+ Math.random() * 1000000000 * Math.PI + ""
+				+ (Math.random() * 1000000000 * Math.PI);
+
+		userDBController.setForgotPwdByMail(email, newLink);
+
+		String url = "http://localhost:8080/SopraMMS/CreateNewPassword?link="
+				+ newLink;
+
 		EmailTelnet mail = new EmailTelnet();
-		
+
 		StringBuilder text = new StringBuilder();
-		text.append("Sehr geehrte/geehrter Frau/Herr "+user.getLastName()+",");
+		text.append("Sehr geehrte/geehrter Frau/Herr " + user.getLastName()
+				+ ",");
 		text.append("\n\n");
-text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername: "+user.getLogin()+") im MMS beantragt.");
+		text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername: "
+				+ user.getLogin() + ") im MMS beantragt.");
 		text.append("\n\n");
 		text.append("Bitte rufen Sie folgenden Link auf und ändern Sie ihr Passwort.");
 		text.append("\n\n");
@@ -148,20 +153,17 @@ text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername
 		text.append("Mit freundlichen Grüßen");
 		text.append("\n");
 		text.append("MMS-Team");
-		
-		mail.send_mail("MMS - Neues Passwort", email,text.toString());
+
+		mail.send_mail("MMS - Neues Passwort", email, text.toString());
 	}
-	
-	public User checkNewPasswordLink(String link)
-	{
+
+	public User checkNewPasswordLink(String link) {
 		return userDBController.getUserByForgotPwd(link);
 	}
-	
-	public void deleteNewPasswordLink(String loginname)
-	{
+
+	public void deleteNewPasswordLink(String loginname) {
 		userDBController.removeForgotPwdByLoginname(loginname);
 	}
-	
 
 	public User checkLogin(String session) {
 		// TODO Methode existiert in DB noch nicht
@@ -197,11 +199,10 @@ text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername
 		}
 	}
 
-	
-	public boolean removeRepresentative(User user){
+	public boolean removeRepresentative(User user) {
 		return userDBController.removeRepresentative(user);
 	}
-	
+
 	public void logout(String loginname) {
 		User user = userDBController.getUser(loginname);
 		if (user != null) {
@@ -209,8 +210,8 @@ text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername
 			userDBController.changeUser(user, user);
 		}
 	}
-	
-	public Deadline getDeadlinebyFaculty(String facultyID){
+
+	public Deadline getDeadlinebyFaculty(String facultyID) {
 		return userDBController.getDeadlineByFaculty(facultyID);
 	}
 
@@ -221,23 +222,23 @@ text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername
 	public String getFacultyName(User user) {
 		return userDBController.getFacultyName(user);
 	}
-	
-	public List<String> getAllFacultiesByName(){
+
+	public List<String> getAllFacultiesByName() {
 		return userDBController.getFacultiesByName();
 	}
-	
-	public List<String> getAllFacultiesID(){
+
+	public List<String> getAllFacultiesID() {
 		return userDBController.getFacultiesID();
 	}
-	
-	public List<String> getAllInstitutesByName(){
+
+	public List<String> getAllInstitutesByName() {
 		return userDBController.getInstitutes();
 	}
-	
+
 	public List<String> getAllInstitutes() {
 		return userDBController.getInstitutes();
 	}
-	
+
 	public List<User> getAllUsers() {
 		return userDBController.getAllUsers();
 	}
@@ -245,29 +246,29 @@ text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername
 	public List<String> getInstituteNames(User user) {
 		return userDBController.getInstituteNames(user.getLogin());
 	}
-	
-	public List<String> getCoursesByFaculty(String facultyID){
+
+	public List<String> getCoursesByFaculty(String facultyID) {
 		return userDBController.getCoursesByFaculty(facultyID);
 	}
-	
-	
-	//News
-	
+
+	// News
+
 	// true -> public
 	// false -> private
-	public List<String[]> getNewsByType(int type)
-	{
+	public List<String[]> getNewsByType(int type) {
 		return userDBController.getNews(type);
-		
+
 	}
-	
-	public void deleteNews(String title)
-	{
+
+	public void deleteNews(String title) {
 		userDBController.deleteNews(title);
 	}
-	
-	public void addNews(String[] data, int type)
-	{
-		userDBController.addNews(data[0],data[1],data[2],type);
+
+	public void addNews(String[] data, int type) {
+		userDBController.addNews(data[0], data[1], type);
+	}
+
+	public int numberOfNews() {
+		return userDBController.numberOfNews();
 	}
 }

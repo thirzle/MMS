@@ -1,7 +1,7 @@
 <script>
 $(document).ready(function() {
 		$("#addNews").click(function(e) {
-		$(".contentBox").load("/SopraMMS/guiElements/admin/creatNews.jsp");
+		$(".contentBox").load("/SopraMMS/guiElements/admin/createNews.jsp");
 		});
 		$("#showNews").click(function(e) {
 			$(".contentBox").load("/SopraMMS/guiElements/admin/showNews.jsp");

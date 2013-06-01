@@ -25,6 +25,7 @@ h3 {
 
 p {
 	max-width: 520px;
+	
 }
 
 a {
@@ -339,7 +340,7 @@ body {
 
 /*--------------------------*/
 /*---- Table - ShowNews ----*/
-.showNewsTable h2,h3, a{
+.showNewsTable h2,h3,a,p{
 	  display: inline;
 	  font-style: normal;
 	  font-weight: normal;
