@@ -518,11 +518,11 @@ public class UserDBController {
 				statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(query);
 				while (resultSet.next()) {
-					instituteList.add(resultSet.getString("name"));
+					instituteList.add(resultSet.getString("instituteID"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("Couldn't get Institutes");
+				System.out.println("Couldn't get InstituteIDs");
 			} finally {
 				close(connection);
 			}
