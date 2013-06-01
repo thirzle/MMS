@@ -75,7 +75,7 @@ public class LogicTest {
 		//CREATE ULTRA HUGE MODULE to TEST PDF CREATION....
 
 		Module test_module = new Module(1337, "Analysis I für Ingenieure und Informatiker", new Date(),
-				new Date(), false, "Institut007", "Subject007");
+				new Date(), false, "Institut007", "Subject007", "Author");
 		
 		
 		
