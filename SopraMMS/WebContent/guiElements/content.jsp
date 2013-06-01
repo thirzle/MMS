@@ -70,9 +70,13 @@
 %>
 <jsp:include page="/guiElements/admin/generatePDF.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("deadline")) {
+	} else if (contentPage.equals("newDeadline")) {
 %>
-<jsp:include page="/guiElements/admin/deadline.jsp"></jsp:include>
+<jsp:include page="/guiElements/admin/newDeadline.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("showDeadline")) {
+%>
+<jsp:include page="/guiElements/admin/showDeadline.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("editUser")) {
 %>
@@ -83,8 +87,8 @@
 <jsp:include page="/guiElements/admin/createNews.jsp"></jsp:include>
 <%
 	}else if (contentPage.equals("showNews")) {
-		%>
-		<jsp:include page="/guiElements/admin/showNews.jsp"></jsp:include>
-		<%
+%>
+<jsp:include page="/guiElements/admin/showNews.jsp"></jsp:include>
+<%
 			}
 %>
