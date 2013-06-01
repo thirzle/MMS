@@ -33,7 +33,7 @@
 		</tr>
 		<tr>
 			<td>Text:</td>
-			<td><textarea name="content" rows="10" cols="50"><%=text.trim()%></textarea></td>
+			<td><textarea name="content" rows="10" cols="50" style="resize:none;"><%=text.trim()%></textarea></td>
 		</tr>
 		<tr>
 			<td>Sichtbarkeit:</td>
