@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
 <%@page import="java.util.List"%>
 <%@page import="user.UserAdministration"%>
 <%
@@ -7,14 +8,17 @@
 %>
 <h1>&Uuml;bersicht Neuigkeiten</h1>
 <form action="/SopraMMS/DeleteNews">
-	<table class='showNewsTable'>
-		<tr>
-			<th></th>
-			<th>Titel</th>
-			<th>Text</th>
-			<th>Sichtbarkeit</th>
-			<th>Erstellungsdatum</th>
-		</tr>
+	<table id="showNewsTable" class='tablesorter'>
+		<thead>
+			<tr>
+				<th style="width: 1%;"></th>
+				<th>Titel</th>
+				<th>Text</th>
+				<th>Sichtbarkeit</th>
+				<th>Erstellungsdatum</th>
+			</tr>
+		</thead>
+		<tbody>
 		<%
 			int index = 0;
 			for (String[] entry : newsList) {
@@ -34,7 +38,6 @@
 					type = "Back-End";
 				}
 		%>
-
 		<tr>
 			<td><input type="checkbox" name="delete<%=index%>"
 				value="<%=entry[0]%>"></td>
@@ -49,6 +52,12 @@
 			index++;
 			}
 		%>
+		</tbody>
 	</table>
 	<input type="submit" value="L&ouml;schen">
 </form>
+<script type="text/javascript" src="/SopraMMS/js/jquery-latest.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.newstable.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
+
+

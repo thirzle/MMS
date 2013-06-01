@@ -1,6 +1,4 @@
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css" type="text/css"
-	media="print, projection, screen" />
+<link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
 	
 <%@ page import="model.UserDBController"%>
 <%@ page import="java.util.List"%>
@@ -13,6 +11,7 @@
 		String[] status = {"Modulver.","Redakteur","Administrator","Recht auf Stellv.","Dezernat II","right[5]"};
 %>
 <form name="editUserForm" action="/SopraMMS/EditUser" method="get">
+
 <table id="userTable" class="tablesorter">
 	<thead>
 		<tr>
