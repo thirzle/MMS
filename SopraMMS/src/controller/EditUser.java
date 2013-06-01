@@ -38,8 +38,10 @@ public class EditUser extends SessionCheck implements Servlet {
     	String loginname = "";
     	UserAdministration ua = new UserAdministration();
     	List<String> institutes = ua.getAllInstituteID();
+    	List<String> instituteNames = ua.getAllInstitute();
     	if(institutes != null) {
     		session.setAttribute("institutes", institutes);
+    		session.setAttribute("instituteNames", instituteNames);
     	} else {
     		System.out.println("(EditUser.java): institute has null value");
     		session.setAttribute("errormessage", "institute is null");

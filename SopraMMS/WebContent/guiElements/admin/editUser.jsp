@@ -2,6 +2,7 @@
 <%@ page import="java.util.List, user.User" %>
 <%
 List<String> institutes = (List<String>) session.getAttribute("institutes");
+List<String> instituteNames = (List<String>) session.getAttribute("instituteNames");
 User user = (User) session.getAttribute("userToEdit");
 List<String> userInstitutes = null;
 boolean[] userRights = null;
@@ -9,10 +10,11 @@ if(user != null) {
 	userInstitutes = user.getInstitute();
 	userRights = user.getRights();
 }
-int NUMBER_OF_INSTITUTES = institutes.size();
+int NUMBER_OF_INSTITUTES = instituteNames.size();
 %>
 <script type="text/javascript" src="/SopraMMS/js/jquery.multiple.select.js"></script>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/multiple-select.css">
+<script type="text/javascript" src="/SopraMMS/js/jquery.edituser.js"></script>
+<link rel="stylesheet" type="text/css" href="/SopraMMS/css/multiple-select.css">
 <h1>Benutzer bearbeiten</h1>
 <div>
 	<table>
@@ -51,7 +53,7 @@ int NUMBER_OF_INSTITUTES = institutes.size();
 		</tr>
 		<tr>
 			<td>Email:</td>
-			<td><input class="inputField" form="newUserForm" type='text' id="emailCellText" name="emailCellText" style="width: 270px"/></td>
+			<td><input class="inputField" form="newUserForm" type='text' id="emailCellText" name="emailCellText" style="width: 260px"/></td>
 			<td>
 			<%
 			if(user != null) {
@@ -63,7 +65,7 @@ int NUMBER_OF_INSTITUTES = institutes.size();
 		<tr>
 			<td>Rechte:</td>
 			<td>
-				<select  id="rightsSelect" style="width: 270px">
+				<select class="inputField" id="rightsSelect" style="width: 270px">
 					<option value="0">Modulver.</option>
 					<option value="1">Redakteur</option>
 					<option value="2">Administrator</option>
@@ -88,9 +90,9 @@ int NUMBER_OF_INSTITUTES = institutes.size();
 		<tr>
 			<td>Institut:</td>
 			<td>
-				<select id="instituteSelect" style="width: 270px">
+				<select class="inputField" id="instituteSelect" style="width: 270px">
 					<% for(int i=0; i<NUMBER_OF_INSTITUTES;i++) { %>
-						<option value=<%=i %>><%=institutes.get(i) %></option>
+						<option value=<%=i %>><%=instituteNames.get(i) %></option>
 					<%} %>
 			    </select>
 			</td>
@@ -120,29 +122,8 @@ int NUMBER_OF_INSTITUTES = institutes.size();
 		</tr>
 	</table>
 </div>
-
-<script type="text/javascript">
-
-//$('#select2').multipleSelect('setSelects', [1, 3]);
-
-
-
-$("#loginCellText").val($("#tmpLoginname").html());
-$("#firstnameCellText").val($("#tmpFirstname").html());
-$("#lastnameCellText").val($("#tmpLastname").html());
-$("#emailCellText").val($("#tmpEmail").html());
-var rightsText = $("#rightsSelectText").html();
-var instituteText = $("#instituteSelectText").html();
-alert(instituteText);
-var split = rightsText.split(",");
-var rights = new Array();
-for ( var i = 0; i < split.length-1; i++) {
-	rights[i] = split[i];
-}
-$("#rightsSelect").multipleSelect(); 
-$("#instituteSelect").multipleSelect(); 
-$('#rightsSelect').multipleSelect('setSelects', rights);
-$(".expandAdministration").toggleClass("expanded");
-$(".expandAdministration").children("ul:first").slideToggle("fast");
-e.stopPropagation();
+<script>
+initMultiSelect();
+loadDataIntoForm();
+loadDataIntoMultiSelect();
 </script>

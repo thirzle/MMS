@@ -238,6 +238,10 @@ public class UserAdministration {
 	public List<String> getAllInstituteID() {
 		return userDBController.getInstituteID();
 	}
+	
+	public List<String> getAllInstitute() {
+		return userDBController.getInstitutes();
+	}
 
 	public List<User> getAllUsers() {
 		return userDBController.getAllUsers();
