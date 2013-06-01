@@ -1,6 +1,7 @@
 <h1>Neuigkeit verfassen</h1>
 
 <%
+	session.setAttribute("content", "createNews");
 	if (request.getParameter("newsstatus") != null) {
 		if (request.getParameter("newsstatus").equals(
 				"choosevisibility")) {

@@ -1,6 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page import="user.UserAdministration"%>
 <%
+	session.setAttribute("content", "showNews");
 	UserAdministration ua = new UserAdministration();
 	List<String[]> newsList = ua.getNewsByType(0);
 %>

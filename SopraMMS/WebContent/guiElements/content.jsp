@@ -26,9 +26,7 @@
 %>
 <jsp:include page="/guiElements/frontend/courseModuleManuals.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("changedPwStatusPw12Wrong")
-			|| contentPage.equals("changedPwStatusOldPwWrong")
-			|| contentPage.equals("changedPwStatusdone")) {
+	} else if (contentPage.equals("changedPw")) {
 %>
 <jsp:include page="/guiElements/generally/changePassword.jsp"></jsp:include>
 <%
