@@ -7,7 +7,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.zip.DataFormatException;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -18,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.w3c.dom.Document;
+
+import com.ibm.icu.text.SimpleDateFormat;
 
 import pdfcreator.SimplePdfCreator;
 
@@ -52,6 +57,9 @@ public class GeneratePDF extends HttpServlet {
 		HttpSession session = request.getSession();
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		UserAdministration uAdmin = new UserAdministration();
+		
+		LinkedList<String> facListName = (LinkedList) uAdmin
+				.getAllFacultiesByName();
 		LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
 		LinkedList<String> courses = (LinkedList) uAdmin
 				.getCoursesByFaculty(facListID.getFirst());
@@ -65,32 +73,61 @@ public class GeneratePDF extends HttpServlet {
 			courseArray[j + courses.size()] = "Master " + courses.get(j);
 		}
 
+//		get course from gui
 		String fullCourse = request.getParameter("course");
 		String course = courseArray[Integer.parseInt(fullCourse)];
 		String[] splitCourse = course.split(" ");
+		String courseName = splitCourse[1]; 
+		String degree = splitCourse[0];
+		String courseID = mAdmin.getCourseID(courseName);
+		System.out.println("(GeneratePDF.java) courseID="+courseID +" degree="+degree);
 
 		// load all modules of course
 		LinkedList<Module> moduleList = (LinkedList) mAdmin.getModulesByCourse(
-				mAdmin.getCourseID(splitCourse[1]), splitCourse[0]);
-		for (Module module : moduleList) {
-			System.out.println(module.getModuleID() + " " + module.getName()
-					+ " " + module.getCreationDate() + " "
-					+ module.getModificationDate());
-			for (Entry entry : module.getEntryList()) {
-				System.out.println(entry.getTitle() + " " + entry.getVersion());
-			}
+				courseID, degree);
+		
+		String latestVersion = mAdmin.getLatestVersionOfModuleManual(courseID, degree);
+		String latestAuthor = mAdmin.getLastModificationAuthor(courseID, degree);
+		String modificationDate = mAdmin.getLastModificationDateOfModuleManual(courseID, degree);
+		String examRegulation = request.getParameter("examRegulation");
+		LinkedList<String> instituteIDList = mAdmin.getInstituteListOfModuleManual(courseID, degree);
+		LinkedList<String> instituteNameList = new LinkedList<String>();
+		for (String instituteID : instituteIDList) {
+			instituteNameList.add(mAdmin.getInstituteName(instituteID));
 		}
+		String semester;
+		if(latestVersion.charAt(0) == 's'){
+			semester = latestVersion.substring(0, 8);
+		}
+		else{
+			semester = latestVersion.substring(0, 12);
+		}
+		String fileName = courseID + "_" + degree + "_"+semester+".pdf";
+//		Create new ModuleManual
+//		get current Date
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date currentTime = new Date();
+		String date = formatter.format(currentTime);
+		
+		mAdmin.createModuleManual(latestVersion, courseID, degree, date, date, false, Integer.parseInt(examRegulation));
+		
+//		Generate new PDF
 		try {
 			SimplePdfCreator pdfCreator = new SimplePdfCreator();
-			pdfCreator.createModulePdf("P:/Team7_12/TestPDF/module.pdf",
-					moduleList);
+// TODO institute ist eine Liste, latestVersion ist String
+			pdfCreator.createModulePdf("P:/Team7_12/TestPDF/" + fileName,
+					moduleList, instituteNameList.getFirst(), facListName.getFirst(), degree, examRegulation,
+					modificationDate,
+					latestAuthor, semester,
+					42);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("couldn't create PDF of course: "
 					+ splitCourse[1]);
 		}
-		response.sendRedirect("/SopraMMS/fileExportServlet?filename=module.pdf");
+		response.sendRedirect("/SopraMMS/fileExportServlet?filename="
+				+ fileName);
 	}
 
 	/**

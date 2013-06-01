@@ -12,12 +12,13 @@ public class Module {
 	private int moduleID;
 	private String instituteID;
 	private String  subject;
+	private String modificationauthor;
 
 	private List<Entry> entryList = new LinkedList<Entry>();
 
 
 	public Module(int moduleID, String name, Date creationDate,
-			Date modificationDate, boolean approved, String insituteID, String subject) {
+			Date modificationDate, boolean approved, String insituteID, String subject, String modificationauthor) {
 		this.moduleID = moduleID;
 		this.name = name;
 		this.creationDate = creationDate;
@@ -25,12 +26,13 @@ public class Module {
 		this.approved = approved;
 		this.instituteID = insituteID;
 		this.subject = subject;
+		this.modificationauthor = modificationauthor;
 	}
 
 
 	public Module(int moduleID, String name, Date creationDate,
 			Date modificationDate, boolean approved, String insituteID,
-			List<Entry> entryList, String subject) {
+			List<Entry> entryList, String subject, String modificationauthor) {
 		this.moduleID = moduleID;
 		this.name = name;
 		this.creationDate = creationDate;
@@ -39,6 +41,7 @@ public class Module {
 		this.instituteID = insituteID;
 		this.entryList = entryList;
 		this.subject = subject;
+		this.modificationauthor = modificationauthor;
 	}
 
 

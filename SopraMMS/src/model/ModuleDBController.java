@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,8 +69,9 @@ public class ModuleDBController {
 								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
 								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID"),
-								resultSet.getString("subject")));
+								.getString("instituteID"), resultSet
+								.getString("subject"), resultSet
+								.getString("modificationauthor")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -114,8 +115,9 @@ public class ModuleDBController {
 								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
 								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID"),
-								resultSet.getString("subject")));
+								.getString("instituteID"), resultSet
+								.getString("subject"), resultSet
+								.getString("modificationauthor")));
 			}
 			for (Module module : moduleList) {
 				module.setEntryList(getEntryListOfModule(module));
@@ -151,7 +153,8 @@ public class ModuleDBController {
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
-						resultSet.getString("subject"));
+						resultSet.getString("subject"),
+						resultSet.getString("modificationauthor"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -194,8 +197,9 @@ public class ModuleDBController {
 								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
 								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID"),
-								resultSet.getString("subject")));
+								.getString("instituteID"), resultSet
+								.getString("subject"), resultSet
+								.getString("modificationauthor")));
 
 			}
 			for (Module module : moduleList) {
@@ -230,7 +234,8 @@ public class ModuleDBController {
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
-						resultSet.getString("subject"));
+						resultSet.getString("subject"),
+						resultSet.getString("modificationauthor"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -272,7 +277,8 @@ public class ModuleDBController {
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
-						resultSet.getString("subject"));
+						resultSet.getString("subject"),
+						resultSet.getString("modificationauthor"));
 			}
 			if (module != null)
 				module.setEntryList(getEntryListOfModule(module));
@@ -304,7 +310,8 @@ public class ModuleDBController {
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
-						resultSet.getString("subject"));
+						resultSet.getString("subject"),
+						resultSet.getString("modificationauthor"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -349,7 +356,8 @@ public class ModuleDBController {
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
-						resultSet.getString("subject"));
+						resultSet.getString("subject"),
+						resultSet.getString("modificationauthor"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -395,7 +403,8 @@ public class ModuleDBController {
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
-						resultSet.getString("subject"));
+						resultSet.getString("subject"),
+						resultSet.getString("modificationauthor"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -441,7 +450,8 @@ public class ModuleDBController {
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
-						resultSet.getString("subject"));
+						resultSet.getString("subject"),
+						resultSet.getString("modificationauthor"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -487,7 +497,8 @@ public class ModuleDBController {
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
-						resultSet.getString("subject"));
+						resultSet.getString("subject"),
+						resultSet.getString("modificationauthor"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -533,7 +544,8 @@ public class ModuleDBController {
 						resultSet.getDate("modificationdate"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
-						resultSet.getString("subject"));
+						resultSet.getString("subject"),
+						resultSet.getString("modificationauthor"));
 				// check for duplicate
 				if (moduleList.isEmpty()) {
 					moduleList.add(module);
@@ -564,8 +576,8 @@ public class ModuleDBController {
 		Connection connection = connect();
 		int moduleID = module.getModuleID();
 		String name = module.getName();
-		Date creationDate = module.getCreationDate();
-		Date modificationDate = module.getModificationDate();
+		Date creationDate = (Date) module.getCreationDate();
+		Date modificationDate = (Date) module.getModificationDate();
 		boolean approved = module.isApproved();
 		String instituteID = module.getInstituteID();
 
@@ -593,8 +605,8 @@ public class ModuleDBController {
 		Connection connection = connect();
 		int moduleID = module.getModuleID();
 		String name = module.getName();
-		Date creationDate = module.getCreationDate();
-		Date modificationDate = module.getModificationDate();
+		Date creationDate = (Date) module.getCreationDate();
+		Date modificationDate = (Date) module.getModificationDate();
 		boolean approved = module.isApproved();
 		String instituteID = module.getInstituteID();
 
@@ -662,7 +674,6 @@ public class ModuleDBController {
 								.getString("text")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't load textual entries");
 		} finally {
@@ -697,8 +708,8 @@ public class ModuleDBController {
 				courses.addCourse(resultSet.getString("courseID"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("couldn't get courseentry by module: " + m);
 		} finally {
 			close(connection);
 		}
@@ -729,7 +740,6 @@ public class ModuleDBController {
 						resultSet.getInt("presencetime"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't load effortentry");
 		}
@@ -751,7 +761,6 @@ public class ModuleDBController {
 									.getString("title")));
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.out.println("Couldn't load selfstudies");
 			}
@@ -778,7 +787,6 @@ public class ModuleDBController {
 						resultSet.getString("url") });
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't find modules");
 		} finally {
@@ -807,7 +815,6 @@ public class ModuleDBController {
 			} else
 				return null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Could't find modulmanual");
 		} finally {
@@ -833,6 +840,186 @@ public class ModuleDBController {
 			close(connection);
 		}
 		return null;
+	}
+
+	public String getLastModificationDate(String courseID, String degree) {
+		Connection connection = connect();
+		query = "SELECT MAX(module.modificationdate) FROM module "
+				+ "JOIN modulecourseaffiliation AS ma ON module.moduleID = ma.moduleID "
+				+ "WHERE ma.courseID = ? AND ma.degree = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, courseID);
+			pStatement.setString(2, degree);
+			ResultSet resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				return "" + resultSet.getDate(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get modificationdates of moduleList");
+		} finally {
+			close(connection);
+		}
+		return null;
+	}
+
+	public String getLastModificationAuthor(String courseID, String degree) {
+		Connection connection = connect();
+		query = "SELECT m.modificationauthor, MAX(m.modificationdate) FROM module AS m "
+				+ "JOIN modulecourseaffiliation AS ma ON m.moduleID = ma.moduleID "
+				+ "WHERE ma.courseID = ? AND ma.degree = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, courseID);
+			pStatement.setString(2, degree);
+			ResultSet resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				return resultSet.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out
+					.println("couldn't get last modification author of course: "
+							+ courseID);
+		} finally {
+			close(connection);
+		}
+		return null;
+	}
+
+	public String generateLatestVersionOfModuleManual(String courseID,
+			String degree) {
+		Connection connection = connect();
+		LinkedList<String> versionnumbers = new LinkedList<String>();
+		LinkedList<String> sSemesters = new LinkedList<String>();
+		LinkedList<String> wSemesters = new LinkedList<String>();
+		query = "SELECT versionnumber FROM modulemanual WHERE courseID = ? AND degree = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, courseID);
+			pStatement.setString(2, degree);
+			ResultSet resultSet = pStatement.executeQuery();
+			// get all versionnumbers of module
+			while (resultSet.next()) {
+				versionnumbers.add(resultSet.getString(1));
+			}
+			System.out.println("(ModuleDBController) versionnumbers is empty: "+ versionnumbers.isEmpty());
+			// separate sSemester and wSemester
+			for (String version : versionnumbers) {
+				if (version.charAt(0) == 's') {
+					sSemesters.add(version);
+				} else {
+					wSemesters.add(version);
+				}
+			}
+			// find latest sSemester version
+			System.out.println("(ModuleDBController) sSemesters is empty: "+ sSemesters.isEmpty());
+			String latestSS = sSemesters.getFirst().substring(4, 8);
+			for (String version : sSemesters) {
+				if (Integer.parseInt(latestSS) < Integer.parseInt(version
+						.substring(4, 8))) {
+					latestSS = version.substring(4, 8);
+				}
+			}
+			// find latest wSemester version
+			String latestWS = wSemesters.getFirst().substring(8, 12);
+			for (String version : wSemesters) {
+				if (Integer.parseInt(latestWS) < Integer.parseInt(version
+						.substring(8, 12))) {
+					latestWS = version.substring(8, 12);
+				}
+			}
+			// if latest sSemester version >= latest wSemester version return
+			// new wise
+			if (Integer.parseInt(latestSS) >= Integer.parseInt(latestWS)) {
+				return "wise" + latestSS + ""
+						+ (Integer.parseInt(latestSS) + 1);
+			}
+			// if latest sSemester version < latest wSemester version return new
+			// sose
+			else {
+				return "sose" + latestWS;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out
+					.println("couldn't get latest version of modulemanual of course: "
+							+ courseID);
+		} finally {
+			close(connection);
+		}
+		return null;
+	}
+
+	public LinkedList getInstituteList(String courseID, String degree) {
+		Connection connection = connect();
+		LinkedList<String> instituteIDList = new LinkedList<String>();
+		query = "SELECT DISTINCT m.instituteID FROM module AS m "
+				+ "JOIN modulecourseaffiliation AS ma ON m.moduleID = ma.moduleID "
+				+ "WHERE ma.courseID = ? AND ma.degree = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, courseID);
+			pStatement.setString(2, degree);
+			ResultSet resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				instituteIDList.add(resultSet.getString(1));
+			}
+			return instituteIDList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out
+					.println("couldn't get institutes of modulemanual of course: "
+							+ courseID + " " + degree);
+		} finally {
+			close(connection);
+		}
+		return instituteIDList;
+	}
+
+	public String getInstituteName(String instituteID) {
+		Connection connection = connect();
+		query = "SELECT name FROM institute WHERE instituteID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, instituteID);
+			ResultSet resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				return resultSet.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out
+					.println("couldn't get name of institute: " + instituteID);
+		} finally {
+			close(connection);
+		}
+		return null;
+	}
+
+	public void createModuleMaunal(String version, String courseID,
+			String degree, String creationdate, String modificationdate,
+			boolean approvalstatus, int examregulation) {
+		Connection connection = connect();
+		query = "INSERT INTO modulemanual (versionnumber, courseID, degree, "
+				+ "creationdate, modificationdate, approvalstatus, examregulation) "
+				+ "VALUES (?,?,?,?,?,?,?)";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, version);
+			pStatement.setString(2, courseID);
+			pStatement.setString(3, degree);
+			pStatement.setString(4, creationdate);
+			pStatement.setString(5, modificationdate);
+			pStatement.setBoolean(6, approvalstatus);
+			pStatement.setInt(7, examregulation);
+			pStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't create modulemanual");
+		}
 	}
 
 	public void close(Connection connection) {

@@ -25,6 +25,8 @@
 			}
 		%>
 	</select><br>
+	<p>Geben Sie die aktuelle Pr&uuml;fungsordnung ein:</p>
+	<input name="examRegulation" type="text" size="30" maxlength="30"/>
 	<br> <input type="submit" name="Submit" id="showEntries"
 	<%//TODO PDF automatisieren %>
 		value="Modulhandbuch erstellen" />
