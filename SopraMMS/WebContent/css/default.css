@@ -100,6 +100,10 @@ body {
 	padding-left: 10px;
 }
 
+.contentTextBox{
+	width: 520px;
+}
+
 .contentBox a {
 	color: #1E6289;
 	text-decoration: underline;

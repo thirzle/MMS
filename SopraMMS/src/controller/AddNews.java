@@ -47,9 +47,9 @@ public class AddNews extends HttpServlet {
 		} else {
 			visibility = 0;
 
-			if (frontend != null) {
+			if (frontend != null && backend == null) {
 				visibility = 1;
-			} else if (backend != null) {
+			} else if (backend != null && frontend == null) {
 				visibility = 2;
 			} else {
 				visibility = 0;
