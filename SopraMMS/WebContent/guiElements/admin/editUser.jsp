@@ -1,16 +1,42 @@
 
 <%@ page import="java.util.List, user.User" %>
 <%
-List<String> institutes = (List<String>) session.getAttribute("institutes");
-List<String> instituteNames = (List<String>) session.getAttribute("instituteNames");
-User user = (User) session.getAttribute("userToEdit");
+List<String> institutes = null;
+List<String> instituteNames = null;
+List<String> emptyInputs = null;
+User user = null;
 List<String> userInstitutes = null;
 boolean[] userRights = null;
+int NUMBER_OF_INSTITUTES = 0;
+try {
+	institutes = (List<String>) session.getAttribute("institutes");
+	instituteNames = (List<String>) session.getAttribute("instituteNames");
+	emptyInputs = (List<String>) session.getAttribute("emptyInputs");
+	user = (User) session.getAttribute("userToEdit");
+	NUMBER_OF_INSTITUTES = instituteNames.size();
+} catch(NullPointerException e) {
+	System.out.println("NullPointerException");
+} finally {
 if(user != null) {
 	userInstitutes = user.getInstitute();
 	userRights = user.getRights();
 }
-int NUMBER_OF_INSTITUTES = instituteNames.size();
+boolean empty_loginCellText = false;
+boolean empty_firstnameCellText = false;
+boolean empty_lastnameCellText = false;
+boolean empty_emailCellText = false;
+boolean empty_rightsSelect = false;
+boolean empty_instituteSelect = false;
+if(emptyInputs != null) {
+	for(String string : emptyInputs) {
+		empty_loginCellText = string == "loginCellText" || empty_loginCellText ;
+		empty_firstnameCellText = string == "firstnameCellText" || empty_firstnameCellText;
+		empty_lastnameCellText = string == "lastnameCellText" || empty_lastnameCellText;
+		empty_emailCellText = string == "emailCellText" || empty_emailCellText;
+		empty_rightsSelect = string == "rightsSelect"|| empty_rightsSelect;
+		empty_instituteSelect = string == "instituteSelect" || empty_instituteSelect;
+	}
+}
 %>
 <script type="text/javascript" src="/SopraMMS/js/jquery.multiple.select.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.edituser.js"></script>
@@ -23,7 +49,9 @@ int NUMBER_OF_INSTITUTES = instituteNames.size();
 			<td><input class="inputField" form="newUserForm" type='text' id="loginCellText" name="loginCellText"/></td>
 			<td>
 			<%
-			if(user != null) {
+			if(empty_loginCellText) {
+				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			} else if(user != null) {
 				out.print("<textarea style='display: none;' id='tmpLoginname'>"+user.getLogin()+"</textarea>");
 			}
 			%>
@@ -34,7 +62,9 @@ int NUMBER_OF_INSTITUTES = instituteNames.size();
 			<td><input class="inputField" form="newUserForm" type='text' id="firstnameCellText" name="firstnameCellText"/></td>
 			<td>
 			<%
-			if(user != null) {
+			if(empty_firstnameCellText) {
+				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			} else if(user != null) {
 				out.print("<textarea style='display: none;' id='tmpFirstname'>"+user.getFirstName()+"</textarea>");
 			}
 			%>
@@ -45,7 +75,9 @@ int NUMBER_OF_INSTITUTES = instituteNames.size();
 			<td><input class="inputField" form="newUserForm" type='text' id="lastnameCellText" name="lastnameCellText"/></td>
 			<td>
 			<%
-			if(user != null) {
+			if(empty_lastnameCellText) {
+				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			} else	if(user != null) {
 				out.print("<textarea style='display: none;' id='tmpLastname'>"+user.getLastName()+"</textarea>");
 			}
 			%>
@@ -56,7 +88,9 @@ int NUMBER_OF_INSTITUTES = instituteNames.size();
 			<td><input class="inputField" form="newUserForm" type='text' id="emailCellText" name="emailCellText" style="width: 260px"/></td>
 			<td>
 			<%
-			if(user != null) {
+			if(empty_emailCellText) {
+				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			} else	if(user != null) {
 				out.print("<textarea style='display: none;' id='tmpEmail'>"+user.getMail()+"</textarea>");
 			}
 			%>
@@ -75,7 +109,9 @@ int NUMBER_OF_INSTITUTES = instituteNames.size();
 			</td>
 			<td>
 			<%
-			if(userRights != null) {
+			if(empty_rightsSelect) {
+				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			} else	if(userRights != null) {
 				String text = "";
 				for(int i=0;i<userRights.length;i++){
 					if(userRights[i]) {
@@ -98,7 +134,9 @@ int NUMBER_OF_INSTITUTES = instituteNames.size();
 			</td>
 			<td>
 			<%
-			if(institutes != null && userInstitutes != null) {
+			if(empty_instituteSelect) {
+				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			} else	if(institutes != null && userInstitutes != null) {
 				String text = "";
 				for( String string : userInstitutes) {
 					System.out.println("(editUser.jsp):string="+string);
@@ -113,8 +151,8 @@ int NUMBER_OF_INSTITUTES = instituteNames.size();
 		<tr>
 			<td></td>
 			<td>
-				<form id="newUserForm" onsubmit="setValues()"action="/SopraMMS/SaveUser" method="get">
-					<input type="submit" name="Submit" id="saveButton" style="float: right;" value="Speichern"/>
+				<form id="newUserForm" onsubmit="setValues()"action="/SopraMMS/ChangeUser" method="get">
+					<input type="submit" name="Submit" id="saveButton" style="float: right;" value="Ändern"/>
 					<textarea name="rightsSelect" style="display:none;" id="rightsLabel"></textarea>
 					<textarea name="instituteSelect" style="display:none;" id="instituteLabel"></textarea>
 				</form>
@@ -122,6 +160,7 @@ int NUMBER_OF_INSTITUTES = instituteNames.size();
 		</tr>
 	</table>
 </div>
+<%}//end finally %>
 <script>
 initMultiSelect();
 loadDataIntoForm();

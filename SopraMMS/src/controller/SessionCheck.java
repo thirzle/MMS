@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import user.User;
+import user.UserAdministration;
 
 /**
  * Servlet implementation class SessionCeck
@@ -17,11 +18,13 @@ import user.User;
 @WebServlet("/SessionCeck")
 public class SessionCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L; 
+	protected UserAdministration ua;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public SessionCheck() {
         super();
+        ua = new UserAdministration();
     }
 
 	/**
@@ -59,5 +62,12 @@ public class SessionCheck extends HttpServlet {
 		}
 	    }
 	    return isGranted;
+	}
+	
+	protected boolean actionGranted(HttpServletRequest request, int status) {
+	    HttpSession session = request.getSession();
+	    User user = (User) session.getAttribute("user");
+	    boolean[] userRights = user.getRights();
+	    return userRights[status];
 	}
 }

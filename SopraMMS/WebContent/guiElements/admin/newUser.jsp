@@ -1,7 +1,9 @@
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List, java.util.ArrayList" %>
 <%
 List<String> institutes = (List<String>) session.getAttribute("institutes");
+String instituteIndex = "";
+String rightsIndex = "";
 List<String> emptyInputs = (List<String>) session.getAttribute("emptyInputs");
 List<String[]> notEmptyInputs = (List<String[]>) session.getAttribute("notEmptyInputs");
 int NUMBER_OF_INSTITUTES = institutes.size();
@@ -20,9 +22,22 @@ if(emptyInputs != null) {
 		empty_rightsSelect = string == "rightsSelect"|| empty_rightsSelect;
 		empty_instituteSelect = string == "instituteSelect" || empty_instituteSelect;
 	}
+	if(!empty_instituteSelect) {
+		for ( String[] string : notEmptyInputs ) {
+			if(string[0] == "instituteSelect" ) {
+				instituteIndex = string[1];
+			}
+		}
+	}
+	if(!empty_rightsSelect) {
+		for ( String[] string : notEmptyInputs ) {
+			if(string[0] == "rightsSelect" ) {
+				rightsIndex = string[1];
+			}
+		}
+	}
 }
 %>
-<script type="text/javascript" src="/SopraMMS/js/jquery.multiple.select.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/multiple-select.css">
 <h1>Neuen Benutzer anlegen</h1>
 <div>
@@ -110,6 +125,9 @@ if(emptyInputs != null) {
 			<%
 			if(empty_rightsSelect) {
 				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			} else	if(rightsIndex != "") {
+				System.out.println("(newUser.jsp): index: "+rightsIndex);
+				out.print("<textarea style='display: none;' id='rightsSelectText'>"+rightsIndex+"</textarea>");
 			}
 			%>
 			</td>
@@ -127,6 +145,9 @@ if(emptyInputs != null) {
 			<%
 			if(empty_instituteSelect) {
 				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			} else	if(instituteIndex != "") {
+				System.out.println("(newUser.jsp): index: "+instituteIndex);
+				out.print("<textarea style='display: none;' id='instituteSelectText'>"+instituteIndex+"</textarea>");
 			}
 			%>
 			</td>
@@ -143,27 +164,10 @@ if(emptyInputs != null) {
 		</tr>
 	</table>
 </div>
-
+<script type="text/javascript" src="/SopraMMS/js/jquery.newuser.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.multiple.select.js"></script>
 <script type="text/javascript">
-$("#loginCellText").val($("#tmpLoginname").html());
-$("#firstnameCellText").val($("#tmpFirstname").html());
-$("#lastnameCellText").val($("#tmpLastname").html());
-$("#emailCellText").val($("#tmpEmail").html());
-function setValues() {
-	var instituteSelectselectedIndex = $('#instituteSelect').multipleSelect('getSelects');
-	var rightsSelectselectedIndex = $('#rightsSelect').multipleSelect('getSelects');
-	var instituteLabel = $("#instituteLabel");
-	var rightsLabel = $("#rightsLabel");
-	
-	instituteLabel.html(instituteSelectselectedIndex);
-	rightsLabel.html(rightsSelectselectedIndex);
-}
-function isEmpty(element) {
-	
-}
-$("#rightsSelect").multipleSelect(); 
-$("#instituteSelect").multipleSelect(); 
-$(".expandAdministration").toggleClass("expanded");
-$(".expandAdministration").children("ul:first").slideToggle("fast");
-e.stopPropagation();
+initMultiSelect();
+loadDataIntoForm();
+loadDataIntoMultiSelect();
 </script>

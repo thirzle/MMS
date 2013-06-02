@@ -1,8 +1,10 @@
 function convertToArray(string) {
-	var split = string.split(",");
 	var tmp = new Array();
-	for ( var i = 0; i < split.length-1; i++) {
-		tmp[i] = split[i];
+	if(string != null) {
+		var split = string.split(",");
+		for ( var i = 0; i < split.length-1; i++) {
+			tmp[i] = split[i];
+		}
 	}
 	return tmp;
 }
@@ -26,4 +28,14 @@ function loadDataIntoForm() {
 	$("#firstnameCellText").val($("#tmpFirstname").html());
 	$("#lastnameCellText").val($("#tmpLastname").html());
 	$("#emailCellText").val($("#tmpEmail").html());
+}
+
+function setValues() {
+	var instituteSelectselectedIndex = $('#instituteSelect').multipleSelect('getSelects');
+	var rightsSelectselectedIndex = $('#rightsSelect').multipleSelect('getSelects');
+	var instituteLabel = $("#instituteLabel");
+	var rightsLabel = $("#rightsLabel");
+	
+	instituteLabel.html(instituteSelectselectedIndex);
+	rightsLabel.html(rightsSelectselectedIndex);
 }
