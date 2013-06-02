@@ -56,7 +56,6 @@
 	</table>
 	<input type="submit" value="L&ouml;schen">
 </form>
-<script type="text/javascript" src="/SopraMMS/js/jquery-latest.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.newstable.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
 
