@@ -20,80 +20,40 @@ import user.UserAdministration;
 @WebServlet("/SaveUser")
 public class SaveUser extends SessionCheck {
 	private static final long serialVersionUID = 1L;
-    
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SaveUser() {
-        super();
-    }
+	private List<String> emptyInputs = new ArrayList<String>();
+	private List<String[]> notEmptyInputs = new ArrayList<String[]>();
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public SaveUser() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		boolean[] requiredRights = {false,false,false,true,false};
-		List<String> rootInstitutes = ua.getAllInstitutesByName();
-		if(isLoggedIn(request, response) && actionGranted(request, requiredRights)) {
+		int right = 3; // 3 entspricht dem Recht: Administrator
+		if (isLoggedIn(request, response) && actionGranted(request, right)) {
 			HttpSession session = request.getSession();
-			// Die Liste wird ggf. mit den Feldnamen leeren Feldern gefuellt
-			List<String> emptyInputs = new ArrayList<String>();
-			List<String[]> notEmptyInputs = new ArrayList<String[]>();
-			String[] names = new String[6];
-			String[] paras = {"loginCellText","firstnameCellText","lastnameCellText","emailCellText","rightsSelect","instituteSelect"};
-			//prueft Request Paramater auf null Werte und fuellt entsprechend die 'emptyInputs' Liste
-			for (int i = 0; i < paras.length; i++) {
-				names[i] = request.getParameter(paras[i]);
-				if(names[i].equals(null)||names[i] == "") {
-					emptyInputs.add(paras[i]);
-				} else {
-					String[] tmp = {paras[i],names[i]};
-					notEmptyInputs.add(tmp);
-				}
-			}		
-			
-			// Die erhaltenen Institute und Rechte stehen in einem String gespeichert
-			// dieser wird hier getrennt und entsprechend Institute und Rechte extrahiert
-			if(emptyInputs.isEmpty()) {
-				char[] splitetInstitutes = names[5].toCharArray();
-				char[] splitetRights = names[4].toCharArray();
-				boolean[] finalRights = {false,false,false,false,false};
-				List<String> finalInstitutes = new ArrayList<String>();
+			User user = createUser(request);
+			if (user != null) {
+				ua.createUser(user);
 				try {
-					// Extrahiere Integer Werte um das Rechte boolean[] zu setzten
-					for (char c : splitetRights) {
-						int tmp = Character.getNumericValue(c);
-						finalRights[tmp] = true;
-						System.out.println("(SaveUser.java):RechtNr. "+tmp);
-					}
-					// Mapping: Integer <=> Institut
-					for (char c : splitetInstitutes) {
-						int tmp = Character.getNumericValue(c);
-						finalInstitutes.add(rootInstitutes.get(tmp));
-						System.out.println("(SaveUser.java.70): add: "+rootInstitutes.get(tmp));
-					}
-				} catch(ArrayIndexOutOfBoundsException e) {
-					System.out.println("(SaveUser.java): Failed to parseInt(string).");
-				}
-				// Der Benutzer mit den erhaltenen Attributen kann erzeugt werden
-				User user = new User(names[0],names[1],names[2],names[3],finalRights,finalInstitutes,"");
-				System.out.println("create user "+user.toString());
-				if(!finalInstitutes.isEmpty()){
-					ua.createUser(user);
-					try{
-						ua.sendNewPasswordLink(names[3]);
-						session.removeAttribute("emptyInputs");
-						session.setAttribute("content", "editUser");
-						System.out.println("User successfully transmitted to UserAdministration!");
-					} catch(Exception e) {
-						e.printStackTrace();
-						session.setAttribute("errormessage", "Failed to send new password link!");
-						System.out.println("(SaveUser.java.94): failed to sendNewPasswordLink to email: "+names[3]);
-					} finally {
-						response.sendRedirect("/SopraMMS/LoadUser");
-					}
-				} else {
-					System.out.println("there was an error converting institutes");
+					ua.sendNewPasswordLink(user.getMail());
+					session.removeAttribute("emptyInputs");
+					session.setAttribute("content", "editUser");
+					System.out.println("User successfully transmitted to UserAdministration!");
+				} catch (Exception e) {
+					e.printStackTrace();
+					session.setAttribute("errormessage",
+							"Failed to send new password link!");
+					System.out.println("(SaveUser.java.94): failed to sendNewPasswordLink to email: "
+									+ user.getMail());
+				} finally {
+					response.sendRedirect("/SopraMMS/LoadUser");
 				}
 			} else {
 				// Ein oder mehrere Felder waren nicht gefuellt
@@ -112,10 +72,59 @@ public class SaveUser extends SessionCheck {
 		}
 	}
 
+	protected User createUser(HttpServletRequest request) {
+		List<String> rootInstitutes = ua.getAllInstitutesByName();
+		// Die Liste wird ggf. mit den Feldnamen leeren Feldern gefuellt
+		String[] names = new String[6];
+		String[] paras = {"loginCellText","firstnameCellText","lastnameCellText","emailCellText","rightsSelect","instituteSelect"};
+		//prueft Request Paramater auf null Werte und fuellt entsprechend die 'emptyInputs' Liste
+		for (int i = 0; i < paras.length; i++) {
+			names[i] = request.getParameter(paras[i]);
+			if(names[i].equals(null)||names[i] == "") {
+				this.emptyInputs.add(paras[i]);
+			} else {
+				String[] tmp = {paras[i],names[i]};
+				this.notEmptyInputs.add(tmp);
+			}
+		}		
+		// Die erhaltenen Institute und Rechte stehen in einem String gespeichert
+		// dieser wird hier getrennt und entsprechend Institute und Rechte extrahiert
+		if(this.emptyInputs.isEmpty()) {
+			char[] splitetInstitutes = names[5].toCharArray();
+			char[] splitetRights = names[4].toCharArray();
+			boolean[] finalRights = {false,false,false,false,false};
+			List<String> finalInstitutes = new ArrayList<String>();
+			try {
+				// Extrahiere Integer Werte um das Rechte boolean[] zu setzten
+				for (char c : splitetRights) {
+					int tmp = Character.getNumericValue(c);
+					finalRights[tmp] = true;
+					System.out.println("(SaveUser.java):RechtNr. "+tmp);
+				}
+				// Mapping: Integer <=> Institut
+				for (char c : splitetInstitutes) {
+					int tmp = Character.getNumericValue(c);
+					finalInstitutes.add(rootInstitutes.get(tmp));
+					System.out.println("(SaveUser.java.70): add: "+rootInstitutes.get(tmp));
+				}
+			} catch(ArrayIndexOutOfBoundsException e) {
+				System.out.println("(SaveUser.java): Failed to parseInt(string).");
+			}
+			// Der Benutzer mit den erhaltenen Attributen kann erzeugt werden
+			User user = new User(names[0],names[1],names[2],names[3],finalRights,finalInstitutes,"");
+			System.out.println("create user "+user.toString());
+			return user;
+		} else {
+			return null;
+		}
+	}
+
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost "+request.getParameter("rights"));
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("doPost " + request.getParameter("rights"));
 	}
 }

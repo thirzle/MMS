@@ -155,7 +155,7 @@ if(emptyInputs != null) {
 		<tr>
 			<td></td>
 			<td>
-				<form id="newUserForm" onsubmit="setValues()"action="/SopraMMS/SaveUser" method="get">
+				<form id="newUserForm" onsubmit="checkValues()"action="/SopraMMS/SaveUser" method="get">
 					<input type="submit" name="Submit" id="saveButton" style="float: right;" value="Speichern"/>
 					<textarea name="rightsSelect" style="display:none;" id="rightsLabel"></textarea>
 					<textarea name="instituteSelect" style="display:none;" id="instituteLabel"></textarea>

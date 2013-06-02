@@ -6,7 +6,7 @@ function loadDataIntoForm() {
 	$("#emailCellText").val($("#tmpEmail").html());
 }
 
-function setValues() {
+function checkValues() {
 	var instituteSelectselectedIndex = $('#instituteSelect').multipleSelect('getSelects');
 	var rightsSelectselectedIndex = $('#rightsSelect').multipleSelect('getSelects');
 	var instituteLabel = $("#instituteLabel");
