@@ -31,7 +31,8 @@ public class LogicTest {
 		System.out.println("Test ended...");
 	}
 
-
+	//TODO:
+	//connection.getModuleManualbyCourse("inf", "Bachelor", "sose2015");
 	private static void module_load_test() {
 		System.out.println("###########################################");
 		System.out.println("# Logic Test # 1");
