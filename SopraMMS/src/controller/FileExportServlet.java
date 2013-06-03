@@ -6,21 +6,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import user.UserAdministration;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import javax.servlet.annotation.WebInitParam;
 
 /**
- * Servlet implementation class SendNewPassword
+ * Servlet implementation class FileExportServlet
  */
-@WebServlet("/SendNewPassword")
-public class SendNewPassword extends HttpServlet {
+@WebServlet(urlPatterns = { "/fileExportServlet" }, initParams = { @WebInitParam(name = "exportFolder", value = "P:/Team7_12/TestPDF/", description = "Folder with files to export") })
+public class FileExportServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public SendNewPassword() {
+	public FileExportServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -29,19 +31,19 @@ public class SendNewPassword extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		String email = request.getParameter("email");
-		UserAdministration ua = new UserAdministration();
-		try {
-			ua.sendNewPasswordLink(email);
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendRedirect("SopraMMS/guiElements/error.jsp");
+		response.setContentType("application/pdf");
+		String exportFolder = this.getInitParameter("exportFolder");
+		String exportFile = request.getParameter("filename");
+		FileInputStream fi = new FileInputStream(new File(exportFolder
+				+ exportFile));
+		int bytesRead = 0;
+		byte[] buffer = new byte[1024];
+		while ((bytesRead = (fi.read(buffer))) > 0) {
+			response.getOutputStream().write(buffer, 0, bytesRead);
 		}
-		session.setAttribute("content", "start");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
 	/**

@@ -75,7 +75,7 @@ public class LogicTest {
 		//CREATE ULTRA HUGE MODULE to TEST PDF CREATION....
 
 		Module test_module = new Module(1337, "Analysis I für Ingenieure und Informatiker", new Date(),
-				new Date(), false, "Institut007", "Subject007");
+				new Date(), false, "Institut007", "Subject007", "Author");
 		
 		
 		
@@ -268,11 +268,18 @@ public class LogicTest {
 		LinkedList<Module> module_list = new LinkedList<Module>();
 		module_list.add(test_module);
 		module_list.add(test_module);
+		module_list.add(test_module);
+		module_list.add(test_module);
+		module_list.add(test_module);
+		module_list.add(test_module);
+		module_list.add(test_module);
+
 
 
 		SimplePdfCreator pdfcreator = new SimplePdfCreator();
 		try {
-			pdfcreator.createModulePdf("C:/PDFBox_test/module.pdf", module_list);
+			pdfcreator.createModulePdf("C:/PDFBox_test/module.pdf", module_list, "Medieninformatik", "Eine Fakult\u00E4t", "Bachelor",
+				"FSPO 2012", "gestern xD", "ich", "Sommersemester 2013", 9000);
 		} catch (COSVisitorException | IOException e) {
 			System.out.println("Error in PDF creation, check if the path exists and / or the file isn't open...");
 			System.exit(-1);

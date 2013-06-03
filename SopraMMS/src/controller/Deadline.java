@@ -28,7 +28,7 @@ public class Deadline extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		session.setAttribute("content", "deadline");
+		session.setAttribute("content", "newDeadline");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 

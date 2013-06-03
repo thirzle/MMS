@@ -40,20 +40,20 @@ public class ChangePassword extends HttpServlet {
 		request.getSession().setAttribute("generallyMenu", "open");
 		if (!newPassword1.equals(newPassword2)) {
 			request.getSession().setAttribute("content",
-					"changedPwStatusPw12Wrong");
+					"changedPw");
 
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?changePwStatus=changedPwStatusPw12Wrong");
 		} else {
 			User user = (User) (request.getSession().getAttribute("user"));
 			if (ua.checkPassword(user.getLogin(), oldPassword.hashCode()+"")) {
 				ua.changePassword(user, newPassword1.hashCode()+"");
 				request.getSession().setAttribute("content",
-						"changedPwStatusdone");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+						"changedPw");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?changePwStatus=changedPwStatusdone");
 			} else {
 				request.getSession().setAttribute("content",
-						"changedPwStatusOldPwWrong");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+						"changedPw");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?changePwStatus=changedPwStatusOldPwWrong");
 			}
 		}
 

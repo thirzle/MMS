@@ -14,16 +14,21 @@ import model.UserDBController;
 import user.User;
 
 /**
- * Servlet implementation class DeleteUser
+ * Servlet implementation class EditUser
  */
-@WebServlet("/DeleteUser")
-public class DeleteUser extends SessionCheck implements Servlet {
-	private static final long serialVersionUID = 1L;
+@WebServlet("/LoadTable")
+public class LoadTable extends SessionCheck implements Servlet {
+	
        
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8802119366159398073L;
+
+	/**
      * @see SessionCheck#SessionCheck()
      */
-    public DeleteUser() {
+    public LoadTable() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,8 +37,12 @@ public class DeleteUser extends SessionCheck implements Servlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	System.out.println("(DeleteUser.java): //TODO");
-		response.sendRedirect("/SopraMMS/LoadTable");
+    	HttpSession session = request.getSession();	
+		UserDBController controller = new UserDBController();
+		List<User> users = controller.getAllUsers();
+		session.setAttribute("users", users);
+		session.setAttribute("content", "loadTable");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
 	/**

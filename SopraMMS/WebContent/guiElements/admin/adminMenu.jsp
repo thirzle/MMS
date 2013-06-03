@@ -1,8 +1,11 @@
 <script>
 $(document).ready(function() {
 		$("#addNews").click(function(e) {
-		$(".contentBox").load("/SopraMMS/guiElements/admin/creatNews.jsp");
+		$(".contentBox").load("/SopraMMS/guiElements/admin/createNews.jsp");
 		});
+		$("#showNews").click(function(e) {
+			$(".contentBox").load("/SopraMMS/guiElements/admin/showNews.jsp");
+			});
 });
 </script>
 
@@ -18,7 +21,7 @@ $(document).ready(function() {
 			<ul class="subNav">
 				<li id="newUser"><a href="/SopraMMS/NewUser">Neuer
 						Benutzer</a></li>
-				<li id="editUser"><a href="/SopraMMS/EditUser">Benutzer
+				<li id="editUser"><a href="/SopraMMS/LoadTable">Benutzer
 						bearbeiten</a></li>
 				<li id="deleteUser"><a href="/SopraMMS/DeleteUser">Benutzer
 						löschen</a></li>
@@ -30,7 +33,7 @@ $(document).ready(function() {
 		</div>
 		<div class="expandAdminNews">
 			<ul class="subNav">
-				<li id="showNews"><a href="/SopraMMS/ShowNews">&Uuml;bersicht Neuigkeiten</a></li>
+				<li id="showNews">&Uuml;bersicht Neuigkeiten</li>
 				<li id="addNews">Neuigkeit verfassen</li>
 			</ul>
 		</div>

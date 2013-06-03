@@ -1,29 +1,27 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import model.UserDBController;
-import user.User;
+import user.UserAdministration;
 
 /**
- * Servlet implementation class DeleteUser
+ * Servlet implementation class DeleteNews
  */
-@WebServlet("/DeleteUser")
-public class DeleteUser extends SessionCheck implements Servlet {
+@WebServlet("/DeleteNews")
+public class DeleteNews extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
-     * @see SessionCheck#SessionCheck()
+     * @see HttpServlet#HttpServlet()
      */
-    public DeleteUser() {
+    public DeleteNews() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,8 +30,21 @@ public class DeleteUser extends SessionCheck implements Servlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	System.out.println("(DeleteUser.java): //TODO");
-		response.sendRedirect("/SopraMMS/LoadTable");
+		UserAdministration ua = new UserAdministration();
+		ArrayList<String> deleted = new ArrayList<>();
+		int number = ua.numberOfNews();
+		for (int i = 0; i < number; i++) {
+			if(request.getParameter("delete"+i)!=null)
+			{
+				deleted.add(request.getParameter("delete"+i));
+			}
+		}
+		
+		for (String title : deleted) {
+			ua.deleteNews(title);
+		}
+		request.getSession().setAttribute("content", "showNews");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
 	/**

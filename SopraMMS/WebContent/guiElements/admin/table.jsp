@@ -1,6 +1,4 @@
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css" type="text/css"
-	media="print, projection, screen" />
+<link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
 	
 <%@ page import="model.UserDBController"%>
 <%@ page import="java.util.List"%>
@@ -12,9 +10,12 @@
 	    users = (List<User>) session.getAttribute("users");
 		String[] status = {"Modulver.","Redakteur","Administrator","Recht auf Stellv.","Dezernat II","right[5]"};
 %>
+<form name="editUserForm" action="/SopraMMS/EditUser" method="get">
+
 <table id="userTable" class="tablesorter">
 	<thead>
 		<tr>
+			<th></th>
 			<th>Benutzername</th>
 			<th>Vorname</th>
 			<th>Nachname</th>
@@ -29,6 +30,7 @@
 			for(int i=0; i<users.size();i++) {
 		%>
 		<tr>
+			<td><input type="radio" name="selectedRowID" value='<%=users.get(i).getLogin() %>'/></td>
 			<td><%=users.get(i).getLogin()%></td>
 			<td><%=users.get(i).getFirstName()%></td>
 			<td><%=users.get(i).getLastName()%></td>
@@ -65,16 +67,12 @@
 		%>
 	</tbody>
 </table>
+	<input type="submit" value="Bearbeiten"/>
+</form>
+<%if(session.getAttribute("errormessage") != null) { %>
+	<p style="color: #FF0000"><%= session.getAttribute("errormessage") %></p>
+<%} %>
 
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/jquery-latest.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/jquery.tablesorter.js"></script>
-<script type="text/javascript">
-	$(function() {
-		$("#userTable").tablesorter({
-			sortList : [ [ 0, 0 ], [ 2, 1 ] ],
-			widgets : [ 'zebra' ]
-		});
-	});
-</script>
+
+<script type="text/javascript" src="/SopraMMS/js/jquery.usertable.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>

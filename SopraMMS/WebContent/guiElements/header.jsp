@@ -3,13 +3,13 @@
 <script>
 $(document).ready(function(){
 	$(".start").click(function() {
-		window.location.replace("adminHome.jsp");
+		window.location.replace("home.jsp?home=true");
 	});
 });
 </script>
-<a href="/SopraMMS/guiElements/home.jsp"><img src="${pageContext.request.contextPath}/images/textHeader.bmp" alt="Logo" align="left"></a>
+<a href="/SopraMMS/guiElements/home.jsp?home=true"><img src="${pageContext.request.contextPath}/images/textHeader.bmp" alt="Logo" align="left"></a>
 <img src="${pageContext.request.contextPath}/images/imgHeader.bmp" alt="Logo" align="right">
 <br>
 <div class="headerNavigation" id="navigation">
-	<navigation class="start">Startseite</navigation>
+	<span class="start"><navigation>Startseite</navigation></span>
 </div>

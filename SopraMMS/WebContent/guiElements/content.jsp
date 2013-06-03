@@ -2,7 +2,7 @@
 <%
 	String contentPage;
 	Object user = session.getAttribute("user");
-	if (session.getAttribute("content") == null) {
+	if (session.getAttribute("content") == null || request.getParameter("home")!=null) {
 		contentPage = "start";
 		if (request.getParameter("contentPdf") != null) {
 			contentPage = "contentPdf";
@@ -16,19 +16,17 @@
 %>
 <jsp:include page="/guiElements/frontend/frontendContent.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("contentPdf")) {
-%>
-<jsp:include page="/guiElements/frontend/courseModuleManuals.jsp"></jsp:include>
-<%
 	} else if (contentPage.equals("createNewPassword")
 			|| contentPage.equals("ceateNewPwNotEqual")
 			|| contentPage.equals("ceateNewPwDone")) {
 %>
 <jsp:include page="/guiElements/Login/createNewPassword.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("changedPwStatusPw12Wrong")
-			|| contentPage.equals("changedPwStatusOldPwWrong")
-			|| contentPage.equals("changedPwStatusdone")) {
+	} else if (contentPage.equals("contentPdf")) {
+%>
+<jsp:include page="/guiElements/frontend/courseModuleManuals.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("changedPw")) {
 %>
 <jsp:include page="/guiElements/generally/changePassword.jsp"></jsp:include>
 <%
@@ -56,7 +54,7 @@
 %>
 <jsp:include page="/guiElements/generally/createdRepresentative.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("editUser")) {
+	} else if (contentPage.equals("loadTable")) {
 %>
 <jsp:include page="/guiElements/admin/userManagementContent.jsp"></jsp:include>
 <%
@@ -72,9 +70,25 @@
 %>
 <jsp:include page="/guiElements/admin/generatePDF.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("deadline")) {
+	} else if (contentPage.equals("newDeadline")) {
 %>
-<jsp:include page="/guiElements/admin/deadline.jsp"></jsp:include>
+<jsp:include page="/guiElements/admin/newDeadline.jsp"></jsp:include>
 <%
-	} 
+	} else if (contentPage.equals("showDeadline")) {
+%>
+<jsp:include page="/guiElements/admin/showDeadline.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("editUser")) {
+%>
+<jsp:include page="/guiElements/admin/editUser.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("createNews")) {
+%>
+<jsp:include page="/guiElements/admin/createNews.jsp"></jsp:include>
+<%
+	}else if (contentPage.equals("showNews")) {
+%>
+<jsp:include page="/guiElements/admin/showNews.jsp"></jsp:include>
+<%
+			}
 %>

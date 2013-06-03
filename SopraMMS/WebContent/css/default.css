@@ -99,17 +99,21 @@ body {
 	padding-left: 10px;
 }
 
+.contentTextBox {
+	width: 520px;
+}
+
 .contentBox a {
 	color: #1E6289;
 	text-decoration: underline;
 }
 
-.contentBox error{
+.contentBox error {
 	font-weight: normal;
 	color: #a52a2a;
 }
 
-.contentBoxDate{
+.contentBoxDate {
 	padding-right: 280px;
 	text-align: right;
 	font-weight: lighter;
@@ -125,7 +129,7 @@ body {
 	background-color: #FFEEEE;
 }
 
-.pdfModuleManualBox li{
+.pdfModuleManualBox li {
 	color: black;
 	width: 400px;
 	padding: 2px 15px 2px 10px;
@@ -133,18 +137,15 @@ body {
 	cursor: pointer;
 }
 
-.pdfModuleManualBox a{
+.pdfModuleManualBox a {
 	text-decoration: none;
 }
 
-.pdfModuleManualBox li:HOVER{
-		border-top: 1px dotted #CCCCDD;
+.pdfModuleManualBox li:HOVER {
+	border-top: 1px dotted #CCCCDD;
 	border-bottom: 1px dotted #CCCCDD;
 	font-weight: bold;
-
-	
 }
-
 
 /*--------------*/
 /*----Footer----*/
@@ -156,7 +157,7 @@ body {
 	padding: 5px 0 0 0;
 }
 
-.footer navigation {
+.impressum {
 	text-align: left;
 	font-size: 10pt;
 	color: #FFFFFF;
@@ -187,11 +188,11 @@ body {
 	margin-top: 0px;
 }
 
-.menuBox li{
+.menuBox li {
 	padding-bottom: 5px;
 }
 
-.menuBox a{
+.menuBox a {
 	color: black;
 	text-decoration: none;
 }
@@ -205,7 +206,9 @@ body {
 	color: #a52a2a;
 }
 
-.loginFailed a{text-decoration: underline; }
+.loginFailed a {
+	text-decoration: underline;
+}
 
 /*---- Menu Structure ----*/
 .nav {
@@ -213,16 +216,22 @@ body {
 }
 
 .nav li:hover {
-	cursor: default;
+	cursor: pointer;
+	font-weight: normal;
 }
 
 .subNav li {
 	list-style-image: url(../images/bullet2.bmp);
 }
 
-.subNav li:hover {
-	font-weight: bold;
+.subNav a:hover {
 	cursor: pointer;
+	font-weight: bold;
+}
+
+.subNav li:hover {
+	cursor: pointer;
+	font-weight: bold;
 }
 
 .nav ul {
@@ -230,9 +239,8 @@ body {
 	padding: 5px 0 0 20px;
 }
 
-.headerNavGenerally,.headerNavCourse,.headerNavAdministration,.headerNavModul,.errorNav,  li
+.headerNavGenerally,.headerNavCourse,.headerNavAdministration,.headerNavModul,.errorNav,li
 	{
-	cursor: pointer;
 	list-style-image: url(../images/bullet1.bmp);
 }
 
@@ -250,26 +258,22 @@ body {
 
 .inputField {
 	display: block;
-    height: 26px;
-    padding: 0 0 0 8px;
-    overflow: hidden;
-    position: relative;
-    
+	height: 26px;
+	padding: 0 0 0 8px;
+	overflow: hidden;
+	position: relative;
 	font-family: Lucida Grande, Verdana, Arial, Sans-Serif;
 	font-size: 10pt;
-	
-    cursor: pointer;
-    border: 1px solid #aaa;
-    white-space: nowrap;
-    line-height: 26px;
-    color: #444;
-    text-decoration: none;
-
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
-
-    background-color: #fff;
+	cursor: pointer;
+	border: 1px solid #aaa;
+	white-space: nowrap;
+	line-height: 26px;
+	color: #444;
+	text-decoration: none;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	background-color: #fff;
 }
 
 .userManagementEntry {
@@ -324,9 +328,8 @@ body {
 	float: left;
 }
 
-
-/*---------------*/
-/*---- Table ----*/
+/*--------------------------------*/
+/*---- Table - UserManagement ----*/
 .tableClass {
 	width: 50%;
 	border: 1;
@@ -337,11 +340,26 @@ body {
 	width: 10px;
 }
 
+/*--------------------------*/
+/*---- Table - ShowNews ----*/
+.showNewsTable h2,h3,a,p {
+	display: inline;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 10pt;
+	color: black;
+}
+
+.showNewsTable th {
+	text-align: left;
+	padding: 0px 20px 10px 0px;
+}
+
 /*---- Message ----*/
 .messageManagementEntry {
 	font-size: 8pt;
 	margin-left: 5%;
-	margin-top: 5%; 
+	margin-top: 5%;
 	margin-bottom: 0px;
 	background-color: #FFFFFF;
 }

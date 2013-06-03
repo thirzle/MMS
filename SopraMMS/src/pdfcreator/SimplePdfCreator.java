@@ -1,5 +1,7 @@
 package pdfcreator;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.apache.pdfbox.exceptions.COSVisitorException;
@@ -13,6 +15,9 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import management.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,6 +47,17 @@ public class SimplePdfCreator {
     public SimplePdfCreator() {
 	super();
     }
+    
+    private String get_current_time() {
+	Date current_date = new Date();
+	SimpleDateFormat time_format = new SimpleDateFormat("E yyyy.MM.dd 'um' hh:mm:ss a zzz");
+	// with date:
+	// SimpleDateFormat date_and_time_format = new SimpleDateFormat
+	// ("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
+
+	// returning current time:
+	return time_format.format(current_date);
+}
 
     private LinkedList<String> divide_string(String string, float max_size, PDFont font, int font_size) {
 	LinkedList<String> string_list = new LinkedList<String>();
@@ -94,26 +110,79 @@ public class SimplePdfCreator {
 	return string_list;
     }
 
-    // TODO: Some data needs to be laoded first from somewhere ...
-    // no data no titlepage :D
-    private PDPage createTitlePage(PDDocument doc) throws IOException, COSVisitorException {
+
+    private PDPage createTitlePage(PDDocument doc, String institute, String faculty, String degree, String po,
+	    String last_modification_date, String last_author, String semester, int version) throws IOException, COSVisitorException {
 	// load data and create a title page...
 
 	// temporary first page... needs more content...
 	PDPage title_page = new PDPage();
 
 	PDPageContentStream contentStream = new PDPageContentStream(doc, title_page);
+	
 	contentStream.beginText();
-	contentStream.setFont(font_bold, font_size_title);
-
-	String title = "Title...";
-	float title_width = font_bold.getStringWidth(title) / 1000 * font_size_title;
-	float title_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_title;
-
-	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - title_width) / 2, (title_page.getMediaBox().getHeight() - title_height) / 2 + 100);
-	contentStream.drawString(title);
+	contentStream.setFont(font_bold, font_size_content);
+	String string = "Modulhandbuch";
+	float string_width = font_bold.getStringWidth(string) / 1000 * font_size_content;
+	float string_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_content;
+	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 290);
+	contentStream.drawString(string);
 	contentStream.endText();
 	contentStream.close();
+	
+	contentStream.beginText();
+	contentStream.setFont(font_bold, font_size_title);
+	string = degree+"studiengang";
+	string_width = font_bold.getStringWidth(string) / 1000 * font_size_title;
+	string_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_title;
+	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 200);
+	contentStream.drawString(string);
+	contentStream.endText();
+	contentStream.close();
+	
+	contentStream.beginText();
+	contentStream.setFont(font_bold, font_size_title);
+	string = institute;
+	string_width = font_bold.getStringWidth(string) / 1000 * font_size_title;
+	string_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_title;
+	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 170);
+	contentStream.drawString(string);
+	contentStream.endText();
+	contentStream.close();
+	
+	contentStream.beginText();
+	contentStream.setFont(font_bold, font_size_title);
+	string = "(" + po + ")";
+	string_width = font_bold.getStringWidth(string) / 1000 * font_size_title;
+	string_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_title;
+	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 140);
+	contentStream.drawString(string);
+	contentStream.endText();
+	contentStream.close();
+	
+	//TODO:
+	//parse faculty into several strings if too big....
+	contentStream.beginText();
+	contentStream.setFont(font_bold, font_size_content);
+	string = faculty;
+	contentStream.moveTextPositionByAmount(title_page.getMediaBox().getWidth() - page_offset_top - 100, title_page.getMediaBox().getHeight() - page_offset_top - 20);
+	contentStream.drawString(string);
+	contentStream.endText();
+	contentStream.close();
+	
+	
+	
+	
+	contentStream.beginText();
+	contentStream.setFont(font_normal, font_size_content);
+	string = "Basierend auf Rev. " + version + ". Letzte Änderung am " + last_modification_date + " durch " + last_author + ". Generiert am " + get_current_time() + ".";
+	string_width = font_normal.getStringWidth(string) / 1000 * font_size_content;
+	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, page_offset_bottom);
+	contentStream.drawString(string);
+	contentStream.endText();
+	contentStream.close();
+	
+
 
 	return title_page;
     }
@@ -134,7 +203,7 @@ public class SimplePdfCreator {
 	float title_width = font_bold.getStringWidth(module.getName()) / 1000 * font_size_title;
 	float title_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_title;
 
-	module_contentStream.moveTextPositionByAmount((page.getMediaBox().getWidth() - title_width) / 2, (page.getMediaBox().getHeight() - title_height) - 50);
+	module_contentStream.moveTextPositionByAmount((page.getMediaBox().getWidth() - title_width) / 2, (page.getMediaBox().getHeight() - title_height) - page_offset_top);
 	module_contentStream.drawString(module.getName());
 	module_contentStream.endText();
 	module_contentStream.close();
@@ -353,6 +422,31 @@ public class SimplePdfCreator {
 	pages.add(page);
 
 	PDPageContentStream module_contentStream = new PDPageContentStream(doc, page);
+	
+	// set curser to content pos...
+	int x = page_offset_left;
+	int y = (int) page.getMediaBox().getHeight() - page_offset_top - content_offset_after_title;
+	
+	//pre calculate the page amount used by index pages:
+	
+	// 3 is the first content page inf index pages count is 1... 
+	int page_offset = 3;
+	
+	for (int j = 0; j < index_page_content_list.size(); j++) {
+
+	    
+	    y -= space_between_content;
+	        
+	    // next line
+
+	    // new page...
+	    if (y < page_offset_bottom) {
+		page_offset += 1;
+		y = (int) page.getMediaBox().getHeight() - page_offset_top;
+	    }
+	}
+	
+	System.out.println("content_page_offset:  " + page_offset);
 
 	// Index Title
 	String index_title = "Inhaltsverzeichnis";
@@ -363,26 +457,20 @@ public class SimplePdfCreator {
 	float title_width = font_bold.getStringWidth(index_title) / 1000 * font_size_title;
 	float title_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_title;
 
-	module_contentStream.moveTextPositionByAmount((page.getMediaBox().getWidth() - title_width) / 2, (page.getMediaBox().getHeight() - title_height) - 50);
+	module_contentStream.moveTextPositionByAmount((page.getMediaBox().getWidth() - title_width) / 2, (page.getMediaBox().getHeight() - title_height) - page_offset_top);
 	module_contentStream.drawString(index_title);
 	module_contentStream.endText();
 	module_contentStream.close();
 
 	// set curser to content pos...
-	int x = page_offset_left;
-	int y = (int) page.getMediaBox().getHeight() - page_offset_top - content_offset_after_title;
+	x = page_offset_left;
+	y = (int) page.getMediaBox().getHeight() - page_offset_top - content_offset_after_title;
+	
 
-	// TODO: temporary offset, needs to be calculates
-	// is used to the page number on which site which module is located
-	
-	//precalculate the entire index page height to get site count ...
-	//add site count to page_offset and done...
-	
-	int page_offset = 3;
 
 	for (int j = 0; j < index_page_content_list.size(); j++) {
 
-	    page_offset += Integer.parseInt(index_page_content_number_list.get(j));
+	    
 	    
 	    // TITLE FIRST...
 	    x = page_offset_left;
@@ -399,7 +487,7 @@ public class SimplePdfCreator {
 	    module_contentStream.beginText();
 	    module_contentStream.setFont(font_normal, font_size_content);
 	    module_contentStream.moveTextPositionByAmount(x, y);
-	    module_contentStream.drawString(page_offset + "");
+	    module_contentStream.drawString((page_offset + Integer.parseInt(index_page_content_number_list.get(j))) + "");
 	    module_contentStream.endText();
 	    module_contentStream.close();
 	    y -= space_between_content;
@@ -419,8 +507,10 @@ public class SimplePdfCreator {
 	}
 	return pages;
     }
-
-    public void createModulePdf(String file, List<Module> module_list) throws IOException, COSVisitorException {
+//TODO institute ist eine Liste
+//TODO version ist String
+    public void createModulePdf(String file, List<Module> module_list, String institute, String faculty, String degree, String po,
+	    String last_modification_date, String last_author, String semester, int version) throws IOException, COSVisitorException {
 	// the document
 	PDDocument doc = null;
 
@@ -436,7 +526,8 @@ public class SimplePdfCreator {
 	    doc = new PDDocument();
 
 	    // FIRST PAGE
-	    title_page = createTitlePage(doc);
+	    title_page = createTitlePage(doc, institute, faculty, degree, po,
+		    last_modification_date, last_author, semester, version);
 
 	    // Content Pages
 	    System.out.println("> module_list size:  " + module_list.size());
@@ -448,6 +539,8 @@ public class SimplePdfCreator {
 		
 		index_page_content_list.add(module_list.get(i).getName());
 		index_page_content_number_list.add(content_page_count + "");
+		
+		System.out.println("page_count:  " + content_page_count);
 
 		LinkedList<PDPage> module_pages = createModulePages(doc, module_list.get(i));
 		for (int j = 0; j < module_pages.size(); j++) {
@@ -456,8 +549,6 @@ public class SimplePdfCreator {
 		content_page_count += module_pages.size();
 	    }
 
-	    // Index Pages
-
 	    // add pages to document...
 
 	    // title page...
@@ -465,19 +556,49 @@ public class SimplePdfCreator {
 
 	    // index pages...
 	    index_page_list = createIndexPages(doc, index_page_content_list, index_page_content_number_list);
+	    
+	    
+	    //add numbers to the pages...
+	    //add pages to document...
+	    
+	    int page_number = 1;
+	    
+	    //index pages
 	    for (int i = 0; i < index_page_list.size(); i++) {
+		PDPageContentStream page_number_contentStream = new PDPageContentStream(doc, index_page_list.get(i), true, true);
+		page_number_contentStream.beginText();
+		page_number_contentStream.setFont(font_normal, font_size_content);
+		page_number_contentStream.moveTextPositionByAmount(	index_page_list.get(i).getMediaBox().getWidth() - page_offset_right,
+									page_offset_bottom / 2);
+		page_number_contentStream.drawString(page_number + "");
+		page_number_contentStream.endText();
+		page_number_contentStream.close();
+		
 		doc.addPage(index_page_list.get(i));
+		page_number ++;
 	    }
 
 	    // content pages...
 	    for (int i = 0; i < content_page_list.size(); i++) {
+		PDPageContentStream page_number_contentStream = new PDPageContentStream(doc, content_page_list.get(i), true, true);
+		page_number_contentStream.beginText();
+		page_number_contentStream.setFont(font_normal, font_size_content);
+		page_number_contentStream.moveTextPositionByAmount(	content_page_list.get(i).getMediaBox().getWidth() - page_offset_right,
+									page_offset_bottom / 2);
+		page_number_contentStream.drawString(page_number + "");
+		page_number_contentStream.endText();
+		page_number_contentStream.close();
+			
 		doc.addPage(content_page_list.get(i));
+		page_number ++;
 	    }
 
-	    doc.save(file);
+	    FileOutputStream foFileOutputStream = new FileOutputStream(new File(file));
+	    doc.save(foFileOutputStream);
 	} finally {
 	    if (doc != null) {
 		doc.close();
+		System.out.println("fertsch");
 	    }
 	}
     }

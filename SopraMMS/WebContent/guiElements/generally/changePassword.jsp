@@ -1,5 +1,7 @@
 <%@page import="user.User"%>
-
+<%
+	session.setAttribute("content", "changedPw");
+%>
 
 <h1>Passwort &auml;ndern</h1>
 <p>
@@ -12,9 +14,7 @@
 %>
 </p>
 <%
-	
-	String content = session.getAttribute("content") + "";
-	session.setAttribute("content", null);
+	String content = request.getParameter("changePWStatus") + "";
 	if (content.equals("changedPwStatusOldPwWrong")) {
 %>
 <p>
@@ -52,7 +52,8 @@
 			<td><input name="newPassword2" type="password" size="30"
 				maxlength="40"></td>
 		</tr>
-		
-	</table><input type="submit" name="Submit"
-				value="Passwort &Auml;ndern" class="btnChangePw" />
+
+	</table>
+	<input type="submit" name="Submit" value="Passwort &Auml;ndern"
+		class="btnChangePw" />
 </form>
