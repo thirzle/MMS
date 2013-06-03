@@ -81,7 +81,7 @@ if(emptyInputs != null) {
 		</tr>
 		<tr>
 			<td>Email:</td>
-			<td><input class="inputField" form="newUserForm" type='text' id="emailCellText" name="emailCellText" style="width: 270px"/></td>
+			<td><input class="inputField" form="newUserForm" type='email' id="emailCellText" name="emailCellText" style="width: 270px"/></td>
 			<td>
 			<%
 			if(empty_emailCellText) {
@@ -141,8 +141,8 @@ if(emptyInputs != null) {
 		<tr>
 			<td></td>
 			<td>
-				<form id="newUserForm" onsubmit="checkValues()"action="/SopraMMS/SaveUser" method="get">
-					<input type="submit" name="Submit" id="saveButton" style="float: right;" value="Speichern"/>
+				<form id="newUserForm" action="/SopraMMS/SaveUser" method="get">
+					<input type="submit" name="Submit" id="saveButton" style="float: right;" value="Speichern" disabled/>
 					<textarea name="rightsSelect" style="display:none;" id="rightsLabel"></textarea>
 					<textarea name="instituteSelect" style="display:none;" id="instituteLabel"></textarea>
 				</form>

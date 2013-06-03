@@ -1,10 +1,16 @@
+var loginnameInput = $("#loginCellText");
+var firstnameInput = $("#firstnameCellText");
+var lastnameInput = $("#lastnameCellText");
+var emailInput = $("#emailCellText");
+var instituteSelect = $('#instituteSelect');
+var rightsSelect = $('#rightsSelect');
+var body = $("body");
 
-function loadDataIntoForm() {
-	$("#loginCellText").val($("#tmpLoginname").html());
-	$("#firstnameCellText").val($("#tmpFirstname").html());
-	$("#lastnameCellText").val($("#tmpLastname").html());
-	$("#emailCellText").val($("#tmpEmail").html());
-}
+var firstname = false;
+var lastname = false;
+var email = false;
+var rights = false;
+var institutes = false;
 
 function checkValues() {
 	var instituteSelectselectedIndex = $('#instituteSelect').multipleSelect('getSelects');
@@ -21,34 +27,36 @@ function initMultiSelect() {
 	$("#instituteSelect").multipleSelect(); 
 }
 
-function convertToArray(string) {
-	var tmp = new Array();
-	if(string != null) {
-		string = string.trim();
-		for ( var i = 0; i < string.length; i++) {
-			tmp[i] = string.charAt(i);
-		}
-	}
-	return tmp;
-}
-
-function loadDataIntoMultiSelect() {
-	var rightsText = $("#rightsSelectText").html();
-	var instituteText = $("#instituteSelectText").html();
-	var indexOfRights = convertToArray(rightsText);
-	var indexOfInstitutes = convertToArray(instituteText);
-	$('#rightsSelect').multipleSelect('setSelects', indexOfRights);
-	$('#instituteSelect').multipleSelect('setSelects', indexOfInstitutes);
-}
-
-function generateLoginname() {
-	var loginnameInput = $("#loginCellText");
-	var firstnameInput = $("#firstnameCellText");
-	var lastnameInput = $("#lastnameCellText");
-	
+function generateLoginname() {	
 	var string = lastnameInput.val().toLowerCase();
 	var string2 = firstnameInput.val().toLowerCase().charAt(0);
 	var generatedString = string + string2;
 	loginnameInput.val("");
 	loginnameInput.val(generatedString);
+	setBooleans();
+}
+
+body.click(function() {
+	setBooleans();
+});
+
+function setBooleans() {
+	firstname = firstnameInput.val().trim() == "";
+	lastname = lastnameInput.val().trim() == "";
+	email = emailInput.val().trim() == "";
+	rights = rightsSelect.multipleSelect('getSelects')+"" == "";
+	institutes = instituteSelect.multipleSelect('getSelects')+"" == "";
+	if(!firstname&&!lastname&&!email&&!rights&&!institutes) {
+		$('#saveButton').each(function() {
+	        if ($(this).attr('disabled')) {
+	            $(this).removeAttr('disabled');
+	        }
+	    });
+	} else {
+		$('#saveButton').each(function() {
+	            $(this).attr({
+	                'disabled': 'disabled'
+	            });
+	    });
+	}
 }
