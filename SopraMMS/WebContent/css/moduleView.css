@@ -15,6 +15,7 @@ textarea {
 .descriptionModule {
 	width: 120px;
 	background-color: #EDECE8;
+	padding-left: 10px;
 }
 
 .entryModule {

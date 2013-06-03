@@ -91,13 +91,13 @@
 %>
 <jsp:include page="/guiElements/admin/showNews.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("createNewModule")) {
-%>
-<jsp:include page="/guiElements/modulemanager/createNewModule.jsp"></jsp:include>
-<%
 	} else if (contentPage.equals("newMessage")) {
 %>
 <jsp:include page="/guiElements/generally/newMessage.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("createNewModule")) {
+%>
+<jsp:include page="/guiElements/modulemanager/createNewModule.jsp"></jsp:include>
 <%
 	}
 %>

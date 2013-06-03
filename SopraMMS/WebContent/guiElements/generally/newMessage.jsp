@@ -22,7 +22,7 @@
 		<tr>
 			<th align="left" colspan="2">Nachricht:</th>
 			<th align="left" colspan="4"><textarea form="sendMailForm" cols="77" rows="20"
-					name="message"></textarea></th>
+					name="message" style="resize: none;"></textarea></th>
 		</tr>
 	</table>
 	<table cellpadding="10" cellspacing="10" align=right>
@@ -30,7 +30,7 @@
 			<td> 
 				<input form="sendMailForm" type="submit" value="Senden">
 			</td>
-			<td>
-				<input type="button" name="Cancel" value="Abbrechen" onclick="window.location = '/SopraMMS/guiElements/home.jsp' " />
-			</td>
+		<!--  	<td>
+				<input type="button" name="Cancel" value="Abbrechen" onclick="window.location = '/SopraMMS/guiElements/home.jsp?home=true' " />
+			</td>-->
 	</table>

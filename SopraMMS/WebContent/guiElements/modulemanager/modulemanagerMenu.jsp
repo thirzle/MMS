@@ -1,10 +1,3 @@
-<script>
-$(document).ready(function() {
-		$(".newModule").click(function(e) {
-		$(".contentBox").load("/SopraMMS/guiElements/modulemanager/createNewModule.jsp");
-		});
-});
-</script>
 
 
 <div class="menuBox">
@@ -15,7 +8,7 @@ $(document).ready(function() {
 		<div class="headerNavModul" ><li>Modulverwaltung</li></div>
 		<div class="expandModul">
 			<ul class="subNav">
-				<li class='newModule'>Neues Modul eintragen</li>
+				<li><a href='/SopraMMS/CreateModule'>Neues Modul eintragen</a></li>
 			</ul>
 		</div>
 	</ul>

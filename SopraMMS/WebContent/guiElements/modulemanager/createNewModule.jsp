@@ -1,12 +1,17 @@
+<%@page import="java.util.ArrayList"%>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/moduleView.css">
-<%
-	session.setAttribute("content", "createNewModule");
 
-	String[] requiredFieldsTypeA = { "K&uuml;rzel", "Titel", "Dauer",
-			"LP", "Turnus", "Sprache", "Pr&uuml;fungsform",
-			"Notenbildung" };
-	String[] requiredFieldsTypeB = { "Inhalt", "Lernziele", "Literatur" };
+
+<%
+	ArrayList<String> requiredFieldsTypeA = new ArrayList();
+	requiredFieldsTypeA.addAll((ArrayList<String>) session
+			.getAttribute("fieldsTypeA"));
+	
+	ArrayList<String> requiredFieldsTypeB = new ArrayList();
+	requiredFieldsTypeB.addAll((ArrayList<String>) session
+			.getAttribute("fieldsTypeB"));
+	
 %>
 <h1>Neues Modul erstellen</h1>
 
@@ -18,8 +23,8 @@
 	<table>
 		<tr>
 			<td class='descriptionModule'><%=description%></td>
-			<td class='entryModule'><textarea name='<%=description%>Content' rows="1" cols="50"
-					style="resize: none;"></textarea></td>
+			<td class='entryModule'><textarea name='<%=description%>Content'
+					rows="1" cols="60" style="resize: none;"></textarea></td>
 		</tr>
 	</table>
 </div>
@@ -31,8 +36,8 @@
 	<table>
 		<tr>
 			<td class='descriptionModule'><%=description%></td>
-			<td class='entryModule'><textarea name='<%=description%>Content' rows="5" cols="50"
-					style="resize: none;"></textarea></td>
+			<td class='entryModule'><textarea name='<%=description%>Content'
+					rows="5" cols="60" style="resize: none;"></textarea></td>
 		</tr>
 	</table>
 </div>
