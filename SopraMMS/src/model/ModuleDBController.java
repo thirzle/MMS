@@ -788,8 +788,8 @@ public class ModuleDBController {
 	}
 
 	// TODO
-	// get a specified modulemanual
-	public String getModuleManual(String courseID, String degree, String version) {
+	// get URL of a specified modulemanual
+	public String getModuleManualURL(String courseID, String degree, String version) {
 		Connection connection = connect();
 		query = "SELECT pdf.url "
 				+ "FROM modulemanual AS m JOIN pdfmodulemanual AS pdf ON "
@@ -815,6 +815,40 @@ public class ModuleDBController {
 		}
 		return null;
 	}
+	
+	
+	public List<Module> getModuleManualbyCourse(String courseID, String degree, String versionnumber){
+		Connection connection = connect();
+		List<Module> modulemanual = new LinkedList<Module>();
+		query = "SELECT m.* FROM modulemanual AS mm JOIN module AS m ON mm.versionnumber = m.modulemanual " +
+				"WHERE mm.courseID = ? AND mm.degree = ? AND mm.versionnumber = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, courseID);
+			pStatement.setString(2, degree);
+			pStatement.setString(3, versionnumber);
+			ResultSet resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				modulemanual.add(new Module(resultSet.getInt("moduleID"), 
+						resultSet.getString("name"), 
+						resultSet.getDate("creationdate"), 
+						resultSet.getDate("modificationdate"), 
+						resultSet.getBoolean("approvalstatus"), 
+						resultSet.getString("instituteID"), 
+						resultSet.getString("subject")));
+			}
+			for (Module module : modulemanual) {
+				module.setEntryList(getEntryListOfModule(module));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(connection);
+		}
+		return modulemanual;
+	}
+	
 
 	public String getCourseID(String course) {
 		Connection connection = connect();

@@ -7,13 +7,6 @@
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	<script src="/SopraMMS/js/jquery.datepicker.js"></script>
  	<link rel="stylesheet" href="/resources/demos/style.css" />
- 	<script>
- 		$(function() {
-		$( "#deadline" ).datepicker();
-		$( "#rememberbegin" ).datepicker();
-		});
-	</script>
-  
 	<table>
 		<tr>
 			<td>Neuer Stichtag:</td>
@@ -27,6 +20,12 @@
 			</td>
 		</tr>
 	</table>
+	 	<script>
+ 		$(function() {
+		$( "#deadline" ).datepicker();
+		$( "#rememberbegin" ).datepicker();
+		});
+	</script>
 <form name="deadline" action="/SopraMMS/Deadline" method="get">
 	<input type="submit" value="Neuen Stichtag festlegen">
 </form>
