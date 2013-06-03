@@ -7,7 +7,6 @@ String rightsIndex = "";
 List<String> emptyInputs = (List<String>) session.getAttribute("emptyInputs");
 List<String[]> notEmptyInputs = (List<String[]>) session.getAttribute("notEmptyInputs");
 int NUMBER_OF_INSTITUTES = institutes.size();
-boolean empty_loginCellText = false;
 boolean empty_firstnameCellText = false;
 boolean empty_lastnameCellText = false;
 boolean empty_emailCellText = false;
@@ -15,7 +14,6 @@ boolean empty_rightsSelect = false;
 boolean empty_instituteSelect = false;
 if(emptyInputs != null) {
 	for(String string : emptyInputs) {
-		empty_loginCellText = string == "loginCellText" || empty_loginCellText ;
 		empty_firstnameCellText = string == "firstnameCellText" || empty_firstnameCellText;
 		empty_lastnameCellText = string == "lastnameCellText" || empty_lastnameCellText;
 		empty_emailCellText = string == "emailCellText" || empty_emailCellText;
@@ -47,9 +45,7 @@ if(emptyInputs != null) {
 			<td><input class="inputField" form="newUserForm" type='text' id="loginCellText" name="loginCellText"/></td>
 			<td>
 			<%
-				if(empty_loginCellText) {
-							out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
-				} else if(notEmptyInputs != null) {
+				if(notEmptyInputs != null) {
 					for(String[] string : notEmptyInputs) {
 						if(string[0] == "loginCellText") {
 							out.print("<textarea style='display: none;' id='tmpLoginname'>"+string[1]+"</textarea>");

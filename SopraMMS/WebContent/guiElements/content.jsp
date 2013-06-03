@@ -86,9 +86,13 @@
 %>
 <jsp:include page="/guiElements/admin/createNews.jsp"></jsp:include>
 <%
-	}else if (contentPage.equals("showNews")) {
+	} else if (contentPage.equals("showNews")) {
 %>
 <jsp:include page="/guiElements/admin/showNews.jsp"></jsp:include>
 <%
-			}
+	} else if (contentPage.equals("newMessage")) {
+%>
+<jsp:include page="/guiElements/generally/newMessage.jsp"></jsp:include>
+<%
+	}
 %>
