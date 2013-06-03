@@ -703,7 +703,6 @@ public class UserDBController {
 	public Deadline getDeadlineByFaculty(String facultyID) {
 		Connection connection = connect();
 		query = "SELECT * FROM deadline where facultyID = ?";
-
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, facultyID);
@@ -711,15 +710,32 @@ public class UserDBController {
 			if (resultSet.next()) {
 				return new Deadline(resultSet.getDate("deadline"),
 						resultSet.getDate("beginremember"),
-						resultSet.getInt("tolerance"),
 						resultSet.getString("facultyID"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			close(connection);
 		}
 		return null;
 	}
+	
+	
+	public boolean setDeadlineByFaculty(Deadline deadline){
+		Connection connection = connect();
+		query = "INSERT INTO deadline VALUES(?,?,?)";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setDate(1, deadline.getDeadline());
+			pStatement.setDate(2, deadline.getBeginremember());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
 
 	public List<String[]> getNews(int type) {
 		List<String[]> news = new LinkedList<String[]>();
