@@ -20,13 +20,7 @@
 	if (session.getAttribute("generallyMenu") != null) {
 		session.setAttribute("generallyMenu", null);
 %>
-<script>
-	$(document).ready(function() {
-		$(".expandGenerally").toggleClass("expanded");
-		$(".expandGenerally").children("ul:first").slideToggle(0);
-		e.stopPropagation();
-	});
-</script>
+
 <%
 	}
 	session.removeAttribute("generallyMenu");
