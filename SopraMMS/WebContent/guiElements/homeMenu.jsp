@@ -19,7 +19,7 @@
 	}
 		if (rights[1]) {
 %>
-<%@ include file="/guiElements/modulmanager/modulmanagerMenu.jsp"%>
+<%@ include file="/guiElements/modulemanager/modulemanagerMenu.jsp"%>
 <%
 	}
 		if (rights[2]) {

@@ -14,7 +14,7 @@
 %>
 </p>
 <%
-	String content = request.getParameter("changePWStatus") + "";
+	String content = request.getParameter("changePwStatus") + "";
 	if (content.equals("changedPwStatusOldPwWrong")) {
 %>
 <p>

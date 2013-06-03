@@ -1,0 +1,22 @@
+@CHARSET "ISO-8859-1";
+
+.moduleEntry {
+	padding: 2px 0px 2px 0px;
+}
+
+table {
+	border: 1px solid #C4C0B4;
+}
+
+textarea {
+	border: none;
+}
+
+.descriptionModule {
+	width: 120px;
+	background-color: #EDECE8;
+}
+
+.entryModule {
+	width: 500px;
+}
