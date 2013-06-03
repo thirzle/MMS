@@ -42,22 +42,12 @@ if(emptyInputs != null) {
 	<table>
 		<tr>
 			<td>Benutzername:</td>
-			<td><input class="inputField" form="newUserForm" type='text' id="loginCellText" name="loginCellText"/></td>
-			<td>
-			<%
-				if(notEmptyInputs != null) {
-					for(String[] string : notEmptyInputs) {
-						if(string[0] == "loginCellText") {
-							out.print("<textarea style='display: none;' id='tmpLoginname'>"+string[1]+"</textarea>");
-						}
-					}
-				}
-			%>
-			</td>
+			<td><input class="inputField" form="newUserForm" type='text' id="loginCellText" name="loginCellText" readonly/></td>
+			<td id="loginnameTableCell"></td>
 		</tr>
 		<tr>
 			<td>Vorname:</td>
-			<td><input class="inputField" form="newUserForm" type='text' id="firstnameCellText" name="firstnameCellText"/></td>
+			<td><input oninput="generateLoginname()" class="inputField" form="newUserForm" type='text' id="firstnameCellText" name="firstnameCellText"/></td>
 			<td>
 			<%
 			if(empty_firstnameCellText) {
@@ -74,7 +64,7 @@ if(emptyInputs != null) {
 		</tr>
 		<tr>
 			<td>Nachname:</td>
-			<td><input class="inputField" form="newUserForm" type='text' id="lastnameCellText" name="lastnameCellText"/></td>
+			<td><input oninput="generateLoginname()" class="inputField" form="newUserForm" type='text' id="lastnameCellText" name="lastnameCellText"/></td>
 			<td>
 			<%
 			if(empty_lastnameCellText) {

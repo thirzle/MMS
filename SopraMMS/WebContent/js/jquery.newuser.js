@@ -40,3 +40,15 @@ function loadDataIntoMultiSelect() {
 	$('#rightsSelect').multipleSelect('setSelects', indexOfRights);
 	$('#instituteSelect').multipleSelect('setSelects', indexOfInstitutes);
 }
+
+function generateLoginname() {
+	var loginnameInput = $("#loginCellText");
+	var firstnameInput = $("#firstnameCellText");
+	var lastnameInput = $("#lastnameCellText");
+	
+	var string = lastnameInput.val().toLowerCase();
+	var string2 = firstnameInput.val().toLowerCase().charAt(0);
+	var generatedString = string + string2;
+	loginnameInput.val("");
+	loginnameInput.val(generatedString);
+}
