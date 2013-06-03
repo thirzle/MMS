@@ -26,7 +26,7 @@
 	<tr>		
 			<td>Erinnerungsbeginn:</td>
 			<td>
-				<input name="rememberbegin" type="date" id="datepicker2" 
+				<input name="beginremember" type="date" id="datepicker2" 
 				value="<%=new SimpleDateFormat("dd.MM.yyyy").format(session.getAttribute("beginremember"))%>"/>
 			</td>
 	</tr>

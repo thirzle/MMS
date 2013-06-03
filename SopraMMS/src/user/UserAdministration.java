@@ -214,6 +214,14 @@ public class UserAdministration {
 	public Deadline getDeadlinebyFaculty(String facultyID) {
 		return userDBController.getDeadlineByFaculty(facultyID);
 	}
+	
+	public void setDeadlinebyFaculty(Deadline deadline){
+		userDBController.setDeadlineByFaculty(deadline);
+	}
+	
+	public void updateDeadlinebyFaculty(Deadline deadline){
+		userDBController.updateDeadlineByFaculty(deadline);
+	}
 
 	public boolean checkPassword(String loginname, String password) {
 		return userDBController.checkPassword(loginname, password);
