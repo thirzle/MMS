@@ -54,7 +54,7 @@
 </div>
 <div class="expandMessages">
 	<ul class="subNav">
-		<li class=newMsg>Neue Nachricht</li>
+		<li class=newMsg><a href="/SopraMMS/NewMessage">Neue Nachricht</a></li>
 	</ul>
 
 	</ul>

@@ -58,12 +58,11 @@ public class ChangeUser extends SessionCheck implements Servlet {
 						ua.changeRights(origUser, tmpUser.getRights());
 					}
 					session.removeAttribute("errormessage");
-					session.setAttribute("content","loadTable");
-					response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+					response.sendRedirect("/SopraMMS/LoadTable");
  				} else {
 					System.out.println("there was an error converting institutes");
 					session.setAttribute("errormessage", "an error occurred");
-					session.setAttribute("content","loadTable");
+					response.sendRedirect("SopraMMS/LoadTable");
  				}
 			} else {
 				// Ein oder mehrere Felder waren nicht gefuellt

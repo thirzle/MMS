@@ -44,7 +44,6 @@ public class SaveUser extends SessionCheck {
 				try {
 					ua.sendNewPasswordLink(user.getMail());
 					session.removeAttribute("emptyInputs");
-					session.setAttribute("content", "editUser");
 					System.out.println("User successfully transmitted to UserAdministration!");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +52,7 @@ public class SaveUser extends SessionCheck {
 					System.out.println("(SaveUser.java.94): failed to sendNewPasswordLink to email: "
 									+ user.getMail());
 				} finally {
-					response.sendRedirect("/SopraMMS/LoadUser");
+					response.sendRedirect("/SopraMMS/LoadTable");
 				}
 			} else {
 				// Ein oder mehrere Felder waren nicht gefuellt
@@ -105,13 +104,14 @@ public class SaveUser extends SessionCheck {
 				for (char c : splitetInstitutes) {
 					int tmp = Character.getNumericValue(c);
 					finalInstitutes.add(rootInstitutes.get(tmp));
-					System.out.println("(SaveUser.java.70): add: "+rootInstitutes.get(tmp));
+					System.out.println("(SaveUser.java): add: "+rootInstitutes.get(tmp));
 				}
 			} catch(ArrayIndexOutOfBoundsException e) {
 				System.out.println("(SaveUser.java): Failed to parseInt(string).");
 			}
 			// Der Benutzer mit den erhaltenen Attributen kann erzeugt werden
 			User user = new User(names[0],names[1],names[2],names[3],finalRights,finalInstitutes,"");
+			user.setPassword(names[0]);
 			System.out.println("create user "+user.toString());
 			return user;
 		} else {
