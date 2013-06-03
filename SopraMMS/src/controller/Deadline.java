@@ -37,11 +37,11 @@ public class Deadline extends HttpServlet {
 			if (session.getAttribute("deadline")==null) {
 				session.setAttribute("content", "newDeadline");
 				session.setAttribute("existingDeadline", false);
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?existingDeadline=false");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			} else {
 				session.setAttribute("content", "showDeadline");
 				session.setAttribute("existingDeadline", true);
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?existingDeadline=true");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
 		//Deadline submitted
 		} else {
@@ -53,19 +53,25 @@ public class Deadline extends HttpServlet {
 			for (int i = 0; strtok.hasMoreTokens(); i++) {
 				input[i] = Integer.parseInt(strtok.nextToken());
 			}
-			deadline = new Date(input[0], input[1], input[2]);
+			deadline = new Date(input[2]-1900, input[1]-1, input[0]);
 			session.setAttribute("deadline", deadline);
-			beginremember = new Date(input[0], input[1], input[2]);
+			temp = request.getParameter("beginremember");
+			strtok = new StringTokenizer(temp, ".");
+			for (int i = 0; strtok.hasMoreTokens(); i++) {
+				input[i] = Integer.parseInt(strtok.nextToken());
+			}
+			beginremember = new Date(input[2]-1900, input[1]-1, input[0]);
 			session.setAttribute("beginremember",  beginremember);
 			User user = (User) session.getAttribute("user");
-			System.out.println(session.getAttribute("existingDeadline"));
-//			if(session.getAttribute("existingDeadline").){
-//				userAdmin.updateDeadlinebyFaculty(new management.Deadline(deadline, beginremember, user.getFaculty()));
-//			} else {
-//				userAdmin.setDeadlinebyFaculty(new management.Deadline(deadline, beginremember, user.getFaculty()));
-//			}
+			if((boolean)session.getAttribute("existingDeadline")){
+				userAdmin.updateDeadlinebyFaculty(new management.Deadline(deadline, beginremember, user.getFaculty()));
+			} else {
+				userAdmin.setDeadlinebyFaculty(new management.Deadline(deadline, beginremember, user.getFaculty()));
+			}
+			session.removeAttribute("existingDeadline");
+			session.setAttribute("content", "showDeadline");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}	
-		session.removeAttribute("existingDeadline");
 	} 
 
 	/**

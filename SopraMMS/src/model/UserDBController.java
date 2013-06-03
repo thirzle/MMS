@@ -748,6 +748,7 @@ public class UserDBController {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setDate(1, deadline.getDeadline());
 			pStatement.setDate(2, deadline.getBeginremember());
+			pStatement.setString(3, deadline.getFacultyID());
 			return pStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

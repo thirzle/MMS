@@ -4,7 +4,7 @@
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   	<script src="/SopraMMS/js/jquery.datepicker.translate.js"></script>
 <h1>Stichtag</h1>
-<p>Folgender Stichtag ist f&uuml;r ihre Fakul&auml;t im Moment festgelegt.</p>
+<p>Folgender Stichtag ist momentan f&uuml;r ihre Fakul&auml;t festgelegt.</p>
   <script>
   $(function() {
     $( "#datepicker1" ).datepicker();

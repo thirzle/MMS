@@ -18,13 +18,13 @@
 	<tr>
 			<td>Neuer Stichtag:</td>
 			<td>
-				<input type="date" id="datepicker1" />
+				<input name="deadline" type="date" id="datepicker1" />
 			</td>
 	</tr>
 	<tr>		
 			<td>Erinnerungsbeginn:</td>
 			<td>
-				<input type="date" id="datepicker2" />
+				<input name="beginremember" type="date" id="datepicker2" />
 			</td>
 	</tr>
 </table>
