@@ -46,10 +46,12 @@ public class SimplePdfCreator {
 
     private int content_offset_after_title = 90;
 
+    private int index_content_offset = 50;
+
     public SimplePdfCreator() {
 	super();
     }
-    
+
     private String get_current_time() {
 	Date current_date = new Date();
 	SimpleDateFormat time_format = new SimpleDateFormat("E yyyy.MM.dd 'um' hh:mm:ss a zzz");
@@ -59,7 +61,7 @@ public class SimplePdfCreator {
 
 	// returning current time:
 	return time_format.format(current_date);
-}
+    }
 
     private LinkedList<String> divide_string(String string, float max_size, PDFont font, int font_size) {
 	LinkedList<String> string_list = new LinkedList<String>();
@@ -112,16 +114,14 @@ public class SimplePdfCreator {
 	return string_list;
     }
 
-
-    private PDPage createTitlePage(PDDocument doc, String institute, String faculty, String degree, String po,
-	    String last_modification_date, String last_author, String semester, String version) throws IOException, COSVisitorException {
+    private PDPage createTitlePage(PDDocument doc, String institute, String faculty, String degree, String po, String last_modification_date, String last_author, String semester, String version) throws IOException, COSVisitorException {
 	// load data and create a title page...
 
 	// temporary first page... needs more content...
 	PDPage title_page = new PDPage();
 
 	PDPageContentStream contentStream = new PDPageContentStream(doc, title_page);
-	
+
 	contentStream.beginText();
 	contentStream.setFont(font_bold, font_size_content);
 	String string = "Modulhandbuch";
@@ -131,17 +131,17 @@ public class SimplePdfCreator {
 	contentStream.drawString(string);
 	contentStream.endText();
 	contentStream.close();
-	
+
 	contentStream.beginText();
 	contentStream.setFont(font_bold, font_size_title);
-	string = degree+"studiengang";
+	string = degree + "studiengang";
 	string_width = font_bold.getStringWidth(string) / 1000 * font_size_title;
 	string_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_title;
 	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 200);
 	contentStream.drawString(string);
 	contentStream.endText();
 	contentStream.close();
-	
+
 	contentStream.beginText();
 	contentStream.setFont(font_bold, font_size_title);
 	string = institute;
@@ -151,7 +151,7 @@ public class SimplePdfCreator {
 	contentStream.drawString(string);
 	contentStream.endText();
 	contentStream.close();
-	
+
 	contentStream.beginText();
 	contentStream.setFont(font_bold, font_size_title);
 	string = "(" + po + ")";
@@ -161,9 +161,9 @@ public class SimplePdfCreator {
 	contentStream.drawString(string);
 	contentStream.endText();
 	contentStream.close();
-	
-	//TODO:
-	//parse faculty into several strings if too big....
+
+	// TODO:
+	// parse faculty into several strings if too big....
 	contentStream.beginText();
 	contentStream.setFont(font_bold, font_size_content);
 	string = faculty;
@@ -171,10 +171,7 @@ public class SimplePdfCreator {
 	contentStream.drawString(string);
 	contentStream.endText();
 	contentStream.close();
-	
-	
-	
-	
+
 	contentStream.beginText();
 	contentStream.setFont(font_normal, font_size_content);
 	string = "Basierend auf Rev. " + version + ". Letzte Änderung am " + last_modification_date + " durch " + last_author + ". Generiert am " + get_current_time() + ".";
@@ -183,8 +180,6 @@ public class SimplePdfCreator {
 	contentStream.drawString(string);
 	contentStream.endText();
 	contentStream.close();
-	
-
 
 	return title_page;
     }
@@ -416,7 +411,8 @@ public class SimplePdfCreator {
 	return pages;
     }
 
-    private LinkedList<PDPage> createIndexPages(PDDocument doc, LinkedList<String> index_page_content_list, LinkedList<String> index_page_content_number_list) throws IOException, COSVisitorException {
+    private LinkedList<PDPage> createIndexPages(PDDocument doc, LinkedList<LinkedList<Module>> module_subject_list,
+	    LinkedList<String> subject_list, LinkedList<String> index_page_content_number_list) throws IOException, COSVisitorException {
 	// create module pages
 	LinkedList<PDPage> pages = new LinkedList<PDPage>();
 
@@ -424,30 +420,42 @@ public class SimplePdfCreator {
 	pages.add(page);
 
 	PDPageContentStream module_contentStream = new PDPageContentStream(doc, page);
-	
+
 	// set curser to content pos...
 	int x = page_offset_left;
 	int y = (int) page.getMediaBox().getHeight() - page_offset_top - content_offset_after_title;
-	
-	//pre calculate the page amount used by index pages:
-	
-	// 3 is the first content page inf index pages count is 1... 
-	int page_offset = 3;
-	
-	for (int j = 0; j < index_page_content_list.size(); j++) {
 
+	// pre calculate the page amount used by index pages:
+
+	// 3 is the first content page inf index pages count is 1...
+	int page_offset = 3;
+
+	
+	for (int j = 0; j < module_subject_list.size(); j++) {
+	    y -= space_between_content;
+	    for (int i = 0; i < module_subject_list.get(j).size(); i++) {
+		y -= space_between_content;
+		if (y < page_offset_bottom) {
+		    page_offset += 1;
+		    y = (int) page.getMediaBox().getHeight() - page_offset_top;
+		}
+	    }
 	    
 	    y -= space_between_content;
-	        
-	    // next line
-
-	    // new page...
-	    if (y < page_offset_bottom) {
-		page_offset += 1;
-		y = (int) page.getMediaBox().getHeight() - page_offset_top;
-	    }
 	}
 	
+	/*
+	 * for (int j = 0; j < index_page_content_list.size(); j++) {
+	 * 
+	 * 
+	 * y -= space_between_content;
+	 * 
+	 * // next line
+	 * 
+	 * // new page... if (y < page_offset_bottom) { page_offset += 1; y =
+	 * (int) page.getMediaBox().getHeight() - page_offset_top; } }
+	 */
+
 	System.out.println("content_page_offset:  " + page_offset);
 
 	// Index Title
@@ -467,84 +475,104 @@ public class SimplePdfCreator {
 	// set curser to content pos...
 	x = page_offset_left;
 	y = (int) page.getMediaBox().getHeight() - page_offset_top - content_offset_after_title;
-	
 
+	int subject_list_index = 0;
+	int index_page_content_number_list_index = 0;
+	for (int j = 0; j < module_subject_list.size(); j++) {
 
-	for (int j = 0; j < index_page_content_list.size(); j++) {
+	    // print subject...
+	    // TODO:...
 
-	    
-	    
-	    // TITLE FIRST...
 	    x = page_offset_left;
+
 	    module_contentStream.beginText();
 	    module_contentStream.setFont(font_bold, font_size_content);
 	    module_contentStream.moveTextPositionByAmount(x, y);
-	    module_contentStream.drawString(index_page_content_list.get(j));
+	    module_contentStream.drawString(subject_list.get(subject_list_index));
 	    module_contentStream.endText();
 	    module_contentStream.close();
-
-	    // CONTENT...
-	    x = (int) page.getMediaBox().getWidth() - page_offset_right - 30;
-
-	    module_contentStream.beginText();
-	    module_contentStream.setFont(font_normal, font_size_content);
-	    module_contentStream.moveTextPositionByAmount(x, y);
-	    module_contentStream.drawString((page_offset + Integer.parseInt(index_page_content_number_list.get(j))) + "");
-	    module_contentStream.endText();
-	    module_contentStream.close();
+	    
 	    y -= space_between_content;
+	    
+	    subject_list_index ++;
 
 	    
-	    
-	    // next line
+	    for (int i = 0; i < module_subject_list.get(j).size(); i++) {
 
-	    // IF the page end is reached create a new page and work on
-	    // it
-	    if (y < page_offset_bottom) {
-		page = new PDPage();
-		pages.add(page);
-		module_contentStream = new PDPageContentStream(doc, page);
-		y = (int) page.getMediaBox().getHeight() - page_offset_top;
+		// TITLE FIRST...
+		x = page_offset_left + index_content_offset;
+		module_contentStream.beginText();
+		module_contentStream.setFont(font_bold, font_size_content);
+		module_contentStream.moveTextPositionByAmount(x, y);
+		module_contentStream.drawString(module_subject_list.get(j).get(i).getName());
+		module_contentStream.endText();
+		module_contentStream.close();
+
+		// CONTENT...
+		x = (int) page.getMediaBox().getWidth() - page_offset_right - 30;
+
+		module_contentStream.beginText();
+		module_contentStream.setFont(font_normal, font_size_content);
+		module_contentStream.moveTextPositionByAmount(x, y);
+		module_contentStream.drawString((page_offset + Integer.parseInt(index_page_content_number_list.get(index_page_content_number_list_index))) + "");
+		module_contentStream.endText();
+		module_contentStream.close();
+		y -= space_between_content;
+
+		index_page_content_number_list_index ++;
+		
+		// next line
+
+		// IF the page end is reached create a new page and work on
+		// it
+		if (y < page_offset_bottom) {
+		    page = new PDPage();
+		    pages.add(page);
+		    module_contentStream = new PDPageContentStream(doc, page);
+		    y = (int) page.getMediaBox().getHeight() - page_offset_top;
+		}
 	    }
+	    
+	    y -= space_between_content;
 	}
 	return pages;
     }
-//TODO institute ist eine Liste
-//TODO version ist String
-    public void createModulePdf(String file, List<Module> module_list, String institute, String faculty, String degree, String po,
-	    String last_modification_date, String last_author, String semester, String version) throws IOException, COSVisitorException {
-	
-	
+
+    // TODO institute ist eine Liste
+    // TODO version ist String
+    public void createModulePdf(String file, List<Module> module_list, String institute, String faculty, String degree, String po, String last_modification_date, String last_author, String semester, String version) throws IOException, COSVisitorException {
+
 	LinkedList<String> subject_list = new LinkedList<String>();
-	LinkedList<String,LinkedList<Module>> module_subject_list = new LinkedList<String>();
-	
-	//pre sort the modules by subject...
-	
-	for(int i = 0; i < module_list.size(); i++){
+	LinkedList<LinkedList<Module>> module_subject_list = new LinkedList<LinkedList<Module>>();
+
+	// pre sort the modules by subject...
+
+	for (int i = 0; i < module_list.size(); i++) {
 	    String subject = module_list.get(i).getSubject();
 	    System.out.println(subject);
-	    
-	    //check if subject already in list
+
+	    // check if subject already in list
 	    boolean not_in_list = true;
 	    int index_of_subject = -1;
-	    for(int j = 0; j < subjectlist.size(); j++){
-		if(subjectlist.get(j).compareTo(subject)==0){
+	    for (int j = 0; j < subject_list.size(); j++) {
+		if (subject_list.get(j).compareTo(subject) == 0) {
 		    not_in_list = false;
 		    index_of_subject = j;
 		    break;
 		}
 	    }
-	       
-	    //if subject already in list add the module to the right list
-	    
-	    subjectlist.add(subject);
+
+	    // if subject already in list add the module to the right list
+	    if (not_in_list) {
+		subject_list.add(subject);
+		// create new module group...
+		module_subject_list.add(new LinkedList<Module>());
+		module_subject_list.get(module_subject_list.size() - 1).add(module_list.get(i));
+	    } else {
+		module_subject_list.get(index_of_subject).add(module_list.get(i));
+	    }
 	}
-	
-	
-	
-	
-	
-	
+
 	// the document
 	PDDocument doc = null;
 
@@ -560,27 +588,27 @@ public class SimplePdfCreator {
 	    doc = new PDDocument();
 
 	    // FIRST PAGE
-	    title_page = createTitlePage(doc, institute, faculty, degree, po,
-		    last_modification_date, last_author, semester, version);
+	    title_page = createTitlePage(doc, institute, faculty, degree, po, last_modification_date, last_author, semester, version);
 
 	    // Content Pages
 	    System.out.println("> module_list size:  " + module_list.size());
 
 	    int content_page_count = 0;
-	    for (int i = 0; i < module_list.size(); i++) {
-		System.out.println("> @ module_list element: " + i + "  " + module_list.get(i).getName() + "  " + content_page_count);
-		
-		
-		index_page_content_list.add(module_list.get(i).getName());
-		index_page_content_number_list.add(content_page_count + "");
-		
-		System.out.println("page_count:  " + content_page_count);
+	    for (int k = 0; k < subject_list.size(); k++) {
+		for (int i = 0; i < module_subject_list.get(k).size(); i++) {
+		    System.out.println("> @ module_list element: " + i + "  " + module_subject_list.get(k).get(i).getName() + "  " + content_page_count);
 
-		LinkedList<PDPage> module_pages = createModulePages(doc, module_list.get(i));
-		for (int j = 0; j < module_pages.size(); j++) {
-		    content_page_list.add(module_pages.get(j));
+		    index_page_content_list.add(module_subject_list.get(k).get(i).getName());
+		    index_page_content_number_list.add(content_page_count + "");
+
+		    System.out.println("page_count:  " + content_page_count);
+
+		    LinkedList<PDPage> module_pages = createModulePages(doc, module_subject_list.get(k).get(i));
+		    for (int j = 0; j < module_pages.size(); j++) {
+			content_page_list.add(module_pages.get(j));
+		    }
+		    content_page_count += module_pages.size();
 		}
-		content_page_count += module_pages.size();
 	    }
 
 	    // add pages to document...
@@ -589,27 +617,25 @@ public class SimplePdfCreator {
 	    doc.addPage(title_page);
 
 	    // index pages...
-	    index_page_list = createIndexPages(doc, index_page_content_list, index_page_content_number_list);
-	    
-	    
-	    //add numbers to the pages...
-	    //add pages to document...
-	    
-	    int page_number = 1;
-	    
-	    //index pages
+	    index_page_list = createIndexPages(doc, module_subject_list, subject_list, index_page_content_number_list);
+
+	    // add numbers to the pages...
+	    // add pages to document...
+
+	    int page_number = 2;
+
+	    // index pages
 	    for (int i = 0; i < index_page_list.size(); i++) {
 		PDPageContentStream page_number_contentStream = new PDPageContentStream(doc, index_page_list.get(i), true, true);
 		page_number_contentStream.beginText();
 		page_number_contentStream.setFont(font_normal, font_size_content);
-		page_number_contentStream.moveTextPositionByAmount(	index_page_list.get(i).getMediaBox().getWidth() - page_offset_right,
-									page_offset_bottom / 2);
+		page_number_contentStream.moveTextPositionByAmount(index_page_list.get(i).getMediaBox().getWidth() - page_offset_right, page_offset_bottom / 2);
 		page_number_contentStream.drawString(page_number + "");
 		page_number_contentStream.endText();
 		page_number_contentStream.close();
-		
+
 		doc.addPage(index_page_list.get(i));
-		page_number ++;
+		page_number++;
 	    }
 
 	    // content pages...
@@ -617,14 +643,13 @@ public class SimplePdfCreator {
 		PDPageContentStream page_number_contentStream = new PDPageContentStream(doc, content_page_list.get(i), true, true);
 		page_number_contentStream.beginText();
 		page_number_contentStream.setFont(font_normal, font_size_content);
-		page_number_contentStream.moveTextPositionByAmount(	content_page_list.get(i).getMediaBox().getWidth() - page_offset_right,
-									page_offset_bottom / 2);
+		page_number_contentStream.moveTextPositionByAmount(content_page_list.get(i).getMediaBox().getWidth() - page_offset_right, page_offset_bottom / 2);
 		page_number_contentStream.drawString(page_number + "");
 		page_number_contentStream.endText();
 		page_number_contentStream.close();
-			
+
 		doc.addPage(content_page_list.get(i));
-		page_number ++;
+		page_number++;
 	    }
 
 	    FileOutputStream foFileOutputStream = new FileOutputStream(new File(file));
