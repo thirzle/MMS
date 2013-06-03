@@ -78,7 +78,8 @@ public class LogicTest {
 		Module test_module = new Module(1337, "Analysis I für Ingenieure und Informatiker", new Date(),
 				new Date(), false, "Institut007", "Subject007", "Author");
 		
-		
+		Module test_module2 = new Module(1337, "Analysis I für helle Köpfe", new Date(),
+			new Date(), false, "Institut007", "Subject008", "Author");
 		
 
 		TextualEntry test_textualentry1 = new TextualEntry(42, "02:44:35",
@@ -216,6 +217,18 @@ public class LogicTest {
 			false, false, false, 1,"Notenbildung: ", "Ergebnis der Schriftlichen Prüfung");
 		
 		
+		//Erweiterte Testfaelle:
+		TextualEntry test_textualentry27 = new TextualEntry(42, "02:44:35",
+			false, false, false, 1," ", " ");
+		
+		TextualEntry test_textualentry28 = new TextualEntry(42, "02:44:35",
+			false, false, false, 1,"Testf\u00E4lle: ", " ");
+		
+		TextualEntry test_textualentry29 = new TextualEntry(42, "02:44:35",
+			false, false, false, 1,"Langer Punkt: ", "- Das ist ein extrem langer Punkt, der auf mehrere Zeilen aufgeteilt werden sollte um zu testen ob die String-spillter-Methode ihren Job richtig erledigt und den Text einrückt :D");
+		
+		
+		//Modul 1
 		test_module.addTextualEntry(test_textualentry1);
 		test_module.addTextualEntry(test_textualentry2);
 		test_module.addTextualEntry(test_textualentry3);
@@ -249,30 +262,62 @@ public class LogicTest {
 		test_module.addTextualEntry(test_textualentry25);
 		test_module.addTextualEntry(test_textualentry26);
 		
-		
-		//Erweiterte Testfaelle:
-		TextualEntry test_textualentry27 = new TextualEntry(42, "02:44:35",
-			false, false, false, 1," ", " ");
-		
-		TextualEntry test_textualentry28 = new TextualEntry(42, "02:44:35",
-			false, false, false, 1,"Testf\u00E4lle: ", " ");
-		
-		TextualEntry test_textualentry29 = new TextualEntry(42, "02:44:35",
-			false, false, false, 1,"Langer Punkt: ", "- Das ist ein extrem langer Punkt, der auf mehrere Zeilen aufgeteilt werden sollte um zu testen ob die String-spillter-Methode ihren Job richtig erledigt und den Text einrückt :D");
-		
 		test_module.addTextualEntry(test_textualentry27);
 		test_module.addTextualEntry(test_textualentry28);
 		test_module.addTextualEntry(test_textualentry29);
 		
 	
 		
+		
+		
+		//Modul 2
+		test_module2.addTextualEntry(test_textualentry1);
+		test_module2.addTextualEntry(test_textualentry2);
+		test_module2.addTextualEntry(test_textualentry3);
+		test_module2.addTextualEntry(test_textualentry4);
+		test_module2.addTextualEntry(test_textualentry5);
+		
+		test_module2.addTextualEntry(test_textualentry6);
+		test_module2.addTextualEntry(test_textualentry7);
+		test_module2.addTextualEntry(test_textualentry8);
+		test_module2.addTextualEntry(test_textualentry9);
+		test_module2.addTextualEntry(test_textualentry10);
+		test_module2.addTextualEntry(test_textualentry11);
+		test_module2.addTextualEntry(test_textualentry12);
+		test_module2.addTextualEntry(test_textualentry13);
+		test_module2.addTextualEntry(test_textualentry14);
+		test_module2.addTextualEntry(test_textualentry15);
+		test_module2.addTextualEntry(test_textualentry16);
+		test_module2.addTextualEntry(test_textualentry17);
+		test_module2.addTextualEntry(test_textualentry18);
+		test_module2.addTextualEntry(test_textualentry19);
+		test_module2.addTextualEntry(test_textualentry20);
+		test_module2.addTextualEntry(test_textualentry21);
+		test_module2.addTextualEntry(test_textualentry22);
+		test_module2.addTextualEntry(test_textualentry23);
+
+		
+		test_module2.addEffortEntry(test_effortentry);
+		
+		test_module2.addTextualEntry(test_textualentry24);
+		test_module2.addTextualEntry(test_textualentry25);
+		test_module2.addTextualEntry(test_textualentry26);
+		
+		test_module2.addTextualEntry(test_textualentry27);
+		test_module2.addTextualEntry(test_textualentry28);
+		test_module2.addTextualEntry(test_textualentry29);
+		
+		
+		
+		
+		
 		LinkedList<Module> module_list = new LinkedList<Module>();
 		module_list.add(test_module);
 		module_list.add(test_module);
+		module_list.add(test_module2);
 		module_list.add(test_module);
 		module_list.add(test_module);
-		module_list.add(test_module);
-		module_list.add(test_module);
+		module_list.add(test_module2);
 		module_list.add(test_module);
 
 
@@ -280,7 +325,7 @@ public class LogicTest {
 		SimplePdfCreator pdfcreator = new SimplePdfCreator();
 		try {
 			pdfcreator.createModulePdf("C:/PDFBox_test/module.pdf", module_list, "Medieninformatik", "Eine Fakult\u00E4t", "Bachelor",
-				"FSPO 2012", "gestern xD", "ich", "Sommersemester 2013", 9000);
+				"FSPO 2012", "gestrigen Tage", "AJ", "Sommersemester 2013", "over 9000");
 		} catch (COSVisitorException | IOException e) {
 			System.out.println("Error in PDF creation, check if the path exists and / or the file isn't open...");
 			System.exit(-1);

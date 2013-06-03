@@ -14,6 +14,8 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import com.sun.org.apache.xerces.internal.xs.StringList;
+
 import management.*;
 
 import java.text.SimpleDateFormat;
@@ -112,7 +114,7 @@ public class SimplePdfCreator {
 
 
     private PDPage createTitlePage(PDDocument doc, String institute, String faculty, String degree, String po,
-	    String last_modification_date, String last_author, String semester, int version) throws IOException, COSVisitorException {
+	    String last_modification_date, String last_author, String semester, String version) throws IOException, COSVisitorException {
 	// load data and create a title page...
 
 	// temporary first page... needs more content...
@@ -510,7 +512,39 @@ public class SimplePdfCreator {
 //TODO institute ist eine Liste
 //TODO version ist String
     public void createModulePdf(String file, List<Module> module_list, String institute, String faculty, String degree, String po,
-	    String last_modification_date, String last_author, String semester, int version) throws IOException, COSVisitorException {
+	    String last_modification_date, String last_author, String semester, String version) throws IOException, COSVisitorException {
+	
+	
+	LinkedList<String> subject_list = new LinkedList<String>();
+	LinkedList<String,LinkedList<Module>> module_subject_list = new LinkedList<String>();
+	
+	//pre sort the modules by subject...
+	
+	for(int i = 0; i < module_list.size(); i++){
+	    String subject = module_list.get(i).getSubject();
+	    System.out.println(subject);
+	    
+	    //check if subject already in list
+	    boolean not_in_list = true;
+	    int index_of_subject = -1;
+	    for(int j = 0; j < subjectlist.size(); j++){
+		if(subjectlist.get(j).compareTo(subject)==0){
+		    not_in_list = false;
+		    index_of_subject = j;
+		    break;
+		}
+	    }
+	       
+	    //if subject already in list add the module to the right list
+	    
+	    subjectlist.add(subject);
+	}
+	
+	
+	
+	
+	
+	
 	// the document
 	PDDocument doc = null;
 
