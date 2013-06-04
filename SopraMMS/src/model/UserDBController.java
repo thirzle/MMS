@@ -881,6 +881,39 @@ public class UserDBController {
 		}
 		return instituteID;
 	}
+	
+	public List<String[]> getEmails(boolean[] rights){
+		Connection connection = connect();
+		LinkedList<String[]> mailList = new LinkedList<String[]>();
+		String[] string;
+		ResultSet resultSet;
+		query = "SELECT u.firstname, u.lastname, u.mail " +
+				"FROM user AS u JOIN rightsaffiliation AS r " +
+				"ON u.loginname = r.loginname WHERE r.rightsID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			for (int i = 0; i < rights.length; i++) {
+				if(rights[i]){
+					pStatement.setInt(1, i);
+					resultSet = pStatement.executeQuery();
+					while(resultSet.next()){
+						string = new String[3];
+						string[0] = resultSet.getString(1);
+						string[1] = resultSet.getString(2);
+						string[2] = resultSet.getString(3);
+						mailList.add(string);
+					}
+				}
+			}
+			return mailList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get emails of users by rights");
+		}finally {
+			close(connection);
+		}
+		return mailList;
+	}
 
 
 	// close connection

@@ -160,12 +160,18 @@ public class DBtest {
 //		System.out.println();
 		
 //		mController.generateLatestVersionOfModuleManual
-		String latestVersion = mController.generateLatestVersionOfModuleManual("inf", "Bachelor");
-		System.out.println("get latest version of course inf "+latestVersion);
-		
-//		mController.createModuleManual
-		mController.createModuleMaunal(latestVersion, "mi", "Bachelor", "2013-06-01", "2013-06-01", true, 2012);
+//		String latestVersion = mController.generateLatestVersionOfModuleManual("inf", "Bachelor");
+//		System.out.println("get latest version of course inf "+latestVersion);
+//		
+////	mController.createModuleManual
+//		mController.createModuleMaunal(latestVersion, "mi", "Bachelor", "2013-06-01", "2013-06-01", true, 2012);
 	
+//		uController.getEmails
+		boolean[] b = {false, false, false, false, false, false, true};
+		LinkedList<String[]> mailList = (LinkedList) uController.getEmails(b);
+		for (String[] strings : mailList) {
+			System.out.println("Firstname: "+ strings[0]+" Lastname: "+ strings[1]+" Mail: "+strings[2]);
+		}
 
 	}
 
