@@ -13,9 +13,9 @@ textarea {
 }
 
 .descriptionModule {
-	width: 120px;
+	width: 149px;
 	background-color: #EDECE8;
-	padding-left: 10px;
+	padding: 0px 10px 0px 10px;
 }
 
 .entryModule {
