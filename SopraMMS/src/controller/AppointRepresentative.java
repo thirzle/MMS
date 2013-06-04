@@ -38,10 +38,8 @@ public class AppointRepresentative extends HttpServlet {
 		String firstNameRep = request.getParameter("firstNameRep");
 		String lastNameRep = request.getParameter("lastNameRep");
 		String mailRep = request.getParameter("mailRep");
-		System.out.println(mailRep == ""+"''''''''''''''''''''''''''''''''''''''''''");
 		
 		if(firstNameRep.equals(null) || lastNameRep.equals(null)  || mailRep.equals(null) || firstNameRep.equals("") || lastNameRep.equals("") || mailRep.equals("")){
-			System.out.println("less data******************************************");
 			request.getSession().setAttribute("lessData", true);
 			request.getSession().setAttribute("content", "appointRepresentative");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
@@ -66,7 +64,6 @@ public class AppointRepresentative extends HttpServlet {
 		//if representative exists
 		else{
 			if(!userR.getFirstName().equals(firstNameRep) || !userR.getLastName().equals(lastNameRep)){
-				System.out.println("falsche Daten**************************************");
 				request.getSession().setAttribute("wrongData", true);
 				request.getSession().setAttribute("content", "appointRepresentative");
 			}

@@ -255,6 +255,9 @@ public class UserAdministration {
 		return userDBController.getAllUsers();
 	}
 
+//	get Mail: übergeben: Liste von Rechten, gibt zurück: Liste mit String Array -->Name, Vorname, Email-Adresse
+//	public List<String[]> 
+	
 	public List<String> getInstituteNames(User user) {
 		return userDBController.getInstituteNames(user.getLogin());
 	}

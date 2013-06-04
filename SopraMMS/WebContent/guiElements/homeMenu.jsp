@@ -34,10 +34,16 @@
 	}
 		if (rights[2]) {
 %>
+<%@ include file="/guiElements/modulemanager/modulemanagerMenu.jsp"%>
+<%
+	}
+		if (rights[1]) {
+%>
 <%@ include file="/guiElements/prof/profMenu.jsp"%>
 <%
 	}
 %>
+
 <%@ include file="/guiElements/generally/generallyMenu.jsp"%>
 <%
 	}
