@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import management.Entry;
+import management.ModuleAdministration;
+import management.TextualEntry;
+
 /**
  * Servlet implementation class CreateModule
  */
@@ -35,9 +39,6 @@ public class CreateModule extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
-		System.out.println("(CreateModule.java):"
-				+ request.getParameter("addRow"));
-
 		// TypA --> Vordefinierte Pflichfelder Feld
 		// TypB --> Vordefinierte Pflichfelder Textarea
 		// TypC --> Selbstdefinierte Felder Textarea
@@ -59,6 +60,9 @@ public class CreateModule extends HttpServlet {
 			fieldsTypeA.add(new String[] { "Sprache", "" });
 			fieldsTypeA.add(new String[] { "Prüfungsform", "" });
 			fieldsTypeA.add(new String[] { "Notenbildung", "" });
+			
+			System.out.println("fieldsTypeA");
+			
 		} else {
 			fieldsTypeA.addAll((ArrayList<String[]>) session
 					.getAttribute("fieldsTypeA"));
@@ -67,9 +71,13 @@ public class CreateModule extends HttpServlet {
 		// Fuer TypB
 		if (session.getAttribute("fieldsTypeB") == null) {
 
-			fieldsTypeB.add(new String[] { "Inhalt", " " });
-			fieldsTypeB.add(new String[] { "Lernziele", " " });
-			fieldsTypeB.add(new String[] { "Literatur", " " });
+			fieldsTypeB.add(new String[] { "Inhalt", "" });
+			fieldsTypeB.add(new String[] { "Lernziele", "" });
+			fieldsTypeB.add(new String[] { "Literatur", "" });
+			
+			System.out.println("fieldsTypeB");
+
+			
 		} else {
 			fieldsTypeB.addAll((ArrayList<String[]>) session
 					.getAttribute("fieldsTypeB"));
@@ -98,36 +106,71 @@ public class CreateModule extends HttpServlet {
 		for (int i = 0; i < fieldsTypeC.size(); i++) {
 			String[] entry = fieldsTypeC.get(i);
 			entry[0] = request.getParameter(i + "Title").trim();
-			if (request.getParameter(i + "Content")!=null) {
+			if (request.getParameter(i + "Content") != null) {
 				entry[1] = request.getParameter(i + "Content").trim();
 			}
 			fieldsTypeC.set(i, entry);
 		}
 
+		
+		// Bei Klick Zeile hinzufuegen
+		if (request.getParameter("addRow") != null) {
+
+			fieldsTypeC.add(new String[] { "", ""});
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		} 
+		// Bei Klick entsprechende Zeile loeschen
+		else if (request.getParameter("deleteRow") != null) {
+			int deleteEntry = Integer.parseInt(request.getParameter("deleteRow").replace(
+					"Delete", ""));
+			fieldsTypeC.remove(deleteEntry);
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		}
+		// Bei Klick Module Speichern
+		else if (request.getParameter("saveModule") != null) {
+			// TODO pruefen ob Pflichfelder befuellt sind
+			// TODO evtl Pruefansicht
+			
+			ModuleAdministration ma = new ModuleAdministration();
+			
+			ArrayList<Entry> module = new ArrayList<>();
+			
+			for (String[] strings : fieldsTypeA) {
+				TextualEntry entry = new TextualEntry(strings[0], strings[1]);
+				module.add(entry);
+			}
+			for (String[] strings : fieldsTypeB) {
+				TextualEntry entry = new TextualEntry(strings[0], strings[1]);
+				module.add(entry);
+			}
+			for (String[] strings : fieldsTypeC) {
+				TextualEntry entry = new TextualEntry(strings[0], strings[1]);
+				module.add(entry);
+			}
+			fieldsTypeA=fieldsTypeB=fieldsTypeC=null;
+			
+			
+			System.out.println("############ Modul #############");
+			for (Entry entry : module) {
+				System.out.println("-> "+entry.getTitle());
+				System.out.println("     "+entry.getContent());
+			}
+			System.out.println("################################");
+			
+			//TODO Modul an DB uebertragen
+			//Spezifische Felder für Turnus, LP, Aufwand, Studiengang 
+			
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true");			
+		}
 		// Anzeige beim Aufruf von Modul einfuegen
-		if (request.getParameter("newModule") == null
-				&& request.getParameter("addRow") == null) {
+		else if (request.getParameter("newModule") == null) {
 			session.setAttribute("content", "createNewModule");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
-		// Anzeige beim Klick auf Zeile hinzufuegen
-		else if (request.getParameter("addRow") != null) {
-			
-			fieldsTypeC.add(new String[] { "", "" });
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-		} else if (request.getParameter("saveModule") != null) {
-			// TODO pruefen ob Pflichfelder befuellt sind
-			// TODO evtl Pruefansicht
-			// TODO letztes selbsterstelltes feld wir d nicht gespeichert
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp?newModule=missingField");
-		} else {
 
-		}
-		
 		session.setAttribute("fieldsTypeA", fieldsTypeA);
 		session.setAttribute("fieldsTypeB", fieldsTypeB);
 		session.setAttribute("fieldsTypeC", fieldsTypeC);
-
 
 	}
 

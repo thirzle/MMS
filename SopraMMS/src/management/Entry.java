@@ -81,4 +81,10 @@ public abstract class Entry {
 	public String getTitle() {
 		return title;
 	}
+	
+	
+	public String getContent()
+	{
+		return "Kein Inhalt vorhanden";
+	}
 }

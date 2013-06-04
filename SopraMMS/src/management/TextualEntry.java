@@ -36,5 +36,10 @@ public class TextualEntry extends Entry {
 
 		return text;
 	}
+	
+	public String getContent()
+	{
+		return text;
+	}
 
 }
