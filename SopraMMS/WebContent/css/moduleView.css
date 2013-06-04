@@ -19,5 +19,16 @@ textarea {
 }
 
 .entryModule {
-	width: 500px;
+	width: 400px;
+}
+
+.buttonDeleteRow{
+	width: 30px;
+}
+
+.buttonDeleteRow button{
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	border: 0;
+	cursor: pointer;
 }

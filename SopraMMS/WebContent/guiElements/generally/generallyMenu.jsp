@@ -1,15 +1,9 @@
 <script>
-	$(document)
-			.ready(
-					function() {
-						$(".changePassword")
-								.click(
-										function(e) {
-											$(".contentBox")
-													.load(
-															"/SopraMMS/guiElements/generally/changePassword.jsp");
-										});
-					});
+	$(document).ready(function() {
+		$(".changePassword").click(function(e) {
+		$(".contentBox").load("/SopraMMS/guiElements/generally/changePassword.jsp");
+		});
+	});
 	//Lisa
 	$(document).ready(function() {
 		$(".newMsg").click(function(e) {

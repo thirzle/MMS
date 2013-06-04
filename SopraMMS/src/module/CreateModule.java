@@ -108,13 +108,13 @@ public class CreateModule extends HttpServlet {
 		if (request.getParameter("newModule") == null
 				&& request.getParameter("addRow") == null) {
 			session.setAttribute("content", "createNewModule");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
 		// Anzeige beim Klick auf Zeile hinzufuegen
 		else if (request.getParameter("addRow") != null) {
 			
 			fieldsTypeC.add(new String[] { "", "" });
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-
 		} else if (request.getParameter("saveModule") != null) {
 			// TODO pruefen ob Pflichfelder befuellt sind
 			// TODO evtl Pruefansicht
