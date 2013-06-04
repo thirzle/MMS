@@ -44,11 +44,13 @@ if(user != null) {
 			<td>Rechte:</td>
 			<td>
 				<select class="inputField" id="rightsSelect" style="width: 270px">
-					<option value="0">Modulver.</option>
-					<option value="1">Redakteur</option>
-					<option value="2">Administrator</option>
-					<option value="3">Recht auf Stellv.</option>
-					<option value="4">Dezernat II</option>
+					<option value="0">Recht auf Stellv.</option>
+					<option value="1">Dozent</option>
+					<option value="2">Modulverantwortl.</option>
+					<option value="3">Dezernat II</option>
+					<option value="4">Koordinator</option>
+					<option value="5">Freigabeberecht.</option>
+					<option value="6">Administrator</option>
 				</select>
 			</td>
 			<td>

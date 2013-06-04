@@ -39,14 +39,20 @@
 	}
 		if (rights[1]) {
 %>
-<%@ include file="/guiElements/prof/profMenu.jsp"%>
+<%@ include file="/guiElements/lecturer/lecturerMenu.jsp"%>
 <%
 	}
+		if (rights[0]) {
 %>
 
 <%@ include file="/guiElements/generally/generallyMenu.jsp"%>
 <%
+	} else {
+%>
+<%@ include file="/guiElements/generally/generallyMenuWithoutRepresentative.jsp"%>
+<%
 	}
+}
 %>
 <%
 	if (user == null) {

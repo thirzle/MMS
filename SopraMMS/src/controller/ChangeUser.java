@@ -77,7 +77,7 @@ public class ChangeUser extends SessionCheck implements Servlet {
 		// dieser wird hier getrennt und entsprechend Institute und Rechte extrahiert
 		char[] splitetInstitutes = names[5].toCharArray();
 		char[] splitetRights = names[4].toCharArray();
-		boolean[] finalRights = {false,false,false,false,false};
+		boolean[] finalRights = {false,false,false,false,false,false,false};
 		List<String> finalInstitutes = new ArrayList<String>();
 		try {
 			// Extrahiere Integer Werte um das Rechte boolean[] zu setzten

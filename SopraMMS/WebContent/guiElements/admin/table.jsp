@@ -8,7 +8,7 @@
 	List<User> users;
 	try {
 	    users = (List<User>) session.getAttribute("users");
-		String[] status = {"Modulver.","Redakteur","Administrator","Recht auf Stellv.","Dezernat II","right[5]","right[6]"};
+		String[] status = {"Recht auf Stellv.","Dozent","Modulverantwortl.","Dezernat II","Koordinator","Freigabeberecht.","Administrator"};
 %>
 <form name="editUserForm" action="/SopraMMS/EditUser" method="get">
 

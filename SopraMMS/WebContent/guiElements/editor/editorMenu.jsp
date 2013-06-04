@@ -1,5 +1,19 @@
-	<div class="menuBox">
-			<h1>Freigabeberechtigter</h1>
-	
-			<h3>TODO </h3>
-	</div>
+<div class="menuBox">
+	<h1>Freigabeberechtigter</h1>
+
+	<ul class="nav">
+		<div class="headerNavEditorModule">
+			<li>Modulverwaltung</li>
+		</div>
+		<div class="expandEditorModule">
+			<ul class="subNav">
+				<li id="checkModule"><a>Freizugebende
+						Module</a></li>
+				<li id="createModule"><a>Modul
+						erstellen</a></li>
+				<li id="editModule"><a>Modul
+						bearbeiten</a></li>
+			</ul>
+		</div>
+	</ul>
+</div>
