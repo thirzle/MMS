@@ -4,7 +4,28 @@
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   	<script src="/SopraMMS/js/jquery.datepicker.translate.js"></script>
 <h1>Stichtag</h1>
+<% 
+	String content = request.getParameter("submitDeadline")+"";
+	if(content.equals("deadBeforeRemem")) {
+%>
 <p>Folgender Stichtag ist momentan f&uuml;r ihre Fakul&auml;t festgelegt.</p>
+<p>
+	<error>Der Stichtag darf nicht vor dem Erinnerungsbeginn liegen</error>
+</p>
+<%
+	} else if(content.equals("deadBeforeToday")) {
+%>
+<p>Folgender Stichtag ist momentan f&uuml;r ihre Fakul&auml;t festgelegt.</p>
+<p>
+	<error>Der Stichtag darf nicht in der Vergangenheit liegen</error>
+</p>
+<%
+	} else if(content.equals("done")) {
+%>
+<p>Der Stichtag wurde erfolgreich geändert</p>
+<%
+	}
+%>
   <script>
   $(function() {
     $( "#datepicker1" ).datepicker();

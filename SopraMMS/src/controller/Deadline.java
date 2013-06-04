@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.StringTokenizer;
 
 import javax.servlet.ServletException;
@@ -60,7 +60,7 @@ public class Deadline extends HttpServlet {
 				input[i] = Integer.parseInt(strtok.nextToken());
 			}
 			beginremember = new Date(input[2]-1900, input[1]-1, input[0]);
-			if(deadline.after(beginremember)&&deadline.after(new Date())){
+			if(deadline.after(beginremember)&&deadline.after(new java.util.Date())){
 				session.setAttribute("deadline", deadline);
 				session.setAttribute("beginremember",  beginremember);
 				User user = (User) session.getAttribute("user");
@@ -76,14 +76,14 @@ public class Deadline extends HttpServlet {
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=done");
 			} else{
 				if ((boolean)session.getAttribute("existingDeadline")) {
-					session.setAttribute("content", "newDeadline");
+					session.setAttribute("content", "showDeadline");
 					if(deadline.before(beginremember))
 						response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=deadBeforeRemem");
 					else
 						response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=deadBeforeToday");
 					
 				} else {
-					session.setAttribute("content", "showDeadline");
+					session.setAttribute("content", "newDeadline");
 					if(deadline.before(beginremember))
 						response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=deadBeforeRemem");
 					else

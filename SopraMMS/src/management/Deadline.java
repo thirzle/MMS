@@ -1,7 +1,7 @@
 package management;
 
 
-import java.util.Date;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 public class Deadline {
