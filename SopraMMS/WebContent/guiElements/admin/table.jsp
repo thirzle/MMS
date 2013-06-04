@@ -69,8 +69,10 @@
 </table>
 	<input type="submit" value="Bearbeiten"/>
 </form>
+<%if(session.getAttribute("errormessage") != null) { %>
+	<p style="color: #FF0000"><%= session.getAttribute("errormessage") %></p>
+<%} %>
 
 
-<script type="text/javascript" src="/SopraMMS/js/jquery-latest.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.usertable.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>

@@ -50,9 +50,10 @@ public class Login extends SessionCheck {
 				session.setAttribute("rights", user.getRights());
 				session.setAttribute("email", user.getMail());
 				session.setAttribute("content", "home");
-				session.setAttribute("deadline", deadline.getDeadline());
-				session.setAttribute("beginremember", deadline.getBeginremember());
-
+				if(deadline!=null) {
+					session.setAttribute("deadline", deadline.getDeadline());
+					session.setAttribute("beginremember", deadline.getBeginremember());
+				}
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			} else {
 				System.out.println("Invalid loginname or password");

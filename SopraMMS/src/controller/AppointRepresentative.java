@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.LinkedList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,44 +37,52 @@ public class AppointRepresentative extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		UserAdministration uAdmin = new UserAdministration();
 		String firstNameRep = request.getParameter("firstNameRep");
 		String lastNameRep = request.getParameter("lastNameRep");
 		String mailRep = request.getParameter("mailRep");
-		System.out.println(mailRep == ""+"''''''''''''''''''''''''''''''''''''''''''");
-		
-		if(firstNameRep.equals(null) || lastNameRep.equals(null)  || mailRep.equals(null) || firstNameRep.equals("") || lastNameRep.equals("") || mailRep.equals("")){
-			System.out.println("less data******************************************");
+
+		if (firstNameRep.equals(null) || lastNameRep.equals(null)
+				|| mailRep.equals(null) || firstNameRep.equals("")
+				|| lastNameRep.equals("") || mailRep.equals("")) {
 			request.getSession().setAttribute("lessData", true);
-			request.getSession().setAttribute("content", "appointRepresentative");
+			request.getSession().setAttribute("content",
+					"appointRepresentative");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			return;
 		}
-		
-		User user = (User) request.getSession().getAttribute("user");
-		User userR = new UserAdministration().getUserByMail(mailRep);
 
-		//if representative doesn't exist
-		if(userR == null){
+		User user = (User) request.getSession().getAttribute("user");
+		User userR = uAdmin.getUserByMail(mailRep);
+
+		// if representative doesn't exist
+		if (userR == null) {
 			String content = user.getFirstName() + " " + user.getLastName()
-					+ " (E-Mail Adresse: " + mailRep + ") " + " moechte "
-					+ firstNameRep + " " + lastNameRep
-					+ " zu seinem Stellvertreter ernennen";
-			
+					+ " moechte " + firstNameRep + " " + lastNameRep
+					+ " (E-Mail Adresse: " + mailRep + ") "
+					+ " zu ihrem/seinem Stellvertreter ernennen"
+					+ "\nhttp://localhost:8080/SopraMMS/";
+
 			EmailTelnet mail = new EmailTelnet();
-			mail.send_mail("Neuer Stellvertreter", "teresa.hirzle@uni-ulm.de",
-					content);
+			boolean[] rights = { false, false, false, false, false, false, true };
+			LinkedList<String[]> adminMails = (LinkedList) uAdmin
+					.getEmails(rights);
+			for (String[] strings : adminMails) {
+				mail.send_mail("Neuer Stellvertreter", strings[2], content);
+			}
 			request.getSession().setAttribute("content", "applyRepresentative");
 		}
-		//if representative exists
-		else{
-			if(!userR.getFirstName().equals(firstNameRep) || !userR.getLastName().equals(lastNameRep)){
-				System.out.println("falsche Daten**************************************");
+		// if representative exists
+		else {
+			if (!userR.getFirstName().equals(firstNameRep)
+					|| !userR.getLastName().equals(lastNameRep)) {
 				request.getSession().setAttribute("wrongData", true);
-				request.getSession().setAttribute("content", "appointRepresentative");
-			}
-			else{
-				new UserAdministration().changeRepresentative(user, userR.getLogin());
-				request.getSession().setAttribute("content", "createdRepresentative");
+				request.getSession().setAttribute("content",
+						"appointRepresentative");
+			} else {
+				uAdmin.changeRepresentative(user, userR.getLogin());
+				request.getSession().setAttribute("content",
+						"createdRepresentative");
 			}
 		}
 		request.getSession().setAttribute("generallyMenu", "open");

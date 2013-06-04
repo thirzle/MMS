@@ -14,13 +14,7 @@
 	if (session.getAttribute("generallyMenu") != null) {
 		session.setAttribute("generallyMenu", null);
 %>
-<script>
-	$(document).ready(function() {
-		$(".expandGenerally").toggleClass("expanded");
-		$(".expandGenerally").children("ul:first").slideToggle(0);
-		e.stopPropagation();
-	});
-</script>
+
 <%
 	}
 	session.removeAttribute("generallyMenu");
@@ -48,7 +42,7 @@
 </div>
 <div class="expandMessages">
 	<ul class="subNav">
-		<li class=newMsg>Neue Nachricht</li>
+		<li class=newMsg><a href="/SopraMMS/NewMessage">Neue Nachricht</a></li>
 	</ul>
 
 	</ul>

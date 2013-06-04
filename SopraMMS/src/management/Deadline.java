@@ -1,28 +1,26 @@
 package management;
 
 
-import java.sql.Date;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Deadline {
-	private static Date deadline;
+	private Date deadline;
 	private Date beginremember;
-	private int tolerance;
 	private String facultyID;
 
 	
 	public Deadline(int dday, int dmonth, int dyear, int bday, int bmonth, int byear,
-			int tolerance, String facultyID) {
+			 String facultyID) {
 		deadline = calcDate(dday, dmonth, dyear);
 		beginremember = calcDate(bday, bmonth, byear);
-		this.tolerance = tolerance;
 		this.facultyID = facultyID;
 	}
 	
 	
-	public Deadline(Date deadline, Date beginremember, int tolerance, String facultyID){
+	public Deadline(Date deadline, Date beginremember, String facultyID){
 		this.deadline = deadline;
 		this.beginremember = beginremember;
-		this.tolerance = tolerance;
 		this.facultyID = facultyID;
 	}
 	
@@ -50,7 +48,7 @@ public class Deadline {
 
 
 	public void setDeadline(Date deadline) {
-		Deadline.deadline = deadline;
+		this.deadline = deadline;
 	}
 
 
@@ -61,16 +59,6 @@ public class Deadline {
 
 	public void setBeginremember(Date beginremember) {
 		this.beginremember = beginremember;
-	}
-
-
-	public int getTolerance() {
-		return tolerance;
-	}
-
-
-	public void setTolerance(int tolerance) {
-		this.tolerance = tolerance;
 	}
 
 

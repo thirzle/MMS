@@ -35,34 +35,42 @@ public class EditUser extends SessionCheck implements Servlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("(EditUser.java): doGet() called");
     	HttpSession session = request.getSession();	
-    	String loginname = "";
-    	UserAdministration ua = new UserAdministration();
-    	List<String> institutes = ua.getAllInstituteID();
-    	List<String> instituteNames = ua.getAllInstitute();
-    	if(institutes != null) {
-    		session.setAttribute("institutes", institutes);
-    		session.setAttribute("instituteNames", instituteNames);
-    	} else {
-    		System.out.println("(EditUser.java): institute has null value");
-    		session.setAttribute("errormessage", "institute is null");
-    		session.setAttribute("content", "loadTable");
-    		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-    	}
-    	try {
-	    	loginname = request.getParameter("selectedRowID").toString();
-	    	User user = ua.getUser(loginname);
-	    	if(user != null) {
-	    		session.setAttribute("userToEdit", user);
-	    		session.setAttribute("content", "editUser");
+    	if(isLoggedIn(request, response) && actionGranted(request, 3)) {
+	    	String loginname = "";
+	    	UserAdministration ua = new UserAdministration();
+	    	List<String> institutes = ua.getAllInstituteID();
+	    	List<String> instituteNames = ua.getAllInstitute();
+	    	if(institutes != null) {
+	    		session.setAttribute("institutes", institutes);
+	    		session.setAttribute("instituteNames", instituteNames);
+	    		session.removeAttribute("errormessage");
 	    	} else {
-	    		session.setAttribute("errormessage", "no user was selected");
+	    		System.out.println("(EditUser.java): institute has null value");
+	    		session.setAttribute("errormessage", "institute is null");
 	    		session.setAttribute("content", "loadTable");
+	    		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	    	}
-    	} catch(NullPointerException e) {
-    		System.out.println("Parameter: selectedRowID has null value.");
-    		session.setAttribute("errormessage", "no user was selected.");
-    		session.setAttribute("content", "loadTable");
-    	} finally {
+	    	try {
+		    	loginname = request.getParameter("selectedRowID").toString();
+		    	User user = ua.getUser(loginname);
+		    	if(user != null) {
+		    		session.removeAttribute("emptyInputs");
+		    		session.setAttribute("userToEdit", user);
+		    		session.setAttribute("content", "editUser");
+		    	} else {
+		    		session.setAttribute("errormessage", "no user was selected");
+		    		session.setAttribute("content", "loadTable");
+		    	}
+	    	} catch(NullPointerException e) {
+	    		System.out.println("Parameter: selectedRowID has null value.");
+	    		session.setAttribute("errormessage", "no user was selected.");
+	    		session.setAttribute("content", "loadTable");
+	    	} finally {
+	    		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+	    	}
+    	} else {
+    		System.out.println("not logged in or access denied.");
+    		session.setAttribute("content", "start");
     		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
     	}
 	}

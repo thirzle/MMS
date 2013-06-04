@@ -4,74 +4,83 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import user.User;
-import user.UserAdministration;
 
 /**
- * Servlet implementation class SaveUser
+ * Servlet implementation class ChangeUser
  */
-@WebServlet("/SaveUser")
-public class SaveUser extends SessionCheck {
+@WebServlet("/ChangeUser")
+public class ChangeUser extends SessionCheck implements Servlet {
 	private static final long serialVersionUID = 1L;
 	private List<String> emptyInputs = new ArrayList<String>();
 	private List<String[]> notEmptyInputs = new ArrayList<String[]>();
+       
+    /**
+     * @see SessionCheck#SessionCheck()
+     */
+    public ChangeUser() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public SaveUser() {
-		super();
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int right = 3; // 3 entspricht dem Recht: Administrator
-		if (isLoggedIn(request, response) && actionGranted(request, right)) {
-			HttpSession session = request.getSession();
-			User user = createUser(request);
-			if (user != null) {
-				ua.createUser(user);
-				try {
-					ua.sendNewPasswordLink(user.getMail());
-					session.removeAttribute("emptyInputs");
-					System.out.println("User successfully transmitted to UserAdministration!");
-				} catch (Exception e) {
-					e.printStackTrace();
-					session.setAttribute("errormessage",
-							"Failed to send new password link!");
-					System.out.println("(SaveUser.java.94): failed to sendNewPasswordLink to email: "
-									+ user.getMail());
-				} finally {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	HttpSession session = request.getSession();
+		int right = 3;
+		if(isLoggedIn(request, response) && actionGranted(request, right)) {
+			User origUser = (User) session.getAttribute("userToEdit");
+			if(origUser == null) {
+				System.out.println("(ChangeUser.java): user is null");
+				return;
+			}
+			User tmpUser = createUser(request);
+			if(emptyInputs.isEmpty()) {
+ 				if(tmpUser != null){
+	 				if(origUser.getFirstName()!= tmpUser.getFirstName() || origUser.getLastName() != tmpUser.getLastName()) {
+	 					ua.changeName(origUser, tmpUser.getFirstName(), tmpUser.getLastName());
+					}
+					if(tmpUser.getMail() != origUser.getMail()) {
+						ua.changeMail(origUser, tmpUser.getMail());
+					}
+					if(tmpUser.getInstitute() != origUser.getInstitute()) {
+						ua.changeInstitute(origUser, tmpUser.getInstitute());
+					}
+					if(tmpUser.getRights() != origUser.getRights()) {
+						ua.changeRights(origUser, tmpUser.getRights());
+					}
+					session.removeAttribute("errormessage");
 					response.sendRedirect("/SopraMMS/LoadTable");
-				}
+ 				} else {
+					System.out.println("there was an error converting institutes");
+					session.setAttribute("errormessage", "an error occurred");
+					response.sendRedirect("SopraMMS/LoadTable");
+ 				}
 			} else {
 				// Ein oder mehrere Felder waren nicht gefuellt
-				session.setAttribute("notEmptyInputs", notEmptyInputs);
 				session.setAttribute("emptyInputs", emptyInputs);
-				session.setAttribute("content", "newUser");
+				session.setAttribute("content", "editUser");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 				System.out.println("some input is missing.");
 			}
 		} else {
 			// Unerlaubter Zugriff / weil nicht eingeloggt oder keine Erlaubnis
-			HttpSession session = request.getSession();
 			session.setAttribute("content", "start");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			System.out.println("not logged in or access denied.");
 		}
-	}
-
-	protected User createUser(HttpServletRequest request) {
+		
+	} // end doGet()
+    
+    protected User createUser(HttpServletRequest request) {
 		List<String> rootInstitutes = ua.getAllInstitutesByName();
 		// Die Liste wird ggf. mit den Feldnamen leeren Feldern gefuellt
 		String[] names = new String[6];
@@ -104,14 +113,13 @@ public class SaveUser extends SessionCheck {
 				for (char c : splitetInstitutes) {
 					int tmp = Character.getNumericValue(c);
 					finalInstitutes.add(rootInstitutes.get(tmp));
-					System.out.println("(SaveUser.java): add: "+rootInstitutes.get(tmp));
+					System.out.println("(SaveUser.java.70): add: "+rootInstitutes.get(tmp));
 				}
 			} catch(ArrayIndexOutOfBoundsException e) {
 				System.out.println("(SaveUser.java): Failed to parseInt(string).");
 			}
 			// Der Benutzer mit den erhaltenen Attributen kann erzeugt werden
 			User user = new User(names[0],names[1],names[2],names[3],finalRights,finalInstitutes,"");
-			user.setPassword(names[0]);
 			System.out.println("create user "+user.toString());
 			return user;
 		} else {
@@ -120,11 +128,10 @@ public class SaveUser extends SessionCheck {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost " + request.getParameter("rights"));
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 	}
+
 }

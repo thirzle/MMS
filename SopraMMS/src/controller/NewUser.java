@@ -37,17 +37,18 @@ public class NewUser extends SessionCheck {
 	    HttpSession session = request.getSession();
 	    boolean[] rights = {false,false,false,true,false};
 		if(isLoggedIn(request, response) && actionGranted(request, rights)) {
-		    //TODO
-		    //in die Logik auslagern
-		    UserDBController controller = new UserDBController();
-		    List<String> institutes = controller.getInstitutes();
-		    //
+		    List<String> institutes = ua.getAllInstitute();
+		    session.removeAttribute("institutes");
+    		session.removeAttribute("instituteNames");
+    		session.removeAttribute("emptyInputs");
 		    session.setAttribute("institutes", institutes);
 		    session.setAttribute("content", "newUser");
 		    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		} else {
 		    // not logged in or access denied!
 		    System.out.println("(Access denied): You are not logged in or permitted");
+		    session.setAttribute("content", "start");
+		    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
 	}
 	

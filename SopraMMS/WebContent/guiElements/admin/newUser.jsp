@@ -1,11 +1,12 @@
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List, java.util.ArrayList" %>
 <%
 List<String> institutes = (List<String>) session.getAttribute("institutes");
+String instituteIndex = "";
+String rightsIndex = "";
 List<String> emptyInputs = (List<String>) session.getAttribute("emptyInputs");
 List<String[]> notEmptyInputs = (List<String[]>) session.getAttribute("notEmptyInputs");
 int NUMBER_OF_INSTITUTES = institutes.size();
-boolean empty_loginCellText = false;
 boolean empty_firstnameCellText = false;
 boolean empty_lastnameCellText = false;
 boolean empty_emailCellText = false;
@@ -13,40 +14,40 @@ boolean empty_rightsSelect = false;
 boolean empty_instituteSelect = false;
 if(emptyInputs != null) {
 	for(String string : emptyInputs) {
-		empty_loginCellText = string == "loginCellText" || empty_loginCellText ;
 		empty_firstnameCellText = string == "firstnameCellText" || empty_firstnameCellText;
 		empty_lastnameCellText = string == "lastnameCellText" || empty_lastnameCellText;
 		empty_emailCellText = string == "emailCellText" || empty_emailCellText;
 		empty_rightsSelect = string == "rightsSelect"|| empty_rightsSelect;
 		empty_instituteSelect = string == "instituteSelect" || empty_instituteSelect;
 	}
+	if(!empty_instituteSelect) {
+		for ( String[] string : notEmptyInputs ) {
+			if(string[0] == "instituteSelect" ) {
+				instituteIndex = string[1];
+			}
+		}
+	}
+	if(!empty_rightsSelect) {
+		for ( String[] string : notEmptyInputs ) {
+			if(string[0] == "rightsSelect" ) {
+				rightsIndex = string[1];
+			}
+		}
+	}
 }
 %>
-<script type="text/javascript" src="/SopraMMS/js/jquery.multiple.select.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/multiple-select.css">
 <h1>Neuen Benutzer anlegen</h1>
 <div>
 	<table>
 		<tr>
 			<td>Benutzername:</td>
-			<td><input class="inputField" form="newUserForm" type='text' id="loginCellText" name="loginCellText"/></td>
-			<td>
-			<%
-				if(empty_loginCellText) {
-							out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
-				} else if(notEmptyInputs != null) {
-					for(String[] string : notEmptyInputs) {
-						if(string[0] == "loginCellText") {
-							out.print("<textarea style='display: none;' id='tmpLoginname'>"+string[1]+"</textarea>");
-						}
-					}
-				}
-			%>
-			</td>
+			<td><input class="inputField" form="newUserForm" type='text' id="loginCellText" name="loginCellText" readonly/></td>
+			<td id="loginnameTableCell"></td>
 		</tr>
 		<tr>
 			<td>Vorname:</td>
-			<td><input class="inputField" form="newUserForm" type='text' id="firstnameCellText" name="firstnameCellText"/></td>
+			<td><input oninput="generateLoginname()" class="inputField" form="newUserForm" type='text' id="firstnameCellText" name="firstnameCellText"/></td>
 			<td>
 			<%
 			if(empty_firstnameCellText) {
@@ -63,7 +64,7 @@ if(emptyInputs != null) {
 		</tr>
 		<tr>
 			<td>Nachname:</td>
-			<td><input class="inputField" form="newUserForm" type='text' id="lastnameCellText" name="lastnameCellText"/></td>
+			<td><input oninput="generateLoginname()" class="inputField" form="newUserForm" type='text' id="lastnameCellText" name="lastnameCellText"/></td>
 			<td>
 			<%
 			if(empty_lastnameCellText) {
@@ -80,7 +81,7 @@ if(emptyInputs != null) {
 		</tr>
 		<tr>
 			<td>Email:</td>
-			<td><input class="inputField" form="newUserForm" type='text' id="emailCellText" name="emailCellText" style="width: 270px"/></td>
+			<td><input class="inputField" form="newUserForm" type='email' id="emailCellText" name="emailCellText" style="width: 270px"/></td>
 			<td>
 			<%
 			if(empty_emailCellText) {
@@ -110,6 +111,9 @@ if(emptyInputs != null) {
 			<%
 			if(empty_rightsSelect) {
 				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			} else	if(rightsIndex != "") {
+				System.out.println("(newUser.jsp): index: "+rightsIndex);
+				out.print("<textarea style='display: none;' id='rightsSelectText'>"+rightsIndex+"</textarea>");
 			}
 			%>
 			</td>
@@ -127,6 +131,9 @@ if(emptyInputs != null) {
 			<%
 			if(empty_instituteSelect) {
 				out.print("<p style='color: #FF0000;'>Bitte füllen Sie alle Felder aus.</p>");
+			} else	if(instituteIndex != "") {
+				System.out.println("(newUser.jsp): index: "+instituteIndex);
+				out.print("<textarea style='display: none;' id='instituteSelectText'>"+instituteIndex+"</textarea>");
 			}
 			%>
 			</td>
@@ -134,8 +141,8 @@ if(emptyInputs != null) {
 		<tr>
 			<td></td>
 			<td>
-				<form id="newUserForm" onsubmit="setValues()"action="/SopraMMS/SaveUser" method="get">
-					<input type="submit" name="Submit" id="saveButton" style="float: right;" value="Speichern"/>
+				<form id="newUserForm" action="/SopraMMS/SaveUser" method="get">
+					<input type="submit" name="Submit" id="saveButton" style="float: right;" value="Speichern" disabled/>
 					<textarea name="rightsSelect" style="display:none;" id="rightsLabel"></textarea>
 					<textarea name="instituteSelect" style="display:none;" id="instituteLabel"></textarea>
 				</form>
@@ -143,27 +150,10 @@ if(emptyInputs != null) {
 		</tr>
 	</table>
 </div>
-
+<script type="text/javascript" src="/SopraMMS/js/jquery.newuser.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.multiple.select.js"></script>
 <script type="text/javascript">
-$("#loginCellText").val($("#tmpLoginname").html());
-$("#firstnameCellText").val($("#tmpFirstname").html());
-$("#lastnameCellText").val($("#tmpLastname").html());
-$("#emailCellText").val($("#tmpEmail").html());
-function setValues() {
-	var instituteSelectselectedIndex = $('#instituteSelect').multipleSelect('getSelects');
-	var rightsSelectselectedIndex = $('#rightsSelect').multipleSelect('getSelects');
-	var instituteLabel = $("#instituteLabel");
-	var rightsLabel = $("#rightsLabel");
-	
-	instituteLabel.html(instituteSelectselectedIndex);
-	rightsLabel.html(rightsSelectselectedIndex);
-}
-function isEmpty(element) {
-	
-}
-$("#rightsSelect").multipleSelect(); 
-$("#instituteSelect").multipleSelect(); 
-$(".expandAdministration").toggleClass("expanded");
-$(".expandAdministration").children("ul:first").slideToggle("fast");
-e.stopPropagation();
+initMultiSelect();
+loadDataIntoForm();
+loadDataIntoMultiSelect();
 </script>

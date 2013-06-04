@@ -342,7 +342,7 @@ body {
 
 /*--------------------------*/
 /*---- Table - ShowNews ----*/
-.showNewsTable h2,h3,a,p {
+.showNewsTable h2, .showNewsTable  h3, .showNewsTable a, .showNewsTable p {
 	display: inline;
 	font-style: normal;
 	font-weight: normal;

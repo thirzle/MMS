@@ -45,6 +45,7 @@
 					zur&uuml;ck. <br />Sollte dies nicht klappen starten Sie Ihren
 					Browser neu und laden Sie danach das Modul Management System erneut.
 				</p>
+				<img src="${pageContext.request.contextPath}/images/Teambild.jpg" alt="Logo" align="right">
 
 			</div>
 		</div>

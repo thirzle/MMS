@@ -114,13 +114,12 @@ public class GeneratePDF extends HttpServlet {
 //		Generate new PDF
 		try {
 			SimplePdfCreator pdfCreator = new SimplePdfCreator();
-// TODO institute ist eine Liste, latestVersion ist String
+// TODO institute ist eine Liste
 			pdfCreator.createModulePdf("P:/Team7_12/TestPDF/" + fileName,
 					moduleList, instituteNameList.getFirst(), facListName.getFirst(), degree, examRegulation,
 					modificationDate,
 					latestAuthor, semester,
-					42);
-
+					latestVersion);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("couldn't create PDF of course: "

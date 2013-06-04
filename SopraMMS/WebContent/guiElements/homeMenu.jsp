@@ -12,27 +12,38 @@
 <%
 	if (user != null) {
 		boolean[] rights = user.getRights();
-		if (rights[3]) {
+		if (rights[6]) {
 %>
 <%@ include file="/guiElements/admin/adminMenu.jsp"%>
 <%
 	}
-		if (rights[1]) {
+		if(rights[5]){
 %>
-<%@ include file="/guiElements/modulmanager/modulmanagerMenu.jsp"%>
+<%@include file="/guiElements/editor/editorMenu.jsp" %>
 <%
-	}
-		if (rights[2]) {
-%>
-<%@ include file="/guiElements/editor/editorMenu.jsp"%>
-<%
-	}
+		}
 		if (rights[4]) {
+%>
+<%@ include file="/guiElements/coordinator/coordinatorMenu.jsp"%>
+<%
+	}
+		if (rights[3]) {
 %>
 <%@ include file="/guiElements/dez2/dez2Menu.jsp"%>
 <%
 	}
+		if (rights[2]) {
 %>
+<%@ include file="/guiElements/modulemanager/modulemanagerMenu.jsp"%>
+<%
+	}
+		if (rights[1]) {
+%>
+<%@ include file="/guiElements/prof/profMenu.jsp"%>
+<%
+	}
+%>
+
 <%@ include file="/guiElements/generally/generallyMenu.jsp"%>
 <%
 	}

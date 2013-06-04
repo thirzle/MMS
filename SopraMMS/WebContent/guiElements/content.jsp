@@ -2,7 +2,8 @@
 <%
 	String contentPage;
 	Object user = session.getAttribute("user");
-	if (session.getAttribute("content") == null || request.getParameter("home")!=null) {
+	if (session.getAttribute("content") == null
+			|| request.getParameter("home") != null) {
 		contentPage = "start";
 		if (request.getParameter("contentPdf") != null) {
 			contentPage = "contentPdf";
@@ -86,9 +87,17 @@
 %>
 <jsp:include page="/guiElements/admin/createNews.jsp"></jsp:include>
 <%
-	}else if (contentPage.equals("showNews")) {
+	} else if (contentPage.equals("showNews")) {
 %>
 <jsp:include page="/guiElements/admin/showNews.jsp"></jsp:include>
 <%
-			}
+	} else if (contentPage.equals("newMessage")) {
+%>
+<jsp:include page="/guiElements/generally/newMessage.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("createNewModule")) {
+%>
+<jsp:include page="/guiElements/modulemanager/createNewModule.jsp"></jsp:include>
+<%
+	}
 %>

@@ -1,3 +1,5 @@
+
+
 <div class="menuBox">
 	<h1>Modulverwaltung</h1>
 
@@ -6,7 +8,7 @@
 		<div class="headerNavModul" ><li>Modulverwaltung</li></div>
 		<div class="expandModul">
 			<ul class="subNav">
-				<li>TODO</li>
+				<li><a href='/SopraMMS/CreateModule'>Neues Modul eintragen</a></li>
 			</ul>
 		</div>
 	</ul>

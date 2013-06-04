@@ -1,0 +1,34 @@
+@CHARSET "ISO-8859-1";
+
+.moduleEntry {
+	padding: 2px 0px 2px 0px;
+}
+
+table {
+	border: 1px solid #C4C0B4;
+}
+
+textarea {
+	border: none;
+}
+
+.descriptionModule {
+	width: 160px;
+	background-color: #EDECE8;
+	padding: 0px 10px 0px 10px;
+}
+
+.entryModule {
+	width: 400px;
+}
+
+.buttonDeleteRow{
+	width: 30px;
+}
+
+.buttonDeleteRow button{
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	border: 0;
+	cursor: pointer;
+}

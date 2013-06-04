@@ -12,6 +12,7 @@ public class Module {
 	private int moduleID;
 	private String instituteID;
 	private String  subject;
+
 	private String modificationauthor;
 
 	private List<Entry> entryList = new LinkedList<Entry>();
@@ -106,6 +107,15 @@ public class Module {
 	
 	public void addTextualEntryList(List<TextualEntry> entries){
 		entryList.addAll(entries);
+	}
+	
+	public String getSubject() {
+	    return subject;
+	}
+
+
+	public String getModificationauthor() {
+	    return modificationauthor;
 	}
 
 

@@ -33,7 +33,7 @@ public class UserDBController {
 	private static final String USER = "teamaccount";
 	private static final String PASSWORD = "6lsj7tdm";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	static final int NUMBEROFRIGHTS = 5;
+	static final int NUMBEROFRIGHTS = 7;
 
 	// establish connection
 	public Connection connect() {
@@ -279,6 +279,19 @@ public class UserDBController {
 			// set all rights listed in table rightsaffiliation
 			while (resultSet.next()) {
 				rightsArray[resultSet.getInt("rightsID")] = true;
+			}
+			pStatement = connection.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
+			pStatement.setString(1,  loginname);
+			resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				loginname = resultSet.getString("supervisor");
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, loginname);
+				resultSet = pStatement.executeQuery();
+				// set all rights of supervisor listed in table rightsaffiliation
+				while (resultSet.next()) {
+					rightsArray[resultSet.getInt("rightsID")] = true;
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -703,7 +716,6 @@ public class UserDBController {
 	public Deadline getDeadlineByFaculty(String facultyID) {
 		Connection connection = connect();
 		query = "SELECT * FROM deadline where facultyID = ?";
-
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, facultyID);
@@ -711,15 +723,55 @@ public class UserDBController {
 			if (resultSet.next()) {
 				return new Deadline(resultSet.getDate("deadline"),
 						resultSet.getDate("beginremember"),
-						resultSet.getInt("tolerance"),
 						resultSet.getString("facultyID"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			close(connection);
 		}
 		return null;
 	}
+	
+	
+	public boolean setDeadlineByFaculty(Deadline deadline){
+		Connection connection = connect();
+		query = "INSERT INTO deadline VALUES(?,?,?)";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setDate(1, deadline.getDeadline());
+			pStatement.setDate(2, deadline.getBeginremember());
+			pStatement.setString(3, deadline.getFacultyID());
+			return pStatement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
+	
+	public boolean updateDeadlineByFaculty(Deadline deadline){
+		Connection connection = connect();
+		query = "UPDATE deadline SET deadline = ?, beginremember = ? WHERE facultyID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setDate(1, deadline.getDeadline());
+			pStatement.setDate(2, deadline.getBeginremember());
+			pStatement.setString(3, deadline.getFacultyID());
+			return pStatement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
 
 	public List<String[]> getNews(int type) {
 		List<String[]> news = new LinkedList<String[]>();
@@ -829,6 +881,40 @@ public class UserDBController {
 		}
 		return instituteID;
 	}
+	
+	public List<String[]> getEmails(boolean[] rights){
+		Connection connection = connect();
+		LinkedList<String[]> mailList = new LinkedList<String[]>();
+		String[] string;
+		ResultSet resultSet;
+		query = "SELECT u.firstname, u.lastname, u.mail " +
+				"FROM user AS u JOIN rightsaffiliation AS r " +
+				"ON u.loginname = r.loginname WHERE r.rightsID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			for (int i = 0; i < rights.length; i++) {
+				if(rights[i]){
+					pStatement.setInt(1, i);
+					resultSet = pStatement.executeQuery();
+					while(resultSet.next()){
+						string = new String[3];
+						string[0] = resultSet.getString(1);
+						string[1] = resultSet.getString(2);
+						string[2] = resultSet.getString(3);
+						mailList.add(string);
+					}
+				}
+			}
+			return mailList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get emails of users by rights");
+		}finally {
+			close(connection);
+		}
+		return mailList;
+	}
+
 
 	// close connection
 	private void close(Connection connection) {

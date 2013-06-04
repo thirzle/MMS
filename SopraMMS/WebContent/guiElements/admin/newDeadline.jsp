@@ -13,20 +13,20 @@
 	$( "#datepicker2" ).datepicker();
   })
   </script>
+  <form name="submit" action="/SopraMMS/Deadline" method="get">
 <table>
 	<tr>
 			<td>Neuer Stichtag:</td>
 			<td>
-				<input form="deadline" type="date" id="datepicker1" />
+				<input name="deadline" type="date" id="datepicker1" />
 			</td>
 	</tr>
 	<tr>		
 			<td>Erinnerungsbeginn:</td>
 			<td>
-				<input form="deadline" type="date" id="datepicker2" />
+				<input name="beginremember" type="date" id="datepicker2" />
 			</td>
 	</tr>
 </table>
-<form name="deadline" action="/SopraMMS/Deadline" method="get">
 	<input type="submit" value="Neuen Stichtag festlegen">
 </form>

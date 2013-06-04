@@ -214,6 +214,14 @@ public class UserAdministration {
 	public Deadline getDeadlinebyFaculty(String facultyID) {
 		return userDBController.getDeadlineByFaculty(facultyID);
 	}
+	
+	public void setDeadlinebyFaculty(Deadline deadline){
+		userDBController.setDeadlineByFaculty(deadline);
+	}
+	
+	public void updateDeadlinebyFaculty(Deadline deadline){
+		userDBController.updateDeadlineByFaculty(deadline);
+	}
 
 	public boolean checkPassword(String loginname, String password) {
 		return userDBController.checkPassword(loginname, password);
@@ -247,6 +255,11 @@ public class UserAdministration {
 		return userDBController.getAllUsers();
 	}
 
+//	get Mail: übergeben: Liste von Rechten, gibt zurück: Liste mit String Array -->Name, Vorname, Email-Adresse
+	public List<String[]> getEmails(boolean[] rights){
+		return userDBController.getEmails(rights);
+	}
+	
 	public List<String> getInstituteNames(User user) {
 		return userDBController.getInstituteNames(user.getLogin());
 	}
