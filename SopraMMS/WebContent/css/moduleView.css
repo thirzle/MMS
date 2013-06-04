@@ -22,8 +22,10 @@ textarea {
 	width: 400px;
 }
 
+
 .buttonDeleteRow{
 	width: 30px;
+	background-color: #EDECE8;
 }
 
 .buttonDeleteRow button{

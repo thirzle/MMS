@@ -29,7 +29,7 @@
 				<td class='descriptionModule'><%=description[0]%></td>
 				<td class='entryModule'><textarea
 						name='<%=description[0]%>Content' rows="1" cols="60"
-						style="resize: none;"><%=description[1]%></textarea></td>
+						style="resize: none;"><%=description[1].trim()%></textarea></td>
 			</tr>
 		</table>
 	</div>
@@ -43,7 +43,7 @@
 				<td class='descriptionModule'><%=description[0]%></td>
 				<td class='entryModule'><textarea
 						name='<%=description[0]%>Content' rows="5" cols="60"
-						style="resize: none;"><%=description[1]%></textarea></td>
+						style="resize: none;"><%=description[1].trim()%></textarea></td>
 			</tr>
 		</table>
 	</div>
@@ -56,14 +56,15 @@
 		<table>
 			<tr>
 				<td class='descriptionModule'><input name="<%=i%>Title"
-					type="text" size="20" maxlength="50" value="<%=description[0]%>">
-				</td>
-				<td class='entryModule'><textarea
-						name="<%=i%>Content" rows="5" cols="60" style="resize: none;"><%=description[1]%>
-						</textarea></td>
-				<td class='buttonDeleteRow'><button type="submit" value="<%=i%>Title" name="deleteRow">
+					type="text" size="20" maxlength="50"
+					value="<%=description[0].trim()%>"></td>
+				<td class='entryModule'><textarea name="<%=i%>Content" rows="5"
+						cols="60" style="resize: none;"><%=description[1].trim()%></textarea></td>
+				<td class='buttonDeleteRow'>
+					<button type="submit" value="<%=i%>Delete" name="deleteRow">
 						<img src="/SopraMMS/images/deleteModuleEntry.png" />
-					</button></td>
+					</button>
+				</td>
 			</tr>
 		</table>
 	</div>
