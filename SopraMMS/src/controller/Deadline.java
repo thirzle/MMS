@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 import javax.servlet.ServletException;
@@ -54,24 +54,44 @@ public class Deadline extends HttpServlet {
 				input[i] = Integer.parseInt(strtok.nextToken());
 			}
 			deadline = new Date(input[2]-1900, input[1]-1, input[0]);
-			session.setAttribute("deadline", deadline);
 			temp = request.getParameter("beginremember");
 			strtok = new StringTokenizer(temp, ".");
 			for (int i = 0; strtok.hasMoreTokens(); i++) {
 				input[i] = Integer.parseInt(strtok.nextToken());
 			}
 			beginremember = new Date(input[2]-1900, input[1]-1, input[0]);
-			session.setAttribute("beginremember",  beginremember);
-			User user = (User) session.getAttribute("user");
-			if((boolean)session.getAttribute("existingDeadline")){
-				userAdmin.updateDeadlinebyFaculty(new management.Deadline(deadline, beginremember, user.getFaculty()));
-			} else {
-				userAdmin.setDeadlinebyFaculty(new management.Deadline(deadline, beginremember, user.getFaculty()));
+			if(deadline.after(beginremember)&&deadline.after(new Date())){
+				session.setAttribute("deadline", deadline);
+				session.setAttribute("beginremember",  beginremember);
+				User user = (User) session.getAttribute("user");
+				if((boolean)session.getAttribute("existingDeadline")){
+					userAdmin.updateDeadlinebyFaculty(new management.Deadline(deadline, 
+							beginremember, user.getFaculty()));
+				} else {
+					userAdmin.setDeadlinebyFaculty(new management.Deadline(deadline, 
+							beginremember, user.getFaculty()));
+				}
+				session.removeAttribute("existingDeadline");
+				session.setAttribute("content", "showDeadline");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=done");
+			} else{
+				if ((boolean)session.getAttribute("existingDeadline")) {
+					session.setAttribute("content", "newDeadline");
+					if(deadline.before(beginremember))
+						response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=deadBeforeRemem");
+					else
+						response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=deadBeforeToday");
+					
+				} else {
+					session.setAttribute("content", "showDeadline");
+					if(deadline.before(beginremember))
+						response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=deadBeforeRemem");
+					else
+						response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=deadBeforeToday");
+				}
 			}
-			session.removeAttribute("existingDeadline");
-			session.setAttribute("content", "showDeadline");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-		}	
+			
+		}
 	} 
 
 	/**
