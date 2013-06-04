@@ -12,7 +12,7 @@ var email = false;
 var rights = false;
 var institutes = false;
 
-function checkValues() {
+function setValues() {
 	var instituteSelectselectedIndex = $('#instituteSelect').multipleSelect('getSelects');
 	var rightsSelectselectedIndex = $('#rightsSelect').multipleSelect('getSelects');
 	var instituteLabel = $("#instituteLabel");
@@ -46,6 +46,7 @@ function setBooleans() {
 	email = emailInput.val().trim() == "";
 	rights = rightsSelect.multipleSelect('getSelects')+"" == "";
 	institutes = instituteSelect.multipleSelect('getSelects')+"" == "";
+	setValues();
 	if(!firstname&&!lastname&&!email&&!rights&&!institutes) {
 		$('#saveButton').each(function() {
 	        if ($(this).attr('disabled')) {

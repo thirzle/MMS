@@ -33,10 +33,9 @@ public class NewUser extends SessionCheck {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    System.out.println("(AddUser.java): doGet() called");
+	    System.out.println("(NewUser.java): doGet() called");
 	    HttpSession session = request.getSession();
-	    boolean[] rights = {false,false,false,true,false};
-		if(isLoggedIn(request, response) && actionGranted(request, rights)) {
+		if(isLoggedIn(request, response) && actionGranted(request, 3)) {
 		    List<String> institutes = ua.getAllInstitute();
 		    session.removeAttribute("institutes");
     		session.removeAttribute("instituteNames");

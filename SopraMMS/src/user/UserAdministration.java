@@ -51,6 +51,13 @@ public class UserAdministration {
 		userDBController.changeUser(user, newUser);
 		return newUser;
 	}
+	
+	public User changeLoginname(User user, String loginname) {
+		User newUser = user;
+		newUser.setLogin(loginname);
+		userDBController.changeUser(user, newUser);
+		return newUser;
+	}
 
 	/*
 	 * Gets an object User which contains the loginname to identify the user and
