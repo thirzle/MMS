@@ -280,6 +280,19 @@ public class UserDBController {
 			while (resultSet.next()) {
 				rightsArray[resultSet.getInt("rightsID")] = true;
 			}
+			pStatement = connection.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
+			pStatement.setString(1,  loginname);
+			resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				loginname = resultSet.getString("supervisor");
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, loginname);
+				resultSet = pStatement.executeQuery();
+				// set all rights of supervisor listed in table rightsaffiliation
+				while (resultSet.next()) {
+					rightsArray[resultSet.getInt("rightsID")] = true;
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get rights of user: " + loginname);
