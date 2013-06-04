@@ -5,11 +5,11 @@
 
 <%
 	Date deadline = (java.sql.Date) session.getAttribute("deadline");
-	Date beginremember = (java.sql.Date) session
-			.getAttribute("beginremember");
-	//new SimpleDateFormat("dd.MM.yyyy").format();
-	Date today = new Date();
-	if (today.after(deadline)) {
+	Date beginremember = (java.sql.Date) session.getAttribute("beginremember");
+	if(deadline!=null&&beginremember!=null) {
+		//new SimpleDateFormat("dd.MM.yyyy").format();
+		Date today = new Date();
+		if (today.after(deadline)) {
 %>
 <h1>Keine &Auml;nderungen am Modulhandbuch mehr m&ouml;glich</h1>
 <p>
@@ -31,7 +31,8 @@
 <p>Falls Sie diesen Termin nicht einhalten können, treten Sie bitte
 	mit dem Administrator in Kontakt.</p>
 <%
-	}
+		}
+	}	
 %>
 
 
