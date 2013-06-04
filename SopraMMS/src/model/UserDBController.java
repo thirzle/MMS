@@ -33,7 +33,7 @@ public class UserDBController {
 	private static final String USER = "teamaccount";
 	private static final String PASSWORD = "6lsj7tdm";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	static final int NUMBEROFRIGHTS = 5;
+	static final int NUMBEROFRIGHTS = 7;
 
 	// establish connection
 	public Connection connect() {
