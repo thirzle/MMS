@@ -53,7 +53,7 @@
 	<table>
 		<tr>
 			<td class='descriptionModule'><input name="<%=i%>Title" type="text" size="20" maxlength="50" value="<%=description[0]%>"></td>
-			<td class='entryModule'><textarea name='<%=description[0]%>Content'
+			<td class='entryModule'><textarea name="<%=i%>Content"
 					rows="5" cols="60" style="resize: none;"><%=description[1]%></textarea></td>
 		</tr>
 	</table>
