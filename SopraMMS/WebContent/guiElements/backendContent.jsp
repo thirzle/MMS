@@ -9,13 +9,6 @@
 			.getAttribute("beginremember");
 	//new SimpleDateFormat("dd.MM.yyyy").format();
 	Date today = new Date();
-	System.out.println(new SimpleDateFormat("dd.MM.yyyy")
-			.format(deadline));
-	System.out.println(new SimpleDateFormat("dd.MM.yyyy")
-			.format(beginremember));
-	System.out
-			.println(new SimpleDateFormat("dd.MM.yyyy").format(today));
-
 	if (today.after(deadline)) {
 %>
 <h1>Keine &Auml;nderungen am Modulhandbuch mehr m&ouml;glich</h1>
@@ -32,9 +25,10 @@
 <p>
 	Bis zum
 	<%=new SimpleDateFormat("dd.MM.yyyy").format(deadline)%>
-	m&uuml;ssen &auml;nderungen oder neue Module im MMS eingereicht werden.
+	m&uuml;ssen &Auml;nderungen oder neue Module im MMS eingereicht werden,
+	im kommenden Semester wirksam zu sein.
 </p>
-<p>Falls Sie diesen Termin nicht einhalten können treten Sie bitte
+<p>Falls Sie diesen Termin nicht einhalten können, treten Sie bitte
 	mit dem Administrator in Kontakt.</p>
 <%
 	}
