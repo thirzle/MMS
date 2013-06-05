@@ -13,6 +13,7 @@ var rights = false;
 var institutes = false;
 generateLoginname();
 function setValues() {
+	alert("setValues called");
 	var instituteSelectselectedIndex = $('#instituteSelect').multipleSelect('getSelects');
 	var rightsSelectselectedIndex = $('#rightsSelect').multipleSelect('getSelects');
 	var instituteLabel = $("#instituteLabel");
@@ -20,6 +21,7 @@ function setValues() {
 	
 	instituteLabel.html(instituteSelectselectedIndex);
 	rightsLabel.html(rightsSelectselectedIndex);
+	alert("(edituser.js):instituteSelectselectedIndex:"+instituteSelectselectedIndex);
 }
 
 function initMultiSelect() {
@@ -55,8 +57,8 @@ function setBooleans() {
 	firstname = firstnameInput.val().trim() == "";
 	lastname = lastnameInput.val().trim() == "";
 	email = emailInput.val().trim() == "";
-	rights = rightsSelect.multipleSelect('getSelects')+"" == "";
-	institutes = instituteSelect.multipleSelect('getSelects')+"" == "";
+	rights = rightsSelect.multipleSelect('getSelects')+"" == ""; // geht aus irgend einem Grund nicht mehr wenn nichts ausgewählt ist.
+	institutes = instituteSelect.multipleSelect('getSelects')+"" == ""; // Das womöglich auch nicht
 	setValues();
 	if(!firstname&&!lastname&&!email&&!rights&&!institutes) {
 		$('#saveButton').each(function() {

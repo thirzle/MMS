@@ -38,11 +38,16 @@ public class LoadTable extends SessionCheck implements Servlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session = request.getSession();	
-		UserDBController controller = new UserDBController();
-		List<User> users = controller.getAllUsers();
+		List<User> users = ua.getAllUsers();
 		session.setAttribute("users", users);
-		session.setAttribute("content", "loadTable");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		try {
+			session.setAttribute("task", request.getParameter("task").toString());
+		} catch(NullPointerException e){
+			session.setAttribute("task", "edit");
+		} finally {
+			session.setAttribute("content", "loadTable");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		}
 	}
 
 	/**

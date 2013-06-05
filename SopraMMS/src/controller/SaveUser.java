@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.ibm.icu.text.SimpleDateFormat;
 
 import user.User;
 import user.UserAdministration;
@@ -32,7 +35,8 @@ public class SaveUser extends SessionCheck {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		int right = 3; // 3 entspricht dem Recht: Administrator
 		if (isLoggedIn(request, response) && actionGranted(request, right)) {
 			HttpSession session = request.getSession();
@@ -41,12 +45,23 @@ public class SaveUser extends SessionCheck {
 			try {
 				ua.sendNewPasswordLink(user.getMail());
 				session.removeAttribute("emptyInputs");
-				System.out.println("User successfully transmitted to UserAdministration!");
+				System.out
+						.println("User successfully transmitted to UserAdministration!");
+
+				// "Benutzer erstellt" wird in History des Benutzers gespeichert
+				Date currentTime = new Date();
+				java.sql.Date date = new java.sql.Date(currentTime.getYear(),
+						currentTime.getMonth(), currentTime.getDay()+2);
+				ua.insertHistory(user.getLogin(), date, user.getFirstName() + " "
+						+ user.getLastName() + " wurde erstellt");
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				session.setAttribute("errormessage",
 						"Failed to send new password link!");
-				System.out.println("(SaveUser.java.94): failed to sendNewPasswordLink to email: "+ user.getMail());
+				System.out
+						.println("(SaveUser.java.94): failed to sendNewPasswordLink to email: "
+								+ user.getMail());
 			} finally {
 				response.sendRedirect("/SopraMMS/LoadTable");
 			}
@@ -63,36 +78,43 @@ public class SaveUser extends SessionCheck {
 		List<String> rootInstitutes = ua.getAllInstitutesByName();
 		// Die Liste wird ggf. mit den Feldnamen leeren Feldern gefuellt
 		String[] names = new String[6];
-		String[] paras = {"loginCellText","firstnameCellText","lastnameCellText","emailCellText","rightsSelect","instituteSelect"};	
-		// Die erhaltenen Institute und Rechte stehen in einem String gespeichert
+		String[] paras = { "loginCellText", "firstnameCellText",
+				"lastnameCellText", "emailCellText", "rightsSelect",
+				"instituteSelect" };
+		// Die erhaltenen Institute und Rechte stehen in einem String
+		// gespeichert
 		for (int i = 0; i < paras.length; i++) {
 			names[i] = request.getParameter(paras[i]);
-		}	
-		// dieser wird hier getrennt und entsprechend Institute und Rechte extrahiert
+		}
+		// dieser wird hier getrennt und entsprechend Institute und Rechte
+		// extrahiert
 		char[] splitetInstitutes = names[5].toCharArray();
 		char[] splitetRights = names[4].toCharArray();
-		boolean[] finalRights = {false,false,false,false,false};
+		boolean[] finalRights = new boolean[7];
 		List<String> finalInstitutes = new ArrayList<String>();
 		try {
 			// Extrahiere Integer Werte um das Rechte boolean[] zu setzten
 			for (char c : splitetRights) {
 				int tmp = Character.getNumericValue(c);
 				finalRights[tmp] = true;
-				System.out.println("(SaveUser.java):RechtNr. "+tmp);
+				System.out.println("(SaveUser.java):RechtNr. " + tmp);
 			}
 			// Mapping: Integer <=> Institut
 			for (char c : splitetInstitutes) {
 				int tmp = Character.getNumericValue(c);
 				finalInstitutes.add(rootInstitutes.get(tmp));
-				System.out.println("(SaveUser.java): add: "+rootInstitutes.get(tmp));
+				System.out.println("(SaveUser.java): add: "
+						+ rootInstitutes.get(tmp));
 			}
-		} catch(ArrayIndexOutOfBoundsException e) {
+		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("(SaveUser.java): Failed to parseInt(string).");
 		}
 		// Der Benutzer mit den erhaltenen Attributen kann erzeugt werden
-		User user = new User(names[0],names[1],names[2],names[3],finalRights,finalInstitutes,"");
+		User user = new User(names[0], names[1], names[2], names[3],
+				finalRights, finalInstitutes, "");
 		user.setPassword(names[0]);
-		System.out.println("create user "+user.toString());
+		System.out.println("create user " + user.toString());
+
 		return user;
 	}
 

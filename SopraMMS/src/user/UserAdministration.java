@@ -1,6 +1,7 @@
 package user;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -282,6 +283,10 @@ public class UserAdministration {
 	public List<String[]> getNewsByType(int type) {
 		return userDBController.getNews(type);
 
+	}
+	
+	public void insertHistory(String loginname, Date date, String content){
+		userDBController.insertHistory(loginname, date, content);
 	}
 
 	public void deleteNews(String title) {

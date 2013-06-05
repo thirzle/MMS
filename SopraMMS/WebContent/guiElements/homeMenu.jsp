@@ -1,4 +1,4 @@
-
+<%@page import="user.User" %>
 <%
 	//Initialization
 	User user = null;
@@ -7,34 +7,34 @@
 	}
 %>
 
-<%@ include file="/guiElements/frontend/courseSelection.jsp"%>
+<jsp:include page="/guiElements/frontend/courseSelection.jsp"></jsp:include>
 
 <%
 	if (user != null) {
 		boolean[] rights = user.getRights();
 		if (rights[6]) {
 %>
-<%@ include file="/guiElements/admin/adminMenu.jsp"%>
+<jsp:include page="/guiElements/admin/adminMenu.jsp"></jsp:include>
 <%
 	}
 		if(rights[5]){
 %>
-<%@include file="/guiElements/editor/editorMenu.jsp" %>
+<jsp:include page="/guiElements/editor/editorMenu.jsp" ></jsp:include>
 <%
 		}
 		if (rights[4]) {
 %>
-<%@ include file="/guiElements/coordinator/coordinatorMenu.jsp"%>
+<jsp:include page="/guiElements/coordinator/coordinatorMenu.jsp"></jsp:include>
 <%
 	}
 		if (rights[3]) {
 %>
-<%@ include file="/guiElements/dez2/dez2Menu.jsp"%>
+<jsp:include page="/guiElements/dez2/dez2Menu.jsp"></jsp:include>
 <%
 	}
 		if (rights[2]) {
 %>
-<%@ include file="/guiElements/modulemanager/modulemanagerMenu.jsp"%>
+<jsp:include page="/guiElements/modulemanager/modulemanagerMenu.jsp"></jsp:include>
 <%
 	}
 		if (rights[1]) {
@@ -45,7 +45,7 @@
 		if (rights[0]) {
 %>
 
-<%@ include file="/guiElements/generally/generallyMenu.jsp"%>
+<jsp:include page="/guiElements/generally/generallyMenu.jsp"></jsp:include>
 <%
 	} else {
 %>
@@ -56,12 +56,13 @@
 %>
 <%
 	if (user == null) {
+	session.removeAttribute("loginname");
 %>
-<%@ include file="/guiElements/Login/login.jsp"%>
+<jsp:include page="/guiElements/Login/login.jsp"></jsp:include>
 <%
 	} else {
 %>
-<%@ include file="/guiElements/Login/logout.jsp"%>
+<jsp:include page="/guiElements/Login/logout.jsp"></jsp:include>
 <%
 	}
 %>

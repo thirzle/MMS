@@ -52,6 +52,7 @@ public class EditUser extends SessionCheck implements Servlet {
 	    	}
 	    	try {
 		    	loginname = request.getParameter("selectedRowID").toString();
+		    	System.out.println("(EditUser.java):selectedRowID: "+loginname);
 		    	User user = ua.getUser(loginname);
 		    	if(user != null) {
 		    		session.removeAttribute("emptyInputs");
