@@ -1,27 +1,42 @@
 @CHARSET "ISO-8859-1";
 
 .moduleEntry {
-	padding: 2px 0px 2px 0px;
+	padding: 2px 0px 5px 0px;
 }
 
 table {
-	border: 1px solid #C4C0B4;
-}
-
-textarea {
-	border: none;
+	border: 1px solid #C4C0B4;	
 }
 
 .descriptionModule {
-	width: 160px;
+	width: 150px;
 	background-color: #EDECE8;
 	padding: 0px 10px 0px 10px;
+	margin: 0px 0px 0px 0px;	
+}
+
+.descriptionModule input{
+	border: 1px solid #C4C0B4;
+	width: 100%;
+	
 }
 
 .entryModule {
-	width: 400px;
+	
 }
 
+.entryModule  textarea {
+	border: none;
+	resize: none;
+	width: 520px;
+	height: 80px;
+}
+
+ .entryModule input {
+	border: none;
+	resize: none;
+	width: 520px;
+}
 
 .buttonDeleteRow{
 	width: 30px;
