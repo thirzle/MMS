@@ -1,27 +1,62 @@
 @CHARSET "ISO-8859-1";
 
 .moduleEntry {
-	padding: 2px 0px 2px 0px;
+	padding: 2px 0px 5px 0px;
 }
 
 table {
-	border: 1px solid #C4C0B4;
-}
-
-textarea {
-	border: none;
+	border: 1px solid #C4C0B4;	
 }
 
 .descriptionModule {
-	width: 160px;
+	width: 150px;
 	background-color: #EDECE8;
 	padding: 0px 10px 0px 10px;
+	margin: 0px 0px 0px 0px;	
+}
+
+.descriptionModule input{
+	border: 1px solid #C4C0B4;
+	width: 100%;
+
 }
 
 .entryModule {
-	width: 400px;
+width: 520px;
 }
 
+.entryModule  textarea {
+	border: none;
+	resize: none;
+	height: 80px;
+	width: 520px;
+}
+
+ .entryModule input {
+	border: none;
+	resize: none;
+	width: 520px;
+
+}
+
+.effortEntry{
+
+	padding: 4px 4px 4px 0px;
+}
+
+.effortEntry table{
+	border: none;
+}
+
+.effortEntryTitel input{
+	width: 150px;
+	border: 1px solid #C4C0B4;
+}
+
+.effortEntryTime input{
+	width: 50px;
+	border: 1px solid #C4C0B4;
+}
 
 .buttonDeleteRow{
 	width: 30px;
