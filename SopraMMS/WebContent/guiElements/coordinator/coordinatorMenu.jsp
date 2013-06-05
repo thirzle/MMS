@@ -7,7 +7,7 @@
 		</div>
 		<div class="expandCoordinatorModule">
 			<ul class="subNav">
-				<li id="editModule"><a>Module
+				<li><a>Module
 						bearbeiten</a></li>
 			</ul>
 		</div>

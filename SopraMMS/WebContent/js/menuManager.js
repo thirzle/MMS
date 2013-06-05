@@ -179,3 +179,75 @@ $(document).ready(function() {
 		$(".expandMessages").toggleClass("expanded", true);
 	}
 });
+// Lebenslauf
+$(document).ready(function() {
+	$(".headerNavResume").click(function(e) {
+		var exp = sessionStorage.getItem('expResume');
+		if (exp == 'true') {
+			$(".expandResume").toggleClass("expanded", false);
+			sessionStorage.setItem('expResume', 'false');
+		} else {
+			$(".expandResume").toggleClass("expanded", true);
+			sessionStorage.setItem('expResume', 'true');
+		}
+		$(".expandResume").children("ul:first").slideToggle("fast");
+	});
+});
+
+$(document).ready(function() {
+	var exp = sessionStorage.getItem('expResume');
+	if (exp == 'true') {
+		$(".expandResume").toggleClass("expanded", false);
+		$(".expandResume").children("ul:first").slideToggle(0);
+	} else {
+		$(".expandResume").toggleClass("expanded", true);
+	}
+});
+// Modulverantwortlicher
+$(document).ready(function() {
+	$(".headerNavEditorModule").click(function(e) {
+		var exp = sessionStorage.getItem('expEditorModule');
+		if (exp == 'true') {
+			$(".expandEditorModule").toggleClass("expanded", false);
+			sessionStorage.setItem('expEditorModule', 'false');
+		} else {
+			$(".expandEditorModule").toggleClass("expanded", true);
+			sessionStorage.setItem('expEditorModule', 'true');
+		}
+		$(".expandEditorModule").children("ul:first").slideToggle("fast");
+	});
+});
+
+$(document).ready(function() {
+	var exp = sessionStorage.getItem('expEditorModule');
+	if (exp == 'true') {
+		$(".expandEditorModule").toggleClass("expanded", false);
+		$(".expandEditorModule").children("ul:first").slideToggle(0);
+	} else {
+		$(".expandEditorModule").toggleClass("expanded", true);
+	}
+});
+// Koordinator
+$(document).ready(function() {
+	$(".headerNavCoordinatorModule").click(function(e) {
+		var exp = sessionStorage.getItem('expCoordModule');
+		if (exp == 'true') {
+			$(".expandCoordinatorModule").toggleClass("expanded", false);
+			sessionStorage.setItem('expCoordinatorModule', 'false');
+		} else {
+			$(".expandCoordinatorModule").toggleClass("expanded", true);
+			sessionStorage.setItem('expCoordModule', 'true');
+		}
+		$(".expandCoordinatorModule").children("ul:first").slideToggle("fast");
+	});
+});
+
+$(document).ready(function() {
+	var exp = sessionStorage.getItem('expCoordModule');
+	if (exp == 'true') {
+		$(".expandCoordinatorModule").toggleClass("expanded", false);
+		$(".expandCoordinatorModule").children("ul:first").slideToggle(0);
+	} else {
+		$(".expandCoordinatorModule").toggleClass("expanded", true);
+	}
+});
