@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.Servlet;
@@ -35,8 +36,16 @@ public class DeleteUser extends SessionCheck implements Servlet {
     	HttpSession session = request.getSession();
 		if(isLoggedIn(request, response)&&actionGranted(request, 3)) {
 	    	User user =(User) session.getAttribute("userToDelete");
+	    	
+	    	// insert into History "User removed"
+			/*Date currentTime = new Date();
+			java.sql.Date date = new java.sql.Date(currentTime.getYear(),
+					currentTime.getMonth(), currentTime.getDay()+2);
+			ua.insertHistory(user.getLogin(), date, "Wurde geloescht");*/
+			
 	    	ua.deleteUser(user);
 			response.sendRedirect("/SopraMMS/LoadTable");
+			
     	} else {
     		session.removeAttribute("userToDelete");
     		session.setAttribute("content","start");

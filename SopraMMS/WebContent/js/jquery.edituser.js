@@ -50,15 +50,19 @@ function generateLoginname() {
 }
 
 body.click(function() {
+	alert("body clicked");
 	setBooleans();
 });
 
 function setBooleans() {
+	alert("setBooleans");
 	firstname = firstnameInput.val().trim() == "";
 	lastname = lastnameInput.val().trim() == "";
 	email = emailInput.val().trim() == "";
-	rights = rightsSelect.multipleSelect('getSelects')+"" == ""; // geht aus irgend einem Grund nicht mehr wenn nichts ausgewählt ist.
-	institutes = instituteSelect.multipleSelect('getSelects')+"" == ""; // Das womöglich auch nicht
+	alert("(edituser.js): rightsSelect:"+rightsSelect.multipleSelect('getSelects'));
+	rights = rightsSelect.multipleSelect('getSelects')+"" == "";
+	alert("(edituser.js):rights:"+rights);
+	institutes = instituteSelect.multipleSelect('getSelects')+"" == "";
 	setValues();
 	if(!firstname&&!lastname&&!email&&!rights&&!institutes) {
 		$('#saveButton').each(function() {

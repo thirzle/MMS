@@ -4,6 +4,11 @@
 		$(".contentBox").load("/SopraMMS/guiElements/generally/changePassword.jsp");
 		});
 	});
+	$(document).ready(function() {
+		$(".changeName").click(function(e) {
+		$(".contentBox").load("/SopraMMS/guiElements/generally/changeName.jsp");
+		});
+	});
 	//Lisa
 	$(document).ready(function() {
 		$(".newMsg").click(function(e) {
@@ -32,6 +37,7 @@
 		<div class="expandAccount">
 			<ul class="subNav">
 				<li class=changePassword>Passwort &auml;ndern</li>
+				<li class=changeName>Name &auml;ndern</li>
 				<form id="showR" action="/SopraMMS/ShowRepresentative" method="get">
 					<li class=showRepresentative onclick="showR.submit()">Stellvertreter</li>
 				</form>

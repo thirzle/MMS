@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
 
 import javax.servlet.ServletException;
@@ -71,6 +72,12 @@ public class AppointRepresentative extends HttpServlet {
 				mail.send_mail("Neuer Stellvertreter", strings[2], content);
 			}
 			request.getSession().setAttribute("content", "applyRepresentative");
+			
+			// insert into History "Representative appointed"
+			Date currentTime = new Date();
+			java.sql.Date date = new java.sql.Date(currentTime.getYear(),
+					currentTime.getMonth(), currentTime.getDay()+2);
+			uAdmin.insertHistory(user.getLogin(), date, "Hat "+firstNameRep+" "+lastNameRep+" als Stellvertreter beantragt.");
 		}
 		// if representative exists
 		else {
@@ -83,6 +90,11 @@ public class AppointRepresentative extends HttpServlet {
 				uAdmin.changeRepresentative(user, userR.getLogin());
 				request.getSession().setAttribute("content",
 						"createdRepresentative");
+				// insert into History "Representative created"
+				Date currentTime = new Date();
+				java.sql.Date date = new java.sql.Date(currentTime.getYear(),
+						currentTime.getMonth(), currentTime.getDay()+2);
+				uAdmin.insertHistory(user.getLogin(), date, "Hat "+firstNameRep+" "+lastNameRep+" als Stellvertreter ernannt.");
 			}
 		}
 		request.getSession().setAttribute("generallyMenu", "open");
