@@ -1,7 +1,7 @@
 
 
 <div class="menuBox">
-	<h1>Modulverwaltung</h1>
+	<h1>Modulverantwortlicher</h1>
 
 
 	<ul class="nav">

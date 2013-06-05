@@ -915,6 +915,23 @@ public class UserDBController {
 		return mailList;
 	}
 
+	public void insertHistory(String loginname, Date date, String content){
+		Connection connection = connect();
+		query = "INSERT INTO history (loginname, date, content) VALUES (?,?,?)";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			pStatement.setDate(2, date);
+			pStatement.setString(3, content);
+			pStatement.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't insert history: "+content+" of user: "+loginname);
+		}finally {
+			close(connection);
+		}
+	}
 
 	// close connection
 	private void close(Connection connection) {

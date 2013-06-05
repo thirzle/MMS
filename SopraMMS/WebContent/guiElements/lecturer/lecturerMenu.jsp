@@ -2,12 +2,12 @@
 	<h1>Dozent</h1>
 
 	<ul class="nav">
-		<div class="headerNavLecturerResume">
+		<div class="headerNavResume">
 			<li>Lebenslauf</li>
 		</div>
-		<div class="expandLecturerResume">
+		<div class="expandResume">
 			<ul class="subNav">
-				<li id="resume"><a>Lebenslauf
+				<li><a>Lebenslauf
 						bearbeiten</a></li>
 			</ul>
 		</div>
