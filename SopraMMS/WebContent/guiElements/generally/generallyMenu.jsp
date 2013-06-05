@@ -10,9 +10,9 @@
 		});
 	});
 	//Lisa
-	$(document).ready(function() {
-		$(".newMsg").click(function(e) {
-		$(".contentBox").load("/SopraMMS/guiElements/generally/newMessage.jsp");});});
+	//$(document).ready(function() {
+		//$(".newMsg").click(function(e) {
+		//$(".contentBox").load("/SopraMMS/guiElements/generally/newMessage.jsp");//});});
 </script>
 
 <%
@@ -48,7 +48,8 @@
 </div>
 <div class="expandMessages">
 	<ul class="subNav">
-		<li class=newMsg><a href="/SopraMMS/NewMessage">Neue Nachricht</a></li>
+		<!-- <li class=newMsg><a href="/SopraMMS/NewMessage">Neue Nachricht</a></li> -->
+		<li id="newMsg"><a href="/SopraMMS/LoadTable?task=mail">Neue Nachricht</a></li>
 	</ul>
 
 	</ul>

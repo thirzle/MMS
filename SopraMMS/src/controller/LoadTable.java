@@ -49,10 +49,8 @@ public class LoadTable extends SessionCheck implements Servlet {
 		String task = "";
 		try {
 			task = request.getParameter("task").toString();
-			if(task == "mail") {
-				// TODO Lisa bitte noch den content value angeben, also welche seite in contentBox geladen werden soll...
-				session.setAttribute("content", ""); // <----- hier setzten
-											//   ^------ hier setzten
+			if(task.equals("mail")) {
+				session.setAttribute("content", "newMessage"); 
 			} else if( task.equals("edit") ) {
 				session.setAttribute("task", "edit");
 				session.setAttribute("content", "loadTable");
