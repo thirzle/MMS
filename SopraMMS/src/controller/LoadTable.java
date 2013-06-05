@@ -59,7 +59,6 @@ public class LoadTable extends SessionCheck implements Servlet {
 				session.setAttribute("content", "loadTable");
 			}
 		} catch(NullPointerException e){
-			System.out.println("task was null");
 			session.setAttribute("task", "edit");
 			session.setAttribute("content", "loadTable");
 		} finally {

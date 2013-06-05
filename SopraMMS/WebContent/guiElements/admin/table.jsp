@@ -10,7 +10,6 @@
 	try {
 	    users = (List<User>) session.getAttribute("users");
 		task = session.getAttribute("task").toString().trim();
-		System.out.println("(table.jsp):task="+task);
 		String[] status = {"Recht auf Stellv.","Dozent","Modulverantwortl.","Dezernat II","Koordinator","Freigabeberecht.","Administrator"};
 %>
 <form id="edit" action="/SopraMMS/EditUser" method="get"></form>
