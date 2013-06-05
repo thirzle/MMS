@@ -25,6 +25,7 @@ $(document).ready(function() {
 						bearbeiten</a></li>
 				<li id="deleteUser"><a href="/SopraMMS/LoadTable?task=delete">Benutzer
 						löschen</a></li>
+				<li id="showHistory"><a href="/SopraMMS/ShowHistory">Historie</a></li>
 			</ul>
 		</div>
 		
