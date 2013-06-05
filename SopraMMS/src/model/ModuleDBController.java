@@ -1050,6 +1050,61 @@ public class ModuleDBController {
 		}
 		return null;
 	}
+	
+	
+	public List<String> getSubjects() {
+		List<String> subjects = new LinkedList<String>();
+		Connection connection = connect();
+		query = "SELECT * FROM subjects";
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				subjects.add(resultSet.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(connection);
+		}
+		return subjects;
+	}
+	
+	
+	public boolean createSubject(String subject){
+		Connection connection = connect();
+		query = "INSERT INTO subjects VALUES (?)";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, subject);
+			return pStatement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
+	
+	public boolean deleteSubject(String subject){
+		Connection connection = connect();
+		query = "DELETE FROM subjects WHERE name = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, subject);
+			return pStatement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
 
 	public void createModuleMaunal(String version, String courseID,
 			String degree, String creationdate, String modificationdate,
