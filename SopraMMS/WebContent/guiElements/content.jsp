@@ -13,6 +13,7 @@
 	}
 
 	System.out.println("(content.jsp): Seiteninhalt: " + contentPage);
+	System.out.println("(content.jsp): Task: "+ session.getAttribute("task"));
 	if (contentPage.equals("start")) {
 %>
 <jsp:include page="/guiElements/frontend/frontendContent.jsp"></jsp:include>

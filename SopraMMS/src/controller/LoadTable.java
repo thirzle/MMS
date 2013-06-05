@@ -40,12 +40,29 @@ public class LoadTable extends SessionCheck implements Servlet {
     	HttpSession session = request.getSession();	
 		List<User> users = ua.getAllUsers();
 		session.setAttribute("users", users);
+		session.removeAttribute("content");
+		String task = "";
 		try {
-			session.setAttribute("task", request.getParameter("task").toString());
+			task = request.getParameter("task").toString();
+			if(task == "mail") {
+				// TODO Lisa bitte noch den content value angeben, also welche seite in contentBox geladen werden soll...
+				session.setAttribute("content", ""); // <----- hier setzten
+											//   ^------ hier setzten
+			} else if( task.equals("edit") ) {
+				session.setAttribute("task", "edit");
+				session.setAttribute("content", "loadTable");
+			} else if( task.equals("delete") ) {
+				session.setAttribute("task", "delete");
+				session.setAttribute("content", "loadTable");
+			} else {
+				session.setAttribute("task", "edit");
+				session.setAttribute("content", "loadTable");
+			}
 		} catch(NullPointerException e){
+			System.out.println("task was null");
 			session.setAttribute("task", "edit");
-		} finally {
 			session.setAttribute("content", "loadTable");
+		} finally {
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
 	}

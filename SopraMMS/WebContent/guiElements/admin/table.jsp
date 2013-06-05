@@ -10,6 +10,7 @@
 	try {
 	    users = (List<User>) session.getAttribute("users");
 		task = session.getAttribute("task").toString().trim();
+		System.out.println("(table.jsp):task="+task);
 		String[] status = {"Recht auf Stellv.","Dozent","Modulverantwortl.","Dezernat II","Koordinator","Freigabeberecht.","Administrator"};
 %>
 <form id="edit" action="/SopraMMS/EditUser" method="get"></form>
@@ -32,7 +33,7 @@
 		<%	
 			for(int i=0; i<users.size();i++) {
 		%>
-		<tr><%System.out.println(users.get(i).getLogin()); %>
+		<tr>
 			<td><input form='<%=task %>' type="radio" name="selectedRowID" value='<%=users.get(i).getLogin() %>'/></td>
 			<td><%=users.get(i).getLogin()%></td>
 			<td><%=users.get(i).getFirstName()%></td>
