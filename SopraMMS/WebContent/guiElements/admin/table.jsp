@@ -5,12 +5,15 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="user.User"%>
 <%
-	List<User> users;
+	List<User> users = null;
+	String task = "";
 	try {
 	    users = (List<User>) session.getAttribute("users");
 		String[] status = {"Modulver.","Redakteur","Administrator","Recht auf Stellv.","Dezernat II","right[5]","right[6]"};
+		task = session.getAttribute("task").toString().trim();
 %>
-<form name="editUserForm" action="/SopraMMS/EditUser" method="get">
+<form id="edit" action="/SopraMMS/EditUser" method="get"></form>
+<form id="delete" action="/SopraMMS/DeleteUser" method="get"></form>
 
 <table id="userTable" class="tablesorter">
 	<thead>
@@ -29,8 +32,8 @@
 		<%	
 			for(int i=0; i<users.size();i++) {
 		%>
-		<tr>
-			<td><input type="radio" name="selectedRowID" value='<%=users.get(i).getLogin() %>'/></td>
+		<tr><%System.out.println(users.get(i).getLogin()); %>
+			<td><input form='<%=task %>' type="radio" name="selectedRowID" value='<%=users.get(i).getLogin() %>'/></td>
 			<td><%=users.get(i).getLogin()%></td>
 			<td><%=users.get(i).getFirstName()%></td>
 			<td><%=users.get(i).getLastName()%></td>
@@ -67,9 +70,13 @@
 		%>
 	</tbody>
 </table>
-	<input type="submit" value="Bearbeiten"/>
-</form>
-<%if(session.getAttribute("errormessage") != null) { %>
+<%
+if(task.equals("edit")) { %>
+	<input form="edit" type="submit" value="Bearbeiten"/>
+<%} else if(task.equals("delete")) { %>
+	<input form="delete" type="submit" value="Löschen"/>
+<%}
+if(session.getAttribute("errormessage") != null) { %>
 	<p style="color: #FF0000"><%= session.getAttribute("errormessage") %></p>
 <%} %>
 
