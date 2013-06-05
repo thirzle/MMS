@@ -1,29 +1,29 @@
-<%@page import="java.util.ArrayList"%>
+<%@ page import="java.util.List, java.util.ArrayList"%>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/moduleView.css">
 <%
 	ArrayList<String[]> fieldsTypeA = new ArrayList();
 	fieldsTypeA.addAll((ArrayList<String[]>) session
-			.getAttribute("fieldsTypeA"));
+	.getAttribute("fieldsTypeA"));
 
 	ArrayList<String[]> fieldsTypeB = new ArrayList();
 	fieldsTypeB.addAll((ArrayList<String[]>) session
-			.getAttribute("fieldsTypeB"));
+	.getAttribute("fieldsTypeB"));
 
 	ArrayList<String[]> fieldsTypeC = new ArrayList();
 	fieldsTypeC.addAll((ArrayList<String[]>) session
-			.getAttribute("fieldsTypeC"));
+	.getAttribute("fieldsTypeC"));
 
 	ArrayList<String[]> fieldsTypeD = new ArrayList();
 	fieldsTypeD.addAll((ArrayList<String[]>) session
-			.getAttribute("fieldsTypeD"));
+	.getAttribute("fieldsTypeD"));
 %>
 <h1>Neues Modul erstellen</h1>
 
 <form action="/SopraMMS/CreateModule?newModule=newRow" method="get">
 	<%
 		for (int i = 0; i < fieldsTypeA.size(); i++) {
-			String[] description = fieldsTypeA.get(i);
+		String[] description = fieldsTypeA.get(i);
 	%>
 	<div class='moduleEntry'>
 		<table>
@@ -45,7 +45,7 @@
 						<table>
 							<%
 								for (int i = 0; i < fieldsTypeD.size(); i++) {
-									String[] description = fieldsTypeD.get(i);
+														String[] description = fieldsTypeD.get(i);
 							%>
 							<tr>
 								<td class="effortEntryTitel"><input name='<%=i%>TitleD'
@@ -62,9 +62,34 @@
 
 		</table>
 	</div>
+
+	<div class='moduleEntry'>
+		<table>
+			<tr>
+				<td class='descriptionModule'>Institut</td>
+				<td class='entryModule'>
+					<%
+						List<String[]> institutes = (List<String[]>) session
+											.getAttribute("institutes");
+					%> <select name='selectedInstitute' id="instituteSelect">
+						<%
+							for (int i = 0; i < institutes.size(); i++) {
+						%>
+						<option  value='<%=institutes.get(i)[0]%>'><%=institutes.get(i)[1]%></option>
+
+						<%
+							}
+						%>
+				</select>
+				</td>
+			</tr>
+		</table>
+
+	</div>
+
 	<%
 		for (int i = 0; i < fieldsTypeB.size(); i++) {
-			String[] description = fieldsTypeB.get(i);
+		String[] description = fieldsTypeB.get(i);
 	%>
 	<div class='moduleEntry'>
 		<table>
@@ -76,8 +101,8 @@
 	</div>
 	<%
 		}
-		for (int i = 0; i < fieldsTypeC.size(); i++) {
-			String[] description = fieldsTypeC.get(i);
+			for (int i = 0; i < fieldsTypeC.size(); i++) {
+		String[] description = fieldsTypeC.get(i);
 	%>
 	<div class='moduleEntry'>
 		<table>
@@ -94,8 +119,8 @@
 		</table>
 	</div>
 	<%
-			}
-%>
+		}
+	%>
 
 	<button type="submit" value="addRow" name="createModule">Zeile
 		hinzuf&uuml;gen</button>
@@ -105,3 +130,5 @@
 		einreichen</button>
 
 </form>
+
+

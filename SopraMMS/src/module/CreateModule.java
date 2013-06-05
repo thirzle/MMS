@@ -2,6 +2,7 @@ package module;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import user.UserAdministration;
 
 import management.Entry;
 import management.ModuleAdministration;
@@ -37,7 +40,16 @@ public class CreateModule extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
+		UserAdministration ua = new UserAdministration();
+		ModuleAdministration ma = new ModuleAdministration();
 		HttpSession session = request.getSession();
+
+		if (session.getAttribute("institutes") == null) {
+
+			List<String[]> institutes = ua.getAllInstitutesByName(session
+					.getAttribute("loginname").toString());
+			session.setAttribute("institutes", institutes);
+		}
 
 		// TypA --> Vordefinierte Pflichfelder Feld
 		// TypB --> Vordefinierte Pflichfelder Textarea
@@ -47,6 +59,9 @@ public class CreateModule extends HttpServlet {
 		ArrayList<String[]> fieldsTypeB = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeC = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeD = new ArrayList<>();
+		
+		String institute = request.getParameter("selectedInstitute");
+		System.out.println("(CreateModule.java) selectedInstituteID: "+institute);
 		// Fuelle Liste mit Standartwerten falls das Session Attribut noch nicht
 		// besteht, anderenfalls kopiere das Session Attribut in das lokale
 		// Attribut
@@ -55,8 +70,7 @@ public class CreateModule extends HttpServlet {
 		if (session.getAttribute("fieldsTypeA") == null) {
 			fieldsTypeA.add(new String[] { "K&uuml;rzel", "" });
 			fieldsTypeA.add(new String[] { "Titel", "" });
-			fieldsTypeA.add(new String[] { "Dauer", "" });
-			fieldsTypeA.add(new String[] { "LP", "" });
+			fieldsTypeA.add(new String[] { "Verantwortlicher", "" });
 			fieldsTypeA.add(new String[] { "Turnus", "" });
 			fieldsTypeA.add(new String[] { "Sprache", "" });
 			fieldsTypeA.add(new String[] { "Pr&uuml;fungsform", "" });
@@ -153,7 +167,6 @@ public class CreateModule extends HttpServlet {
 			}
 			// Bei Klick Module Speichern
 			else if (request.getParameter("createModule").equals("sendModule")) {
-				ModuleAdministration ma = new ModuleAdministration();
 
 				ArrayList<Entry> module = new ArrayList<>();
 
@@ -172,27 +185,20 @@ public class CreateModule extends HttpServlet {
 							strings[1]);
 					module.add(entry);
 				}
-				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
-
-				System.out.println("############ Modul #############");
-				for (Entry entry : module) {
-					System.out.println("-> " + entry.getTitle());
-					System.out.println("     " + entry.getContent());
-				}
-				System.out.println("################################");
-
+				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;				
+			
 				// TODO Modul an DB uebertragen
 				// Spezifische Felder für Turnus, LP, Aufwand, Studiengang
-
+				ma.createModule(module, session.getAttribute("loginname").toString(), institute);
 				// TODO pruefen ob Pflichfelder befuellt sind
 
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true");
 			}
 		}
 		// Bei Klick entsprechende Zeile loeschen
-		else if (request.getParameter("deleteRow")!=null) {
-			int deleteEntry = Integer.parseInt(request.getParameter(
-					"deleteRow").replace("Delete", ""));
+		else if (request.getParameter("deleteRow") != null) {
+			int deleteEntry = Integer.parseInt(request
+					.getParameter("deleteRow").replace("Delete", ""));
 			fieldsTypeC.remove(deleteEntry);
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}

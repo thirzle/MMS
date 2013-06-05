@@ -2,6 +2,7 @@ package user;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -247,7 +248,7 @@ public class UserAdministration {
 		return userDBController.getFacultiesID();
 	}
 
-	public List<String> getAllInstitutesByName(String loginname) {
+	public List<String[]> getAllInstitutesByName(String loginname) {
 		return userDBController.getInstituteNames(loginname);
 	}
 
@@ -269,7 +270,12 @@ public class UserAdministration {
 	}
 	
 	public List<String> getInstituteNames(User user) {
-		return userDBController.getInstituteNames(user.getLogin());
+		List<String[]> listA = userDBController.getInstituteNames(user.getLogin());
+		List<String> listB = new ArrayList<>();
+		for (String[] strings : listA) {
+			listB.add(strings[1]);
+		}
+		return listB;
 	}
 
 	public List<String> getCoursesByFaculty(String facultyID) {
