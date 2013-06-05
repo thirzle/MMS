@@ -64,7 +64,8 @@ public class ModuleDBController {
 			ResultSet resultSet = statement.executeQuery(query);
 			// get all entries except of course entries
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"),
+				moduleList.add(new Module(resultSet.getInt("moduleID"), 
+						resultSet.getInt("version"),
 						resultSet.getString("name"), resultSet
 								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
@@ -110,7 +111,8 @@ public class ModuleDBController {
 			pStatement.setString(1, institute);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"),
+				moduleList.add(new Module(resultSet.getInt("moduleID"), 
+						resultSet.getInt("version"),
 						resultSet.getString("name"), resultSet
 								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
@@ -147,7 +149,8 @@ public class ModuleDBController {
 			pStatement.setString(2, degree);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				module = new Module(resultSet.getInt("moduleID"),
+				module = new Module(resultSet.getInt("moduleID"), 
+						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
@@ -193,6 +196,7 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getInt("version"),
 						resultSet.getString("name"), resultSet
 								.getDate("creationdate"), resultSet
 								.getDate("modificationdate"), resultSet
@@ -229,6 +233,7 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
@@ -272,6 +277,7 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
@@ -305,6 +311,7 @@ public class ModuleDBController {
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
@@ -351,6 +358,7 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
@@ -398,6 +406,7 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
@@ -445,6 +454,7 @@ public class ModuleDBController {
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
@@ -492,6 +502,7 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
@@ -539,6 +550,7 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				module = new Module(resultSet.getInt("moduleID"),
+						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
 						resultSet.getDate("modificationdate"),
@@ -658,10 +670,11 @@ public class ModuleDBController {
 				+ "FROM entry AS e JOIN latestentry AS l ON e.entryID = l.entryID "
 				+ "AND e.version = l.version JOIN textualentry AS t ON "
 				+ "e.entryID = t.entryID AND e.version = t.version "
-				+ "WHERE moduleID = ?";
+				+ "WHERE moduleID = ? AND modulversion = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setInt(1, m.getModuleID());
+			pStatement.setInt(2, m.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				entries.add(new TextualEntry(resultSet.getInt("version"),
@@ -689,10 +702,11 @@ public class ModuleDBController {
 				+ " FROM courseentry AS c JOIN latestentry AS l"
 				+ " ON c.entryID = l.entryID AND c.version = l.version JOIN entry "
 				+ "AS e on c.entryID = e.entryID AND c.version = e.version"
-				+ " WHERE e.moduleID = ?";
+				+ " WHERE e.moduleID = ? AND e.moduleversion = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setInt(1, m.getModuleID());
+			pStatement.setInt(2, m.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				courses = new CourseEntry(resultSet.getInt("version"),
@@ -724,10 +738,12 @@ public class ModuleDBController {
 		query = "SELECT e.*,  ef.presencetime "
 				+ "FROM entry AS e JOIN effortentry AS ef ON e.entryID = ef.entryID"
 				+ " AND e.version = ef.version JOIN latestentry AS l ON "
-				+ "ef.entryID = l.entryID AND ef.version = l.version WHERE e.moduleID = ?";
+				+ "ef.entryID = l.entryID AND ef.version = l.version " +
+				"WHERE e.moduleID = ? AND e.moduleversion = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setInt(1, m.getModuleID());
+			pStatement.setInt(2, m.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				effort = new EffortEntry(resultSet.getInt("version"), resultSet
@@ -837,12 +853,13 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				modulemanual.add(new Module(resultSet.getInt("moduleID"), 
+						resultSet.getInt("version"),
 						resultSet.getString("name"), 
 						resultSet.getDate("creationdate"), 
 						resultSet.getDate("modificationdate"), 
 						resultSet.getBoolean("approvalstatus"), 
 						resultSet.getString("instituteID"), 
-						resultSet.getString("subject"), 
+						resultSet.getString("subjectname"), 
 						resultSet.getString("modificationauthor")));
 			}
 			for (Module module : modulemanual) {
@@ -1033,6 +1050,61 @@ public class ModuleDBController {
 		}
 		return null;
 	}
+	
+	
+	public List<String> getSubjects() {
+		List<String> subjects = new LinkedList<String>();
+		Connection connection = connect();
+		query = "SELECT * FROM subjects";
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				subjects.add(resultSet.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(connection);
+		}
+		return subjects;
+	}
+	
+	
+	public boolean createSubject(String subject){
+		Connection connection = connect();
+		query = "INSERT INTO subjects VALUES (?)";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, subject);
+			return pStatement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
+	
+	public boolean deleteSubject(String subject){
+		Connection connection = connect();
+		query = "DELETE FROM subjects WHERE name = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, subject);
+			return pStatement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
 
 	public void createModuleMaunal(String version, String courseID,
 			String degree, String creationdate, String modificationdate,

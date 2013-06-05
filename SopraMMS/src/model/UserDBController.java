@@ -80,6 +80,38 @@ public class UserDBController {
 		}
 		return userList;
 	}
+	
+	
+	// get all user listed in database
+	public List<User> getAllUsersQuick() {
+		Connection connection = connect();
+		List<User> userList = new LinkedList<User>();
+		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
+		List<String> instituteList = new LinkedList<String>();
+		try {
+			query = "SELECT * FROM user";
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				String loginname = resultSet.getString("loginname");
+				rightsArray = getRights(loginname);
+				instituteList = getInstitutesByName(loginname);
+				User user = new User(loginname,
+						resultSet.getString("firstname"),
+						resultSet.getString("lastname"),
+						resultSet.getString("mail"), rightsArray,
+						instituteList, resultSet.getString("representative"));
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get all Users");
+		} finally {
+			close(connection);
+		}
+		return userList;
+	}
+	
 
 	// find specified user by loginname
 	public User getUser(String loginname) {

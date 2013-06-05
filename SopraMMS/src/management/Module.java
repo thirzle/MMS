@@ -10,6 +10,7 @@ public class Module {
 	private Date modificationDate;
 	private boolean approved;
 	private int moduleID;
+	private int version;
 	private String instituteID;
 	private String  subject;
 
@@ -18,9 +19,10 @@ public class Module {
 	private List<Entry> entryList = new LinkedList<Entry>();
 
 
-	public Module(int moduleID, String name, Date creationDate,
+	public Module(int moduleID, int version, String name, Date creationDate,
 			Date modificationDate, boolean approved, String insituteID, String subject, String modificationauthor) {
 		this.moduleID = moduleID;
+		this.version = version;
 		this.name = name;
 		this.creationDate = creationDate;
 		this.modificationDate = modificationDate;
@@ -31,10 +33,11 @@ public class Module {
 	}
 
 
-	public Module(int moduleID, String name, Date creationDate,
+	public Module(int moduleID, int version, String name, Date creationDate,
 			Date modificationDate, boolean approved, String insituteID,
 			List<Entry> entryList, String subject, String modificationauthor) {
 		this.moduleID = moduleID;
+		this.version = version;
 		this.name = name;
 		this.creationDate = creationDate;
 		this.modificationDate = modificationDate;
@@ -116,6 +119,16 @@ public class Module {
 
 	public String getModificationauthor() {
 	    return modificationauthor;
+	}
+
+
+	public int getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 
