@@ -50,7 +50,13 @@ public class EffortEntry extends Entry {
 
 
 	public String toString() {
-		return "to do...";
+		StringBuilder sb = new StringBuilder();
+		sb.append("Aufwand\n");
+		System.out.println("    Präsenzzeit: "+presenceTime+"\n");
+		for (SelfStudy ss : selfStudyList) {
+			System.out.println("    "+ss.toString()+"\n");
+		}
+		return sb.toString();
 	}
 
 

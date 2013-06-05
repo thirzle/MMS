@@ -22,7 +22,7 @@ public class SelfStudy {
 
 
 	public String toString() {
-		return "to do...";
+		return title+" - "+time;
 	}
 
 

@@ -38,7 +38,12 @@ public class LoadTable extends SessionCheck implements Servlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session = request.getSession();	
+    	long x = System.currentTimeMillis();
 		List<User> users = ua.getAllUsers();
+		long y = System.currentTimeMillis();
+		System.out.println("(LoadTable.java) LoadUser Time: "+(y-x));
+		
+		
 		session.setAttribute("users", users);
 		try {
 			session.setAttribute("task", request.getParameter("task").toString());

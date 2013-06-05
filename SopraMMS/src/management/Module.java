@@ -124,5 +124,19 @@ public class Module {
 		Date date = new Date();
 		return date;
 	}
+	
+	public void print()
+	{
+		System.out.println("############ Modul #############");
+		System.out.println("Titel: "+name);
+		System.out.println("Autor: "+modificationauthor);
+		System.out.println("Institut: "+instituteID);
+		System.out.println("Erstellungsdatum: "+creationDate.toString());
+		
+		for (Entry e : entryList) {
+			System.out.println(e.toString());
+		}
+		System.out.println("################################");
+	}
 
 }

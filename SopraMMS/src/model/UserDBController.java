@@ -407,17 +407,17 @@ public class UserDBController {
 	}
 
 	// get institutenames of user
-	public List<String> getInstituteNames(String loginname) {
+	public List<String[]> getInstituteNames(String loginname) {
 		Connection connection = connect();
-		LinkedList<String> instituteList = new LinkedList<String>();
-		query = "SELECT i.name FROM institute AS i JOIN instituteaffiliation AS ia "
+		LinkedList<String []> instituteList = new LinkedList<String[]>();
+		query = "SELECT i.instituteID, i.name FROM institute AS i JOIN instituteaffiliation AS ia "
 				+ "ON i.instituteID = ia.instituteID WHERE ia.loginname = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				instituteList.add(resultSet.getString(1));
+				instituteList.add(new String[]{resultSet.getString(1),resultSet.getString(2)});
 			}
 			return instituteList;
 		} catch (SQLException e) {
