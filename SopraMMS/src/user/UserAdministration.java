@@ -288,6 +288,10 @@ public class UserAdministration {
 	public void insertHistory(String loginname, Date date, String content){
 		userDBController.insertHistory(loginname, date, content);
 	}
+	
+	public List<String[]> showHistory(){
+		return userDBController.showHistory();
+	}
 
 	public void deleteNews(String title) {
 		userDBController.deleteNews(title);

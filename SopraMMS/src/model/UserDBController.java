@@ -932,6 +932,33 @@ public class UserDBController {
 			close(connection);
 		}
 	}
+	
+//	TODO checkLoginName
+	
+	public List<String[]> showHistory(){
+		Connection connection = connect();
+		LinkedList<String[]> userList = new LinkedList<String[]>();
+		String[] string;
+		query = "SELECT loginname, date, content FROM history";
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while(resultSet.next()){
+				string = new String[3];
+				string[0] = resultSet.getString(1);
+				string[1] = ""+resultSet.getDate(2);
+				string[2] = resultSet.getString(3);
+				userList.add(string);
+			}
+			return userList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't show history");
+		}finally {
+			close(connection);
+		}
+		return userList;
+	}
 
 	// close connection
 	private void close(Connection connection) {
