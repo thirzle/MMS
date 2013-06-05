@@ -48,7 +48,7 @@ public class SaveUser extends SessionCheck {
 				System.out
 						.println("User successfully transmitted to UserAdministration!");
 
-				// "Benutzer erstellt" wird in History des Benutzers gespeichert
+				// insert into History "User created"
 				Date currentTime = new Date();
 				java.sql.Date date = new java.sql.Date(currentTime.getYear(),
 						currentTime.getMonth(), currentTime.getDay()+2);
