@@ -9,7 +9,7 @@
 
 body {
   font-family: 'Raleway', sans-serif;
-  background-color:#000;
+  background-color:#FFF;
 }
 
 canvas {
@@ -20,8 +20,16 @@ canvas {
 }
 
 h1, p {
-  margin:5px;
-  color:#fff;
+  margin:15px;
+  color:#555;
+  margin-left: 200px;
+  margin-top: 35px;
+}
+
+img {
+  position: absolute;
+  top: 15px;
+  margin:-8px;
 }
 
 
@@ -46,7 +54,7 @@ function loader() {
       circles = [];
   
   canvas.style.marginTop = -ch / 2 + 'px';
-  ctx.fillStyle = '#77ff77';  
+  ctx.fillStyle = '#999999';  
   document.body.appendChild( canvas );
   
   function Circle( opt ) {
@@ -117,6 +125,7 @@ setTimeout( loader, 50 );
 	<h1>Error 404...</h1>
 	<p>The crazy dog has eaten the page.</p>
 	<p>Meanwhile check out the fancy circles :D</p>
+	<img src="../images/Teambild_inv.jpg" alt="Crazy Dog" align="left">
 
 </body>
 </html>
