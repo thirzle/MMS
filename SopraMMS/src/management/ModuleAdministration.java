@@ -92,6 +92,7 @@ public class ModuleAdministration {
 	public void createModule(List<Entry> list, String author, String institut){
 		
 		int moduleID=1;
+		int versionID=1;
 		String name=list.get(1).getContent();
 		Date d =new Date();
 		java.sql.Date creationDate = new java.sql.Date(d.getYear(),d.getMonth(),d.getDay());
@@ -101,7 +102,7 @@ public class ModuleAdministration {
 		List<Entry> entryList = list;
 		String subject = "TEST";
 		String modificationauthor=author;
-		Module module = new Module(moduleID, name, creationDate, modificationDate, approved, insituteID, entryList, subject, modificationauthor);
+		Module module = new Module(moduleID, versionID ,name, creationDate, modificationDate, approved, insituteID, entryList, subject, modificationauthor);
 		module.print();
 		moduleDBController.createModule(module);
 	}
