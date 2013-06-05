@@ -90,8 +90,7 @@ public class SaveUser extends SessionCheck {
 		// extrahiert
 		char[] splitetInstitutes = names[5].toCharArray();
 		char[] splitetRights = names[4].toCharArray();
-		boolean[] finalRights = { false, false, false, false, false, false,
-				false };
+		boolean[] finalRights = new boolean[7];
 		List<String> finalInstitutes = new ArrayList<String>();
 		try {
 			// Extrahiere Integer Werte um das Rechte boolean[] zu setzten

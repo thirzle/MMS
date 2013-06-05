@@ -21,7 +21,7 @@
 
 		<div class="main">
 			<div class="menu">
-				<%@ include file="/guiElements/homeMenu.jsp"%>
+				<jsp:include page="/guiElements/homeMenu.jsp"></jsp:include>
 			</div>
 			<div class="contentBox" id="contentBox">
 				<jsp:include page="/guiElements/content.jsp"></jsp:include>

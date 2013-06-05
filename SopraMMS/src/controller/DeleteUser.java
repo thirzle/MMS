@@ -32,8 +32,16 @@ public class DeleteUser extends SessionCheck implements Servlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	System.out.println("(DeleteUser.java): //TODO");
-		response.sendRedirect("/SopraMMS/LoadTable");
+    	HttpSession session = request.getSession();
+		if(isLoggedIn(request, response)&&actionGranted(request, 3)) {
+	    	User user =(User) session.getAttribute("userToDelete");
+	    	ua.deleteUser(user);
+			response.sendRedirect("/SopraMMS/LoadTable");
+    	} else {
+    		session.removeAttribute("userToDelete");
+    		session.setAttribute("content","start");
+    		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+    	}
 	}
 
 	/**

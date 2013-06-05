@@ -18,24 +18,44 @@ table {
 .descriptionModule input{
 	border: 1px solid #C4C0B4;
 	width: 100%;
-	
+
 }
 
 .entryModule {
-	
+width: 520px;
 }
 
 .entryModule  textarea {
 	border: none;
 	resize: none;
-	width: 520px;
 	height: 80px;
+	width: 520px;
 }
 
  .entryModule input {
 	border: none;
 	resize: none;
 	width: 520px;
+
+}
+
+.effortEntry{
+
+	padding: 4px 4px 4px 0px;
+}
+
+.effortEntry table{
+	border: none;
+}
+
+.effortEntryTitel input{
+	width: 150px;
+	border: 1px solid #C4C0B4;
+}
+
+.effortEntryTime input{
+	width: 50px;
+	border: 1px solid #C4C0B4;
 }
 
 .buttonDeleteRow{
