@@ -13,8 +13,10 @@ import javax.servlet.http.HttpSession;
 
 import user.UserAdministration;
 
+import management.EffortEntry;
 import management.Entry;
 import management.ModuleAdministration;
+import management.SelfStudy;
 import management.TextualEntry;
 
 /**
@@ -59,9 +61,10 @@ public class CreateModule extends HttpServlet {
 		ArrayList<String[]> fieldsTypeB = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeC = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeD = new ArrayList<>();
-		
+
 		String institute = request.getParameter("selectedInstitute");
-		System.out.println("(CreateModule.java) selectedInstituteID: "+institute);
+		System.out.println("(CreateModule.java) selectedInstituteID: "
+				+ institute);
 		// Fuelle Liste mit Standartwerten falls das Session Attribut noch nicht
 		// besteht, anderenfalls kopiere das Session Attribut in das lokale
 		// Attribut
@@ -175,6 +178,23 @@ public class CreateModule extends HttpServlet {
 							strings[1]);
 					module.add(entry);
 				}
+
+				// Aufwand speichern
+				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
+				EffortEntry effort = new EffortEntry(pt);
+				List<SelfStudy> selfStudyList = new ArrayList<>();
+
+				for (int i = 1; i < fieldsTypeD.size(); i++) {
+					String[] entry = fieldsTypeD.get(i);
+					if (!(entry[0].equals("") || entry[1].equals(""))) {
+						selfStudyList.add(new SelfStudy(entry[0], Integer
+								.parseInt(entry[1])));
+					}
+				}
+				effort.setSelfStudyList(selfStudyList);
+				module.add(effort);
+
+				// Textfelder speichern
 				for (String[] strings : fieldsTypeB) {
 					TextualEntry entry = new TextualEntry(strings[0],
 							strings[1]);
@@ -185,11 +205,12 @@ public class CreateModule extends HttpServlet {
 							strings[1]);
 					module.add(entry);
 				}
-				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;				
-			
+				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
+
 				// TODO Modul an DB uebertragen
 				// Spezifische Felder für Turnus, LP, Aufwand, Studiengang
-				ma.createModule(module, session.getAttribute("loginname").toString(), institute);
+				ma.createModule(module, session.getAttribute("loginname")
+						.toString(), institute);
 				// TODO pruefen ob Pflichfelder befuellt sind
 
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true");

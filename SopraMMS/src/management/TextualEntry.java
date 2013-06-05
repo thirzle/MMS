@@ -31,7 +31,7 @@ public class TextualEntry extends Entry {
 
 
 	public String toString() {
-		return this.getTitle() + text;
+		return this.getTitle() +" - "+ text;
 	}
 	
 	public String getContent()

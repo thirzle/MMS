@@ -93,14 +93,16 @@ public class ModuleAdministration {
 		
 		int moduleID=1;
 		String name=list.get(1).getContent();
-		Date creationDate = new Date();
-		Date modificationDate = new Date();
+		Date d =new Date();
+		java.sql.Date creationDate = new java.sql.Date(d.getYear(),d.getMonth(),d.getDay());
+		java.sql.Date modificationDate = new java.sql.Date(d.getYear(),d.getMonth(),d.getDay());
 		boolean approved = false;
 		String insituteID = institut;
 		List<Entry> entryList = list;
 		String subject = "TEST";
 		String modificationauthor=author;
 		Module module = new Module(moduleID, name, creationDate, modificationDate, approved, insituteID, entryList, subject, modificationauthor);
+		module.print();
 		moduleDBController.createModule(module);
 	}
 }
