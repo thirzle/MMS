@@ -60,7 +60,7 @@ public class SaveUser extends SessionCheck {
 	}
 
 	protected User createUser(HttpServletRequest request) {
-		List<String> rootInstitutes = ua.getAllInstitutesByName();
+		List<String> rootInstitutes = ua.getAllInstitute();
 		// Die Liste wird ggf. mit den Feldnamen leeren Feldern gefuellt
 		String[] names = new String[6];
 		String[] paras = {"loginCellText","firstnameCellText","lastnameCellText","emailCellText","rightsSelect","instituteSelect"};	

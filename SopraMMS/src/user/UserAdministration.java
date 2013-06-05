@@ -246,8 +246,8 @@ public class UserAdministration {
 		return userDBController.getFacultiesID();
 	}
 
-	public List<String> getAllInstitutesByName() {
-		return userDBController.getInstitutes();
+	public List<String> getAllInstitutesByName(String loginname) {
+		return userDBController.getInstituteNames(loginname);
 	}
 
 	public List<String> getAllInstituteID() {
