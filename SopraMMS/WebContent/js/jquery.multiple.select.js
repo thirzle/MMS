@@ -56,7 +56,7 @@
 				html.push(
 					'<li>',
 						'<label>',
-							'<input type="checkbox" name="selectAll" /> ',
+							'<input onchange="setBooleans()" type="checkbox" name="selectAll" /> ',
 							'[' + this.options.selectAllText + ']',
 						'</label>',
 					'</li>'

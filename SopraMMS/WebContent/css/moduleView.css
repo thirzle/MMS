@@ -5,24 +5,23 @@
 }
 
 table {
-	border: 1px solid #C4C0B4;	
+	border: 1px solid #C4C0B4;
 }
 
 .descriptionModule {
 	width: 150px;
 	background-color: #EDECE8;
 	padding: 0px 10px 0px 10px;
-	margin: 0px 0px 0px 0px;	
+	margin: 0px 0px 0px 0px;
 }
 
-.descriptionModule input{
+.descriptionModule input {
 	border: 1px solid #C4C0B4;
 	width: 100%;
-
 }
 
 .entryModule {
-width: 520px;
+	width: 520px;
 }
 
 .entryModule  textarea {
@@ -32,38 +31,40 @@ width: 520px;
 	width: 520px;
 }
 
- .entryModule input {
+.entryModule input {
 	border: none;
 	resize: none;
 	width: 520px;
-
 }
 
-.effortEntry{
-
+.effortEntry {
 	padding: 4px 4px 4px 0px;
 }
 
-.effortEntry table{
+.effortEntry table {
 	border: none;
 }
 
-.effortEntryTitel input{
+.effortEntryTitel input {
 	width: 150px;
 	border: 1px solid #C4C0B4;
 }
 
-.effortEntryTime input{
+.effortEntryTime input {
 	width: 50px;
 	border: 1px solid #C4C0B4;
 }
 
-.buttonDeleteRow{
+#instituteSelect {
+	width: 520px;
+}
+
+.buttonDeleteRow {
 	width: 30px;
 	background-color: #EDECE8;
 }
 
-.buttonDeleteRow button{
+.buttonDeleteRow button {
 	padding: 0 0 0 0;
 	margin: 0 0 0 0;
 	border: 0;

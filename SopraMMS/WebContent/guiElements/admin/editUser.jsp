@@ -43,7 +43,7 @@ if(user != null) {
 		<tr>
 			<td>Rechte:</td>
 			<td>
-				<select class="inputField" id="rightsSelect" style="width: 270px">
+				<select onchange="alert('change')" class="inputField" id="rightsSelect" style="width: 270px">
 					<option value="0">Recht auf Stellv.</option>
 					<option value="1">Dozent</option>
 					<option value="2">Modulverantwortl.</option>

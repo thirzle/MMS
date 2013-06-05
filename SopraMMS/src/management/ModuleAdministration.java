@@ -1,6 +1,6 @@
 package management;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -87,5 +87,20 @@ public class ModuleAdministration {
 			boolean approvalstatus, int examregulation) {
 		moduleDBController.createModuleMaunal(version, courseID, degree,
 				creationdate, modificationdate, approvalstatus, examregulation);
+	}
+	
+	public void createModule(List<Entry> list, String author, String institut){
+		
+		int moduleID=1;
+		String name=list.get(1).getContent();
+		Date creationDate = new Date();
+		Date modificationDate = new Date();
+		boolean approved = false;
+		String insituteID = institut;
+		List<Entry> entryList = list;
+		String subject = "TEST";
+		String modificationauthor=author;
+		Module module = new Module(moduleID, name, creationDate, modificationDate, approved, insituteID, entryList, subject, modificationauthor);
+		moduleDBController.createModule(module);
 	}
 }

@@ -32,7 +32,7 @@
 		<%	
 			for(int i=0; i<users.size();i++) {
 		%>
-		<tr><%System.out.println(users.get(i).getLogin()); %>
+		<tr>
 			<td><input form='<%=task %>' type="radio" name="selectedRowID" value='<%=users.get(i).getLogin() %>'/></td>
 			<td><%=users.get(i).getLogin()%></td>
 			<td><%=users.get(i).getFirstName()%></td>

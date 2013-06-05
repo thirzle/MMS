@@ -859,7 +859,7 @@ public class ModuleDBController {
 						resultSet.getDate("modificationdate"), 
 						resultSet.getBoolean("approvalstatus"), 
 						resultSet.getString("instituteID"), 
-						resultSet.getString("subject"), 
+						resultSet.getString("subjectname"), 
 						resultSet.getString("modificationauthor")));
 			}
 			for (Module module : modulemanual) {

@@ -407,17 +407,17 @@ public class UserDBController {
 	}
 
 	// get institutenames of user
-	public List<String> getInstituteNames(String loginname) {
+	public List<String[]> getInstituteNames(String loginname) {
 		Connection connection = connect();
-		LinkedList<String> instituteList = new LinkedList<String>();
-		query = "SELECT i.name FROM institute AS i JOIN instituteaffiliation AS ia "
+		LinkedList<String []> instituteList = new LinkedList<String[]>();
+		query = "SELECT i.instituteID, i.name FROM institute AS i JOIN instituteaffiliation AS ia "
 				+ "ON i.instituteID = ia.instituteID WHERE ia.loginname = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				instituteList.add(resultSet.getString(1));
+				instituteList.add(new String[]{resultSet.getString(1),resultSet.getString(2)});
 			}
 			return instituteList;
 		} catch (SQLException e) {
@@ -931,6 +931,33 @@ public class UserDBController {
 		}finally {
 			close(connection);
 		}
+	}
+	
+//	TODO checkLoginName
+	
+	public List<String[]> showHistory(){
+		Connection connection = connect();
+		LinkedList<String[]> userList = new LinkedList<String[]>();
+		String[] string;
+		query = "SELECT loginname, date, content FROM history";
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while(resultSet.next()){
+				string = new String[3];
+				string[0] = resultSet.getString(1);
+				string[1] = ""+resultSet.getDate(2);
+				string[2] = resultSet.getString(3);
+				userList.add(string);
+			}
+			return userList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't show history");
+		}finally {
+			close(connection);
+		}
+		return userList;
 	}
 
 	// close connection

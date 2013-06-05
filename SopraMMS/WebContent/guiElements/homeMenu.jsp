@@ -55,8 +55,7 @@
 }
 %>
 <%
-	if (user == null) {
-	session.removeAttribute("loginname");
+	if (user == null) {session.invalidate();
 %>
 <jsp:include page="/guiElements/Login/login.jsp"></jsp:include>
 <%

@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>ERROR 404</title>
+
+<style type="text/css">
+body {
+	background: #FFF;
+}
+
+canvas {
+	display: block;
+	left: 0;
+	position: absolute;
+	top: 50%;
+}
+
+h1 {
+	position: absolute;
+	top: 5%;
+	left: 5%;
+}
+</style>
+
+<script type="text/javascript">
+	window.requestAnimFrame = function() {
+		return window.requestAnimationFrame
+				|| window.webkitRequestAnimationFrame
+				|| window.mozRequestAnimationFrame || function(a) {
+					window.setTimeout(a, 1E3 / 60)
+				}
+	}();
+
+	function loader() {
+		var canvas = document.createElement('canvas'), ctx = canvas
+				.getContext('2d'), cw = canvas.width = window.innerWidth, ch = canvas.height = 200, twoPi = Math.PI * 2, tick = 0, ot = Date
+				.now(), dt = 1, fps = 1000 / 60, count = cw / 50, spacing = cw
+				/ count, circles = [];
+
+		canvas.style.marginTop = -ch / 2 + 'px';
+		ctx.fillStyle = '#aaaaaa';
+		document.body.appendChild(canvas);
+
+		function Circle(opt) {
+			for ( var key in opt) {
+				this[key] = opt[key];
+			}
+		}
+
+		Circle.prototype.update = function() {
+			this.x = this.xBase
+					+ Math.sin((tick + this.tickOffset) / this.tickDiv)
+					* this.xRange;
+			this.y = this.yBase
+					+ Math.sin((tick + this.tickOffset) / this.tickDiv)
+					* this.yRange;
+			this.radius = this.radiusBase
+					+ Math.cos((tick + this.tickOffset) / this.tickDiv)
+					* this.radiusRange;
+		};
+
+		loop = function() {
+			requestAnimFrame(loop)
+			var now = Date.now(), dt = (now - ot) / fps;
+			ot = now;
+			tick += dt;
+			ctx.clearRect(0, 0, cw, ch);
+			var i = circles.length;
+			ctx.beginPath();
+			while (i--) {
+				var circle = circles[i];
+				circle.update();
+				ctx.moveTo(circle.x, circle.y)
+				ctx.arc(circle.x, circle.y, circle.radius, 0, twoPi);
+			}
+			ctx.fill();
+		}
+
+		for ( var i = 0; i < count; i++) {
+			circles.push(new Circle({
+				xBase : (cw / 2) + (i * spacing)
+						- (((count - 1) * spacing) / 2),
+				xRange : 0,
+				yBase : ch / 2,
+				yRange : 75,
+				radiusBase : 10,
+				radiusRange : 10,
+				tickDiv : 15,
+				tickOffset : i * 10
+			}));
+		}
+
+		for ( var i = 0; i < count; i++) {
+			circles.push(new Circle({
+				xBase : (cw / 2) + (i * spacing)
+						- (((count - 1) * spacing) / 2),
+				xRange : 20,
+				yBase : ch / 2,
+				yRange : 0,
+				radiusBase : 3,
+				radiusRange : 3,
+				tickDiv : 15,
+				tickOffset : i * 10
+			}));
+		}
+
+		loop();
+	}
+
+	setTimeout(loader, 50);
+</script>
+
+</head>
+<body>
+
+	<h1>Error 404 is beeing processed...</h1>
+
+</body>
+</html>
