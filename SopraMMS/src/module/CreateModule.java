@@ -145,13 +145,6 @@ public class CreateModule extends HttpServlet {
 				fieldsTypeC.add(new String[] { "", "" });
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
-			// Bei Klick entsprechende Zeile loeschen
-			else if (request.getParameter("createModule").equals("deleteRow")) {
-				int deleteEntry = Integer.parseInt(request.getParameter(
-						"deleteRow").replace("Delete", ""));
-				fieldsTypeC.remove(deleteEntry);
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-			}
 			// Modul für Sitzung Speichern
 			else if (request.getParameter("createModule").equals("saveModule")) {
 				System.out
@@ -195,6 +188,13 @@ public class CreateModule extends HttpServlet {
 
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true");
 			}
+		}
+		// Bei Klick entsprechende Zeile loeschen
+		else if (request.getParameter("deleteRow")!=null) {
+			int deleteEntry = Integer.parseInt(request.getParameter(
+					"deleteRow").replace("Delete", ""));
+			fieldsTypeC.remove(deleteEntry);
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
 		// Anzeige beim Aufruf von Modul einfuegen
 		else if (request.getParameter("newModule") == null) {
