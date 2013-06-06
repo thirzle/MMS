@@ -42,6 +42,7 @@ public class ChangeName extends HttpServlet {
 		
 		session.setAttribute("newFirstname", newFirstname);
 		session.setAttribute("newLastname", newLastname);
+		session.setAttribute("newLoginname", loginname);
 		session.setAttribute("content", "changedName");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
