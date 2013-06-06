@@ -37,7 +37,6 @@ public class AppointRepresentative extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		UserAdministration uAdmin = new UserAdministration();
 		String firstNameRep = request.getParameter("firstNameRep");
 		String lastNameRep = request.getParameter("lastNameRep");

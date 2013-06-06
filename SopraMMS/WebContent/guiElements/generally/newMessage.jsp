@@ -29,14 +29,11 @@
 		<td align="left" colspan="2">Empfänger:</td>
 		<td align="left">
 		<input form="sendMailForm" name="mailto" id="mailto"
-			onKeyUp="Eingabe(this.value);" type="text" size="60"></td>
-		<br>
-		<br>
-	</tr>
-	<tr>
-		<td align="left" colspan="2">Empfänger auswählen:</td>
+			onKeyUp="Eingabe(this.value);" type="text" size="40"></td>
+		<!-- <br>
+		<br> -->
 		<td align="left">
-		<select name="mailaddress" id="mailaddress" onclick="uebertrag();" style="width: 380px">
+		<select name="mailaddress" id="mailaddress" onclick="uebertrag();" style="width: 250px">
 				<%
 			for(int i=0; i<users.size();i++) {
 		%>
@@ -50,7 +47,7 @@
 	<tr>
 		<td align="left" colspan="2">Betreff:</td>
 		<td align="left" colspan="4"><input form="sendMailForm"
-			type="text" name="subject" size="60"></td>
+			type="text" name="subject" size="40"></td>
 	</tr>
 	<tr>
 		<td align="left" colspan="2">Nachricht:</td>

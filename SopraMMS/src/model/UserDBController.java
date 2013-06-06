@@ -285,7 +285,7 @@ public class UserDBController {
 	// deletes User
 	public boolean deleteUser(String loginname) {
 		Connection connection = connect();
-		query = "DELETE FROM Uuer WHERE loginname=?";
+		query = "DELETE FROM user WHERE loginname=?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);

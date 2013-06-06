@@ -107,5 +107,9 @@
 %>
 <jsp:include page="/guiElements/coordinator/enterCourseToModule.jsp"></jsp:include>
 <%
+	} else if (contentPage.equals("changedName")) {
+%>
+<jsp:include page="/guiElements/generally/changedName.jsp"></jsp:include>
+<%
 	}
 %>
