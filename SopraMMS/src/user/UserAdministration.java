@@ -127,9 +127,7 @@ public class UserAdministration {
 	}
 
 	public boolean deleteUser(User user) {
-		// TODO fill Method
-
-		return false;
+		return userDBController.deleteUser(user.getLogin());
 	}
 
 	public void sendNewPasswordLink(String email) throws IOException {
