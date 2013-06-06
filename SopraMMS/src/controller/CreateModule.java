@@ -1,4 +1,4 @@
-package module;
+package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,11 +46,11 @@ public class CreateModule extends HttpServlet {
 		ModuleAdministration ma = new ModuleAdministration();
 		HttpSession session = request.getSession();
 
-		if (session.getAttribute("institutes") == null) {
+		if (session.getAttribute("institutesModuleEntry") == null) {
 
 			List<String[]> institutes = ua.getAllInstitutesByName(session
 					.getAttribute("loginname").toString());
-			session.setAttribute("institutes", institutes);
+			session.setAttribute("institutesModuleEntry", institutes);
 		}
 
 		// TypA --> Vordefinierte Pflichfelder Feld

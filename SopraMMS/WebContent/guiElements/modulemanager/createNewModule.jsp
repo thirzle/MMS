@@ -17,6 +17,7 @@
 	ArrayList<String[]> fieldsTypeD = new ArrayList();
 	fieldsTypeD.addAll((ArrayList<String[]>) session
 			.getAttribute("fieldsTypeD"));
+	
 %>
 <h1>Neues Modul erstellen</h1>
 
@@ -81,7 +82,7 @@
 				<td class='entryModule'>
 					<%
 						List<String[]> institutes = (List<String[]>) session
-								.getAttribute("institutes");
+								.getAttribute("institutesModuleEntry");
 					%> <select name='selectedInstitute' id="instituteSelect">
 						<%
 							for (int i = 0; i < institutes.size(); i++) {
