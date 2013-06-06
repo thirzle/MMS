@@ -63,5 +63,14 @@ public class EffortEntry extends Entry {
 	public List<SelfStudy> getSelfStudyList() {
 		return selfStudyList;
 	}
+	
+	public String getContent(){
+		StringBuilder sb= new StringBuilder();
+		sb.append("Präsenzzeit: "+presenceTime+" Stunden\n");
+		for (SelfStudy ss : selfStudyList) {
+			sb.append(""+ss.toString()+" Stunden\n");
+		}
+		return sb.toString();
+	}
 
 }

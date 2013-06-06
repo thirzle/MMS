@@ -22,7 +22,7 @@ this.title = title;
 
 
 public String toString() {
-return title+" - "+time;
+return title+": "+time;
 }
 
 

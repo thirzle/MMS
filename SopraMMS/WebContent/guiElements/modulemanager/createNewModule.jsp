@@ -21,7 +21,7 @@
 %>
 <h1>Neues Modul erstellen</h1>
 
-<form action="/SopraMMS/CreateModule?newModule=newRow" method="get">
+<form action="/SopraMMS/CreateModule" method="get">
 	<%
 		for (int i = 0; i < fieldsTypeA.size(); i++) {
 			String[] description = fieldsTypeA.get(i);

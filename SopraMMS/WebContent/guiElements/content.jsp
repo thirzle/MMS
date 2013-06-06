@@ -100,8 +100,12 @@
 <jsp:include page="/guiElements/modulemanager/createNewModule.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("history")) {
-%>		
+%>
 <jsp:include page="/guiElements/admin/showHistory.jsp"></jsp:include>
-<%	
+<%
+	} else if (contentPage.equals("enterCourseToModule")) {
+%>
+<jsp:include page="/guiElements/coordinator/enterCourseToModule.jsp"></jsp:include>
+<%
 	}
 %>
