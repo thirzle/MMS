@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,6 +45,13 @@ public class ChangeName extends HttpServlet {
 		session.setAttribute("newFirstname", newFirstname);
 		session.setAttribute("newLastname", newLastname);
 		session.setAttribute("newLoginname", loginname);
+		
+		// Insert into History "Name changed"
+		Date currentTime = new Date();
+		java.sql.Date date = new java.sql.Date(currentTime.getYear(),
+				currentTime.getMonth(), currentTime.getDay() + 2);
+		uAdmin.insertHistory(user.getLogin(), date, "Name ge&auml;ndert");
+		
 		session.setAttribute("content", "changedName");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}

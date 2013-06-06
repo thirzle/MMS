@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.Servlet;
@@ -36,6 +37,7 @@ public class ChangeUser extends SessionCheck implements Servlet {
 		int right = 3;
 		if(isLoggedIn(request, response) && actionGranted(request, right)) {
 			User origUser = (User) session.getAttribute("userToEdit");
+			String loginname = origUser.getLogin();
 			if(origUser == null) {
 				System.out.println("(ChangeUser.java): user is null");
 				return;
@@ -53,6 +55,14 @@ public class ChangeUser extends SessionCheck implements Servlet {
 			if(tmpUser.getRights() != origUser.getRights()) {
 				ua.changeRights(origUser, tmpUser.getRights());
 			}
+			
+
+	    	// insert into History "User changed"
+			Date currentTime = new Date();
+			java.sql.Date date = new java.sql.Date(currentTime.getYear(),
+					currentTime.getMonth(), currentTime.getDay()+2);
+			ua.insertHistory(loginname, date, "Wurde ge&auml;ndert");
+			
 			session.removeAttribute("errormessage");
 			response.sendRedirect("/SopraMMS/LoadTable");
 		} else {
