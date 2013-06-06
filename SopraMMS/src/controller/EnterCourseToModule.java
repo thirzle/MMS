@@ -21,37 +21,47 @@ import user.User;
 @WebServlet("/EnterCourseToModule")
 public class EnterCourseToModule extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EnterCourseToModule() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ModuleAdministration ma = new ModuleAdministration();
-		HttpSession session = request.getSession();
-		
-		List<Module> modules = ma.getModifiedModules((User)session.getAttribute("user"));
-		Module module=modules.get(0);
-		
-		List<Entry> entry =module.getEntryList();
-		
-		session.setAttribute("showEntryListFromModule", entry);
-		
-		session.setAttribute("content","enterCourseToModule");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+	public EnterCourseToModule() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		ModuleAdministration ma = new ModuleAdministration();
+		HttpSession session = request.getSession();
+
+		Module module = ma.getModuleByID(1);
+		if (module != null) {
+			List<Entry> entry = module.getEntryList();
+
+			session.setAttribute("showModificationauthorFromModule",
+					module.getModificationauthor());
+			session.setAttribute("showModificationDateFromModule",
+					module.getModificationDate());
+			session.setAttribute("showCreationDateFromModule",
+					module.getCreationDate());
+			session.setAttribute("showEntryListFromModule", entry);
+		}
+		session.setAttribute("content", "enterCourseToModule");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 

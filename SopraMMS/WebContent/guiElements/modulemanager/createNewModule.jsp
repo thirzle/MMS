@@ -17,7 +17,6 @@
 	ArrayList<String[]> fieldsTypeD = new ArrayList();
 	fieldsTypeD.addAll((ArrayList<String[]>) session
 			.getAttribute("fieldsTypeD"));
-	
 %>
 <h1>Neues Modul erstellen</h1>
 

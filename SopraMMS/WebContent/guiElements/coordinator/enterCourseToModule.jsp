@@ -4,18 +4,27 @@
 	href="${pageContext.request.contextPath}/css/moduleView.css">
 <%
 	ArrayList<Entry> entryList = new ArrayList();
-	entryList.addAll((List<Entry>) session
-			.getAttribute("showEntryListFromModule"));
+	Object list = session.getAttribute("showEntryListFromModule");
+
+	if (list != null) {
+		entryList.addAll((List<Entry>) list);
+	}
 %>
 <h1>Studiengang und Fach festlegen</h1>
 
+<table class="informationAboutModule">
+	<tr>
+		<td>&Auml;nderungsdatum: <%=session.getAttribute("showModificationDateFromModule")%></td>
+		<td>Erstellungsdatum: <%=session.getAttribute("showCreationDateFromModule")%></td>
+		<td>Autor: <%=session.getAttribute("showModificationauthorFromModule")%>
+	</tr>
+</table>
+
 <form action="/SopraMMS/EnterCourseToModule" method="get">
-	<%
-		for (Entry entry : entryList) {
-			String[] entryText = new String[2];
-			entryText[0] = entry.getTitle();
-			entryText[1] = entry.getContent();
-	%>
+	<%for (Entry entry : entryList) {
+				String[] entryText = new String[2];
+				entryText[0] = entry.getTitle();
+				entryText[1] = entry.getContent();%>
 	<div class='moduleEntry'>
 		<table>
 			<tr>
@@ -24,9 +33,7 @@
 			</tr>
 		</table>
 	</div>
-	<%
-		}
-	%>
+	<%}%>
 	<button type="submit" value="addRow" name="createModule">Zeile
 		hinzuf&uuml;gen</button>
 	<button type="submit" value="saveModule" name="createModule">Modul
@@ -35,5 +42,3 @@
 		einreichen</button>
 
 </form>
-
-
