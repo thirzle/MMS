@@ -1,3 +1,4 @@
+
 var loginnameInput = $("#loginCellText");
 var firstnameInput = $("#firstnameCellText");
 var lastnameInput = $("#lastnameCellText");
@@ -5,23 +6,20 @@ var emailInput = $("#emailCellText");
 var instituteSelect = $('#instituteSelect');
 var rightsSelect = $('#rightsSelect');
 var body = $("body");
-
 var firstname = false;
 var lastname = false;
 var email = false;
 var rights = false;
 var institutes = false;
 generateLoginname();
+
 function setValues() {
-	alert("setValues called");
 	var instituteSelectselectedIndex = $('#instituteSelect').multipleSelect('getSelects');
 	var rightsSelectselectedIndex = $('#rightsSelect').multipleSelect('getSelects');
 	var instituteLabel = $("#instituteLabel");
 	var rightsLabel = $("#rightsLabel");
-	
 	instituteLabel.html(instituteSelectselectedIndex);
 	rightsLabel.html(rightsSelectselectedIndex);
-	alert("(edituser.js):instituteSelectselectedIndex:"+instituteSelectselectedIndex);
 }
 
 function initMultiSelect() {
@@ -49,21 +47,14 @@ function generateLoginname() {
 	setBooleans();
 }
 
-body.click(function() {
-	alert("body clicked");
-	setBooleans();
-});
+
 
 function setBooleans() {
-	alert("setBooleans");
 	firstname = firstnameInput.val().trim() == "";
 	lastname = lastnameInput.val().trim() == "";
 	email = emailInput.val().trim() == "";
-	alert("(edituser.js): rightsSelect:"+rightsSelect.multipleSelect('getSelects'));
 	rights = rightsSelect.multipleSelect('getSelects')+"" == "";
-	alert("(edituser.js):rights:"+rights);
 	institutes = instituteSelect.multipleSelect('getSelects')+"" == "";
-	setValues();
 	if(!firstname&&!lastname&&!email&&!rights&&!institutes) {
 		$('#saveButton').each(function() {
 	        if ($(this).attr('disabled')) {

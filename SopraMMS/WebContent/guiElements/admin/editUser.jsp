@@ -108,4 +108,8 @@ if(user != null) {
 <script>
 initMultiSelect();
 loadDataIntoMultiSelect();
+body.click(function() {
+		setBooleans();
+		setValues();
+	});
 </script>
