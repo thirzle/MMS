@@ -14,6 +14,7 @@ public abstract class Entry {
 	private boolean approved;
 	private boolean rejected;
 	private String title;
+	private int order;
 	Random random;
 
 	// use this when you import existing data
@@ -42,6 +43,37 @@ public abstract class Entry {
 		this.rejected = false;
 		// actual data...
 		this.title = title;
+	}
+	
+	
+	// use this when you import existing data
+	public Entry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, long entryID, String title, int order) {
+		random = new Random();
+		this.version = version;
+		this.timestamp = timestamp;
+		this.classification = classification;
+		this.approved = approved;
+		this.rejected = rejected;
+		this.title = title;
+		this.entryID = entryID;
+		this.order = order;
+	}
+
+	// updated version
+	// use this to create a new entry
+	public Entry(String title, int order) {
+		// default init...
+		random = new Random();
+		this.entryID = createEntryID();
+		this.version = 1;
+		this.timestamp = get_current_time();
+		this.classification = false;
+		this.approved = false;
+		this.rejected = false;
+		// actual data...
+		this.title = title;
+		this.order = order;
 	}
 
 	
@@ -103,4 +135,10 @@ public abstract class Entry {
 	{
 		return "Kein Inhalt vorhanden";
 	}
+
+
+	public int getOrder() {
+		return order;
+	}
+
 }

@@ -30,6 +30,27 @@ public class CourseEntry extends Entry {
 		super(version, date, classification, approvalstatus, declined, entryID, title);
 		courses = new LinkedList<String>();
 	}
+	
+	//updated version
+	public CourseEntry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, long entryID, String title, int order, List<String> courses) {
+		super(version, date, classification, approvalstatus, declined, entryID, title, order);
+		this.courses = courses;
+	}
+	
+	
+	public CourseEntry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, long entryID, String title, int order, String course) {
+		super(version, date, classification, approvalstatus, declined, entryID, title, order);
+		courses.add(course);
+	}
+	
+
+	public CourseEntry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, long entryID, String title, int order) {
+		super(version, date, classification, approvalstatus, declined, entryID, title, order);
+		courses = new LinkedList<String>();
+	}
 
 
 	public CourseEntry(String title, List<String> courses) {
