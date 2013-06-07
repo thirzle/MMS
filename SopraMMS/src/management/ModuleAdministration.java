@@ -106,4 +106,8 @@ public class ModuleAdministration {
 		module.print();
 		moduleDBController.createModuleByModuleManager(module);
 	}
+	
+	public Module getModuleByID(int moduleID){
+		return moduleDBController.getModule(moduleID);
+	}
 }

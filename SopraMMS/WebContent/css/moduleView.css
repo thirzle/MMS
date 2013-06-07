@@ -70,3 +70,10 @@ table {
 	border: 0;
 	cursor: pointer;
 }
+
+.informationAboutModule{
+	border: none;
+}
+.informationAboutModule td{
+	width: 225px;
+}

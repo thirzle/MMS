@@ -50,7 +50,8 @@ public class UserAdministration {
 
 		User newUser = user;
 		newUser.setRights(newRights);
-		userDBController.changeUser(user, newUser);
+		Boolean changeRights = userDBController.changeRights(user, newRights);
+		System.err.println("(UserAdministration.java):change rights succesfully="+changeRights);
 		return newUser;
 	}
 	

@@ -43,6 +43,20 @@ public class ChangeUser extends SessionCheck implements Servlet {
 				return;
 			}
 			User tmpUser = createUser(request);
+			if(origUser.getFaculty() != null) {
+				tmpUser.setFaculty(origUser.getFaculty());
+			}
+			if(origUser.getRepresentative() != null ){
+				tmpUser.setRepresentative(origUser.getRepresentative());
+			}
+			if(origUser.getSupervisor() != null) {
+				tmpUser.setSupervisor(origUser.getSupervisor());
+			}
+			System.out.println("(ChangeUser.java):origUser.getPassword()="+origUser.getPassword());
+			tmpUser.setPassword(origUser.getPassword());
+			System.out.println("(ChangeUser.java):origUser="+origUser);
+			System.out.println("(ChangeUser.java):tmpUser="+tmpUser);
+
 	 		if(origUser.getFirstName()!= tmpUser.getFirstName() || origUser.getLastName() != tmpUser.getLastName()) {
 	 			ua.changeName(origUser, tmpUser.getFirstName(), tmpUser.getLastName());
 			}
@@ -52,6 +66,7 @@ public class ChangeUser extends SessionCheck implements Servlet {
 			if(tmpUser.getInstitute() != origUser.getInstitute()) {
 				ua.changeInstitute(origUser, tmpUser.getInstitute());
 			}
+			System.out.println(tmpUser.getRights() != origUser.getRights());
 			if(tmpUser.getRights() != origUser.getRights()) {
 				ua.changeRights(origUser, tmpUser.getRights());
 			}
@@ -75,39 +90,40 @@ public class ChangeUser extends SessionCheck implements Servlet {
 	} // end doGet()
     
     protected User createUser(HttpServletRequest request) {
-		List<String> rootInstitutes = ua.getAllInstitute();
+		List<String> rootInstitutes = ua.getAllInstituteID();
 		// Die Liste wird ggf. mit den Feldnamen leeren Feldern gefuellt
 		String[] names = new String[6];
 		String[] paras = {"loginCellText","firstnameCellText","lastnameCellText","emailCellText","rightsSelect","instituteSelect"};
 		//prueft Request Paramater auf null Werte und fuellt entsprechend die 'emptyInputs' Liste
 		for (int i = 0; i < paras.length; i++) {
 			names[i] = request.getParameter(paras[i]);
+			System.out.println("(ChangeUser.java):names[]"+names[i]);
 		}		
 		// Die erhaltenen Institute und Rechte stehen in einem String gespeichert
 		// dieser wird hier getrennt und entsprechend Institute und Rechte extrahiert
 		char[] splitetInstitutes = names[5].toCharArray();
 		char[] splitetRights = names[4].toCharArray();
-		boolean[] finalRights = {false,false,false,false,false};
+		boolean[] finalRights = new boolean[7];
 		List<String> finalInstitutes = new ArrayList<String>();
 		try {
 			// Extrahiere Integer Werte um das Rechte boolean[] zu setzten
 			for (char c : splitetRights) {
 				int tmp = Character.getNumericValue(c);
 				finalRights[tmp] = true;
-				System.out.println("(SaveUser.java):RechtNr. "+tmp);
+				System.out.println("(ChangeUser.java):RechtNr. "+tmp);
 			}
 			// Mapping: Integer <=> Institut
 			for (char c : splitetInstitutes) {
 				int tmp = Character.getNumericValue(c);
 				finalInstitutes.add(rootInstitutes.get(tmp));
-				System.out.println("(SaveUser.java.70): add: "+rootInstitutes.get(tmp));
+				System.out.println("(ChangeUser.java.70): add: "+rootInstitutes.get(tmp));
 			}
 		} catch(ArrayIndexOutOfBoundsException e) {
-			System.out.println("(SaveUser.java): Failed to parseInt(string).");
+			System.out.println("(ChangeUser.java): Failed to parseInt(string).");
 		}
 		// Der Benutzer mit den erhaltenen Attributen kann erzeugt werden
 		User user = new User(names[0],names[1],names[2],names[3],finalRights,finalInstitutes,"");
-		System.out.println("create user "+user.toString());
+		System.out.println("(ChangeUser.java):create user "+user.toString());
 		return user;
 	}
 
