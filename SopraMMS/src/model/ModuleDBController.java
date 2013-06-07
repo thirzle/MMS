@@ -588,7 +588,7 @@ public class ModuleDBController {
 	// create a new module in database
 	public boolean createModuleByModuleManager(Module module) {
 		Connection connection = connect();
-		List<Entry> entryList = new LinkedList<Entry>();
+		List<Entry> entryList = module.getEntryList();
 		query = "INSERT INTO module(moduleID, version, name, creationdate," +
 				" modificationdate, approvalstatus, instituteID," +
 				" modificationauthor) VALUES (?,?,?,?,?,?,?,?);";
