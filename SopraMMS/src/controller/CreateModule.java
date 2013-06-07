@@ -75,33 +75,42 @@ public class CreateModule extends HttpServlet {
 		// Fuer TypA
 		
 		if (session.getAttribute("fieldsTypeA") == null) {
+			if(session.getAttribute("edit").equals(false)){
+				session.removeAttribute("edit");
+			}
 			if(session.getAttribute("edit").equals("true")){
+				session.removeAttribute("edit");
 				long moduleID = Long.parseLong((request.getParameter("selectedModule")));
 				Module editModule = ma.getModuleByID(moduleID);
 				LinkedList<Entry> entryList = (LinkedList<Entry>) ma.getEntryListOfModule(editModule);
 				
-				for (Entry entry : entryList) {
-					if(entry.getTitle().equals("Kürzel")){
-						fieldsTypeA.add(new String[] { "Kürzel", entry.getContent() });
+				if(!entryList.isEmpty()){
+					for (Entry entry : entryList) {
+						if(entry.getTitle().equals("Kürzel")){
+							fieldsTypeA.add(new String[] { "Kürzel", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Titel")){
+							fieldsTypeA.add(new String[] { "Titel", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Verantwortlicher")){
+							fieldsTypeA.add(new String[] { "Verantwortlicher", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Turnus")){
+							fieldsTypeA.add(new String[] { "Turnus", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Sprache")){
+							fieldsTypeA.add(new String[] { "Sprache", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Prü;fungsform")){
+							fieldsTypeA.add(new String[] { "Prüfungsform", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Notenbildung")){
+							fieldsTypeA.add(new String[] { "Notenbildung", entry.getContent() });	
+						}
 					}
-					else if(entry.getTitle().equals("Titel")){
-						fieldsTypeA.add(new String[] { "Titel", entry.getContent() });
-					}
-					else if(entry.getTitle().equals("Verantwortlicher")){
-						fieldsTypeA.add(new String[] { "Verantwortlicher", entry.getContent() });
-					}
-					else if(entry.getTitle().equals("Turnus")){
-						fieldsTypeA.add(new String[] { "Turnus", entry.getContent() });
-					}
-					else if(entry.getTitle().equals("Sprache")){
-						fieldsTypeA.add(new String[] { "Sprache", entry.getContent() });
-					}
-					else if(entry.getTitle().equals("Prü;fungsform")){
-						fieldsTypeA.add(new String[] { "Prüfungsform", entry.getContent() });
-					}
-					else if(entry.getTitle().equals("Notenbildung")){
-						fieldsTypeA.add(new String[] { "Notenbildung", entry.getContent() });	
-					}
+				}
+				else{
+					System.out.println("(CreateModule.java): entryList is empty");
 				}
 			}
 			
@@ -114,7 +123,6 @@ public class CreateModule extends HttpServlet {
 				fieldsTypeA.add(new String[] { "Prüfungsform", "" });
 				fieldsTypeA.add(new String[] { "Notenbildung", "" });
 			}
-			session.removeAttribute("edit");
 
 			System.out.println("fieldsTypeA");
 
