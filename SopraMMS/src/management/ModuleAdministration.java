@@ -107,4 +107,12 @@ public class ModuleAdministration {
 	public Module getModuleByID(int moduleID){
 		return moduleDBController.getModule(moduleID);
 	}
+	
+	public String getModuleManual(long moduleID){
+		return moduleDBController.getModuleManualByModule(moduleID);
+	}
+	
+	public LinkedList<Module> getModulesByAuthor(String loginname){
+		return (LinkedList<Module>) moduleDBController.getModulesByAuthor(loginname);
+	}
 }

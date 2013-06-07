@@ -1196,6 +1196,24 @@ public class ModuleDBController {
 		}
 	}
 	
+	public String getModuleManualByModule(long moduleID) {
+		Connection connection = connect();
+		query = "SELECT modulemanual FROM module WHERE moduleID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, moduleID);
+			ResultSet resultSet = pStatement.executeQuery();
+			return resultSet.getString(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get modulemanual of module: "
+					+ moduleID);
+		} finally {
+			close(connection);
+		}
+		return null;
+	}
+	
 	
 	// roll back changes made in database if something went wrong
 	private void rollback(Connection connection) {

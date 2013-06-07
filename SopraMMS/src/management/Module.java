@@ -206,6 +206,9 @@ public class Module {
 		return version;
 	}
 
+	public String getModuleManual(){
+		return new ModuleAdministration().getModuleManual(moduleID);
+	}
 
 	public void setVersion(int version) {
 		this.version = version;
