@@ -6,7 +6,7 @@
 %>
 
 <h1>Modul bearbeiten</h1>
-<form action="/SopraMMS/CreateModule?edit=true" method="get">
+<form action="/SopraMMS/CreateModule" method="get">
 	<table class="informationAboutModule">
 		<tr>
 			<th></th>
@@ -36,5 +36,8 @@
 			}
 		%>
 	</table>
+	<%
+	session.setAttribute("edit", "true");
+	%>
 	<input type="submit" name="editButton" value="Modul bearbeiten" />
 </form>

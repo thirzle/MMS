@@ -47,10 +47,7 @@ public class CreateModule extends HttpServlet {
 		UserAdministration ua = new UserAdministration();
 		ModuleAdministration ma = new ModuleAdministration();
 		HttpSession session = request.getSession();
-		Long moduleID = Long.parseLong((request.getParameter("selectedModule")));
-		Module editModule = ma.getModuleByID(moduleID);
 
-		LinkedList<Entry> entryList = (LinkedList<Entry>) ma.getEntryListOfModule(editModule);
 		
 		if (session.getAttribute("institutesModuleEntry") == null) {
 
@@ -76,9 +73,13 @@ public class CreateModule extends HttpServlet {
 		// Attribut
 
 		// Fuer TypA
+		
 		if (session.getAttribute("fieldsTypeA") == null) {
-			System.out.println(request.getParameter("edit"+"            edit edit edit"));
-			if(request.getParameter("edit") != null){
+			if(session.getAttribute("edit").equals("true")){
+				long moduleID = Long.parseLong((request.getParameter("selectedModule")));
+				Module editModule = ma.getModuleByID(moduleID);
+				LinkedList<Entry> entryList = (LinkedList<Entry>) ma.getEntryListOfModule(editModule);
+				
 				for (Entry entry : entryList) {
 					if(entry.getTitle().equals("Kürzel")){
 						fieldsTypeA.add(new String[] { "Kürzel", entry.getContent() });
@@ -99,10 +100,11 @@ public class CreateModule extends HttpServlet {
 						fieldsTypeA.add(new String[] { "Prüfungsform", entry.getContent() });
 					}
 					else if(entry.getTitle().equals("Notenbildung")){
-						fieldsTypeA.add(new String[] { "Notenbildung", "" });	
+						fieldsTypeA.add(new String[] { "Notenbildung", entry.getContent() });	
 					}
 				}
 			}
+			
 			else{
 				fieldsTypeA.add(new String[] { "Kürzel", "" });
 				fieldsTypeA.add(new String[] { "Titel", "" });
@@ -112,6 +114,7 @@ public class CreateModule extends HttpServlet {
 				fieldsTypeA.add(new String[] { "Prüfungsform", "" });
 				fieldsTypeA.add(new String[] { "Notenbildung", "" });
 			}
+			session.removeAttribute("edit");
 
 			System.out.println("fieldsTypeA");
 
@@ -122,10 +125,10 @@ public class CreateModule extends HttpServlet {
 
 		// Fuer TypD
 		if (session.getAttribute("fieldsTypeD") == null) {
-			fieldsTypeD.add(new String[] { "Prüsenzzeit", "" });
+			fieldsTypeD.add(new String[] { "Präsenzzeit", "" });
 			fieldsTypeD.add(new String[] { "Nacharbeitung", "" });
 			fieldsTypeD.add(new String[] { "Übungsaufgaben", "" });
-			fieldsTypeD.add(new String[] { "Pr&uuml;fung", "" });
+			fieldsTypeD.add(new String[] { "Prüfung", "" });
 			fieldsTypeD.add(new String[] { "", "" });
 		} else {
 			fieldsTypeD.addAll((ArrayList<String[]>) session
@@ -215,7 +218,7 @@ public class CreateModule extends HttpServlet {
 
 				// Aufwand speichern
 				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
-				EffortEntry effort = new EffortEntry("Pr&auml;senzzeit",pt);
+				EffortEntry effort = new EffortEntry("Präsenzzeit",pt);
 				List<SelfStudy> selfStudyList = new ArrayList<>();
 
 				for (int i = 1; i < fieldsTypeD.size(); i++) {
