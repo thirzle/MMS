@@ -113,6 +113,6 @@ public class ModuleAdministration {
 	}
 	
 	public LinkedList<Module> getModulesByAuthor(String loginname){
-		return (LinkedList<Module>) moduleDBController.getModulesByAuthor(loginname);
+		return (LinkedList<Module>) moduleDBController.getModulesOverviewByAuthor(loginname);
 	}
 }

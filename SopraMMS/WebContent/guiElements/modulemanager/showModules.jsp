@@ -9,6 +9,7 @@
 <form action="ShowModule" method="get">
 	<table class="informationAboutModule">
 		<tr>
+			<th></th>
 			<th>Titel</th>
 			<th>Autor</th>
 			<th>Fach</th>
@@ -21,14 +22,14 @@
 			for (Module module : moduleList) {
 		%>
 		<tr>
-			<input type="radio" name="module"/>
-			<td>Titel: <%=module.getName()%></td>
-			<td>Autor: <%=module.getModificationauthor()%></td>
-			<td>Fach: <%=module.getSubject()%></td>
-			<td>Modulhandbuch: <%=module.getModuleManual()%></td>
-			<td>Erstellungsdatum: <%=module.getCreationDate()%></td>
-			<td>&Auml;nderungsdatum: <%=module.getModificationDate()%></td>
-			<td>Freigabestatus: <%=module.isApproved()%></td>
+			<td><input type="radio" name="selectedModule" value='<%=module.getModuleID()%>'/></td>
+			<td><%=module.getName()%></td>
+			<td><%=module.getModificationauthor()%></td>
+			<td><%=module.getSubject()%></td>
+			<td><%=module.getModuleManual()%></td>
+			<td><%=module.getCreationDate()%></td>
+			<td><%=module.getModificationDate()%></td>
+			<td><%=module.isApproved()%></td>
 		</tr>
 		<%
 			}
