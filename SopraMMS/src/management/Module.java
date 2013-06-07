@@ -11,6 +11,8 @@ public class Module {
 	private Date creationDate;
 	private Date modificationDate;
 	private boolean approved;
+	private boolean classification;
+	private boolean declined;
 	private long moduleID;
 	private int version;
 	private String instituteID;
@@ -125,9 +127,6 @@ public class Module {
 		
 	}
 	
-	
-	
-
 
 	public String getName() {
 		return name;

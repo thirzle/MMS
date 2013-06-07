@@ -269,13 +269,13 @@ public class ModuleDBController {
 
 	// get a specified module
 	// tested: check
-	public Module getModule(int moduleID) {
+	public Module getModule(long moduleID) {
 		Connection connection = connect();
 		Module module = null;
 		query = "SELECT * FROM module WHERE moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setInt(1, moduleID);
+			pStatement.setLong(1, moduleID);
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				module = new Module(resultSet.getInt("moduleID"),
@@ -680,7 +680,7 @@ public class ModuleDBController {
 	}
 
 	// change an existing module
-	public boolean changeModule(Module module, int moduleIDOld) {
+	public boolean changeModule(Module module, long moduleIDOld) {
 		Connection connection = connect();
 		long moduleID = module.getModuleID();
 		String name = module.getName();
@@ -700,7 +700,7 @@ public class ModuleDBController {
 			pStatement.setDate(4, (java.sql.Date) modificationDate);
 			pStatement.setBoolean(5, approved);
 			pStatement.setString(6, instituteID);
-			pStatement.setInt(7, moduleIDOld);
+			pStatement.setLong(7, moduleIDOld);
 			return pStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
