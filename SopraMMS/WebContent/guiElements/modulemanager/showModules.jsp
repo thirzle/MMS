@@ -21,8 +21,8 @@
 			for (Module module : moduleList) {
 		%>
 		<tr>
-			<input type="radio" name="module"/>
-			<td>Titel: <%=module.getName()%></td>
+			<input type="radio" name="selectedModule" value='<%=module.getModuleID()%>'/>
+			<td>Titel: <%out.print(module.getName());%></td>
 			<td>Autor: <%=module.getModificationauthor()%></td>
 			<td>Fach: <%=module.getSubject()%></td>
 			<td>Modulhandbuch: <%=module.getModuleManual()%></td>
