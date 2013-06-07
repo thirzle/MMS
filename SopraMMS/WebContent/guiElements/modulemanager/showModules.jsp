@@ -6,7 +6,7 @@
 %>
 
 <h1>Modul bearbeiten</h1>
-<form action="ShowModule" method="get">
+<form action="/SopraMMS/CreateModule?edit=true" method="get">
 	<table class="informationAboutModule">
 		<tr>
 			<th></th>
@@ -22,7 +22,8 @@
 			for (Module module : moduleList) {
 		%>
 		<tr>
-			<td><input type="radio" name="selectedModule" value='<%=module.getModuleID()%>'/></td>
+			<td><input type="radio" name="selectedModule"
+				value='<%=module.getModuleID()%>' /></td>
 			<td><%=module.getName()%></td>
 			<td><%=module.getModificationauthor()%></td>
 			<td><%=module.getSubject()%></td>
@@ -35,5 +36,5 @@
 			}
 		%>
 	</table>
-	<input type="submit" name="editButton" value="Modul bearbeiten"/>
+	<input type="submit" name="editButton" value="Modul bearbeiten" />
 </form>
