@@ -10,6 +10,8 @@ import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.tomcat.jni.OS;
+
 import user.User;
 
 import management.CourseEntry;
@@ -139,7 +141,7 @@ public class ModuleDBController {
 	public List<Module> getModulesByCourse(String course, String degree) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Integer> temp = new LinkedList<Integer>();
+		LinkedList<Long> temp = new LinkedList<Long>();
 		Module module = null;
 		query = "SELECT m.* FROM modulecourseaffiliation AS ma JOIN module AS m "
 				+ "ON ma.moduleID = m.moduleID WHERE ma.courseID = ? AND ma.degree = ?";
@@ -223,7 +225,7 @@ public class ModuleDBController {
 	public List<Module> getModulesByAuthor(String author) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Integer> temp = new LinkedList<Integer>();
+		LinkedList<Long> temp = new LinkedList<Long>();
 		Module module;
 		query = "SELECT module.*, entry.author FROM module JOIN entry ON module.moduleID = entry.moduleID"
 				+ " WHERE entry.author = ?";
@@ -302,7 +304,7 @@ public class ModuleDBController {
 	public List<Module> getModifiedModules() {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Integer> temp = new LinkedList<Integer>();
+		LinkedList<Long> temp = new LinkedList<Long>();
 		Module module;
 		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE;";
@@ -348,7 +350,7 @@ public class ModuleDBController {
 	public List<Module> getModifiedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Integer> temp = new LinkedList<Integer>();
+		LinkedList<Long> temp = new LinkedList<Long>();
 		Module module;
 		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE AND instituteID = ?";
@@ -396,7 +398,7 @@ public class ModuleDBController {
 	public List<Module> getModifiedModulesByAuthor(String author) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Integer> temp = new LinkedList<Integer>();
+		LinkedList<Long> temp = new LinkedList<Long>();
 		Module module;
 		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE entry.approvalstatus = TRUE AND declined = FALSE AND author = ?";
@@ -445,7 +447,7 @@ public class ModuleDBController {
 	public List<Module> getRejectedModules() {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Integer> temp = new LinkedList<Integer>();
+		LinkedList<Long> temp = new LinkedList<Long>();
 		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE declined = TRUE";
 		Module module;
@@ -491,7 +493,7 @@ public class ModuleDBController {
 	public List<Module> getRejectedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Integer> temp = new LinkedList<Integer>();
+		LinkedList<Long> temp = new LinkedList<Long>();
 		Module module;
 		query = "SELECT module.*"
 				+ "FROM module JOIN entry ON module.moduleID = entry.moduleID "
@@ -540,7 +542,7 @@ public class ModuleDBController {
 	public List<Module> getRejectedModulesByAuthor(String author) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Integer> temp = new LinkedList<Integer>();
+		LinkedList<Long> temp = new LinkedList<Long>();
 		Module module;
 		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
 				+ "WHERE declined = TRUE AND author = ?";
@@ -582,30 +584,90 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-
+	//TODO
 	// create a new module in database
-	public boolean createModule(Module module) {
+	public boolean createModuleByModuleManager(Module module) {
 		Connection connection = connect();
-		int moduleID = module.getModuleID();
-		String name = module.getName();
-		Date creationDate = (Date) module.getCreationDate();
-		Date modificationDate = (Date) module.getModificationDate();
-		boolean approved = module.isApproved();
-		String instituteID = module.getInstituteID();
-
-		query = "INSERT INTO module VALUES (?,?,?,?,?,?);";
+		List<Entry> entryList = new LinkedList<Entry>();
+		query = "INSERT INTO module(moduleID, version, name, creationdate," +
+				" modificationdate, approvalstatus, instituteID," +
+				" modificationauthor) VALUES (?,?,?,?,?,?,?,?);";
 		try {
+			//insert basic module
+			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
-			pStatement.setInt(1, moduleID);
-			pStatement.setString(2, name);
-			pStatement.setDate(3, (java.sql.Date) creationDate);
-			pStatement.setDate(4, (java.sql.Date) modificationDate);
-			pStatement.setBoolean(5, approved);
-			pStatement.setString(6, instituteID);
-			return pStatement.execute();
+			pStatement.setLong(1, module.getModuleID());
+			pStatement.setInt(2, module.getVersion());
+			pStatement.setString(3, module.getName());
+			pStatement.setDate(4, (java.sql.Date) module.getCreationDate());
+			pStatement.setDate(5, (java.sql.Date) module.getModificationDate());
+			pStatement.setBoolean(6, module.isApproved());
+			pStatement.setString(7, module.getInstituteID());
+			pStatement.setString(8, module.getModificationauthor());
+			pStatement.execute();
+			
+			
+			//insert basic entries
+			query = "INSERT INTO entry(entryID, version, moduleID, moduleversion," +
+					" author, date, classification, approvalstatus, declined," +
+					" title) VALUES (?,?,?,?,?,?,?,?)";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setInt(2, 1);
+			pStatement.setLong(3, module.getModuleID());
+			pStatement.setInt(4, module.getVersion());
+			pStatement.setString(5, module.getModificationauthor());
+			pStatement.setDate(6, (Date) module.getCreationDate());
+			pStatement.setBoolean(7, false);
+			pStatement.setBoolean(8, false);
+			pStatement.setBoolean(9, false);
+			for (Entry entry : entryList) {
+				pStatement.setLong(1, entry.getEntryID());
+				pStatement.setString(10, entry.getTitle());
+				pStatement.execute();
+			}
+			
+			//insert textual entries
+			TextualEntry te;
+			query = "INSERT INTO textualentry VALUES(?,?,?)";
+			pStatement = connection.prepareStatement(query);
+			for (Entry entry : entryList) {
+				if(entry.getClass()==TextualEntry.class){
+					te = (TextualEntry) entry;
+					pStatement.setLong(1, te.getEntryID());
+					pStatement.setInt(2, te.getVersion());
+					pStatement.setString(3, te.getContent());
+					pStatement.execute();
+				}
+			}
+			
+			//insert effort entry
+			EffortEntry ee = null;
+			query = "INSERT INTO effortentry VALUES(?,?,?)";
+			pStatement = connection.prepareStatement(query);
+			for (Entry entry : entryList) {
+				if(entry.getClass()==EffortEntry.class){
+					ee = (EffortEntry) entry;
+					pStatement.setLong(1, ee.getEntryID());
+					pStatement.setInt(2, ee.getVersion());
+					pStatement.setInt(3, ee.getTime());
+				}
+			}
+			query = "INSERT INTO selfstudy VALUES(?,?,?,?,?)";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(2, ee.getEntryID());
+			pStatement.setInt(3, ee.getVersion());
+			for (SelfStudy study : ee.getSelfStudyList()) {
+				pStatement.setLong(1, study.getSelfstudyID());
+				pStatement.setString(4, study.getTitle());
+				pStatement.setInt(5, study.getTime());
+				pStatement.execute();
+			}
+			connection.commit();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Couldn't create module: " + name);
+			System.out.println("Couldn't create module: " + module.getName());
+			rollback(connection);
 			return false;
 		} finally {
 			close(connection);
@@ -615,7 +677,7 @@ public class ModuleDBController {
 	// change an existing module
 	public boolean changeModule(Module module, int moduleIDOld) {
 		Connection connection = connect();
-		int moduleID = module.getModuleID();
+		long moduleID = module.getModuleID();
 		String name = module.getName();
 		Date creationDate = (Date) module.getCreationDate();
 		Date modificationDate = (Date) module.getModificationDate();
@@ -627,7 +689,7 @@ public class ModuleDBController {
 				+ "WHERE moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setInt(1, moduleID);
+			pStatement.setLong(1, moduleID);
 			pStatement.setString(2, name);
 			pStatement.setDate(3, (java.sql.Date) creationDate);
 			pStatement.setDate(4, (java.sql.Date) modificationDate);
@@ -651,7 +713,7 @@ public class ModuleDBController {
 		query = "DELETE FROM module WHERE moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setInt(1, module.getModuleID());
+			pStatement.setLong(1, module.getModuleID());
 			return pStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -673,7 +735,7 @@ public class ModuleDBController {
 				+ "WHERE moduleID = ? AND modulversion = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setInt(1, m.getModuleID());
+			pStatement.setLong(1, m.getModuleID());
 			pStatement.setInt(2, m.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
@@ -705,7 +767,7 @@ public class ModuleDBController {
 				+ " WHERE e.moduleID = ? AND e.moduleversion = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setInt(1, m.getModuleID());
+			pStatement.setLong(1, m.getModuleID());
 			pStatement.setInt(2, m.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
@@ -742,7 +804,7 @@ public class ModuleDBController {
 				"WHERE e.moduleID = ? AND e.moduleversion = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setInt(1, m.getModuleID());
+			pStatement.setLong(1, m.getModuleID());
 			pStatement.setInt(2, m.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
@@ -767,7 +829,7 @@ public class ModuleDBController {
 					+ "WHERE e.moduleID = ?";
 			try {
 				pStatement = connection.prepareStatement(query);
-				pStatement.setInt(1, m.getModuleID());
+				pStatement.setLong(1, m.getModuleID());
 				ResultSet resultSet = pStatement.executeQuery();
 				selfstudy = new LinkedList<SelfStudy>();
 				while (resultSet.next()) {
@@ -1128,6 +1190,18 @@ public class ModuleDBController {
 			System.out.println("couldn't create modulemanual");
 		}
 	}
+	
+	
+	// roll back changes made in database if something went wrong
+	private void rollback(Connection connection) {
+		try {
+			connection.rollback();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 	public void close(Connection connection) {
 		try {

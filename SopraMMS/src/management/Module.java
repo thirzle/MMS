@@ -1,18 +1,21 @@
 package management;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class Module {
 	private String name;
 	private Date creationDate;
 	private Date modificationDate;
 	private boolean approved;
-	private int moduleID;
+	private long moduleID;
 	private int version;
 	private String instituteID;
 	private String  subject;
+	private Random random;
 
 	private String modificationauthor;
 
@@ -30,6 +33,7 @@ public class Module {
 		this.instituteID = insituteID;
 		this.subject = subject;
 		this.modificationauthor = modificationauthor;
+		random = new Random();
 	}
 
 
@@ -46,7 +50,81 @@ public class Module {
 		this.entryList = entryList;
 		this.subject = subject;
 		this.modificationauthor = modificationauthor;
+		random = new Random();
 	}
+	
+	//updated version
+	public Module(long moduleID, int version, String name, Date creationDate,
+			Date modificationDate, boolean approved, String insituteID, String subject, String modificationauthor) {
+		this.moduleID = moduleID;
+		this.version = version;
+		this.name = name;
+		this.creationDate = creationDate;
+		this.modificationDate = modificationDate;
+		this.approved = approved;
+		this.instituteID = insituteID;
+		this.subject = subject;
+		this.modificationauthor = modificationauthor;
+		random = new Random();
+	}
+
+
+	public Module(long moduleID, int version, String name, Date creationDate,
+			Date modificationDate, boolean approved, String insituteID,
+			List<Entry> entryList, String subject, String modificationauthor) {
+		this.moduleID = moduleID;
+		this.version = version;
+		this.name = name;
+		this.creationDate = creationDate;
+		this.modificationDate = modificationDate;
+		this.approved = approved;
+		this.instituteID = insituteID;
+		this.entryList = entryList;
+		this.subject = subject;
+		this.modificationauthor = modificationauthor;
+		random = new Random();
+	}
+	
+	
+	public Module(String name, Date creationDate,
+			Date modificationDate, boolean approved, String insituteID, String subject, String modificationauthor) {
+		this.moduleID = createModuleID();
+		this.version = 1;
+		this.name = name;
+		this.creationDate = creationDate;
+		this.modificationDate = modificationDate;
+		this.approved = approved;
+		this.instituteID = insituteID;
+		this.subject = subject;
+		this.modificationauthor = modificationauthor;
+		random = new Random();
+	}
+
+
+	public Module(String name, Date creationDate,
+			Date modificationDate, boolean approved, String insituteID,
+			List<Entry> entryList, String subject, String modificationauthor) {
+		this.moduleID = createModuleID();
+		this.version = 1;
+		this.name = name;
+		this.creationDate = creationDate;
+		this.modificationDate = modificationDate;
+		this.approved = approved;
+		this.instituteID = insituteID;
+		this.entryList = entryList;
+		this.subject = subject;
+		this.modificationauthor = modificationauthor;
+		random = new Random();
+	}
+
+
+	private long createModuleID() {
+		return random.nextInt(1000)+100*Calendar.getInstance().getTimeInMillis();
+		
+	}
+	
+	
+	
 
 
 	public String getName() {
@@ -69,7 +147,7 @@ public class Module {
 	}
 
 
-	public int getModuleID() {
+	public long getModuleID() {
 		return moduleID;
 	}
 

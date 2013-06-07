@@ -89,7 +89,7 @@ public class ModuleAdministration {
 				creationdate, modificationdate, approvalstatus, examregulation);
 	}
 	
-	public void createModule(List<Entry> list, String author, String institut){
+	public void createModuleByModuleManager(List<Entry> list, String author, String institut){
 		
 		int moduleID=1;
 		int versionID=1;
@@ -104,6 +104,6 @@ public class ModuleAdministration {
 		String modificationauthor=author;
 		Module module = new Module(moduleID, versionID ,name, creationDate, modificationDate, approved, insituteID, entryList, subject, modificationauthor);
 		module.print();
-		moduleDBController.createModule(module);
+		moduleDBController.createModuleByModuleManager(module);
 	}
 }
