@@ -69,7 +69,7 @@ public class EffortEntry extends Entry {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Aufwand\n");
-		sb.append("    Prï¿½senzzeit: "+presenceTime+"\n");
+		sb.append("    Präsenzzeit: "+presenceTime+"\n");
 		for (SelfStudy ss : selfStudyList) {
 			sb.append("    "+ss.toString()+"\n");
 		}
@@ -83,7 +83,7 @@ public class EffortEntry extends Entry {
 	
 	public String getContent(){
 		StringBuilder sb= new StringBuilder();
-		sb.append("Prï¿½senzzeit: "+presenceTime+" Stunden\n");
+		sb.append("Präsenzzeit: "+presenceTime+" Stunden\n");
 		for (SelfStudy ss : selfStudyList) {
 			sb.append(""+ss.toString()+" Stunden\n");
 		}
