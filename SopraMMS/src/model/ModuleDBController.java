@@ -609,20 +609,19 @@ public class ModuleDBController {
 			
 			//insert basic entries
 			query = "INSERT INTO entry(entryID, version, moduleID, moduleversion," +
-					" author, date, classification, approvalstatus, declined," +
-					" title) VALUES (?,?,?,?,?,?,?,?)";
+					" author, classification, approvalstatus, declined," +
+					" title) VALUES (?,?,?,?,?,?,?)";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setInt(2, 1);
 			pStatement.setLong(3, module.getModuleID());
 			pStatement.setInt(4, module.getVersion());
 			pStatement.setString(5, module.getModificationauthor());
-			pStatement.setDate(6, (Date) module.getCreationDate());
+			pStatement.setBoolean(6, false);
 			pStatement.setBoolean(7, false);
 			pStatement.setBoolean(8, false);
-			pStatement.setBoolean(9, false);
 			for (Entry entry : entryList) {
 				pStatement.setLong(1, entry.getEntryID());
-				pStatement.setString(10, entry.getTitle());
+				pStatement.setString(9, entry.getTitle());
 				pStatement.execute();
 			}
 			
