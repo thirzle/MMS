@@ -82,6 +82,7 @@ public class CreateModule extends HttpServlet {
 				session.removeAttribute("edit");
 				long moduleID = Long.parseLong((request.getParameter("selectedModule")));
 				Module editModule = ma.getModuleByID(moduleID);
+//				entryList ist doppelt
 				LinkedList<Entry> entryList = (LinkedList<Entry>) ma.getEntryListOfModule(editModule);
 				
 				if(!entryList.isEmpty()){
@@ -101,11 +102,11 @@ public class CreateModule extends HttpServlet {
 						else if(entry.getTitle().equals("Sprache")){
 							fieldsTypeA.add(new String[] { "Sprache", entry.getContent() });
 						}
-						else if(entry.getTitle().equals("Prü;fungsform")){
+						else if(entry.getTitle().equals("Prüfungsform")){
 							fieldsTypeA.add(new String[] { "Prüfungsform", entry.getContent() });
 						}
 						else if(entry.getTitle().equals("Notenbildung")){
-							fieldsTypeA.add(new String[] { "Notenbildung", entry.getContent() });	
+							fieldsTypeA.add(new String[] { "Notenbildung", entry.getContent() });
 						}
 					}
 				}
