@@ -51,6 +51,7 @@ public class UserDBController {
 		return connection;
 	}
 
+	
 	// get all user listed in database
 	public List<User> getAllUsers() {
 		Connection connection = connect();
@@ -63,39 +64,8 @@ public class UserDBController {
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				String loginname = resultSet.getString("loginname");
-				rightsArray = getRights(loginname);
-				instituteList = getInstitutesByName(loginname);
-				User user = new User(loginname,
-						resultSet.getString("firstname"),
-						resultSet.getString("lastname"),
-						resultSet.getString("mail"), rightsArray,
-						instituteList, resultSet.getString("representative"));
-				userList.add(user);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Couldn't get all Users");
-		} finally {
-			close(connection);
-		}
-		return userList;
-	}
-	
-	
-	// get all user listed in database
-	public List<User> getAllUsersQuick() {
-		Connection connection = connect();
-		List<User> userList = new LinkedList<User>();
-		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
-		List<String> instituteList = new LinkedList<String>();
-		try {
-			query = "SELECT * FROM user";
-			statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(query);
-			while (resultSet.next()) {
-				String loginname = resultSet.getString("loginname");
-				rightsArray = getRights(loginname);
-				instituteList = getInstitutesByName(loginname);
+				rightsArray = getRights(loginname, connection);
+				instituteList = getInstitutesByName(loginname, connection);
 				User user = new User(loginname,
 						resultSet.getString("firstname"),
 						resultSet.getString("lastname"),
@@ -333,6 +303,40 @@ public class UserDBController {
 		}
 		return rightsArray;
 	}
+	
+	
+	// get rights of specified user with established connection
+	public boolean[] getRights(String loginname, Connection connection) {
+		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
+		query = "SELECT rightsID FROM rightsaffiliation WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			// set all rights listed in table rightsaffiliation
+			while (resultSet.next()) {
+				rightsArray[resultSet.getInt("rightsID")] = true;
+			}
+			pStatement = connection.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
+			pStatement.setString(1,  loginname);
+			resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				loginname = resultSet.getString("supervisor");
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, loginname);
+				resultSet = pStatement.executeQuery();
+				// set all rights of supervisor listed in table rightsaffiliation
+				while (resultSet.next()) {
+					rightsArray[resultSet.getInt("rightsID")] = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get rights of user: " + loginname);
+		}
+		return rightsArray;
+	}
+	
 
 	// change rights of specified user
 	public boolean changeRights(User user, boolean[] newRights) {
@@ -437,6 +441,27 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
+	
+	
+	// get institute of existing user with established connection
+	public List<String> getInstitutesByName(String loginname, Connection connection) {
+		LinkedList<String> instituteList = new LinkedList<String>();
+		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				instituteList.add(resultSet.getString("instituteID"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get list of institutes from user: "
+					+ loginname);
+		}
+		return instituteList;
+	}
+	
 
 	// get institutenames of user
 	public List<String[]> getInstituteNames(String loginname) {
@@ -461,6 +486,7 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
+	
 
 	// compare hashed password typed in with password in database of specified
 	// user
