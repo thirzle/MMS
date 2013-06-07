@@ -317,8 +317,7 @@ public class ModuleDBController {
 		LinkedList<Module> moduleList = new LinkedList<Module>();
 		LinkedList<Long> temp = new LinkedList<Long>();
 		Module module;
-		query = "SELECT module.*, entry.author FROM module JOIN entry ON module.moduleID = entry.moduleID"
-				+ " WHERE entry.author = ?";
+		query = "SELECT DISTINCT module.* FROM module WHERE modificationauthor = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, author);
