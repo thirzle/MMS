@@ -18,7 +18,7 @@ public abstract class Entry {
 
 	// use this when you import existing data
 	public Entry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, int entryID, String title) {
+			boolean approvalstatus, boolean declined, long entryID, String title) {
 		random = new Random();
 		this.version = version;
 		this.timestamp = timestamp;

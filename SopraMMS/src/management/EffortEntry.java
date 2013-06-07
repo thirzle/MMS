@@ -11,7 +11,7 @@ public class EffortEntry extends Entry {
 
 
 	public EffortEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, int entryID, String title, int presenceTime,
+			boolean approvalstatus, boolean declined, long entryID, String title, int presenceTime,
 			List<SelfStudy> selfStudyList) {
 		super(version, date, classification, approvalstatus, declined, entryID, title);
 		this.presenceTime = presenceTime;
@@ -20,7 +20,7 @@ public class EffortEntry extends Entry {
 	
 	
 	public EffortEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, int entryID, String title, int presenceTime) {
+			boolean approvalstatus, boolean declined, long entryID, String title, int presenceTime) {
 		super(version, date, classification, approvalstatus, declined, entryID, title);
 		this.presenceTime = presenceTime;
 		this.selfStudyList = null;
@@ -52,7 +52,7 @@ public class EffortEntry extends Entry {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Aufwand\n");
-		sb.append("    Präsenzzeit: "+presenceTime+"\n");
+		sb.append("    Prï¿½senzzeit: "+presenceTime+"\n");
 		for (SelfStudy ss : selfStudyList) {
 			sb.append("    "+ss.toString()+"\n");
 		}
@@ -66,7 +66,7 @@ public class EffortEntry extends Entry {
 	
 	public String getContent(){
 		StringBuilder sb= new StringBuilder();
-		sb.append("Präsenzzeit: "+presenceTime+" Stunden\n");
+		sb.append("Prï¿½senzzeit: "+presenceTime+" Stunden\n");
 		for (SelfStudy ss : selfStudyList) {
 			sb.append(""+ss.toString()+" Stunden\n");
 		}

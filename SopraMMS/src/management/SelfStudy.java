@@ -19,7 +19,7 @@ public class SelfStudy {
 		
 	}
 
-	public SelfStudy(int selfstudyID, int time, String title) {
+	public SelfStudy(long selfstudyID, int time, String title) {
 		this.selfstudyID = selfstudyID;
 		this.time = time;
 		this.title = title;

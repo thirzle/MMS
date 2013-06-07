@@ -66,7 +66,7 @@ public class ModuleDBController {
 			ResultSet resultSet = statement.executeQuery(query);
 			// get all entries except of course entries
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"), 
+				moduleList.add(new Module(resultSet.getLong("moduleID"), 
 						resultSet.getInt("version"),
 						resultSet.getString("name"), resultSet
 								.getDate("creationdate"), resultSet
@@ -112,7 +112,7 @@ public class ModuleDBController {
 							resultSet.getBoolean("classification"),
 							resultSet.getBoolean("approvalstatus"),
 							resultSet.getBoolean("declined"),
-							resultSet.getInt("entryID"),
+							resultSet.getLong("entryID"),
 							resultSet.getString("title"),
 							resultSet.getString("courseID"));
 				}
@@ -136,7 +136,7 @@ public class ModuleDBController {
 									.getBoolean("classification"), resultSet
 									.getBoolean("approvalstatus"), resultSet
 									.getBoolean("declined"), resultSet
-									.getInt("entryID"), resultSet
+									.getLong("entryID"), resultSet
 									.getString("title"), resultSet
 									.getString("text")));
 				}
@@ -156,7 +156,7 @@ public class ModuleDBController {
 							resultSet.getBoolean("classification"),
 							resultSet.getBoolean("approvalstatus"),
 							resultSet.getBoolean("declined"),
-							resultSet.getInt("entryID"),
+							resultSet.getLong("entryID"),
 							resultSet.getString("title"),
 							resultSet.getInt("presencetime"));
 				}
@@ -172,7 +172,7 @@ public class ModuleDBController {
 					resultSet = pStatement.executeQuery();
 					while (resultSet.next()) {
 						selfstudy.add(new SelfStudy(
-								resultSet.getInt("selfstudyID"), resultSet
+								resultSet.getLong("selfstudyID"), resultSet
 										.getInt("time"), resultSet
 										.getString("title")));
 					}
@@ -203,7 +203,7 @@ public class ModuleDBController {
 			pStatement.setString(1, institute);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"), 
+				moduleList.add(new Module(resultSet.getLong("moduleID"), 
 						resultSet.getInt("version"),
 						resultSet.getString("name"), resultSet
 								.getDate("creationdate"), resultSet
@@ -241,7 +241,7 @@ public class ModuleDBController {
 			pStatement.setString(2, degree);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				module = new Module(resultSet.getInt("moduleID"), 
+				module = new Module(resultSet.getLong("moduleID"), 
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -287,7 +287,7 @@ public class ModuleDBController {
 			pStatement.setString(1, faculty);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"),
+				moduleList.add(new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"), resultSet
 								.getDate("creationdate"), resultSet
@@ -323,7 +323,7 @@ public class ModuleDBController {
 			pStatement.setString(1, author);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				module = new Module(resultSet.getInt("moduleID"),
+				module = new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -364,7 +364,7 @@ public class ModuleDBController {
 			pStatement.setLong(1, moduleID);
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				module = new Module(resultSet.getInt("moduleID"),
+				module = new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -398,7 +398,7 @@ public class ModuleDBController {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
-				module = new Module(resultSet.getInt("moduleID"),
+				module = new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -445,7 +445,7 @@ public class ModuleDBController {
 			pStatement.setString(1, instituteID);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				module = new Module(resultSet.getInt("moduleID"),
+				module = new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -493,7 +493,7 @@ public class ModuleDBController {
 			pStatement.setString(1, author);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				module = new Module(resultSet.getInt("moduleID"),
+				module = new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -541,7 +541,7 @@ public class ModuleDBController {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
-				module = new Module(resultSet.getInt("moduleID"),
+				module = new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -589,7 +589,7 @@ public class ModuleDBController {
 			pStatement.setString(1, instituteID);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				module = new Module(resultSet.getInt("moduleID"),
+				module = new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -637,7 +637,7 @@ public class ModuleDBController {
 			pStatement.setString(1, author);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				module = new Module(resultSet.getInt("moduleID"),
+				module = new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -835,7 +835,7 @@ public class ModuleDBController {
 								.getBoolean("classification"), resultSet
 								.getBoolean("approvalstatus"), resultSet
 								.getBoolean("declined"), resultSet
-								.getInt("entryID"), resultSet
+								.getLong("entryID"), resultSet
 								.getString("title"), resultSet
 								.getString("text")));
 			}
@@ -867,7 +867,7 @@ public class ModuleDBController {
 						resultSet.getBoolean("classification"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getBoolean("declined"),
-						resultSet.getInt("entryID"),
+						resultSet.getLong("entryID"),
 						resultSet.getString("title"),
 						resultSet.getString("courseID"));
 			}
@@ -904,7 +904,7 @@ public class ModuleDBController {
 						resultSet.getBoolean("classification"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getBoolean("declined"),
-						resultSet.getInt("entryID"),
+						resultSet.getLong("entryID"),
 						resultSet.getString("title"),
 						resultSet.getInt("presencetime"));
 			}
@@ -925,7 +925,7 @@ public class ModuleDBController {
 				selfstudy = new LinkedList<SelfStudy>();
 				while (resultSet.next()) {
 					selfstudy.add(new SelfStudy(
-							resultSet.getInt("selfstudyID"), resultSet
+							resultSet.getLong("selfstudyID"), resultSet
 									.getInt("time"), resultSet
 									.getString("title")));
 				}
@@ -1005,14 +1005,14 @@ public class ModuleDBController {
 			pStatement.setString(3, versionnumber);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				modulemanual.add(new Module(resultSet.getInt("moduleID"), 
+				modulemanual.add(new Module(resultSet.getLong("moduleID"), 
 						resultSet.getInt("version"),
 						resultSet.getString("name"), 
 						resultSet.getDate("creationdate"), 
 						resultSet.getDate("modificationdate"), 
 						resultSet.getBoolean("approvalstatus"), 
 						resultSet.getString("instituteID"), 
-						resultSet.getString("subjectname"), 
+						resultSet.getString("subject"), 
 						resultSet.getString("modificationauthor")));
 			}
 			for (Module module : modulemanual) {
