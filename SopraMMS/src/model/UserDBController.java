@@ -947,13 +947,13 @@ public class UserDBController {
 		return mailList;
 	}
 
-	public void insertHistory(String loginname, Date date, String content){
+	public void insertHistory(String loginname, String date, String content){
 		Connection connection = connect();
 		query = "INSERT INTO history (loginname, date, content) VALUES (?,?,?)";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
-			pStatement.setDate(2, date);
+			pStatement.setString(2, date);
 			pStatement.setString(3, content);
 			pStatement.execute();
 			
