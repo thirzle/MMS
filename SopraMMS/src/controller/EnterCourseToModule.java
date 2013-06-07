@@ -39,7 +39,7 @@ public class EnterCourseToModule extends HttpServlet {
 		ModuleAdministration ma = new ModuleAdministration();
 		HttpSession session = request.getSession();
 
-		Module module = ma.getModuleByID(1);
+		Module module = ma.getModuleByID(137060731287371);
 		if (module != null) {
 			List<Entry> entry = module.getEntryList();
 

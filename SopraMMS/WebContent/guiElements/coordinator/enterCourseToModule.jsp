@@ -5,7 +5,7 @@
 <%
 	ArrayList<Entry> entryList = new ArrayList();
 	Object list = session.getAttribute("showEntryListFromModule");
-
+	System.out.println(list);
 	if (list != null) {
 		entryList.addAll((List<Entry>) list);
 	}
