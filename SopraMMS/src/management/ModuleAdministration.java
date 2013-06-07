@@ -90,9 +90,6 @@ public class ModuleAdministration {
 	}
 	
 	public void createModuleByModuleManager(List<Entry> list, String author, String institut){
-		
-		int moduleID=1;
-		int versionID=1;
 		String name=list.get(1).getContent();
 		Date d =new Date();
 		java.sql.Date creationDate = new java.sql.Date(d.getYear(),d.getMonth(),d.getDay());
@@ -100,9 +97,9 @@ public class ModuleAdministration {
 		boolean approved = false;
 		String insituteID = institut;
 		List<Entry> entryList = list;
-		String subject = "TEST";
+		String subject = null;
 		String modificationauthor=author;
-		Module module = new Module(moduleID, versionID ,name, creationDate, modificationDate, approved, insituteID, entryList, subject, modificationauthor);
+		Module module = new Module(name, creationDate, modificationDate, approved, insituteID, entryList, subject, modificationauthor);
 		module.print();
 		moduleDBController.createModuleByModuleManager(module);
 	}

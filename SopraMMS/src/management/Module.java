@@ -88,6 +88,7 @@ public class Module {
 	
 	public Module(String name, Date creationDate,
 			Date modificationDate, boolean approved, String insituteID, String subject, String modificationauthor) {
+		random = new Random();
 		this.moduleID = createModuleID();
 		this.version = 1;
 		this.name = name;
@@ -97,13 +98,14 @@ public class Module {
 		this.instituteID = insituteID;
 		this.subject = subject;
 		this.modificationauthor = modificationauthor;
-		random = new Random();
+		
 	}
 
 
 	public Module(String name, Date creationDate,
 			Date modificationDate, boolean approved, String insituteID,
 			List<Entry> entryList, String subject, String modificationauthor) {
+		random = new Random();
 		this.moduleID = createModuleID();
 		this.version = 1;
 		this.name = name;
@@ -114,7 +116,7 @@ public class Module {
 		this.entryList = entryList;
 		this.subject = subject;
 		this.modificationauthor = modificationauthor;
-		random = new Random();
+		
 	}
 
 

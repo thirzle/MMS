@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import user.UserAdministration;
-
 import management.EffortEntry;
 import management.Entry;
 import management.ModuleAdministration;
 import management.SelfStudy;
 import management.TextualEntry;
+import user.User;
+import user.UserAdministration;
 
 /**
  * Servlet implementation class CreateModule
@@ -181,7 +181,7 @@ public class CreateModule extends HttpServlet {
 
 				// Aufwand speichern
 				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
-				EffortEntry effort = new EffortEntry(pt);
+				EffortEntry effort = new EffortEntry("Pr&auml;senzzeit",pt);
 				List<SelfStudy> selfStudyList = new ArrayList<>();
 
 				for (int i = 1; i < fieldsTypeD.size(); i++) {
@@ -206,11 +206,10 @@ public class CreateModule extends HttpServlet {
 					module.add(entry);
 				}
 				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
-
+				// TODO leere selbsterstellte felder aussortieren 
 				// TODO Modul an DB uebertragen
 				// Spezifische Felder für Turnus, LP, Aufwand, Studiengang
-				ma.createModule(module, session.getAttribute("loginname")
-						.toString(), institute);
+				ma.createModuleByModuleManager(module, ((User)session.getAttribute("user")).getLogin(), institute);
 				// TODO pruefen ob Pflichfelder befuellt sind
 
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true");

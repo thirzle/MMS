@@ -12,10 +12,11 @@ public class SelfStudy {
 	private Random random;
 
 	public SelfStudy(String title, int time) {
+		random = new Random();
 		this.selfstudyID = createSelfStudyID(); 
 		this.title = title;
 		this.time = time;
-		random = new Random();
+		
 	}
 
 	public SelfStudy(int selfstudyID, int time, String title) {
