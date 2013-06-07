@@ -636,6 +636,7 @@ public class ModuleDBController {
 					pStatement.setInt(2, te.getVersion());
 					pStatement.setString(3, te.getContent());
 					pStatement.execute();
+					System.out.println("text");
 				}
 			}
 			
@@ -649,18 +650,23 @@ public class ModuleDBController {
 					pStatement.setLong(1, ee.getEntryID());
 					pStatement.setInt(2, ee.getVersion());
 					pStatement.setInt(3, ee.getTime());
+					pStatement.execute();
+					System.out.println("effort");
 				}
 			}
-			query = "INSERT INTO selfstudy VALUES(?,?,?,?,?)";
-			pStatement = connection.prepareStatement(query);
-			pStatement.setLong(2, ee.getEntryID());
-			pStatement.setInt(3, ee.getVersion());
-			for (SelfStudy study : ee.getSelfStudyList()) {
-				pStatement.setLong(1, study.getSelfstudyID());
-				pStatement.setString(4, study.getTitle());
-				pStatement.setInt(5, study.getTime());
-				pStatement.execute();
-			}
+			if(ee!=null){
+				query = "INSERT INTO selfstudy VALUES(?,?,?,?,?)";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(2, ee.getEntryID());
+				pStatement.setInt(3, ee.getVersion());
+				for (SelfStudy study : ee.getSelfStudyList()) {
+					pStatement.setLong(1, study.getSelfstudyID());
+					pStatement.setString(4, study.getTitle());
+					pStatement.setInt(5, study.getTime());
+					pStatement.execute();
+					System.out.println("study");
+				}
+			}	
 			connection.commit();
 			return true;
 		} catch (SQLException e) {
