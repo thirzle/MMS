@@ -90,13 +90,103 @@ public class ModuleDBController {
 
 	// load all entries of a specified module
 	public List<Entry> getEntryListOfModule(Module module) {
-		CourseEntry course = getCourseEntryByModule(module);
-		List<TextualEntry> textual = getTextualEntryByModule(module);
-		EffortEntry effort = getEffortEntryByModule(module);
-		if (course != null)
-			module.addCourseEntry(getCourseEntryByModule(module));
-		if (!textual.isEmpty())
-			module.addTextualEntryList(getTextualEntryByModule(module));
+		Connection connection = connect();
+		CourseEntry courses = null;
+		List<TextualEntry> textual = new LinkedList<TextualEntry>();
+		EffortEntry effort = null;
+		List<SelfStudy> selfstudy = new LinkedList<SelfStudy>();
+		query = "SELECT c.courseID, e.*"
+				+ " FROM courseentry AS c JOIN latestentry AS l"
+				+ " ON c.entryID = l.entryID AND c.version = l.version JOIN entry "
+				+ "AS e on c.entryID = e.entryID AND c.version = e.version"
+				+ " WHERE e.moduleID = ? AND e.moduleversion = ?";
+			try {
+				//load courses of module
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(1, module.getModuleID());
+				pStatement.setInt(2, module.getVersion());
+				ResultSet resultSet = pStatement.executeQuery();
+				if (resultSet.next()) {
+					courses = new CourseEntry(resultSet.getInt("version"),
+							resultSet.getTimestamp("timestamp").toString(),
+							resultSet.getBoolean("classification"),
+							resultSet.getBoolean("approvalstatus"),
+							resultSet.getBoolean("declined"),
+							resultSet.getInt("entryID"),
+							resultSet.getString("title"),
+							resultSet.getString("courseID"));
+				}
+				while (resultSet.next()) {
+					courses.addCourse(resultSet.getString("courseID"));
+				}
+				//load textual entries of module
+				query = "SELECT e.*, t.text "
+						+ "FROM entry AS e JOIN latestentry AS l ON e.entryID = l.entryID "
+						+ "AND e.version = l.version JOIN textualentry AS t ON "
+						+ "e.entryID = t.entryID AND e.version = t.version "
+						+ "WHERE moduleID = ? AND moduleversion = ?";
+				
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(1, module.getModuleID());
+				pStatement.setInt(2, module.getVersion());
+				resultSet = pStatement.executeQuery();
+				while (resultSet.next()) {
+					textual.add(new TextualEntry(resultSet.getInt("version"),
+							resultSet.getDate("date").toString(), resultSet
+									.getBoolean("classification"), resultSet
+									.getBoolean("approvalstatus"), resultSet
+									.getBoolean("declined"), resultSet
+									.getInt("entryID"), resultSet
+									.getString("title"), resultSet
+									.getString("text")));
+				}
+				
+				query = "SELECT e.*,  ef.presencetime "
+						+ "FROM entry AS e JOIN effortentry AS ef ON e.entryID = ef.entryID"
+						+ " AND e.version = ef.version JOIN latestentry AS l ON "
+						+ "ef.entryID = l.entryID AND ef.version = l.version " +
+						"WHERE e.moduleID = ? AND e.moduleversion = ?";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(1, module.getModuleID());
+				pStatement.setInt(2, module.getVersion());
+				resultSet = pStatement.executeQuery();
+				if (resultSet.next()) {
+					effort = new EffortEntry(resultSet.getInt("version"), resultSet
+							.getDate("date").toString(),
+							resultSet.getBoolean("classification"),
+							resultSet.getBoolean("approvalstatus"),
+							resultSet.getBoolean("declined"),
+							resultSet.getInt("entryID"),
+							resultSet.getString("title"),
+							resultSet.getInt("presencetime"));
+				}
+				if (effort != null) {
+					query = "SELECT s.selfstudyID, s.time, s.title "
+							+ "FROM entry AS e JOIN selfstudy AS s ON e.entryID = s.entryID"
+							+ " AND e.version = s.version JOIN latestentry AS l ON "
+							+ "s.entryID = l.entryID AND s.version = l.version "
+							+ "WHERE e.moduleID = ? AND e.moduleversion = ?";
+					pStatement = connection.prepareStatement(query);
+					pStatement.setLong(1, module.getModuleID());
+					pStatement.setInt(2, module.getVersion());
+					resultSet = pStatement.executeQuery();
+					while (resultSet.next()) {
+						selfstudy.add(new SelfStudy(
+								resultSet.getInt("selfstudyID"), resultSet
+										.getInt("time"), resultSet
+										.getString("title")));
+					}
+				
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Couldn't get entries of module: " + module.getName());
+			}
+		if(courses != null)
+			module.addCourseEntry(courses);
+		if(!textual.isEmpty())
+			module.addTextualEntryList(textual);
 		if (effort != null)
 			module.addEffortEntry(getEffortEntryByModule(module));
 		return module.getEntryList();
@@ -222,7 +312,7 @@ public class ModuleDBController {
 
 	// load all available modules by a chosen author
 	// tested: check
-	public List<Module> getModulesByAuthor(String author) {
+	public List<Module> getModulesOverviewByAuthor(String author) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
 		LinkedList<Long> temp = new LinkedList<Long>();
@@ -254,9 +344,6 @@ public class ModuleDBController {
 					}
 
 				}
-			}
-			for (Module modules : moduleList) {
-				modules.setEntryList(getEntryListOfModule(modules));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -737,7 +824,7 @@ public class ModuleDBController {
 				+ "FROM entry AS e JOIN latestentry AS l ON e.entryID = l.entryID "
 				+ "AND e.version = l.version JOIN textualentry AS t ON "
 				+ "e.entryID = t.entryID AND e.version = t.version "
-				+ "WHERE moduleID = ? AND modulversion = ?";
+				+ "WHERE moduleID = ? AND moduleversion = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(1, m.getModuleID());
