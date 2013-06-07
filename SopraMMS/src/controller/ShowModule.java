@@ -35,8 +35,14 @@ public class ShowModule extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		ModuleAdministration mAdmin = new ModuleAdministration();
-		Module module = (Module) session.getAttribute("module");
+		long moduleID = Long.parseLong(request.getParameter("selectedModule"));
+		Module module = mAdmin.getModuleByID(moduleID);
 		LinkedList<Entry> entryList = (LinkedList<Entry>) mAdmin.getEntryListOfModule(module);
+		
+		session.setAttribute("module", module);
+		session.setAttribute("showEntryListOfModule", entryList);
+		session.setAttribute("content", "editModule");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
 	/**
