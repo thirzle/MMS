@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ibm.icu.text.SimpleDateFormat;
+
 import user.User;
 import user.UserAdministration;
 
@@ -48,9 +50,9 @@ public class RemoveRepresentative extends HttpServlet {
 					.setAttribute("content", "removeRepresentative");
 
 			// insert into History "Representative removed"
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date currentTime = new Date();
-			java.sql.Date date = new java.sql.Date(currentTime.getYear(),
-					currentTime.getMonth(), currentTime.getDay() + 2);
+			String date = formatter.format(currentTime);
 			uAdmin.insertHistory(user.getLogin(), date, "Hat " + firstNameRep
 					+ " " + lastNameRep + " als Stellvertreter gel&ouml;scht.");
 

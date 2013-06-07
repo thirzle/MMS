@@ -290,7 +290,7 @@ public class UserAdministration {
 
 	}
 	
-	public void insertHistory(String loginname, Date date, String content){
+	public void insertHistory(String loginname, String date, String content){
 		userDBController.insertHistory(loginname, date, content);
 	}
 	

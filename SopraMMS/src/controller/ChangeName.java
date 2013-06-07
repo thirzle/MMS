@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ibm.icu.text.SimpleDateFormat;
+
 import user.User;
 import user.UserAdministration;
 
@@ -47,9 +49,9 @@ public class ChangeName extends HttpServlet {
 		session.setAttribute("newLoginname", loginname);
 		
 		// Insert into History "Name changed"
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date currentTime = new Date();
-		java.sql.Date date = new java.sql.Date(currentTime.getYear(),
-				currentTime.getMonth(), currentTime.getDay() + 2);
+		String date = formatter.format(currentTime);
 		uAdmin.insertHistory(user.getLogin(), date, "Name ge&auml;ndert");
 		
 		session.setAttribute("content", "changedName");
