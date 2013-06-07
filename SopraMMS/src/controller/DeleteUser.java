@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ibm.icu.text.SimpleDateFormat;
+
 import model.UserDBController;
 import user.User;
 
@@ -40,9 +42,9 @@ public class DeleteUser extends SessionCheck implements Servlet {
 	    	User user = ua.getUser(loginname);
 	    	System.out.println("(DeleteUser.java):user:"+user);
 	    	// insert into History "User removed"
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date currentTime = new Date();
-			java.sql.Date date = new java.sql.Date(currentTime.getYear(),
-					currentTime.getMonth(), currentTime.getDay()+2);
+			String date = formatter.format(currentTime);
 			ua.insertHistory(user.getLogin(), date, "Wurde geloescht");
 			
 	    	ua.deleteUser(user);

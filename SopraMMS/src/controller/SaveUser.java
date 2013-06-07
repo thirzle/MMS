@@ -49,9 +49,9 @@ public class SaveUser extends SessionCheck {
 						.println("User successfully transmitted to UserAdministration!");
 
 				// insert into History "User created"
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				Date currentTime = new Date();
-				java.sql.Date date = new java.sql.Date(currentTime.getYear(),
-						currentTime.getMonth(), currentTime.getDay()+2);
+				String date = formatter.format(currentTime);
 				ua.insertHistory(user.getLogin(), date, user.getFirstName() + " "
 						+ user.getLastName() + " wurde erstellt");
 				
