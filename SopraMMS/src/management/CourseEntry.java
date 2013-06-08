@@ -6,7 +6,8 @@ import java.util.List;
 public class CourseEntry extends Entry {
 
 	@SuppressWarnings("unused")
-	private List<String> courses = new LinkedList<String>();
+	//course --> String[] {courseID, degree}
+	private List<String[]> courses = new LinkedList<String[]>();
 
 	// TODO
 
@@ -33,39 +34,49 @@ public class CourseEntry extends Entry {
 	
 	//updated version
 	public CourseEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, long entryID, String title, int order, List<String> courses) {
+			boolean approvalstatus, boolean declined, long entryID, String title, int order, List<String[]> courses) {
 		super(version, date, classification, approvalstatus, declined, entryID, title, order);
 		this.courses = courses;
 	}
 	
 	
 	public CourseEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, long entryID, String title, int order, String course) {
+			boolean approvalstatus, boolean declined, long entryID, String title, int order, String course, String degree) {
 		super(version, date, classification, approvalstatus, declined, entryID, title, order);
-		courses.add(course);
+		courses.add(new String[]{course, degree});
 	}
 	
 
 	public CourseEntry(int version, String date, boolean classification,
 			boolean approvalstatus, boolean declined, long entryID, String title, int order) {
 		super(version, date, classification, approvalstatus, declined, entryID, title, order);
-		courses = new LinkedList<String>();
+		courses = new LinkedList<String[]>();
 	}
 
 
-	public CourseEntry(String title, List<String> courses) {
+	public CourseEntry(String title, List<String[]> courses) {
 		super(title);
 		this.courses = courses;
 	}
 
 
-	public CourseEntry(List<String> courses) {
+	public CourseEntry(List<String[]> courses) {
 		super("Empty Title");
 		this.courses = courses;
 	}
 	
 	
-	public void addCourse(String course){
-		courses.add(course);
+	public void addCourse(String course, String degree){
+		courses.add(new String[]{course, degree});
+	}
+
+
+	public List<String[]> getCourses() {
+		return courses;
+	}
+
+
+	public void setCourses(List<String[]> courses) {
+		this.courses = courses;
 	}
 }

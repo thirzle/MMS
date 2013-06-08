@@ -58,13 +58,11 @@ public class ModuleDBController {
 	public List<Module> getModules() {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		List<Entry> entryList = new LinkedList<Entry>();
 		query = "SELECT * FROM module";
 
 		try {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
-			// get all entries except of course entries
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"), resultSet
@@ -81,9 +79,6 @@ public class ModuleDBController {
 			System.out.println("Couldn't get modules.");
 		} finally {
 			close(connection);
-		}
-		for (Module module : moduleList) {
-			module.setEntryList(getEntryListOfModule(module));
 		}
 		return moduleList;
 	}
@@ -115,10 +110,12 @@ public class ModuleDBController {
 						resultSet.getLong("entryID"),
 						resultSet.getString("title"),
 						resultSet.getInt("order"),
-						resultSet.getString("courseID"));
+						resultSet.getString("courseID"), 
+						resultSet.getString("degree"));
 			}
 			while (resultSet.next()) {
-				courses.addCourse(resultSet.getString("courseID"));
+				courses.addCourse(resultSet.getString("courseID"), 
+						resultSet.getString("degree"));
 			}
 			// load textual entries of module
 			query = "SELECT e.*, t.text "
@@ -670,6 +667,35 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
+	
+	// get overview of unfinished modules for coordinator
+	public List<Module> getUnfinishedModulesOverview () {
+		Connection connection = connect();
+		List<Module> moduleList = new LinkedList<Module>();
+		query = "SELECT * FROM module WHERE subject IS NULL";
+
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				moduleList.add(new Module(resultSet.getLong("moduleID"),
+						resultSet.getInt("version"), resultSet
+								.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
+								.getDate("modificationdate"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID"), null, resultSet
+								.getString("modificationauthor")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get unfinished modules.");
+		} finally {
+			close(connection);
+		}
+		return moduleList;
+	}
+	
 
 	// TODO
 	// create a new module in database
@@ -765,6 +791,69 @@ public class ModuleDBController {
 			close(connection);
 		}
 	}
+	
+	
+	public boolean finishNewModule(Module module) {
+		Connection connection = connect();
+		CourseEntry courseEntry = null;
+		query = "UPDATE module SET subject = ? WHERE moduleID = ? AND version = ?";
+		try {
+			connection.setAutoCommit(false);
+			//set subject of unfinished module
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, module.getSubject());
+			pStatement.setLong(2, module.getModuleID());
+			pStatement.setInt(3, module.getVersion());
+			pStatement.execute();
+			
+			//find the course entry
+			for (Entry entry : module.getEntryList()) {
+				if(entry.getClass() == CourseEntry.class){
+					courseEntry = (CourseEntry) entry;
+				}
+			}
+			if(courseEntry != null){
+				//set courses of unfinished module
+				//insert bacic entry
+				query = "INSERT INTO entry (entryID, version, moduleID, moduleversion,"
+						+ " author, classification, approvalstatus, declined,"
+						+ " title, order) VALUES (?,?,?,?,?,?,?,?,?,?)";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(1, courseEntry.getEntryID());
+				pStatement.setInt(2, 1);
+				pStatement.setLong(3, module.getModuleID());
+				pStatement.setInt(4, module.getVersion());
+				pStatement.setString(5, module.getModificationauthor());
+				pStatement.setBoolean(6, false);
+				pStatement.setBoolean(7, false);
+				pStatement.setBoolean(8, false);
+				pStatement.setString(9, courseEntry.getTitle());
+				pStatement.setInt(10, courseEntry.getOrder());
+				pStatement.execute();
+				
+				//insert courses
+				query = "INSERT INTO courseentry VALUES (?,?,?,?)";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(1, courseEntry.getEntryID());
+				pStatement.setInt(2, courseEntry.getVersion());
+				for (String[] course : courseEntry.getCourses()) {
+					pStatement.setString(3, course[0]);
+					pStatement.setString(4, course[1]);
+					pStatement.execute();
+				}
+			}
+			connection.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			rollback(connection);
+			return false;
+		} finally {
+			close(connection);
+		}
+		return true;
+	}
+	
 
 	// change an existing module
 	public boolean changeModule(Module module, long moduleIDOld) {
