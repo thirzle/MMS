@@ -1,12 +1,11 @@
 package management;
 
+import java.sql.SQLException;
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import model.ModuleDBController;
-
 import user.User;
 
 public class ModuleAdministration {
@@ -88,31 +87,39 @@ public class ModuleAdministration {
 		moduleDBController.createModuleMaunal(version, courseID, degree,
 				creationdate, modificationdate, approvalstatus, examregulation);
 	}
-	
-	public void createModuleByModuleManager(List<Entry> list, String author, String institut){
-		String name=list.get(1).getContent();
-		Date d =new Date();
-		java.sql.Date creationDate = new java.sql.Date(d.getYear(),d.getMonth(),d.getDay());
-		java.sql.Date modificationDate = new java.sql.Date(d.getYear(),d.getMonth(),d.getDay());
+
+	public void createModuleByModuleManager(List<Entry> list, String author,
+			String institut) {
+		String name = list.get(1).getContent();
+		Date d = new Date();
+		java.sql.Date creationDate = new java.sql.Date(d.getYear(),
+				d.getMonth(), d.getDay());
+		java.sql.Date modificationDate = new java.sql.Date(d.getYear(),
+				d.getMonth(), d.getDay());
 		boolean approved = false;
 		String insituteID = institut;
 		List<Entry> entryList = list;
 		String subject = null;
-		String modificationauthor=author;
-		Module module = new Module(name, creationDate, modificationDate, approved, insituteID, entryList, subject, modificationauthor);
+		String modificationauthor = author;
+		Module module = new Module(name, creationDate, modificationDate,
+				approved, insituteID, entryList, subject, modificationauthor);
 		module.print();
 		moduleDBController.createModuleByModuleManager(module);
 	}
-	
-	public Module getModuleByID(long moduleID){
+
+	public Module getModuleByID(long moduleID) {
 		return moduleDBController.getModule(moduleID);
 	}
-	
-	public String getModuleManual(long moduleID){
+
+	public String getModuleManual(long moduleID) {
 		return moduleDBController.getModuleManualByModule(moduleID);
 	}
-	
-	public LinkedList<Module> getModulesByAuthor(String loginname){
-		return (LinkedList<Module>) moduleDBController.getModulesOverviewByAuthor(loginname);
+
+	public List<Module> getModulesByAuthor(String loginname) {
+		return moduleDBController.getModulesOverviewByAuthor(loginname);
+	}
+
+	public List<Module> getUnfinishedModulesOverview() {
+		return moduleDBController.getUnfinishedModulesOverview();
 	}
 }
