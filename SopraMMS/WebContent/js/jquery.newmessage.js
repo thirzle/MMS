@@ -2,8 +2,10 @@ var mailaddress = $("#mailaddress");
 var mailto = $("#mailto");
 
 /**
+ * due to the input(Wert) of the user in the text area, the function searches the appropriate email address in the drop
+ * 
  * @param Wert
- * due to the input of the user in the text area, the function searches the appropriate email address in the drop
+ * 
  */
 function Eingabe(Wert)
 {
