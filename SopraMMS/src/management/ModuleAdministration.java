@@ -139,8 +139,8 @@ public class ModuleAdministration {
 		moduleDBController.createModuleByModuleManager(module);
 	}
 
-	public Module getModuleByID(long moduleID, int version) {
-		return moduleDBController.getModule(moduleID,version);
+	public Module getModuleByID(long moduleID) {
+		return moduleDBController.getLatestModule(moduleID);
 	}
 
 	public String getModuleManual(long moduleID) {
