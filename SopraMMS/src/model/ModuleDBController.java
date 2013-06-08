@@ -376,8 +376,6 @@ public class ModuleDBController {
 						resultSet.getString("subject"),
 						resultSet.getString("modificationauthor"));
 			}
-			if (module != null)
-				module.setEntryList(getEntryListOfModule(module));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get module: " + moduleID);
