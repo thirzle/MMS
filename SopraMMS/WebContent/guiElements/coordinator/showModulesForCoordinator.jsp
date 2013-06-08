@@ -9,6 +9,15 @@
 %>
 
 <h1>Studieng&auml;nge und F&auml;cher hinzuf&uuml:gen</h1>
+
+<%
+	if (request.getParameter("info") != null) {
+%>
+	<error>Bitte w&auml;hlen Sie ein Modul aus.</error>
+<%
+	}
+%>
+
 <form action="/SopraMMS/ShowModulListForCoordinator" method="get">
 	<table class='tablesorter'>
 		<tr>
@@ -54,5 +63,6 @@
 		%>
 	</table>
 	<button name="action" value="editModule">Modul bearbeiten</button>
-	<button name="action" value="enterCourse">Stundiengang und Fach eintragen</button>
+	<button name="action" value="enterCourse">Stundiengang und
+		Fach eintragen</button>
 </form>

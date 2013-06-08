@@ -37,8 +37,15 @@ public class ShowModulListForCoordinator extends HttpServlet {
 			if (request.getParameter("action").equals("editModule")) {
 
 			} else if (request.getParameter("action").equals("enterCourse")) {
-				response.sendRedirect("/EnterCourseToModule?moduleID="
-						+ request.getParameter("selectedModule"));
+				if (request.getParameter("selectedModule") != null) {
+					response.sendRedirect("/SopraMMS/EnterCourseToModule?moduleID="
+							+ request.getParameter("selectedModule"));
+				}	else{
+					request.getSession().setAttribute("content",
+							"showModulesForCoordinator");
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?info=chooseModule");
+				}
+
 			}
 		} else {
 

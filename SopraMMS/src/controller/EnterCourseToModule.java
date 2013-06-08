@@ -38,11 +38,10 @@ public class EnterCourseToModule extends HttpServlet {
 		ModuleAdministration ma = new ModuleAdministration();
 		HttpSession session = request.getSession();
 
-		long moduleID = Long.parseLong(request.getParameter("moudleID"));
+		long moduleID = Long.parseLong(request.getParameter("moduleID"));
 		Module module = ma.getModuleByID(moduleID);
 		if (module != null) {
 			List<Entry> entry = module.getEntryList();
-
 			session.setAttribute("showModificationauthorFromModule",
 					module.getModificationauthor());
 			session.setAttribute("showModificationDateFromModule",

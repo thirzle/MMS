@@ -765,7 +765,7 @@ public class ModuleDBController {
 			// insert basic entries
 			query = "INSERT INTO entry(entryID, version, moduleID, moduleversion,"
 					+ " author, classification, approvalstatus, declined,"
-					+ " title, order) VALUES (?,?,?,?,?,?,?,?,?,?)";
+					+ " title, `order`) VALUES (?,?,?,?,?,?,?,?,?,?)";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setInt(2, 1);
 			pStatement.setLong(3, module.getModuleID());

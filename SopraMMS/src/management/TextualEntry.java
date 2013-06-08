@@ -42,7 +42,7 @@ public class TextualEntry extends Entry {
 
 	public TextualEntry(String title, int order, String text) {
 		// filling abstract class Entry with default values...
-		super(title);
+		super(title,order);
 		this.text = text;
 	}
 
@@ -50,7 +50,7 @@ public class TextualEntry extends Entry {
 	// invoke this class if you want to create new data
 	public TextualEntry(String text, int order) {
 		// filling abstract class Entry with default values...
-		super("Empty Title");
+		super("Empty Title",order);
 		this.text = text;
 	}
 	

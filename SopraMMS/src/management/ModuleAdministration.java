@@ -124,7 +124,7 @@ public class ModuleAdministration {
 	}
 
 	public Module getModuleByID(long moduleID) {
-		return moduleDBController.getModule(moduleID);
+		return moduleDBController.getLatestModule(moduleID);
 	}
 
 	public String getModuleManual(long moduleID) {
