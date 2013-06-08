@@ -181,16 +181,16 @@ public class CreateModule extends HttpServlet {
 			else if (request.getParameter("createModule").equals("sendModule")) {
 
 				ArrayList<Entry> module = new ArrayList<>();
-
+				int order=0;
 				for (String[] strings : fieldsTypeA) {
-					TextualEntry entry = new TextualEntry(strings[0],
+					TextualEntry entry = new TextualEntry(strings[0],order++,
 							strings[1]);
 					module.add(entry);
 				}
 
 				// Aufwand speichern
 				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
-				EffortEntry effort = new EffortEntry("Präsenzzeit", pt);
+				EffortEntry effort = new EffortEntry("Zeitaufwand",order++,pt);
 				List<SelfStudy> selfStudyList = new ArrayList<>();
 
 				for (int i = 1; i < fieldsTypeD.size(); i++) {
@@ -205,12 +205,12 @@ public class CreateModule extends HttpServlet {
 
 				// Textfelder speichern
 				for (String[] strings : fieldsTypeB) {
-					TextualEntry entry = new TextualEntry(strings[0],
+					TextualEntry entry = new TextualEntry(strings[0],order++,
 							strings[1]);
 					module.add(entry);
 				}
 				for (String[] strings : fieldsTypeC) {
-					TextualEntry entry = new TextualEntry(strings[0],
+					TextualEntry entry = new TextualEntry(strings[0],order++,
 							strings[1]);
 					module.add(entry);
 				}

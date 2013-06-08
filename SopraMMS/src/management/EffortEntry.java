@@ -10,21 +10,21 @@ public class EffortEntry extends Entry {
 	private List<SelfStudy> selfStudyList = new LinkedList<SelfStudy>();
 
 
-	public EffortEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, long entryID, String title, int presenceTime,
-			List<SelfStudy> selfStudyList) {
-		super(version, date, classification, approvalstatus, declined, entryID, title);
-		this.presenceTime = presenceTime;
-		this.selfStudyList = selfStudyList;
-	}
-	
-	
-	public EffortEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, long entryID, String title, int presenceTime) {
-		super(version, date, classification, approvalstatus, declined, entryID, title);
-		this.presenceTime = presenceTime;
-		this.selfStudyList = null;
-	}
+//	public EffortEntry(int version, String date, boolean classification,
+//			boolean approvalstatus, boolean declined, long entryID, String title, int presenceTime,
+//			List<SelfStudy> selfStudyList) {
+//		super(version, date, classification, approvalstatus, declined, entryID, title);
+//		this.presenceTime = presenceTime;
+//		this.selfStudyList = selfStudyList;
+//	}
+//	
+//	
+//	public EffortEntry(int version, String date, boolean classification,
+//			boolean approvalstatus, boolean declined, long entryID, String title, int presenceTime) {
+//		super(version, date, classification, approvalstatus, declined, entryID, title);
+//		this.presenceTime = presenceTime;
+//		this.selfStudyList = null;
+//	}
 	
 	//updated version
 	public EffortEntry(int version, String date, boolean classification,
@@ -51,6 +51,11 @@ public class EffortEntry extends Entry {
 
 	public EffortEntry(String title, int presenceTime) {
 		super(title);
+		this.presenceTime = presenceTime;
+	}
+	
+	public EffortEntry(String title, int order,int presenceTime) {
+		super(title, order);
 		this.presenceTime = presenceTime;
 	}
 

@@ -11,25 +11,25 @@ public class CourseEntry extends Entry {
 	// TODO
 
 
-	public CourseEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, long entryID, String title, List<String> courses) {
-		super(version, date, classification, approvalstatus, declined, entryID, title);
-		this.courses = courses;
-	}
-	
-	
-	public CourseEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, long entryID, String title, String course) {
-		super(version, date, classification, approvalstatus, declined, entryID, title);
-		courses.add(course);
-	}
-	
-	
-	public CourseEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, long entryID, String title) {
-		super(version, date, classification, approvalstatus, declined, entryID, title);
-		courses = new LinkedList<String>();
-	}
+//	public CourseEntry(int version, String date, boolean classification,
+//			boolean approvalstatus, boolean declined, long entryID, String title, List<String> courses) {
+//		super(version, date, classification, approvalstatus, declined, entryID, title);
+//		this.courses = courses;
+//	}
+//	
+//	
+//	public CourseEntry(int version, String date, boolean classification,
+//			boolean approvalstatus, boolean declined, long entryID, String title, String course) {
+//		super(version, date, classification, approvalstatus, declined, entryID, title);
+//		courses.add(course);
+//	}
+//	
+//	
+//	public CourseEntry(int version, String date, boolean classification,
+//			boolean approvalstatus, boolean declined, long entryID, String title) {
+//		super(version, date, classification, approvalstatus, declined, entryID, title);
+//		courses = new LinkedList<String>();
+//	}
 	
 	//updated version
 	public CourseEntry(int version, String date, boolean classification,
