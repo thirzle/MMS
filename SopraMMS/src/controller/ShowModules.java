@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.LinkedList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,22 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.ibm.icu.text.SimpleDateFormat;
+import management.Module;
+import management.ModuleAdministration;
 
 import user.User;
 import user.UserAdministration;
 
 /**
- * Servlet implementation class ChangeName
+ * Servlet implementation class ShowModules
  */
-@WebServlet("/ChangeName")
-public class ChangeName extends HttpServlet {
+@WebServlet("/ShowModules")
+public class ShowModules extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangeName() {
+    public ShowModules() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,27 +35,14 @@ public class ChangeName extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String newFirstname = request.getParameter("newFirstname");
-		String newLastname = request.getParameter("newLastname");
-		User user = (User) request.getSession().getAttribute("user");
 		HttpSession session = request.getSession();
-		
-		UserAdministration uAdmin = new UserAdministration();
-		uAdmin.changeName(user, newFirstname, newLastname);
-		String loginname = newLastname.toLowerCase() + newFirstname.toUpperCase().charAt(0);
-		uAdmin.changeLoginname(user, loginname);
-		
-		session.setAttribute("newFirstname", newFirstname);
-		session.setAttribute("newLastname", newLastname);
-		session.setAttribute("newLoginname", loginname);
-		
-		// Insert into History "Name changed"
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date currentTime = new Date();
-		String date = formatter.format(currentTime);
-		uAdmin.insertHistory(user.getLogin(), date, "Name ge&auml;ndert");
-		
-		session.setAttribute("content", "changedName");
+		ModuleAdministration mAdmin = new ModuleAdministration();
+		User user = (User) session.getAttribute("user");
+//		TODO getModulesOverview
+		LinkedList<Module> moduleList = mAdmin.getModulesByAuthor(user.getLogin());
+
+		session.setAttribute("moduleList", moduleList);
+		session.setAttribute("content", "showModules");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 

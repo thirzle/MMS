@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ibm.icu.text.SimpleDateFormat;
+
 import user.User;
 import user.UserAdministration;
 
@@ -73,9 +75,9 @@ public class AppointRepresentative extends HttpServlet {
 			request.getSession().setAttribute("content", "applyRepresentative");
 			
 			// insert into History "Representative appointed"
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date currentTime = new Date();
-			java.sql.Date date = new java.sql.Date(currentTime.getYear(),
-					currentTime.getMonth(), currentTime.getDay()+2);
+			String date = formatter.format(currentTime);
 			uAdmin.insertHistory(user.getLogin(), date, "Hat "+firstNameRep+" "+lastNameRep+" als Stellvertreter beantragt.");
 		}
 		// if representative exists
@@ -85,14 +87,20 @@ public class AppointRepresentative extends HttpServlet {
 				request.getSession().setAttribute("wrongData", true);
 				request.getSession().setAttribute("content",
 						"appointRepresentative");
-			} else {
+			}
+//			you can't appoint yourself as representative
+			else if(userR.getFirstName().equals(user.getFirstName()) && userR.getFirstName().equals(user.getLastName())){
+				
+			}
+			
+			else {
 				uAdmin.changeRepresentative(user, userR.getLogin());
 				request.getSession().setAttribute("content",
 						"createdRepresentative");
 				// insert into History "Representative created"
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				Date currentTime = new Date();
-				java.sql.Date date = new java.sql.Date(currentTime.getYear(),
-						currentTime.getMonth(), currentTime.getDay()+2);
+				String date = formatter.format(currentTime);
 				uAdmin.insertHistory(user.getLogin(), date, "Hat "+firstNameRep+" "+lastNameRep+" als Stellvertreter ernannt.");
 			}
 		}

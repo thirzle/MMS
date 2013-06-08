@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ibm.icu.text.SimpleDateFormat;
+
 import user.User;
 import user.UserAdministration;
 
@@ -50,9 +52,9 @@ public class ChangePassword extends HttpServlet {
 				ua.changePassword(user, newPassword1.hashCode() + "");
 
 				// Insert into History "Password changed"
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				Date currentTime = new Date();
-				java.sql.Date date = new java.sql.Date(currentTime.getYear(),
-						currentTime.getMonth(), currentTime.getDay() + 2);
+				String date = formatter.format(currentTime);
 				ua.insertHistory(user.getLogin(), date, "Passwort ge&auml;ndert");
 
 				request.getSession().setAttribute("content", "changedPw");

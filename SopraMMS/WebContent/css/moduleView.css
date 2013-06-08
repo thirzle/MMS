@@ -9,10 +9,10 @@ table {
 }
 
 .descriptionModule {
-	width: 150px;
 	background-color: #EDECE8;
 	padding: 0px 10px 0px 10px;
 	margin: 0px 0px 0px 0px;
+	width: 150px;
 }
 
 .descriptionModule input {
@@ -21,20 +21,20 @@ table {
 }
 
 .entryModule {
-	width: 670px;
+	width: 450px;
 }
 
 .entryModule  textarea {
 	border: none;
 	resize: none;
 	height: 80px;
-	width: 520px;
+	width: 100%;
 }
 
 .entryModule input {
 	border: none;
 	resize: none;
-	width: 520px;
+	width: 100%;
 }
 
 .effortEntry {
@@ -46,21 +46,20 @@ table {
 }
 
 .effortEntryTitel input {
-	width: 150px;
 	border: 1px solid #C4C0B4;
+	width: 120px;
 }
 
 .effortEntryTime input {
-	width: 50px;
 	border: 1px solid #C4C0B4;
+	width: 50px;
 }
 
 #instituteSelect {
-	width: 520px;
+	width: 100%;
 }
 
 .buttonDeleteRow {
-	width: 30px;
 	background-color: #EDECE8;
 }
 
@@ -71,9 +70,10 @@ table {
 	cursor: pointer;
 }
 
-.informationAboutModule{
+.informationAboutModule {
 	border: none;
 }
-.informationAboutModule td{
+
+.informationAboutModule td {
 	width: 225px;
 }

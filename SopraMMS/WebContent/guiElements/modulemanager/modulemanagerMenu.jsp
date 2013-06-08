@@ -5,10 +5,18 @@
 
 
 	<ul class="nav">
-		<div class="headerNavModul" ><li>Modulverwaltung</li></div>
+		<div class="headerNavModul">
+			<li>Modulverwaltung</li>
+		</div>
 		<div class="expandModul">
 			<ul class="subNav">
-				<li><a href='/SopraMMS/CreateModule'>Neues Modul eintragen</a></li>
+
+				<li><a href="/SopraMMS/CreateModule">Modul erstellen</a></li>
+				<%
+					session.setAttribute("edit", "false");
+				%>
+				<li><a href="/SopraMMS/CreateModule">Neues Modul eintragen</a></li>
+				<li><a href="/SopraMMS/ShowModules">Modul bearbeiten</a></li>
 			</ul>
 		</div>
 	</ul>

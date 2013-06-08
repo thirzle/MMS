@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,13 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import user.UserAdministration;
-
 import management.EffortEntry;
 import management.Entry;
+import management.Module;
 import management.ModuleAdministration;
 import management.SelfStudy;
 import management.TextualEntry;
+import user.User;
+import user.UserAdministration;
 
 /**
  * Servlet implementation class CreateModule
@@ -41,11 +43,12 @@ public class CreateModule extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		
 		UserAdministration ua = new UserAdministration();
 		ModuleAdministration ma = new ModuleAdministration();
 		HttpSession session = request.getSession();
 
+		
 		if (session.getAttribute("institutesModuleEntry") == null) {
 
 			List<String[]> institutes = ua.getAllInstitutesByName(session
@@ -70,14 +73,57 @@ public class CreateModule extends HttpServlet {
 		// Attribut
 
 		// Fuer TypA
+		
 		if (session.getAttribute("fieldsTypeA") == null) {
-			fieldsTypeA.add(new String[] { "K&uuml;rzel", "" });
-			fieldsTypeA.add(new String[] { "Titel", "" });
-			fieldsTypeA.add(new String[] { "Verantwortlicher", "" });
-			fieldsTypeA.add(new String[] { "Turnus", "" });
-			fieldsTypeA.add(new String[] { "Sprache", "" });
-			fieldsTypeA.add(new String[] { "Pr&uuml;fungsform", "" });
-			fieldsTypeA.add(new String[] { "Notenbildung", "" });
+			if(session.getAttribute("edit").equals(false)){
+				session.removeAttribute("edit");
+			}
+			if(session.getAttribute("edit").equals("true")){
+				session.removeAttribute("edit");
+				long moduleID = Long.parseLong((request.getParameter("selectedModule")));
+				Module editModule = ma.getModuleByID(moduleID);
+//				entryList ist doppelt
+				LinkedList<Entry> entryList = (LinkedList<Entry>) ma.getEntryListOfModule(editModule);
+				
+				if(!entryList.isEmpty()){
+					for (Entry entry : entryList) {
+						if(entry.getTitle().equals("Kürzel")){
+							fieldsTypeA.add(new String[] { "Kürzel", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Titel")){
+							fieldsTypeA.add(new String[] { "Titel", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Verantwortlicher")){
+							fieldsTypeA.add(new String[] { "Verantwortlicher", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Turnus")){
+							fieldsTypeA.add(new String[] { "Turnus", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Sprache")){
+							fieldsTypeA.add(new String[] { "Sprache", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Prüfungsform")){
+							fieldsTypeA.add(new String[] { "Prüfungsform", entry.getContent() });
+						}
+						else if(entry.getTitle().equals("Notenbildung")){
+							fieldsTypeA.add(new String[] { "Notenbildung", entry.getContent() });
+						}
+					}
+				}
+				else{
+					System.out.println("(CreateModule.java): entryList is empty");
+				}
+			}
+			
+			else{
+				fieldsTypeA.add(new String[] { "Kürzel", "" });
+				fieldsTypeA.add(new String[] { "Titel", "" });
+				fieldsTypeA.add(new String[] { "Verantwortlicher", "" });
+				fieldsTypeA.add(new String[] { "Turnus", "" });
+				fieldsTypeA.add(new String[] { "Sprache", "" });
+				fieldsTypeA.add(new String[] { "Prüfungsform", "" });
+				fieldsTypeA.add(new String[] { "Notenbildung", "" });
+			}
 
 			System.out.println("fieldsTypeA");
 
@@ -88,10 +134,10 @@ public class CreateModule extends HttpServlet {
 
 		// Fuer TypD
 		if (session.getAttribute("fieldsTypeD") == null) {
-			fieldsTypeD.add(new String[] { "Pr&auml;senzzeit", "" });
+			fieldsTypeD.add(new String[] { "Präsenzzeit", "" });
 			fieldsTypeD.add(new String[] { "Nacharbeitung", "" });
-			fieldsTypeD.add(new String[] { "&Uuml;bungsaufgaben", "" });
-			fieldsTypeD.add(new String[] { "Pr&uuml;fung", "" });
+			fieldsTypeD.add(new String[] { "Übungsaufgaben", "" });
+			fieldsTypeD.add(new String[] { "Prüfung", "" });
 			fieldsTypeD.add(new String[] { "", "" });
 		} else {
 			fieldsTypeD.addAll((ArrayList<String[]>) session
@@ -181,7 +227,7 @@ public class CreateModule extends HttpServlet {
 
 				// Aufwand speichern
 				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
-				EffortEntry effort = new EffortEntry(pt);
+				EffortEntry effort = new EffortEntry("Präsenzzeit",pt);
 				List<SelfStudy> selfStudyList = new ArrayList<>();
 
 				for (int i = 1; i < fieldsTypeD.size(); i++) {
@@ -206,11 +252,10 @@ public class CreateModule extends HttpServlet {
 					module.add(entry);
 				}
 				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
-
+				// TODO leere selbsterstellte felder aussortieren 
 				// TODO Modul an DB uebertragen
 				// Spezifische Felder für Turnus, LP, Aufwand, Studiengang
-				ma.createModule(module, session.getAttribute("loginname")
-						.toString(), institute);
+				ma.createModuleByModuleManager(module, ((User)session.getAttribute("user")).getLogin(), institute);
 				// TODO pruefen ob Pflichfelder befuellt sind
 
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true");

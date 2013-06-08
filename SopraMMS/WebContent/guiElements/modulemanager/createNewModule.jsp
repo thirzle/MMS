@@ -47,7 +47,7 @@
 								<%
 									String[] pt = fieldsTypeD.get(0);
 								%>
-								<td class="effortEntryTitel">Pr&auml;senzzeit</td>
+								<td class="effortEntryTitel">Präsenzzeit</td>
 								<td>:</td>
 								<td class="effortEntryTime"><input name='<%=0%>ContentD'
 									type="number" value="<%=pt[1].toString()%>">&ensp;Stunden</td>

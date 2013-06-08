@@ -111,5 +111,9 @@
 %>
 <jsp:include page="/guiElements/generally/changedName.jsp"></jsp:include>
 <%
-	}
+	} else if (contentPage.equals("showModules")) {
+%>
+<jsp:include page="/guiElements/modulemanager/showModules.jsp"></jsp:include>
+<%
+	} 
 %>

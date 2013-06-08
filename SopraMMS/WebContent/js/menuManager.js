@@ -233,7 +233,7 @@ $(document).ready(function() {
 		var exp = sessionStorage.getItem('expCoordModule');
 		if (exp == 'true') {
 			$(".expandCoordinatorModule").toggleClass("expanded", false);
-			sessionStorage.setItem('expCoordinatorModule', 'false');
+			sessionStorage.setItem('expCoordModule', 'false');
 		} else {
 			$(".expandCoordinatorModule").toggleClass("expanded", true);
 			sessionStorage.setItem('expCoordModule', 'true');
@@ -251,3 +251,29 @@ $(document).ready(function() {
 		$(".expandCoordinatorModule").toggleClass("expanded", true);
 	}
 });
+
+//Dezernet 2
+$(document).ready(function() {
+	$(".headerNavDez2Module").click(function(e) {
+		var exp = sessionStorage.getItem('expandDez2Module');
+		if (exp == 'true') {
+			$(".expandDez2Module").toggleClass("expanded", false);
+			sessionStorage.setItem('expandDez2Module', 'false');
+		} else {
+			$(".expandDez2Module").toggleClass("expanded", true);
+			sessionStorage.setItem('expandDez2Module', 'true');
+		}
+		$(".expandDez2Module").children("ul:first").slideToggle("fast");
+	});
+});
+
+$(document).ready(function() {
+	var exp = sessionStorage.getItem('expandDez2Module');
+	if (exp == 'true') {
+		$(".expandDez2Module").toggleClass("expanded", false);
+		$(".expandDez2Module").children("ul:first").slideToggle(0);
+	} else {
+		$(".expandDez2Module").toggleClass("expanded", true);
+	}
+});
+

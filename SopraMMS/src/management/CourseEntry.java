@@ -12,22 +12,43 @@ public class CourseEntry extends Entry {
 
 
 	public CourseEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, int entryID, String title, List<String> courses) {
+			boolean approvalstatus, boolean declined, long entryID, String title, List<String> courses) {
 		super(version, date, classification, approvalstatus, declined, entryID, title);
 		this.courses = courses;
 	}
 	
 	
 	public CourseEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, int entryID, String title, String course) {
+			boolean approvalstatus, boolean declined, long entryID, String title, String course) {
 		super(version, date, classification, approvalstatus, declined, entryID, title);
 		courses.add(course);
 	}
 	
 	
 	public CourseEntry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, int entryID, String title) {
+			boolean approvalstatus, boolean declined, long entryID, String title) {
 		super(version, date, classification, approvalstatus, declined, entryID, title);
+		courses = new LinkedList<String>();
+	}
+	
+	//updated version
+	public CourseEntry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, long entryID, String title, int order, List<String> courses) {
+		super(version, date, classification, approvalstatus, declined, entryID, title, order);
+		this.courses = courses;
+	}
+	
+	
+	public CourseEntry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, long entryID, String title, int order, String course) {
+		super(version, date, classification, approvalstatus, declined, entryID, title, order);
+		courses.add(course);
+	}
+	
+
+	public CourseEntry(int version, String date, boolean classification,
+			boolean approvalstatus, boolean declined, long entryID, String title, int order) {
+		super(version, date, classification, approvalstatus, declined, entryID, title, order);
 		courses = new LinkedList<String>();
 	}
 
