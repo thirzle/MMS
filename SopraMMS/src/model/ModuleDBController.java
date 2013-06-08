@@ -161,8 +161,8 @@ public class ModuleDBController {
 						resultSet.getString("title"),
 						resultSet.getInt("order"),
 						resultSet.getInt("presencetime"));
-			}
-			if (effort != null) {
+				
+				// get selfstudies of effort entry
 				query = "SELECT s.selfstudyID, s.time, s.title "
 						+ "FROM entry AS e JOIN selfstudy AS s ON e.entryID = s.entryID"
 						+ " AND e.version = s.version JOIN latestentry AS l ON "
@@ -177,7 +177,7 @@ public class ModuleDBController {
 							.getLong("selfstudyID"), resultSet.getInt("time"),
 							resultSet.getString("title")));
 				}
-
+				effort.setSelfStudyList(selfstudy);
 			}
 
 		} catch (SQLException e) {
