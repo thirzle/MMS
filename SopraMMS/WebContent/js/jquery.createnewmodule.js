@@ -1,0 +1,6 @@
+
+
+
+function fieldsEmpty() {
+	return;
+}
