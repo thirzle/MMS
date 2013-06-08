@@ -163,7 +163,7 @@ public class ShowEditModule extends HttpServlet {
 		}
 
 		// Fuer TypB
-		if (session.getAttribute("fieldsTypeB") == null) {
+		if (session.getAttribute("fieldsTypeBEdit") == null) {
 			for (Entry entry : entryList) {
 				if (entry.getTitle().equals("Inhalt")) {
 					fieldsTypeB
@@ -312,7 +312,7 @@ public class ShowEditModule extends HttpServlet {
 
 //				session.setAttribute("content", "didEditModule");
 //				System.out.println("did edit module");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
 		}
 		// Bei Klick entsprechende Zeile loeschen
