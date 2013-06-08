@@ -8,23 +8,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import management.Entry;
 import management.Module;
 import management.ModuleAdministration;
 
 /**
- * Servlet implementation class EnterCourseToModule
+ * Servlet implementation class ShowModulListForCoordinator
  */
-@WebServlet("/EnterCourseToModule")
-public class EnterCourseToModule extends HttpServlet {
+@WebServlet("/ShowModulListForCoordinator")
+public class ShowModulListForCoordinator extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public EnterCourseToModule() {
+	public ShowModulListForCoordinator() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -35,24 +33,23 @@ public class EnterCourseToModule extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		ModuleAdministration ma = new ModuleAdministration();
-		HttpSession session = request.getSession();
+		if (request.getParameter("action") != null) {
+			if (request.getParameter("action").equals("editModule")) {
 
-		long moduleID = Long.parseLong(request.getParameter("moudleID"));
-		Module module = ma.getModuleByID(moduleID);
-		if (module != null) {
-			List<Entry> entry = module.getEntryList();
+			} else if (request.getParameter("action").equals("enterCourse")) {
+				response.sendRedirect("/EnterCourseToModule?moduleID="
+						+ request.getParameter("selectedModule"));
+			}
+		} else {
 
-			session.setAttribute("showModificationauthorFromModule",
-					module.getModificationauthor());
-			session.setAttribute("showModificationDateFromModule",
-					module.getModificationDate());
-			session.setAttribute("showCreationDateFromModule",
-					module.getCreationDate());
-			session.setAttribute("showEntryListFromModule", entry);
+			ModuleAdministration ma = new ModuleAdministration();
+			List<Module> moduleList = ma.getUnfinishedModulesOverview();
+			request.getSession().setAttribute(
+					"unfinishedModuleListForCoordinator", moduleList);
+			request.getSession().setAttribute("content",
+					"showModulesForCoordinator");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
-		session.setAttribute("content", "enterCourseToModule");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 
 	}
 

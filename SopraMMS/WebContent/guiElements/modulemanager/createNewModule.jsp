@@ -141,6 +141,8 @@
 		einreichen</button>
 	<button type="submit" value="sendModule" name="createModule"
 		id="submitModulButton" disabled>Modul einreichen</button>
+	<button type="submit" value="sendModule" name="createModule"
+		id="submitModulButton">Modul einreichen</button>
 
 </form>
 <script type="text/javascript"

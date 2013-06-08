@@ -18,17 +18,17 @@ public abstract class Entry {
 	Random random;
 
 	// use this when you import existing data
-	public Entry(int version, String date, boolean classification,
-			boolean approvalstatus, boolean declined, long entryID, String title) {
-		random = new Random();
-		this.version = version;
-		this.timestamp = timestamp;
-		this.classification = classification;
-		this.approved = approved;
-		this.rejected = rejected;
-		this.title = title;
-		this.entryID = entryID;
-	}
+//	public Entry(int version, String date, boolean classification,
+//			boolean approvalstatus, boolean declined, long entryID, String title) {
+//		random = new Random();
+//		this.version = version;
+//		this.timestamp = timestamp;
+//		this.classification = classification;
+//		this.approved = approved;
+//		this.rejected = rejected;
+//		this.title = title;
+//		this.entryID = entryID;
+//	}
 
 
 	// use this to create a new entry
