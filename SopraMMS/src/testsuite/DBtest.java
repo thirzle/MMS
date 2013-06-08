@@ -167,11 +167,15 @@ public class DBtest {
 //		mController.createModuleMaunal(latestVersion, "mi", "Bachelor", "2013-06-01", "2013-06-01", true, 2012);
 	
 //		uController.getEmails
-		boolean[] b = {false, false, false, false, false, false, true};
-		LinkedList<String[]> mailList = (LinkedList) uController.getEmails(b);
-		for (String[] strings : mailList) {
-			System.out.println("Firstname: "+ strings[0]+" Lastname: "+ strings[1]+" Mail: "+strings[2]);
+		
+		Module la = mController.getModule(137060731287371l);
+		la.setEntryList(mController.getEntryListOfModule(la));
+		for (Entry entry : la.getEntryList()) {
+			System.out.println(entry.getTitle());
 		}
+
+		
+		
 
 	}
 
