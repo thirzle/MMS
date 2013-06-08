@@ -41,7 +41,7 @@ public class ShowModules extends HttpServlet {
 //		TODO getModulesOverview
 		LinkedList<Module> moduleList = mAdmin.getModulesByAuthor(user.getLogin());
 
-		session.setAttribute("moduleList", moduleList);
+		session.setAttribute("moduleListForModulemanager", moduleList);
 		session.setAttribute("content", "showModules");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
