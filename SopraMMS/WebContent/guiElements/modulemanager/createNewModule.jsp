@@ -137,8 +137,11 @@
 		hinzuf&uuml;gen</button>
 	<button type="submit" value="saveModule" name="createModule">Modul
 		f&uuml;r Sitzung speichern</button>
-	<button type="submit" value="sendModule" name="createModule" disabled>Modul
-		einreichen</button>
+	<%if(session.getAttribute("edit") != null){ %>
+		<button type="submit" value="sendModule" name="createModule" disabled>Modul einreichen</button>
+	<%}else{ %>
+		<button type="submit" calue="sendEditModule" name="editModule" >Modul einreichen</button>
+	<%} %>
 
 </form>
 <script type="text/javascript" src="/SopraMMS/js/jquery.createnewmodule.js"></script>
