@@ -1,5 +1,4 @@
 var inputs = $("input");
-inputs.attr("oninput","enableSubmitButton()");
 
 function fieldsEmpty() {
 	var isEmpty = false;
@@ -12,7 +11,7 @@ function fieldsEmpty() {
 }
 
 function enableSubmitButton() {
-	alert("enableSubmitButton");
+	alert(fieldsEmpty());
 	if(!fieldsEmpty()) {
 		$('#submitModulButton').each(function() {
 	        if ($(this).attr('disabled')) {
