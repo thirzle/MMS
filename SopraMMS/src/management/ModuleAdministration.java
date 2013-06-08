@@ -47,7 +47,23 @@ public class ModuleAdministration {
 	}
 
 	public List<Entry> getEntryListOfModule(Module module) {
-		return moduleDBController.getEntryListOfModule(module);
+		LinkedList<Entry> entryList = (LinkedList<Entry>) moduleDBController.getEntryListOfModule(module);
+		boolean unsorted = true;
+		Entry left, right, temp;
+		while (unsorted){
+			unsorted = false;
+			for (int i=0; i < entryList.size(); i++) {
+				left = entryList.get(i);
+	         	right = entryList.get(i+1);
+	            if (left.getOrder() > right.getOrder()) {                      
+	               temp = left;
+	               left = right;
+	               right = temp;
+	               unsorted = true;
+	            }
+			}
+		}	
+		return entryList;
 	}
 
 	public String getCourseID(String course) {

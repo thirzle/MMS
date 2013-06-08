@@ -351,13 +351,45 @@ public class ModuleDBController {
 
 	// get all versions of specified module
 	// tested: check
-	public Module getModules(long moduleID) {
+	public Module getAllVersionsOfModule(long moduleID) {
 		Connection connection = connect();
 		Module module = null;
 		query = "SELECT * FROM module WHERE moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(1, moduleID);
+			ResultSet resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				module = new Module(resultSet.getLong("moduleID"),
+						resultSet.getInt("version"),
+						resultSet.getString("name"),
+						resultSet.getDate("creationdate"),
+						resultSet.getDate("modificationdate"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getString("instituteID"),
+						resultSet.getString("subject"),
+						resultSet.getString("modificationauthor"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get versions of module: " + moduleID);
+		} finally {
+			close(connection);
+		}
+		return module;
+	}
+	
+	
+	// get specified module
+	// tested: check
+	public Module getModule(long moduleID, int version) {
+		Connection connection = connect();
+		Module module = null;
+		query = "SELECT * FROM module WHERE moduleID = ? AND version = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, moduleID);
+			pStatement.setInt(2, version);
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				module = new Module(resultSet.getLong("moduleID"),
@@ -712,7 +744,7 @@ public class ModuleDBController {
 	public List<Module> getUnfinishedModulesOverview () {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT * FROM module WHERE subject IS NULL";
+		query = "SELECT DISTINCT * FROM module WHERE subject IS NULL";
 
 		try {
 			statement = connection.createStatement();
