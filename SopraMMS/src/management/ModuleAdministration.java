@@ -106,6 +106,22 @@ public class ModuleAdministration {
 		module.print();
 		moduleDBController.createModuleByModuleManager(module);
 	}
+	
+	public void createModuleByModuleManager(List<Entry> list, String author,
+			String institut, Date creationdate, int version, long moduleID) {
+		String name = list.get(1).getContent();
+		Date d = new Date();
+		java.sql.Date modificationDate = new java.sql.Date(d.getYear(),
+				d.getMonth(), d.getDay());
+		boolean approved = false;
+		String insituteID = institut;
+		List<Entry> entryList = list;
+		String subject = null;
+		String modificationauthor = author;
+		Module module = new Module(moduleID, version, name, creationdate, modificationDate, approved, insituteID, entryList, subject, modificationauthor);
+		module.print();
+		moduleDBController.createModuleByModuleManager(module);
+	}
 
 	public Module getModuleByID(long moduleID) {
 		return moduleDBController.getModule(moduleID);

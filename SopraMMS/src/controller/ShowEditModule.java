@@ -277,9 +277,11 @@ public class ShowEditModule extends HttpServlet {
 
 				// Spezifische Felder für Turnus, LP, Aufwand, Studiengang
 				// Versionsnummer von Modul aktualisieren
+				java.sql.Date creationdate = (java.sql.Date) editModule.getCreationDate();
+				int version = editModule.getVersion()+1;
 				mAdmin.createModuleByModuleManager(entryListForNewModule,
 						((User) session.getAttribute("user")).getLogin(),
-						institute);
+						institute, creationdate, version, moduleID);
 				// TODO pruefen ob Pflichfelder befuellt sind
 
 				// insert into History "Module created"
