@@ -1,6 +1,7 @@
 package management;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,19 +48,18 @@ public class ModuleAdministration {
 	}
 
 	public List<Entry> getEntryListOfModule(Module module) {
-		LinkedList<Entry> entryList = (LinkedList<Entry>) moduleDBController.getEntryListOfModule(module);
+		ArrayList<Entry> entryList = (ArrayList<Entry>) moduleDBController.getEntryListOfModule(module);
 		boolean unsorted = true;
-		Entry left, right, temp;
+		Entry left, right;
 		while (unsorted){
 			unsorted = false;
 			for (int i=0; i < entryList.size(); i++) {
 				left = entryList.get(i);
 	         	right = entryList.get(i+1);
 	            if (left.getOrder() > right.getOrder()) {                      
-	               temp = left;
-	               left = right;
-	               right = temp;
 	               unsorted = true;
+	               entryList.add(i, right);
+	               entryList.add(i+1, left);
 	            }
 			}
 		}	
