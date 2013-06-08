@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import management.Entry;
 import management.Module;
 import management.ModuleAdministration;
-import user.User;
 
 /**
  * Servlet implementation class EnterCourseToModule

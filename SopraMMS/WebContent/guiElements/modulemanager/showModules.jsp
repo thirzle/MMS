@@ -27,14 +27,28 @@
 			<td><%=module.getName()%></td>
 			<td><%=module.getModificationauthor()%></td>
 			<td><%=module.getSubject()%></td>
-			<td><%=module.getModuleManual()%></td>
+			<td>
+				<%
+					if (module.getModuleManual() != null) {
+							out.println(module.getModuleManual());
+						}
+				%>
+			</td>
 			<td><%=module.getCreationDate()%></td>
 			<td><%=module.getModificationDate()%></td>
-			<td><%=module.isApproved()%></td>
+			<td>
+				<%
+					if (module.isApproved()) {
+							out.println("Freigegeben");
+						} else {
+							out.println("Offen");
+						}
+				%>
+			</td>
 		</tr>
 		<%
 			}
-		session.setAttribute("edit", true);
+			session.setAttribute("edit", true);
 		%>
 	</table>
 	<input type="submit" name="editButton" value="Modul bearbeiten" />
