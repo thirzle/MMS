@@ -7,8 +7,8 @@
 		</div>
 		<div class="expandCoordinatorModule">
 			<ul class="subNav">
-				<li><a href="/SopraMMS/EnterCourseToModule">Module
-						bearbeiten</a></li>
+				<li><a href="/SopraMMS/ShowModulListForCoordinator">Module
+						fertigstellen</a></li>
 			</ul>
 		</div>
 	</ul>

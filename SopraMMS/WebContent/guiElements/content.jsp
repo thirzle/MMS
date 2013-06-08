@@ -115,5 +115,14 @@
 %>
 <jsp:include page="/guiElements/modulemanager/showModules.jsp"></jsp:include>
 <%
-	} 
+	} else if (contentPage.equals("editModule")) {
+%>
+<jsp:include page="/guiElements/modulemanager/editModule.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("showModulesForCoordinator")) {
+%>
+<jsp:include
+	page="/guiElements/coordinator/showModulesForCoordinator.jsp"></jsp:include>
+<%
+	}
 %>

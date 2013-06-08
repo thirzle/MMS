@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import management.Module;
 import management.ModuleAdministration;
-
 import user.User;
-import user.UserAdministration;
 
 /**
  * Servlet implementation class ShowModules
@@ -39,9 +37,9 @@ public class ShowModules extends HttpServlet {
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		User user = (User) session.getAttribute("user");
 //		TODO getModulesOverview
-		LinkedList<Module> moduleList = mAdmin.getModulesByAuthor(user.getLogin());
+		List<Module> moduleList = mAdmin.getModulesByAuthor(user.getLogin());
 
-		session.setAttribute("moduleList", moduleList);
+		session.setAttribute("moduleListForModulemanager", moduleList);
 		session.setAttribute("content", "showModules");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
