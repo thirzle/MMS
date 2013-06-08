@@ -276,14 +276,14 @@ public class ModuleDBController {
 
 	// load all available modules by a chosen faculty
 	// tested: check
-	public List<Module> getModulesByFaculty(String faculty) {
+	public List<Module> getModulesByFaculty(String facultyID) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.* FROM modulefacultyaffiliation JOIN module "
-				+ "ON modulefacultyaffiliation.moduleID = module.moduleID WHERE facultyID = ?";
+		query = "SELECT module.* FROM module AS m JOIN institute AS i ON " +
+				"m.instituteID = i.institute WHERE i.facultyID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, faculty);
+			pStatement.setString(1, facultyID);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				moduleList.add(new Module(resultSet.getLong("moduleID"),
@@ -297,12 +297,9 @@ public class ModuleDBController {
 								.getString("modificationauthor")));
 
 			}
-			for (Module module : moduleList) {
-				module.setEntryList(getEntryListOfModule(module));
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Couldn't get modules by faculty: " + faculty);
+			System.out.println("Couldn't get modules by faculty: " + facultyID);
 		} finally {
 			close(connection);
 		}
@@ -352,9 +349,9 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	// get a specified module
+	// get all versions of specified module
 	// tested: check
-	public Module getModule(long moduleID) {
+	public Module getModules(long moduleID) {
 		Connection connection = connect();
 		Module module = null;
 		query = "SELECT * FROM module WHERE moduleID = ?";
@@ -381,6 +378,49 @@ public class ModuleDBController {
 		}
 		return module;
 	}
+	
+	
+	// get latest version of specified module
+	public Module getLatestModule(long moduleID) {
+		Connection connection = connect();
+		Module module = null;
+		int version = -1;
+		query = "SELECT version FROM latestmodule WHERE moduleID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, moduleID);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				version = resultSet.getInt("version");
+			}
+			if(version != -1) {
+				query = "SELECT * FROM module WHERE moduleID = ? AND version = ?";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(1, moduleID);
+				pStatement.setInt(2, version);
+				resultSet = pStatement.executeQuery();
+				if (resultSet.next()) {
+					module = new Module(resultSet.getLong("moduleID"),
+							resultSet.getInt("version"),
+							resultSet.getString("name"),
+							resultSet.getDate("creationdate"),
+							resultSet.getDate("modificationdate"),
+							resultSet.getBoolean("approvalstatus"),
+							resultSet.getString("instituteID"),
+							resultSet.getString("subject"),
+							resultSet.getString("modificationauthor"));
+				}
+			}
+			module.setEntryList(getEntryListOfModule(module));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get module: " + moduleID);
+		} finally {
+			close(connection);
+		}
+		return module;
+	}
+	
 
 	// load all modified modules
 	// tested: check
@@ -974,7 +1014,7 @@ public class ModuleDBController {
 	
 
 	// change an existing module
-	public boolean changeModule(Module module, long moduleIDOld) {
+	public boolean changeModuleByModuleMananger(Module module, long moduleIDOld) {
 		Connection connection = connect();
 		long moduleID = module.getModuleID();
 		String name = module.getName();
@@ -1374,8 +1414,7 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			return resultSet.getString(1);
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("couldn't get modulemanual of module: "
+			System.err.println("couldn't get modulemanual of module: "
 					+ moduleID);
 			return "";
 		} finally {

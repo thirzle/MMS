@@ -168,7 +168,7 @@ public class DBtest {
 	
 //		uController.getEmails
 		
-		Module la = mController.getModule(137060731287371l);
+		Module la = mController.getLatestModule(137060731287371l);
 		la.setEntryList(mController.getEntryListOfModule(la));
 		for (Entry entry : la.getEntryList()) {
 			System.out.println(entry.getTitle());
