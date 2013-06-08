@@ -124,5 +124,9 @@
 <jsp:include
 	page="/guiElements/coordinator/showModulesForCoordinator.jsp"></jsp:include>
 <%
+	} else if(contentPage.equals("didEditModule")){
+%>
+<jsp:include page="/guiElements/modulemanager/didEditModule.jsp"></jsp:include>
+<%
 	}
 %>

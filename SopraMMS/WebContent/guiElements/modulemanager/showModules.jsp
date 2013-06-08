@@ -31,8 +31,9 @@
 			<td>
 				<%
 					if (module.getModuleManual() != null) {
-							out.println(module.getModuleManual());
-						}
+						if(module.getModuleManual() != null)
+							out.println();
+					}
 				%>
 			</td>
 			<td><%=module.getCreationDate()%></td>

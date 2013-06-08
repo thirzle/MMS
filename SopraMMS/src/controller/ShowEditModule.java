@@ -109,12 +109,6 @@ public class ShowEditModule extends HttpServlet {
 				} else if (entry.getTitle().equals("Sprache")) {
 					fieldsTypeA.add(new String[] { "Sprache",
 							entry.getContent() });
-				} else if (entry.getTitle().equals("Prüfungsform")) {
-					fieldsTypeA.add(new String[] { "Prüfungsform",
-							entry.getContent() });
-				} else if (entry.getTitle().equals("Notenbildung")) {
-					fieldsTypeA.add(new String[] { "Notenbildung",
-							entry.getContent() });
 				}
 
 			}
@@ -135,25 +129,33 @@ public class ShowEditModule extends HttpServlet {
 					LinkedList<SelfStudy> selfStudyList = (LinkedList<SelfStudy>) effortEntry
 							.getSelfStudyList();
 
-					for (SelfStudy selfStudy : selfStudyList) {
-						if (selfStudy.getTitle().equals("Präsenzzeit")) {
+					int selfStudySize = selfStudyList.size();
+					for (int i = 0; i < selfStudySize; i++) {
+						if (selfStudyList.get(i).getTitle()
+								.equals("Präsenzzeit")) {
 							fieldsTypeD.add(new String[] { "Präsenzzeit",
-									"" + selfStudy.getTime() });
-						} else if (selfStudy.getTitle().equals("Nacharbeitung")) {
+									"" + selfStudyList.get(i).getTime() });
+						} else if (selfStudyList.get(i).getTitle()
+								.equals("Nacharbeitung")) {
 							fieldsTypeD.add(new String[] { "Nacharbeitung",
-									"" + selfStudy.getTime() });
-						} else if (selfStudy.getTitle()
+									"" + selfStudyList.get(i).getTime() });
+						} else if (selfStudyList.get(i).getTitle()
 								.equals("Übungsaufgaben")) {
 							fieldsTypeD.add(new String[] { "Übungsaufgaben",
-									"" + selfStudy.getTime() });
-						} else if (selfStudy.getTitle().equals("Prüfung")) {
+									"" + selfStudyList.get(i).getTime() });
+						} else if (selfStudyList.get(i).getTitle()
+								.equals("Prüfung")) {
 							fieldsTypeD.add(new String[] { "Prüfung",
-									"" + selfStudy.getTime() });
+									"" + selfStudyList.get(i).getTime() });
+						}
+					}
+					if (selfStudySize < 5) {
+						for (int i = selfStudySize; i < 5; i++) {
+							fieldsTypeD.add(new String[] { "", "" });
 						}
 					}
 				}
 			}
-			fieldsTypeD.add(new String[] { "", "" });
 
 		} else {
 			fieldsTypeD.addAll((ArrayList<String[]>) session
@@ -167,7 +169,16 @@ public class ShowEditModule extends HttpServlet {
 					fieldsTypeB
 							.add(new String[] { "Inhalt", entry.getContent() });
 				} else if (entry.getTitle().equals("Lernziele")) {
+					fieldsTypeB.add(new String[] { "Lernziele",
+							entry.getContent() });
+				} else if (entry.getTitle().equals("Literatur")) {
 					fieldsTypeB.add(new String[] { "Literatur",
+							entry.getContent() });
+				} else if (entry.getTitle().equals("Notenbildung")) {
+					fieldsTypeB.add(new String[] { "Notenbildung",
+							entry.getContent() });
+				} else if (entry.getTitle().equals("Prüfungsform")) {
+					fieldsTypeB.add(new String[] { "Prüfungsform",
 							entry.getContent() });
 				}
 			}
@@ -277,8 +288,9 @@ public class ShowEditModule extends HttpServlet {
 
 				// Spezifische Felder für Turnus, LP, Aufwand, Studiengang
 				// Versionsnummer von Modul aktualisieren
-				java.sql.Date creationdate = (java.sql.Date) editModule.getCreationDate();
-				int version = editModule.getVersion()+1;
+				java.sql.Date creationdate = (java.sql.Date) editModule
+						.getCreationDate();
+				int version = editModule.getVersion() + 1;
 				mAdmin.createModuleByModuleManager(entryListForNewModule,
 						((User) session.getAttribute("user")).getLogin(),
 						institute, creationdate, version, moduleID);
@@ -298,6 +310,8 @@ public class ShowEditModule extends HttpServlet {
 						((User) session.getAttribute("user")).getLogin(), date,
 						"Hat ein Modul ge&auml;ndert: " + title);
 
+//				session.setAttribute("content", "didEditModule");
+//				System.out.println("did edit module");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true");
 			}
 		}
