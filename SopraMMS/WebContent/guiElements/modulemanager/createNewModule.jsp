@@ -29,7 +29,7 @@
 		<table>
 			<tr>
 				<td class='descriptionModule'><%=description[0]%></td>
-				<td class='entryModule'><input name='<%=i%>ContentA'
+				<td class='entryModule'><input class="mustNotBeEmpty" name='<%=i%>ContentA'
 					type="text" value="<%=description[1].trim()%>"></td>
 			</tr>
 		</table>
@@ -49,7 +49,7 @@
 								%>
 								<td class="effortEntryTitel">Präsenzzeit</td>
 								<td>:</td>
-								<td class="effortEntryTime"><input name='<%=0%>ContentD'
+								<td class="effortEntryTime"><input class="mustNotBeEmpty" name='<%=0%>ContentD'
 									type="number" value="<%=pt[1].toString()%>">&ensp;Stunden</td>
 							</tr>
 
@@ -106,7 +106,7 @@
 		<table>
 			<tr>
 				<td class='descriptionModule'><%=description[0]%></td>
-				<td class='entryModule'><textarea name='<%=i%>ContentB'><%=description[1].trim()%></textarea></td>
+				<td class='entryModule'><textarea class="mustNotBeEmpty" name='<%=i%>ContentB'><%=description[1].trim()%></textarea></td>
 			</tr>
 		</table>
 	</div>
@@ -120,7 +120,7 @@
 			<tr>
 				<td class='descriptionModule'><input name="<%=i%>TitleC"
 					type="text" value="<%=description[0].trim()%>"></td>
-				<td class='entryModule'><textarea name="<%=i%>ContentC"><%=description[1].trim()%></textarea></td>
+				<td class='entryModule'><textarea class="mustNotBeEmpty" name="<%=i%>ContentC"><%=description[1].trim()%></textarea></td>
 				<td class='buttonDeleteRow'>
 					<button type="submit" value="<%=i%>Delete" name="deleteRow">
 						<img src="/SopraMMS/images/deleteModuleEntry.png" />
@@ -137,16 +137,9 @@
 		hinzuf&uuml;gen</button>
 	<button type="submit" value="saveModule" name="createModule">Modul
 		f&uuml;r Sitzung speichern</button>
-	<button type="submit" value="sendModule" name="createModule" disabled>Modul
-		einreichen</button>
 	<button type="submit" value="sendModule" name="createModule"
 		id="submitModulButton" disabled>Modul einreichen</button>
-	<button type="submit" value="sendModule" name="createModule"
-		id="submitModulButton">Modul einreichen</button>
 
 </form>
 <script type="text/javascript"
 	src="/SopraMMS/js/jquery.createnewmodule.js"></script>
-<script>
-	fieldsEmpty();
-</script>
