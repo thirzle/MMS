@@ -136,31 +136,32 @@ public class CreateModule extends HttpServlet {
 
 		// Fuer TypD
 		if (session.getAttribute("fieldsTypeD") == null) {
-			// if (edit && !entryList.isEmpty()) {
-			// TODO Fehler in EffortEntry
-			// for (Entry entry : entryList) {
-			// if (entry.getTitle().equals("Präsenzzeit")) {
-			// fieldsTypeD.add(new String[] { "Präsenzzeit",
-			// entry.getContent() });
-			// } else if (entry.getTitle().equals("Nacharbeitung")) {
-			// fieldsTypeD.add(new String[] { "Nacharbeitung",
-			// entry.getContent() });
-			// } else if (entry.getTitle().equals("Übungsaufgaben")) {
-			// fieldsTypeD.add(new String[] { "Übungsaufgaben",
-			// entry.getContent() });
-			// } else if (entry.getTitle().equals("Prüfung")) {
-			// fieldsTypeD.add(new String[] { "Prüfung", entry.getContent() });
-			// }
-			// fieldsTypeD.add(new String[] { "", "" });
-			//
-			// }
-			// } else{
-			fieldsTypeD.add(new String[] { "Präsenzzeit", "" });
-			fieldsTypeD.add(new String[] { "Nacharbeitung", "" });
-			fieldsTypeD.add(new String[] { "Übungsaufgaben", "" });
-			fieldsTypeD.add(new String[] { "Prüfung", "" });
-			fieldsTypeD.add(new String[] { "", "" });
-			// }
+			if (edit && !entryList.isEmpty()) {
+				// TODO in EffortEntry sind komische Sachen gespeichert
+				for (Entry entry : entryList) {
+					if (entry.getTitle().equals("Präsenzzeit")) {
+						fieldsTypeD.add(new String[] { "Präsenzzeit",
+								entry.getContent() });
+					} else if (entry.getTitle().equals("Nacharbeitung")) {
+						fieldsTypeD.add(new String[] { "Nacharbeitung",
+								entry.getContent() });
+					} else if (entry.getTitle().equals("Übungsaufgaben")) {
+						fieldsTypeD.add(new String[] { "Übungsaufgaben",
+								entry.getContent() });
+					} else if (entry.getTitle().equals("Prüfung")) {
+						fieldsTypeD.add(new String[] { "Prüfung",
+								entry.getContent() });
+					}
+					fieldsTypeD.add(new String[] { "", "" });
+
+				}
+			} else {
+				fieldsTypeD.add(new String[] { "Präsenzzeit", "" });
+				fieldsTypeD.add(new String[] { "Nacharbeitung", "" });
+				fieldsTypeD.add(new String[] { "Übungsaufgaben", "" });
+				fieldsTypeD.add(new String[] { "Prüfung", "" });
+				fieldsTypeD.add(new String[] { "", "" });
+			}
 
 		} else {
 			fieldsTypeD.addAll((ArrayList<String[]>) session
@@ -304,7 +305,7 @@ public class CreateModule extends HttpServlet {
 						title = entry.getContent();
 					}
 				}
-//				TODO Unterscheiden zwischen neu eingereicht und geändert?
+				// TODO Unterscheiden zwischen neu eingereicht und geändert
 				if (edit) {
 					ua.insertHistory(
 							((User) session.getAttribute("user")).getLogin(),
@@ -335,8 +336,8 @@ public class CreateModule extends HttpServlet {
 		session.setAttribute("fieldsTypeB", fieldsTypeB);
 		session.setAttribute("fieldsTypeC", fieldsTypeC);
 		session.setAttribute("fieldsTypeD", fieldsTypeD);
-		 session.removeAttribute("edit");
-		 edit = false;
+		session.removeAttribute("edit");
+		edit = false;
 	}
 
 	/**
