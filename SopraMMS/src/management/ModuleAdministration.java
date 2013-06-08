@@ -1,12 +1,12 @@
 package management;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import model.ModuleDBController;
+import sun.org.mozilla.javascript.internal.ast.ArrayLiteral;
 import user.User;
 
 public class ModuleAdministration {
@@ -47,23 +47,26 @@ public class ModuleAdministration {
 		return list;
 	}
 
-	public List<Entry> getEntryListOfModule(Module module) {
-		ArrayList<Entry> entryList = (ArrayList<Entry>) moduleDBController.getEntryListOfModule(module);
-		boolean unsorted = true;
-		Entry left, right;
-		while (unsorted){
-			unsorted = false;
-			for (int i=0; i < entryList.size(); i++) {
-				left = entryList.get(i);
-	         	right = entryList.get(i+1);
-	            if (left.getOrder() > right.getOrder()) {                      
-	               unsorted = true;
-	               entryList.add(i, right);
-	               entryList.add(i+1, left);
-	            }
-			}
-		}	
-		return entryList;
+	public List<Entry> sortModuleEntryListByOrder(Module module) {
+		ArrayList<Entry> entryListUnsorted = new ArrayList<>();
+		entryListUnsorted.addAll(module.getEntryList());
+		Entry[] list = new Entry[entryListUnsorted.size()];
+		ArrayList<Entry> entryListSorted = new ArrayList<>();
+		System.out.println("########### DB Einträge ###########");
+
+		for (Entry entry : entryListUnsorted) {
+			System.out.println(entry.toString());
+		}
+		System.out.println("################################");
+		for (int i = 0; i < list.length; i++) {
+			list[entryListUnsorted.get(i).getOrder()] = entryListUnsorted.get(i);
+		}
+
+		for (int i = 0; i < list.length; i++) {
+			entryListSorted.add(list[i]);
+		}
+
+		return entryListSorted;
 	}
 
 	public String getCourseID(String course) {
@@ -122,7 +125,7 @@ public class ModuleAdministration {
 		module.print();
 		moduleDBController.createModuleByModuleManager(module);
 	}
-	
+
 	public void createModuleByModuleManager(List<Entry> list, String author,
 			String institut, Date creationdate, int version, long moduleID) {
 		String name = list.get(1).getContent();
@@ -134,13 +137,17 @@ public class ModuleAdministration {
 		List<Entry> entryList = list;
 		String subject = null;
 		String modificationauthor = author;
-		Module module = new Module(moduleID, version, name, creationdate, modificationDate, approved, insituteID, entryList, subject, modificationauthor);
+		Module module = new Module(moduleID, version, name, creationdate,
+				modificationDate, approved, insituteID, entryList, subject,
+				modificationauthor);
 		module.print();
 		moduleDBController.createModuleByModuleManager(module);
 	}
 
 	public Module getModuleByID(long moduleID, int version) {
-		return moduleDBController.getModule(moduleID,version);
+		Module module = moduleDBController.getModule(moduleID, version);
+		module.setEntryList(sortModuleEntryListByOrder(module));
+		return module;
 	}
 
 	public String getModuleManual(long moduleID) {
