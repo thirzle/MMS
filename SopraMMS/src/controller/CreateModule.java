@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.ibm.icu.text.SimpleDateFormat;
 
 import management.EffortEntry;
 import management.Entry;
@@ -43,12 +46,23 @@ public class CreateModule extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
+
 		UserAdministration ua = new UserAdministration();
 		ModuleAdministration ma = new ModuleAdministration();
 		HttpSession session = request.getSession();
+		LinkedList<Entry> entryList = new LinkedList<Entry>();
+		boolean edit = false;
 
-		
+		if (session.getAttribute("edit") != null) {
+			edit = true;
+			long moduleID = Long.parseLong((request
+					.getParameter("selectedModule")));
+			Module editModule = ma.getModuleByID(moduleID);
+			// entryList ist doppelt
+			entryList = (LinkedList<Entry>) ma.getEntryListOfModule(editModule);
+
+		}
+
 		if (session.getAttribute("institutesModuleEntry") == null) {
 
 			List<String[]> institutes = ua.getAllInstitutesByName(session
@@ -73,49 +87,37 @@ public class CreateModule extends HttpServlet {
 		// Attribut
 
 		// Fuer TypA
-		
+
 		if (session.getAttribute("fieldsTypeA") == null) {
-			if(session.getAttribute("edit").equals(false)){
-				session.removeAttribute("edit");
-			}
-			if(session.getAttribute("edit").equals("true")){
-				session.removeAttribute("edit");
-				long moduleID = Long.parseLong((request.getParameter("selectedModule")));
-				Module editModule = ma.getModuleByID(moduleID);
-//				entryList ist doppelt
-				LinkedList<Entry> entryList = (LinkedList<Entry>) ma.getEntryListOfModule(editModule);
-				
-				if(!entryList.isEmpty()){
-					for (Entry entry : entryList) {
-						if(entry.getTitle().equals("Kürzel")){
-							fieldsTypeA.add(new String[] { "Kürzel", entry.getContent() });
-						}
-						else if(entry.getTitle().equals("Titel")){
-							fieldsTypeA.add(new String[] { "Titel", entry.getContent() });
-						}
-						else if(entry.getTitle().equals("Verantwortlicher")){
-							fieldsTypeA.add(new String[] { "Verantwortlicher", entry.getContent() });
-						}
-						else if(entry.getTitle().equals("Turnus")){
-							fieldsTypeA.add(new String[] { "Turnus", entry.getContent() });
-						}
-						else if(entry.getTitle().equals("Sprache")){
-							fieldsTypeA.add(new String[] { "Sprache", entry.getContent() });
-						}
-						else if(entry.getTitle().equals("Prüfungsform")){
-							fieldsTypeA.add(new String[] { "Prüfungsform", entry.getContent() });
-						}
-						else if(entry.getTitle().equals("Notenbildung")){
-							fieldsTypeA.add(new String[] { "Notenbildung", entry.getContent() });
-						}
+			if (edit && !entryList.isEmpty()) {
+				// Type A
+				for (Entry entry : entryList) {
+					if (entry.getTitle().equals("Kürzel")) {
+						fieldsTypeA.add(new String[] { "Kürzel",
+								entry.getContent() });
+					} else if (entry.getTitle().equals("Titel")) {
+						fieldsTypeA.add(new String[] { "Titel",
+								entry.getContent() });
+					} else if (entry.getTitle().equals("Verantwortlicher")) {
+						fieldsTypeA.add(new String[] { "Verantwortlicher",
+								entry.getContent() });
+					} else if (entry.getTitle().equals("Turnus")) {
+						fieldsTypeA.add(new String[] { "Turnus",
+								entry.getContent() });
+					} else if (entry.getTitle().equals("Sprache")) {
+						fieldsTypeA.add(new String[] { "Sprache",
+								entry.getContent() });
+					} else if (entry.getTitle().equals("Prüfungsform")) {
+						fieldsTypeA.add(new String[] { "Prüfungsform",
+								entry.getContent() });
+					} else if (entry.getTitle().equals("Notenbildung")) {
+						fieldsTypeA.add(new String[] { "Notenbildung",
+								entry.getContent() });
 					}
 				}
-				else{
-					System.out.println("(CreateModule.java): entryList is empty");
-				}
 			}
-			
-			else{
+
+			else {
 				fieldsTypeA.add(new String[] { "Kürzel", "" });
 				fieldsTypeA.add(new String[] { "Titel", "" });
 				fieldsTypeA.add(new String[] { "Verantwortlicher", "" });
@@ -134,11 +136,32 @@ public class CreateModule extends HttpServlet {
 
 		// Fuer TypD
 		if (session.getAttribute("fieldsTypeD") == null) {
+			// if (edit && !entryList.isEmpty()) {
+			// TODO Fehler in EffortEntry
+			// for (Entry entry : entryList) {
+			// if (entry.getTitle().equals("Präsenzzeit")) {
+			// fieldsTypeD.add(new String[] { "Präsenzzeit",
+			// entry.getContent() });
+			// } else if (entry.getTitle().equals("Nacharbeitung")) {
+			// fieldsTypeD.add(new String[] { "Nacharbeitung",
+			// entry.getContent() });
+			// } else if (entry.getTitle().equals("Übungsaufgaben")) {
+			// fieldsTypeD.add(new String[] { "Übungsaufgaben",
+			// entry.getContent() });
+			// } else if (entry.getTitle().equals("Prüfung")) {
+			// fieldsTypeD.add(new String[] { "Prüfung", entry.getContent() });
+			// }
+			// fieldsTypeD.add(new String[] { "", "" });
+			//
+			// }
+			// } else{
 			fieldsTypeD.add(new String[] { "Präsenzzeit", "" });
 			fieldsTypeD.add(new String[] { "Nacharbeitung", "" });
 			fieldsTypeD.add(new String[] { "Übungsaufgaben", "" });
 			fieldsTypeD.add(new String[] { "Prüfung", "" });
 			fieldsTypeD.add(new String[] { "", "" });
+			// }
+
 		} else {
 			fieldsTypeD.addAll((ArrayList<String[]>) session
 					.getAttribute("fieldsTypeD"));
@@ -146,10 +169,21 @@ public class CreateModule extends HttpServlet {
 
 		// Fuer TypB
 		if (session.getAttribute("fieldsTypeB") == null) {
-
-			fieldsTypeB.add(new String[] { "Inhalt", "" });
-			fieldsTypeB.add(new String[] { "Lernziele", "" });
-			fieldsTypeB.add(new String[] { "Literatur", "" });
+			if (session.getAttribute("edit") != null && !entryList.isEmpty()) {
+				for (Entry entry : entryList) {
+					if (entry.getTitle().equals("Inhalt")) {
+						fieldsTypeB.add(new String[] { "Inhalt",
+								entry.getContent() });
+					} else if (entry.getTitle().equals("Lernziele")) {
+						fieldsTypeB.add(new String[] { "Literatur",
+								entry.getContent() });
+					}
+				}
+			} else {
+				fieldsTypeB.add(new String[] { "Inhalt", "" });
+				fieldsTypeB.add(new String[] { "Lernziele", "" });
+				fieldsTypeB.add(new String[] { "Literatur", "" });
+			}
 
 			System.out.println("fieldsTypeB");
 
@@ -227,7 +261,7 @@ public class CreateModule extends HttpServlet {
 
 				// Aufwand speichern
 				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
-				EffortEntry effort = new EffortEntry("Präsenzzeit",pt);
+				EffortEntry effort = new EffortEntry("Präsenzzeit", pt);
 				List<SelfStudy> selfStudyList = new ArrayList<>();
 
 				for (int i = 1; i < fieldsTypeD.size(); i++) {
@@ -252,11 +286,34 @@ public class CreateModule extends HttpServlet {
 					module.add(entry);
 				}
 				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
-				// TODO leere selbsterstellte felder aussortieren 
+				// TODO leere selbsterstellte felder aussortieren
 				// TODO Modul an DB uebertragen
 				// Spezifische Felder für Turnus, LP, Aufwand, Studiengang
-				ma.createModuleByModuleManager(module, ((User)session.getAttribute("user")).getLogin(), institute);
+				ma.createModuleByModuleManager(module,
+						((User) session.getAttribute("user")).getLogin(),
+						institute);
 				// TODO pruefen ob Pflichfelder befuellt sind
+
+				// insert into History "Module created"
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				Date currentTime = new Date();
+				String date = formatter.format(currentTime);
+				String title = null;
+				for (Entry entry : module) {
+					if (entry.getTitle().equals("Kürzel")) {
+						title = entry.getContent();
+					}
+				}
+//				TODO Unterscheiden zwischen neu eingereicht und geändert?
+				if (edit) {
+					ua.insertHistory(
+							((User) session.getAttribute("user")).getLogin(),
+							date, "Hat ein Modul ge&auml;ndert: " + title);
+				} else {
+					ua.insertHistory(
+							((User) session.getAttribute("user")).getLogin(),
+							date, "Hat ein neues Modul eingereicht: " + title);
+				}
 
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true");
 			}
@@ -278,6 +335,8 @@ public class CreateModule extends HttpServlet {
 		session.setAttribute("fieldsTypeB", fieldsTypeB);
 		session.setAttribute("fieldsTypeC", fieldsTypeC);
 		session.setAttribute("fieldsTypeD", fieldsTypeD);
+		 session.removeAttribute("edit");
+		 edit = false;
 	}
 
 	/**

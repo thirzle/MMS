@@ -34,10 +34,8 @@
 		</tr>
 		<%
 			}
+		session.setAttribute("edit", true);
 		%>
 	</table>
-	<%
-	session.setAttribute("edit", "true");
-	%>
 	<input type="submit" name="editButton" value="Modul bearbeiten" />
 </form>
