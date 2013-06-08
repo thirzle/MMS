@@ -29,7 +29,10 @@
 		<table>
 			<tr>
 				<td class='descriptionModule'><%=entryText[0]%></td>
-				<td class='entryModule'><%=entryText[1]%></td>
+				<td class='entryModule'><%String[] text=entryText[1].split("\n");
+				for(String row:text){
+					out.println(row+"<br/>");
+				}%></td>
 			</tr>
 		</table>
 	</div>

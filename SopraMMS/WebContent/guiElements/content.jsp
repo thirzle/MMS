@@ -2,9 +2,17 @@
 <%
 	String contentPage;
 	Object user = session.getAttribute("user");
-	if (session.getAttribute("content") == null
-			|| request.getParameter("home") != null) {
+	if ((session.getAttribute("content") == null || request
+			.getParameter("home") != null)
+			&& session.getAttribute("user") == null) {
 		contentPage = "start";
+		if (request.getParameter("contentPdf") != null) {
+			contentPage = "contentPdf";
+		}
+	} else if ((session.getAttribute("content") == null || request
+			.getParameter("home") != null)
+			&& session.getAttribute("user") != null) {
+		contentPage = "home";
 		if (request.getParameter("contentPdf") != null) {
 			contentPage = "contentPdf";
 		}
@@ -124,7 +132,7 @@
 <jsp:include
 	page="/guiElements/coordinator/showModulesForCoordinator.jsp"></jsp:include>
 <%
-	} else if(contentPage.equals("didEditModule")){
+	} else if (contentPage.equals("didEditModule")) {
 %>
 <jsp:include page="/guiElements/modulemanager/didEditModule.jsp"></jsp:include>
 <%
