@@ -698,10 +698,13 @@ public class ModuleDBController {
 	
 
 	// TODO
-	// create a new module in database
+	// create a new incomplete module in database
 	public boolean createModuleByModuleManager(Module module) {
 		Connection connection = connect();
 		List<Entry> entryList = module.getEntryList();
+		CourseEntry courseEntry = null;
+		TextualEntry te = null;
+		EffortEntry ee = null;
 		query = "INSERT INTO module(moduleID, version, name, creationdate,"
 				+ " modificationdate, approvalstatus, instituteID,"
 				+ " modificationauthor) VALUES (?,?,?,?,?,?,?,?);";
@@ -739,7 +742,6 @@ public class ModuleDBController {
 			}
 
 			// insert textual entries
-			TextualEntry te;
 			query = "INSERT INTO textualentry VALUES(?,?,?)";
 			pStatement = connection.prepareStatement(query);
 			for (Entry entry : entryList) {
@@ -754,7 +756,123 @@ public class ModuleDBController {
 			}
 
 			// insert effort entry
-			EffortEntry ee = null;
+			query = "INSERT INTO effortentry VALUES(?,?,?)";
+			pStatement = connection.prepareStatement(query);
+			for (Entry entry : entryList) {
+				if (entry.getClass() == EffortEntry.class) {
+					ee = (EffortEntry) entry;
+					pStatement.setLong(1, ee.getEntryID());
+					pStatement.setInt(2, ee.getVersion());
+					pStatement.setInt(3, ee.getTime());
+					pStatement.execute();
+					System.out.println("effort");
+				}
+			}
+			if (ee != null) {
+				query = "INSERT INTO selfstudy VALUES(?,?,?,?,?)";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(2, ee.getEntryID());
+				pStatement.setInt(3, ee.getVersion());
+				for (SelfStudy study : ee.getSelfStudyList()) {
+					pStatement.setLong(1, study.getSelfstudyID());
+					pStatement.setString(4, study.getTitle());
+					pStatement.setInt(5, study.getTime());
+					pStatement.execute();
+					System.out.println("study");
+				}
+			}
+			connection.commit();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't create module: " + module.getName());
+			rollback(connection);
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
+	
+	// create a new complete module in database
+	public boolean createModuleByEditor(Module module) {
+		Connection connection = connect();
+		List<Entry> entryList = module.getEntryList();
+		CourseEntry courseEntry = null;
+		TextualEntry te = null;
+		EffortEntry ee = null;
+		query = "INSERT INTO module(moduleID, version, name, creationdate,"
+				+ " modificationdate, approvalstatus, instituteID,"
+				+ " modificationauthor) VALUES (?,?,?,?,?,?,?,?);";
+		try {
+			// insert basic module
+			connection.setAutoCommit(false);
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, module.getModuleID());
+			pStatement.setInt(2, module.getVersion());
+			pStatement.setString(3, module.getName());
+			pStatement.setDate(4, (java.sql.Date) module.getCreationDate());
+			pStatement.setDate(5, (java.sql.Date) module.getModificationDate());
+			pStatement.setBoolean(6, module.isApproved());
+			pStatement.setString(7, module.getInstituteID());
+			pStatement.setString(8, module.getModificationauthor());
+			pStatement.execute();
+
+			// insert basic entries
+			query = "INSERT INTO entry(entryID, version, moduleID, moduleversion,"
+					+ " author, classification, approvalstatus, declined,"
+					+ " title, order) VALUES (?,?,?,?,?,?,?,?,?,?)";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setInt(2, 1);
+			pStatement.setLong(3, module.getModuleID());
+			pStatement.setInt(4, module.getVersion());
+			pStatement.setString(5, module.getModificationauthor());
+			pStatement.setBoolean(6, false);
+			pStatement.setBoolean(7, false);
+			pStatement.setBoolean(8, false);
+			for (Entry entry : entryList) {
+				pStatement.setLong(1, entry.getEntryID());
+				pStatement.setString(9, entry.getTitle());
+				pStatement.setInt(10, entry.getOrder());
+				pStatement.execute();
+			}
+			
+			//insert course entry
+			//find the course entry
+			for (Entry entry : module.getEntryList()) {
+				if(entry.getClass() == CourseEntry.class){
+					courseEntry = (CourseEntry) entry;
+				}
+			}
+			if(courseEntry != null){
+				//insert courses
+				query = "INSERT INTO courseentry VALUES (?,?,?,?)";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(1, courseEntry.getEntryID());
+				pStatement.setInt(2, courseEntry.getVersion());
+				for (String[] course : courseEntry.getCourses()) {
+					pStatement.setString(3, course[0]);
+					pStatement.setString(4, course[1]);
+					pStatement.execute();
+				}
+			}
+			
+
+			// insert textual entries
+			query = "INSERT INTO textualentry VALUES(?,?,?)";
+			pStatement = connection.prepareStatement(query);
+			for (Entry entry : entryList) {
+				if (entry.getClass() == TextualEntry.class) {
+					te = (TextualEntry) entry;
+					pStatement.setLong(1, te.getEntryID());
+					pStatement.setInt(2, te.getVersion());
+					pStatement.setString(3, te.getContent());
+					pStatement.execute();
+					System.out.println("text");
+				}
+			}
+
+			// insert effort entry
 			query = "INSERT INTO effortentry VALUES(?,?,?)";
 			pStatement = connection.prepareStatement(query);
 			for (Entry entry : entryList) {
@@ -1259,10 +1377,10 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("couldn't get modulemanual of module: "
 					+ moduleID);
+			return "";
 		} finally {
 			close(connection);
 		}
-		return null;
 	}
 
 	// roll back changes made in database if something went wrong
