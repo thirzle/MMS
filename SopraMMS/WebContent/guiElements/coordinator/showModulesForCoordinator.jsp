@@ -23,6 +23,7 @@
 		<tr>
 			<th></th>
 			<th>Titel</th>
+			<th>Version</th>
 			<th>Autor</th>
 			<th>Fach</th>
 			<th>Modulhandbuch</th>
@@ -35,8 +36,9 @@
 		%>
 		<tr>
 			<td><input type="radio" name="selectedModule"
-				value='<%=module.getModuleID()%>' /></td>
+				value='<%=module.getModuleID()%>%<%=module.getVersion()%>' /></td>
 			<td><%=module.getName()%></td>
+			<td><%=module.getVersion()%></td>
 			<td><%=module.getModificationauthor()%></td>
 			<td>
 				<%
