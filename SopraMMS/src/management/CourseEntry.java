@@ -5,11 +5,9 @@ import java.util.List;
 
 public class CourseEntry extends Entry {
 
-	@SuppressWarnings("unused")
 	// course --> String[] {courseID, degree}
 	private List<String[]> courses = new LinkedList<String[]>();
 
-	// TODO
 
 	// public CourseEntry(int version, String date, boolean classification,
 	// boolean approvalstatus, boolean declined, long entryID, String title,

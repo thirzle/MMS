@@ -11,7 +11,12 @@ public class Module {
 	private Date creationDate;
 	private Date modificationDate;
 	private boolean approved;
+	
+	
+	//TODO: die naechsten attribute sind ungenuetzt...
+	@SuppressWarnings("unused")
 	private boolean classification;
+	@SuppressWarnings("unused")
 	private boolean declined;
 	private long moduleID;
 	private int version;

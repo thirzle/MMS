@@ -5,7 +5,6 @@ import java.util.Random;
 
 public class SelfStudy {
 
-	@SuppressWarnings("unused")
 	private long selfstudyID;
 	private String title;
 	private int time;

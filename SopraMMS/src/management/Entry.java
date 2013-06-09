@@ -51,10 +51,7 @@ public abstract class Entry {
 			boolean approvalstatus, boolean declined, long entryID, String title, int order) {
 		random = new Random();
 		this.version = version;
-		this.timestamp = timestamp;
 		this.classification = classification;
-		this.approved = approved;
-		this.rejected = rejected;
 		this.title = title;
 		this.entryID = entryID;
 		this.order = order;
@@ -90,8 +87,7 @@ public abstract class Entry {
 
 	
 	private long createEntryID() {
-		return random.nextInt(1000)+100*Calendar.getInstance().getTimeInMillis();
-		
+		return random.nextInt(1000)+100*Calendar.getInstance().getTimeInMillis();	
 	}
 	
 

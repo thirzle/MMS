@@ -96,7 +96,7 @@ public class ModuleAdministration {
 				degree);
 	}
 
-	public LinkedList getInstituteListOfModuleManual(String courseID,
+	public LinkedList<String> getInstituteListOfModuleManual(String courseID,
 			String degree) {
 		return moduleDBController.getInstituteList(courseID, degree);
 	}

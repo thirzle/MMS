@@ -1318,7 +1318,7 @@ public class ModuleDBController {
 		return null;
 	}
 
-	public LinkedList getInstituteList(String courseID, String degree) {
+	public LinkedList<String> getInstituteList(String courseID, String degree) {
 		Connection connection = connect();
 		LinkedList<String> instituteIDList = new LinkedList<String>();
 		query = "SELECT DISTINCT m.instituteID FROM module AS m "
