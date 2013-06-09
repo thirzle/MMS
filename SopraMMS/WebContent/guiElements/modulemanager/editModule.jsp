@@ -1,29 +1,31 @@
 <%@ page import="java.util.List, java.util.ArrayList"%>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/moduleView.css">
-<%
-	ArrayList<String[]> fieldsTypeA = new ArrayList();
-	fieldsTypeA.addAll((ArrayList<String[]>) session
-	.getAttribute("fieldsTypeAEdit"));
 
-	ArrayList<String[]> fieldsTypeB = new ArrayList();
-	fieldsTypeB.addAll((ArrayList<String[]>) session
-	.getAttribute("fieldsTypeBEdit"));
-
-	ArrayList<String[]> fieldsTypeC = new ArrayList();
-	fieldsTypeC.addAll((ArrayList<String[]>) session
-	.getAttribute("fieldsTypeCEdit"));
-
-	ArrayList<String[]> fieldsTypeD = new ArrayList();
-	fieldsTypeD.addAll((ArrayList<String[]>) session
-	.getAttribute("fieldsTypeDEdit"));
-%>
-<h1>Modul  bearbeiten</h1>
+<h1>Modul bearbeiten</h1>
 
 <form action="/SopraMMS/ShowEditModule" method="get">
 	<%
-		for (int i = 0; i < fieldsTypeA.size(); i++) {
-		String[] description = fieldsTypeA.get(i);
+	System.out.println("######################################################################################");
+		ArrayList<String[]> fieldsTypeA = new ArrayList();
+		fieldsTypeA.addAll((ArrayList<String[]>) session
+		.getAttribute("fieldsTypeAEdit"));
+
+		ArrayList<String[]> fieldsTypeB = new ArrayList();
+		fieldsTypeB.addAll((ArrayList<String[]>) session
+		.getAttribute("fieldsTypeBEdit"));
+
+		ArrayList<String[]> fieldsTypeC = new ArrayList();
+		fieldsTypeC.addAll((ArrayList<String[]>) session
+		.getAttribute("fieldsTypeCEdit"));
+		
+		ArrayList<String[]> fieldsTypeD = new ArrayList();
+		fieldsTypeD.addAll((ArrayList<String[]>) session
+		.getAttribute("fieldsTypeDEdit"));
+		System.out.println("fieldsTypeDEdit: "+(session.getAttribute("fieldsTypeDEdit") == null));
+
+			for (int i = 0; i < fieldsTypeA.size(); i++) {
+			String[] description = fieldsTypeA.get(i);
 	%>
 	<div class='moduleEntry'>
 		<table>
@@ -45,7 +47,10 @@
 						<table>
 							<tr>
 								<%
-									String[] pt = fieldsTypeD.get(0);
+									System.out.println("Fucking Zeitaufwand fieldsTypeD: null: "+ (fieldsTypeD == null) + " empty: "+fieldsTypeD.isEmpty());
+															String[] pt = new String[2];
+															pt = fieldsTypeD.get(0);
+															System.out.println("pt: "+pt[0] + " " + pt[1]);
 								%>
 								<td class="effortEntryTitel">Präsenzzeit</td>
 								<td>:</td>
@@ -55,7 +60,7 @@
 
 							<%
 								for (int i = 1; i < fieldsTypeD.size(); i++) {
-														String[] description = fieldsTypeD.get(i);
+																			String[] description = fieldsTypeD.get(i);
 							%>
 							<tr>
 								<td class="effortEntryTitel"><input name='<%=i%>TitleD'
@@ -81,7 +86,7 @@
 				<td class='entryModule'>
 					<%
 						List<String[]> institutes = (List<String[]>) session
-											.getAttribute("institutesModuleEntry");
+														.getAttribute("institutesModuleEntry");
 					%> <select name='selectedInstitute' id="instituteSelect">
 						<%
 							for (int i = 0; i < institutes.size(); i++) {
@@ -100,7 +105,7 @@
 
 	<%
 		for (int i = 0; i < fieldsTypeB.size(); i++) {
-		String[] description = fieldsTypeB.get(i);
+			String[] description = fieldsTypeB.get(i);
 	%>
 	<div class='moduleEntry'>
 		<table>
@@ -112,8 +117,11 @@
 	</div>
 	<%
 		}
-			for (int i = 0; i < fieldsTypeC.size(); i++) {
-		String[] description = fieldsTypeC.get(i);
+		for (int i = 0; i < fieldsTypeC.size(); i++) {
+			String[] description = new String[2];
+			description = fieldsTypeC.get(i);
+			System.out.println("description");
+			System.out.println(description[0]+" "+description[1]);
 	%>
 	<div class='moduleEntry'>
 		<table>
@@ -137,8 +145,8 @@
 		hinzuf&uuml;gen</button>
 	<button type="submit" value="saveModule" name="createModule">Modul
 		f&uuml;r Sitzung speichern</button>
-	<button type="submit" value="sendModule" name="createModule"
-		id="submitModulButton">Bearbeitetes Modul einreichen</button>
+	<button type="submit" value="sendModule" name="createModule" disabled>Bearbeitetes
+		Modul einreichen</button>
 
 </form>
 <script type="text/javascript"

@@ -27,12 +27,16 @@
 				value='<%=module.getModuleID()%>' /></td>
 			<td><%=module.getName()%></td>
 			<td><%=module.getModificationauthor()%></td>
-			<td><%=module.getSubject()%></td>
+			<td><%
+					if(module.getSubject() != null){
+						out.println(module.getSubject());
+					}
+				%>
+			</td>
 			<td>
 				<%
 					if (module.getModuleManual() != null) {
-						if(module.getModuleManual() != null)
-							out.println();
+						out.println(module.getModuleManual());
 					}
 				%>
 			</td>
