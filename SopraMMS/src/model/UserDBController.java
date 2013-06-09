@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -220,32 +219,23 @@ public class UserDBController {
 	// change existing user in database
 	public boolean changeUser(User oldUser, User newUser) {
 		Connection connection = connect();
-		String loginname = oldUser.getLogin();
-		query = "SELECT * FROM user WHERE loginname=?";
+		query = "UPDATE user SET loginname=?, lastname=?, firstname=?, mail=?  WHERE loginname=?";
 		try {
+			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, loginname);
-			ResultSet resultSet = pStatement.executeQuery();
-			// checks if user exists in database
-			if (resultSet.next()) {
-				query = "UPDATE user SET loginname=?, lastname=?, firstname=?, mail=?, password=?, session=? WHERE loginname=?";
-				pStatement = connection.prepareStatement(query);
-				pStatement.setString(1, newUser.getLogin());
-				pStatement.setString(2, newUser.getLastName());
-				pStatement.setString(3, newUser.getFirstName());
-				pStatement.setString(4, newUser.getMail());
-				pStatement.setString(5, newUser.getPassword());
-				pStatement.setString(6, newUser.getSession());
-				pStatement.setString(7, loginname);
-				pStatement.executeUpdate();
-				return true;
-			} else {
-				System.out.println("That user was not found!");
-				return false;
-			}
+			pStatement.setString(1, newUser.getLogin());
+			pStatement.setString(2, newUser.getLastName());
+			pStatement.setString(3, newUser.getFirstName());
+			pStatement.setString(4, newUser.getMail());
+			pStatement.setString(7, oldUser.getLogin());
+			pStatement.executeUpdate();
+			
+			changeRights(newUser, newUser.getRights(), connection);
+			changeInstitutes(newUser, newUser.getInstitute(), connection);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("User " + loginname + " couldn't be changed.");
+			System.out.println("User " + oldUser.getLogin() + " couldn't be changed.");
 		} finally {
 			close(connection);
 		}
@@ -341,43 +331,138 @@ public class UserDBController {
 	// change rights of specified user
 	public boolean changeRights(User user, boolean[] newRights) {
 		Connection connection = connect();
-		String loginname = user.getLogin();
 		// delete old rights
 		query = "DELETE FROM rightsaffiliation WHERE loginname = ?";
 		try {
 			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, loginname);
+			pStatement.setString(1, user.getLogin());
 			pStatement.execute();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-			System.out.println("Couldn't delete rights of user: " + loginname);
-			rollback(connection);
-			return false;
-		}
+			System.out.println("deleted");
+
 		// insert new rights
 		query = "INSERT INTO rightsaffiliation VALUES (?, ?)";
 		int i = 0;
-		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, loginname);
+			pStatement.setString(1, user.getLogin());
 			for (; i < newRights.length; i++) {
 				if (newRights[i]) {
 					pStatement.setInt(2, i);
-					return pStatement.execute();
+					pStatement.execute();
+					System.out.println("inserted");
 				}
 			}
 			connection.commit();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Couldn't insert right: " + i + " of user: "
-					+ loginname);
+			System.out.println("Couldn't change rights of user: "
+					+ user.getLogin());
 			rollback(connection);
+			return false;
 		} finally {
 			close(connection);
 		}
-		return false;
 	}
+	
+	
+	// change rights of specified user
+	public boolean changeRights(User user, boolean[] newRights, Connection connection) {
+		// delete old rights
+		query = "DELETE FROM rightsaffiliation WHERE loginname = ?";
+		try {
+			connection.setAutoCommit(false);
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, user.getLogin());
+			pStatement.execute();
+			System.out.println("deleted");
+
+		// insert new rights
+		query = "INSERT INTO rightsaffiliation VALUES (?, ?)";
+		int i = 0;
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, user.getLogin());
+			for (; i < newRights.length; i++) {
+				if (newRights[i]) {
+					pStatement.setInt(2, i);
+					pStatement.execute();
+					System.out.println("inserted");
+				}
+			}
+			connection.commit();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't change rights of user: "
+					+ user.getLogin());
+			rollback(connection);
+			return false;
+		}
+	}
+	
+	
+	// change institutes of specified user
+	public boolean changeInstitutes(User user, List<String> institutes) {
+		Connection connection = connect();
+		// delete old institutes
+		query = "DELETE FROM instituteaffiliation WHERE loginname = ?";
+		try {
+			connection.setAutoCommit(false);
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, user.getLogin());
+			pStatement.execute();
+
+		// insert new institutes
+		query = "INSERT INTO instituteaffiliation VALUES (?, ?)";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, user.getLogin());
+			for (String institute : institutes) {
+				pStatement.setString(2, institute);
+				pStatement.execute();
+			}
+			connection.commit();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't change instututes of user: "
+					+ user.getLogin());
+			rollback(connection);
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
+	
+	// change institutes of specified user
+	public boolean changeInstitutes(User user, List<String> institutes, Connection connection) {
+		// delete old institutes
+		query = "DELETE FROM instituteaffiliation WHERE loginname = ?";
+		try {
+			connection.setAutoCommit(false);
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, user.getLogin());
+			pStatement.execute();
+
+		// insert new institutes
+		query = "INSERT INTO instituteaffiliation VALUES (?, ?)";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, user.getLogin());
+			for (String institute : institutes) {
+				pStatement.setString(2, institute);
+				pStatement.execute();
+			}
+			connection.commit();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't change instututes of user: "
+					+ user.getLogin());
+			rollback(connection);
+			return false;
+		}
+	}
+	
 
 	// get all user of specified institute
 	public List<User> getAllUsersFromInstitute(String institute) {
