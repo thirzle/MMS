@@ -111,6 +111,18 @@ public class ModuleAdministration {
 		moduleDBController.createModuleMaunal(version, courseID, degree,
 				creationdate, modificationdate, approvalstatus, examregulation);
 	}
+	
+	
+	//TODO
+	/*
+	 * 	Beispiel um den veralteten Konstruktor zu umgehen....
+	 * 
+	 * 	Calendar cal = Calendar.getInstance();
+    	 *	cal.set(Calendar.YEAR, 1988);
+    	 *	cal.set(Calendar.MONTH, 1);
+    	 *	cal.set(Calendar.DAY_OF_MONTH, 1);
+    	 *	Date dateRepresentation = cal.getTime();
+	 */
 
 	public void createModuleByModuleManager(List<Entry> list, String author,
 			String institut) {

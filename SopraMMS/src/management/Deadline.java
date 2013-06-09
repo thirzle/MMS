@@ -25,6 +25,17 @@ public class Deadline {
 	}
 	
 	
+	//TODO
+	/*
+	 * 	Beispiel um den veralteten Konstruktor zu umgehen....
+	 * 
+	 * 	Calendar cal = Calendar.getInstance();
+    	 *	cal.set(Calendar.YEAR, 1988);
+    	 *	cal.set(Calendar.MONTH, 1);
+    	 *	cal.set(Calendar.DAY_OF_MONTH, 1);
+    	 *	Date dateRepresentation = cal.getTime();
+	 */
+	
 	private Date calcDate(int day, int month, int year){
 		return new Date(year-1900, month-1, day);
 	}
