@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+
+//TODO:
+//namen adden bitte, alle die an der Klasse geschafft haben...
 public class Module {
 	private String name;
 	private Date creationDate;

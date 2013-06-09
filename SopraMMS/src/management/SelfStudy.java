@@ -3,6 +3,14 @@ package management;
 import java.util.Calendar;
 import java.util.Random;
 
+
+//TODO:
+//namen adden bitte, alle die an der Klasse geschafft haben...
+/**
+ * 
+ * @author AJ, add names here...
+ *
+ */
 public class SelfStudy {
 
 	private long selfstudyID;

@@ -1,5 +1,8 @@
 package management;
 
+
+//TODO:
+//namen adden bitte, alle die an der Klasse geschafft haben...
 public class TextualEntry extends Entry {
 
 	private String text;
@@ -14,7 +17,7 @@ public class TextualEntry extends Entry {
 //		this.text = text;
 //	}
 
-
+	@Deprecated
 	public TextualEntry(String title, String text) {
 		// filling abstract class Entry with default values...
 		super(title);
@@ -23,6 +26,7 @@ public class TextualEntry extends Entry {
 
 	
 	// invoke this class if you want to create new data
+	@Deprecated
 	public TextualEntry(String text) {
 		// filling abstract class Entry with default values...
 		super("Empty Title");
@@ -48,6 +52,7 @@ public class TextualEntry extends Entry {
 
 
 	// invoke this class if you want to create new data
+	@Deprecated
 	public TextualEntry(String text, int order) {
 		// filling abstract class Entry with default values...
 		super("Empty Title",order);
