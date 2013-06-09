@@ -14,8 +14,6 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
-import com.sun.org.apache.xerces.internal.xs.StringList;
-
 import management.*;
 
 import java.text.SimpleDateFormat;
@@ -23,46 +21,116 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This class is responsible for the creation of PDF documents.
+ * <p>
+ * Create an object of this class and call it's createModulePdf method
+ * to create a PDF for an existing list of modules and some more parameters.
+ * <p>
+ * Edit parameters in this class to adjust font size, spacings and so on.
+ * @author AJ
+ *
+ */
 public class SimplePdfCreator {
 
     // font definitions
-    private PDFont font_bold = PDType1Font.HELVETICA_BOLD;
+    
+    /**
+     * This font is used for titles, headers and so on.
+     */
+    private PDFont font_bold = PDType1Font.HELVETICA_BOLD;  
+    /**
+     * This font is used for content.
+     */
     private PDFont font_normal = PDType1Font.HELVETICA;
+   
+    /**
+     * Font size for titles.
+     */
     private int font_size_title = 19;
+    /**
+     * Font size for content titles, content, page numbers and so on.
+     * Generally used for anything that does not match "bigger titles".
+     */
     private int font_size_content = 8;
 
     // line spaces
     // space_between_lines > space_between_content
+    /**
+     * Specifies the space between entries ({@link Entry}). Is also used for index pages to group.
+     * <p>
+     * Note: Has to be greater than space_between_content.
+     */
     private int space_between_lines = 18;
+    /**
+     * Specifies the space between content lines. Is also used for index pages.
+     * <p>
+     * Note: Has to be smaller than space_between_lines.
+     */
     private int space_between_content = 12;
 
     // page definitions
+    /**
+     * Page offset used to start text paintings.
+     */
     private int page_offset_top = 50;
+    /**
+     * Page offset used to start text paintings.
+     */
     private int page_offset_left = 50;
+    /**
+     * Page offset used to start text paintings.
+     */
     private int page_offset_right = 50;
+    /**
+     * Page offset used to start text paintings.
+     */
     private int page_offset_bottom = 50;
 
+    /**
+     * Width of the content title. Used to determine the offset for the content. Horizontal.
+     */
     private int content_title_width = 170;
-
+    
+    /**
+     * Offset for content after a title. Vertical.
+     */
     private int content_offset_after_title = 90;
 
+    /**
+     * Offset for and index page entry. Offsets the content from its group title. Horizontal.
+     */
     private int index_content_offset = 50;
 
+    /**
+     * Creates an object of this class. Create one to be able to create PDFs.
+     */
     public SimplePdfCreator() {
 	super();
     }
 
+    /**
+     * Creates a time stamp with current date and time. Is used during PDF creation as creation time.
+     * @return String with current date and time. Format: "E yyyy.MM.dd 'um' hh:mm:ss a zzz"
+     */
     private String get_current_time() {
 	Date current_date = new Date();
 	SimpleDateFormat time_format = new SimpleDateFormat("E yyyy.MM.dd 'um' hh:mm:ss a zzz");
-	// with date:
-	// SimpleDateFormat date_and_time_format = new SimpleDateFormat
-	// ("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
 
 	// returning current time:
 	return time_format.format(current_date);
     }
 
+    /**
+     * Divides a given string into a list of Strings. In many cases the string for the content
+     * of entries ({@link Entry}) is longer than a line on the PDF. In this case the string gets divided by
+     * the max_size parameter to fit into multiple lines.
+     * @param string		The String that gets divided.
+     * @param max_size		The length of divided Strings.
+     * @param font		The Font that is used to determine the length of a String.
+     * @param font_size		The Font's size that is used to determine the length of a String.
+     * @return			A list of strings.
+     */
     private LinkedList<String> divide_string(String string, float max_size, PDFont font, int font_size) {
 	LinkedList<String> string_list = new LinkedList<String>();
 	String rest = string;
@@ -114,6 +182,21 @@ public class SimplePdfCreator {
 	return string_list;
     }
 
+    /**
+     * Creates a title page for the PDF document.
+     * @param doc			The document the page is created for.
+     * @param institute			The institute this document is belonging to.
+     * @param faculty			The faculty this document is belonging to.
+     * @param degree			The degree of this document. ("Master" , "Bachelor")
+     * @param po			Examination Regulations. e.g. "FSPO 2012"
+     * @param last_modification_date	Last modification date.
+     * @param last_author		Last author.
+     * @param semester			The semester this document is valid for.
+     * @param version			The version number.
+     * @return				A page. (The title page)
+     * @throws IOException
+     * @throws COSVisitorException
+     */
     private PDPage createTitlePage(PDDocument doc, String institute, String faculty, String degree, String po, String last_modification_date, String last_author, String semester, String version) throws IOException, COSVisitorException {
 	// load data and create a title page...
 
@@ -184,6 +267,15 @@ public class SimplePdfCreator {
 	return title_page;
     }
 
+    
+    /**
+     * Creates the Module Pages. If a page is full additional pages are created.
+     * @param doc			The document the pages belong to.
+     * @param module			A list of modules that is written on the pages.
+     * @return				A list of Pages. (The content pages)
+     * @throws IOException
+     * @throws COSVisitorException
+     */
     private LinkedList<PDPage> createModulePages(PDDocument doc, Module module) throws IOException, COSVisitorException {
 	// create module pages
 	LinkedList<PDPage> pages = new LinkedList<PDPage>();
@@ -410,7 +502,19 @@ public class SimplePdfCreator {
 	}
 	return pages;
     }
+    
+    
 
+    /**
+     * Creates the index page(s) of the document. Pages need to be created at this point. 
+     * @param doc				The document the pages belong to.
+     * @param module_subject_list		This is a list of lists of modules. First index is used to find the subject the modules are grouped by. The second index gets the actual modules of this subject.
+     * @param subject_list			This list of subjects stores the subject strings that are used to group the modules. The index is equal to the first index of module_subject_list parameter.
+     * @param index_page_content_number_list	Stores the number of pages a module used. Used to calculate the offset for the page numbers. Order is assumed to be same as modules in module_subject_list parameter.
+     * @return					A list of Pages. (The index pages)
+     * @throws IOException
+     * @throws COSVisitorException
+     */
     private LinkedList<PDPage> createIndexPages(PDDocument doc, LinkedList<LinkedList<Module>> module_subject_list,
 	    LinkedList<String> subject_list, LinkedList<String> index_page_content_number_list) throws IOException, COSVisitorException {
 	// create module pages
@@ -537,9 +641,27 @@ public class SimplePdfCreator {
 	}
 	return pages;
     }
+    
 
-    // TODO institute ist eine Liste
-    // TODO version ist String
+    /**
+     * Generates the PDF Document.
+     * <p>
+     * All module_list {@link Module}'s entries ({@link Entry}) have to have a value. If entries have null values the PDF fails to generate.
+     * <p>
+     * The specified file path has to be valid, needs rights for write access, and the file, if already existing, has to be closed to be overwritten!!!
+     * @param file			Path to the file, where it should be stored.
+     * @param module_list		A valid List of modules, that belongs to the following attributes:
+     * @param institute			The institute this document is belonging to.			
+     * @param faculty			The faculty this document is belonging to.
+     * @param degree			The degree of this document. ("Master" , "Bachelor")
+     * @param po			Examination Regulations. e.g. "FSPO 2012"
+     * @param last_modification_date	Last modification date.
+     * @param last_author		Last author.
+     * @param semester			The semester this document is valid for.
+     * @param version			The version number.
+     * @throws IOException
+     * @throws COSVisitorException
+     */
     public void createModulePdf(String file, List<Module> module_list, String institute, String faculty, String degree, String po, String last_modification_date, String last_author, String semester, String version) throws IOException, COSVisitorException {
 
 	LinkedList<String> subject_list = new LinkedList<String>();

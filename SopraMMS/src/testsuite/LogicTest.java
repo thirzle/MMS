@@ -51,7 +51,7 @@ public class LogicTest {
 	
 	SimplePdfCreator pdfcreator = new SimplePdfCreator();
 	try {
-	    pdfcreator.createModulePdf("C:/PDFBox_test/module_2.pdf", module_list, "Informatik", "Eine Fakult\u00E4t", subject, "FSPO 2012", "gestrigen Tage", "AJ", semester, "over 9000");
+	    pdfcreator.createModulePdf("C:/PDFBox_test/module_2.pdf", module_list, "Informatik", "Eine Fakult\u00E4t", "Informatik", "FSPO 2012", "gestrigen Tage", "AJ", semester, "over 9000");
 	} catch (COSVisitorException | IOException e) {
 	    System.out.println("Error in PDF creation, check if the path exists and / or the file isn't open...");
 	    System.exit(-1);
