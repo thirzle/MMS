@@ -64,7 +64,7 @@ public class ShowEditModule extends HttpServlet {
 		}
 
 		Module editModule = mAdmin.getModuleByID(moduleID);
-		entryList = (LinkedList<Entry>) mAdmin.getEntryListOfModule(editModule);
+		entryList = (LinkedList<Entry>) mAdmin.sortModuleEntryListByOrder(editModule);
 
 		if (session.getAttribute("institutesModuleEntry") == null) {
 

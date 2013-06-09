@@ -44,6 +44,12 @@ public class ShowModulListForCoordinator extends HttpServlet {
 							+ selectedModule[0]
 							+ "&version="
 							+ selectedModule[1]);
+					System.out
+							.println("(ShowModulListForCoordinator.java): ModulID-"
+									+ selectedModule[0]
+									+ " Version-"
+									+ selectedModule[1]);
+
 				} else {
 					request.getSession().setAttribute("content",
 							"showModulesForCoordinator");
