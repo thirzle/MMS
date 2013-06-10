@@ -106,15 +106,6 @@ public class EffortEntry extends Entry {
 	this.selfStudyList = null;
     }
 
-    /**
-     * Overwrites this EffortEntry object's {@link SelfStudy} list.
-     * @see SelfStudy
-     * @param selfStudyList		List of {@link SelfStudy} objects.
-     */
-    public void setSelfStudyList(List<SelfStudy> selfStudyList) {
-	this.selfStudyList = selfStudyList;
-    }
-
     @Deprecated
     /**
      * Creates an EffortEntry with given parameters. (Overloaded)
@@ -147,7 +138,7 @@ public class EffortEntry extends Entry {
 	this.presenceTime = presenceTime;
     }
 
-    @SuppressWarnings("deprecation")
+    @Deprecated
     /**
      * Creates an EffortEntry with given parameters. (Overloaded)
      * <p>
@@ -161,6 +152,17 @@ public class EffortEntry extends Entry {
 	this.presenceTime = presenceTime;
     }
 
+    
+    /**
+     * Overwrites this EffortEntry object's {@link SelfStudy} list.
+     * @see SelfStudy
+     * @param selfStudyList		List of {@link SelfStudy} objects.
+     */
+    public void setSelfStudyList(List<SelfStudy> selfStudyList) {
+	this.selfStudyList = selfStudyList;
+    }
+
+    
     /**
      * Returns the presence time.
      * 

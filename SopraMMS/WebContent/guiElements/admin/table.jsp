@@ -18,7 +18,7 @@
 <table id="userTable" class="tablesorter">
 	<thead>
 		<tr>
-			<th></th>
+			<th style="width: 1%"></th>
 			<th>Benutzername</th>
 			<th>Vorname</th>
 			<th>Nachname</th>

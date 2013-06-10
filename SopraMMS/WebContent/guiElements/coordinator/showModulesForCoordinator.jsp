@@ -19,9 +19,10 @@
 %>
 
 <form action="/SopraMMS/ShowModulListForCoordinator" method="get">
-	<table class='tablesorter'>
+	<table class='tablesorter' id="modulesForCoordinator">
+	<thead>
 		<tr>
-			<th></th>
+			<th style="width: 1%"></th>
 			<th>Titel</th>
 			<th>Version</th>
 			<th>Autor</th>
@@ -31,6 +32,8 @@
 			<th>&Auml;nderungsdatum</th>
 			<th>Freigabestatus</th>
 		</tr>
+		</thead>
+		<tbody>
 		<%
 			for (Module module : moduleList) {
 		%>
@@ -63,8 +66,12 @@
 		<%
 			}
 		%>
+		</tbody>
 	</table>
 	<button name="action" value="editModule">Modul bearbeiten</button>
 	<button name="action" value="enterCourse">Stundiengang und
 		Fach eintragen</button>
 </form>
+
+<script type="text/javascript" src="/SopraMMS/js/jquery.showModulesForCoordinator.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
