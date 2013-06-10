@@ -11,8 +11,9 @@
 		<td><a id="text2" onclick="curravail();">Lebenslauf</a></td>
 	</tr>
 </table>
-<div id="currvitae" style="visibility: hidden">http://localhost:8080/SopraMMS/guiElements/home.jsp</div>
+<div id="currvitae" style="visibility: hidden"></div>
 </body>
 <!-- TODO URL aus DB auslesen-->
+<!-- http://localhost:8080/SopraMMS/guiElements/home.jsp -->
 
 <script type="text/javascript" src="/SopraMMS/js/jquery.currvitae.js"></script>
