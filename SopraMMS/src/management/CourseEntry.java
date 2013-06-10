@@ -55,7 +55,7 @@ public class CourseEntry extends Entry {
 	/**
 	 * Creates a CourseEntry with given parameters. (Overloaded)
 	 * <p>
-	 * Difference: multiple courses needed as parameter.
+	 * Difference: multiple courses needed as parameter. Used to create an Entry from already loaded data.
 	 * <p>
 	 * useful
 	 * @param version		The version of this {@link Entry}-extension. (Used to initialize the super class)
@@ -79,7 +79,7 @@ public class CourseEntry extends Entry {
 	/**
 	 * Creates a CourseEntry with given parameters. (Overloaded)
 	 * <p>
-	 * Difference: single course needed as parameter.
+	 * Difference: single course needed as parameter. Used to create an Entry from already loaded data.
 	 * <p>
 	 * useful
 	 * @param version		The version of this {@link Entry}-extension. (Used to initialize the super class)
@@ -105,6 +105,7 @@ public class CourseEntry extends Entry {
 	 * Creates a CourseEntry with given parameters. (Overloaded)
 	 * <p>
 	 * Difference: No course parameter, no degree parameter. Add courses with {@link #addCourse(String course, String degree) addCourse}.
+	 * Used to create an Entry from already loaded data.
 	 * <p>
 	 * useful
 	 * @param version		The version of this {@link Entry}-extension. (Used to initialize the super class)
