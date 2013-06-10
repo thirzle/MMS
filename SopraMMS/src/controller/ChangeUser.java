@@ -54,7 +54,6 @@ public class ChangeUser extends SessionCheck implements Servlet {
 			if(origUser.getSupervisor() != null) {
 				tmpUser.setSupervisor(origUser.getSupervisor());
 			}
-			System.out.println("(ChangeUser.java):origUser.getPassword()="+origUser.getPassword());
 			tmpUser.setPassword(origUser.getPassword());
 			System.out.println("(ChangeUser.java):origUser="+origUser);
 			System.out.println("(ChangeUser.java):tmpUser="+tmpUser);

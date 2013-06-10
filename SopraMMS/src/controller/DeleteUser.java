@@ -39,15 +39,14 @@ public class DeleteUser extends SessionCheck implements Servlet {
     	HttpSession session = request.getSession();
 		if(isLoggedIn(request, response)&&actionGranted(request, 3)) {
 			String loginname = request.getParameter("selectedRowID");
-	    	User user = ua.getUser(loginname);
-	    	System.out.println("(DeleteUser.java):user:"+user);
+	    	System.out.println("(DeleteUser.java):user:"+loginname);
 	    	// insert into History "User removed"
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date currentTime = new Date();
 			String date = formatter.format(currentTime);
-			ua.insertHistory(user.getLogin(), date, "Wurde geloescht");
+			ua.insertHistory(loginname, date, "Wurde geloescht");
 			
-	    	ua.deleteUser(user);
+	    	ua.deleteUser(loginname);
 	    	session.setAttribute("task", "edit");
 			response.sendRedirect("/SopraMMS/LoadTable");
 			

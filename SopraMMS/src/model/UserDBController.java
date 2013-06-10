@@ -227,7 +227,7 @@ public class UserDBController {
 			pStatement.setString(2, newUser.getLastName());
 			pStatement.setString(3, newUser.getFirstName());
 			pStatement.setString(4, newUser.getMail());
-			pStatement.setString(7, oldUser.getLogin());
+			pStatement.setString(5, oldUser.getLogin());
 			pStatement.executeUpdate();
 			
 			changeRights(newUser, newUser.getRights(), connection);
