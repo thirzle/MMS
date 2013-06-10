@@ -1,4 +1,4 @@
-<%@page import="user.User" %>
+<%@page import="user.User"%>
 <%
 	//Initialization
 	User user = null;
@@ -17,11 +17,11 @@
 <jsp:include page="/guiElements/admin/adminMenu.jsp"></jsp:include>
 <%
 	}
-		if(rights[5]){
+		if (rights[5]) {
 %>
-<jsp:include page="/guiElements/editor/editorMenu.jsp" ></jsp:include>
+<jsp:include page="/guiElements/editor/editorMenu.jsp"></jsp:include>
 <%
-		}
+	}
 		if (rights[4]) {
 %>
 <jsp:include page="/guiElements/coordinator/coordinatorMenu.jsp"></jsp:include>
@@ -49,13 +49,20 @@
 <%
 	} else {
 %>
-<%@ include file="/guiElements/generally/generallyMenuWithoutRepresentative.jsp"%>
+<%@ include
+	file="/guiElements/generally/generallyMenuWithoutRepresentative.jsp"%>
 <%
 	}
-}
+	}
 %>
 <%
-	if (user == null) {session.invalidate();
+	if (user == null) {
+		if (session.getAttribute("content") == null) {
+			session.invalidate();
+		} else if (!session.getAttribute("content").equals(
+				"createNewPassword")) {
+			session.invalidate();
+		}
 %>
 <jsp:include page="/guiElements/Login/login.jsp"></jsp:include>
 <%

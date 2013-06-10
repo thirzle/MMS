@@ -2,9 +2,11 @@
 <%
 	String contentPage;
 	Object user = session.getAttribute("user");
-	if ((session.getAttribute("content") == null || request
-			.getParameter("home") != null)
-			&& session.getAttribute("user") == null) {
+	System.out.println("-- content: "+session.getAttribute("content"));
+	System.out.println("-- home: "+request.getParameter("home"));
+	System.out.println("-- user: "+session.getAttribute("user"));
+	if ((session.getAttribute("content") == null || request.getParameter("home") != null) && session.getAttribute("user") == null) {
+	
 		contentPage = "start";
 		if (request.getParameter("contentPdf") != null) {
 			contentPage = "contentPdf";
