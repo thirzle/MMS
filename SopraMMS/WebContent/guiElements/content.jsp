@@ -141,5 +141,9 @@
 %>
 <jsp:include page="/guiElements/modulemanager/didEditModule.jsp"></jsp:include>
 <%
+	} else if (contentPage.equals("CurrVitae")) {
+%>
+<jsp:include page="/guiElements/lecturer/seecurriculumvitae.jsp"></jsp:include>
+<%
 	}
 %>
