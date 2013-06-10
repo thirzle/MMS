@@ -7,13 +7,13 @@
 
 <form action="/SopraMMS/ShowEditModule" method="get">
 	<%
-			LinkedList<String[]> fieldsTypeA = (LinkedList) session.getAttribute("fieldsTypeAEdit");
+			ArrayList<String[]> fieldsTypeA = (ArrayList) session.getAttribute("fieldsTypeAEdit");
 
-			LinkedList<String[]> fieldsTypeB = (LinkedList) session.getAttribute("fieldsTypeBEdit");
+			ArrayList<String[]> fieldsTypeB = (ArrayList) session.getAttribute("fieldsTypeBEdit");
 
-			LinkedList<String[]> fieldsTypeC = (LinkedList) session.getAttribute("fieldsTypeCEdit");
+			ArrayList<String[]> fieldsTypeC = (ArrayList) session.getAttribute("fieldsTypeCEdit");
 
-			LinkedList<String[]> fieldsTypeD = (LinkedList) session.getAttribute("fieldsTypeDEdit");
+			ArrayList<String[]> fieldsTypeD = (ArrayList) session.getAttribute("fieldsTypeDEdit");
 			
 			System.out.println("fieldsTypeDEdit: "+(session.getAttribute("fieldsTypeDEdit") == null));
 

@@ -36,6 +36,7 @@ public class ShowModules extends HttpServlet {
 		HttpSession session = request.getSession();
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		User user = (User) session.getAttribute("user");
+		
 //		TODO getModulesOverview
 		List<Module> moduleList = mAdmin.getModulesByAuthor(user.getLogin());
 
