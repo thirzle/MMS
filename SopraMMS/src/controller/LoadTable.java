@@ -51,8 +51,6 @@ public class LoadTable extends SessionCheck implements Servlet {
 			task = request.getParameter("task").toString();
 			if(task.equals("mail")) {
 				session.setAttribute("content", "newMessage"); 
-			} else if (task.equals("curr")) {
-				session.setAttribute("content", "CurrVitae");
 			} else if( task.equals("edit") ) {
 				session.setAttribute("task", "edit");
 				session.setAttribute("content", "loadTable");
