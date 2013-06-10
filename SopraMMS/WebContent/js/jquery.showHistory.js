@@ -1,6 +1,6 @@
 $(function() {
-	$("#showHistoryTable").tablesorter({
-		sortList : [ [ 0, 0 ], [ 2, 1 ] ],
-		widgets : [ 'zebra' ]
-	});
+	
+	 $('#showHistoryTable').tableScroll({height:370});
+	// $('#showHistoryTable').tableScroll({width:750}); 
 });
+
