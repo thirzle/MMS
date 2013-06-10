@@ -17,7 +17,7 @@ $(document).ready(function() {
 			<ul class="subNav">
 				<li class="newcurriculumvitae"><a>Lebenslauf
 						anlegen</a></li>
-				<li id="seecurriculumvitae"><a href="/SopraMMS/LoadTable?task=curr">Lebenslauf ansehen</a></li>
+				<li id="seecurriculumvitae"><a href="/SopraMMS/GetAllUsers?task=curr">Lebenslauf ansehen</a></li>
 			</ul>
 		</div>
 	</ul>
