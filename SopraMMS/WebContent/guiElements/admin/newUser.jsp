@@ -10,7 +10,7 @@ int NUMBER_OF_INSTITUTES = institutes.size();
 	<table>
 		<tr>
 			<td>Benutzername:</td>
-			<td><input class="inputField" form="newUserForm" type='text' id="loginCellText" style="cursor: default;" name="loginCellText" readonly/></td>
+			<td><input form="newUserForm" type='text' id="loginCellText" style="cursor: default; border: none;" name="loginCellText" readonly/></td>
 			<td id="loginnameTableCell"></td>
 		</tr>
 		<tr>
