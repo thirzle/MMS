@@ -42,6 +42,15 @@
 				}
 		%>
 		<tr>
+			<!--  here is Waldoo ('.') 
+							#	#######
+							 #			#
+								#######	##
+										#
+								######
+								#	#
+								#	#
+			-->
 			<td><input type="checkbox" name="delete<%=index%>"
 				value="<%=entry[0]%>"></td>
 			<td><%=entry[0]%></td>
