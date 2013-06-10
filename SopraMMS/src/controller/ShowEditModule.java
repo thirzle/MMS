@@ -50,21 +50,31 @@ public class ShowEditModule extends HttpServlet {
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		HttpSession session = request.getSession();
 		LinkedList<Entry> entryList = new LinkedList<Entry>();
+//		speichert das ausgeählte Modul + Version
+		String selectedModule = null;
+//		ModulID steht an Stelle 0, Versionsnummer an Stelle 1
+		String[] selectedModuleArray = new String[2];
 
 		long moduleID = 0;
+		int version = 0;
 		// selectedModuleToEdit == null --> Aufruf von Buttons
 		if (request.getParameter("selectedModuleToEdit") == null) {
 			moduleID = (long) session.getAttribute("selectedModuleIDToEdit");
+			version = (int) session.getAttribute("selectedVersionToEdit");
 		}
 		// erster Aufruf von showModules
 		else {
-			moduleID = Long.parseLong((request
-					.getParameter("selectedModuleToEdit")));
+			selectedModule = request.getParameter("selectedModuleToEdit");
+			selectedModuleArray = selectedModule.split(" ");
+			System.out.println("selectedModuleArray: "+selectedModuleArray[0]+" "+selectedModuleArray[1]);
+			moduleID = Long.parseLong(selectedModuleArray[0]);
+			version = Integer.parseInt(selectedModuleArray[1]);
 			session.setAttribute("selectedModuleIDToEdit", moduleID);
+			session.setAttribute("selectedVersionToEdit", version);
 		}
 
-		Module editModule = mAdmin.getModuleByID(moduleID);
-		entryList = (LinkedList<Entry>) mAdmin.sortModuleEntryListByOrder(editModule);
+		Module editModule = mAdmin.getModuleByID(moduleID, version);
+//		entryList = (LinkedList<Entry>) mAdmin.sortModuleEntryListByOrder(editModule);
 
 		if (session.getAttribute("institutesModuleEntry") == null) {
 
@@ -290,10 +300,10 @@ public class ShowEditModule extends HttpServlet {
 				// Versionsnummer von Modul aktualisieren
 				java.sql.Date creationdate = (java.sql.Date) editModule
 						.getCreationDate();
-				int version = editModule.getVersion() + 1;
+				int newVersion = editModule.getVersion() + 1;
 				mAdmin.createModuleByModuleManager(entryListForNewModule,
 						((User) session.getAttribute("user")).getLogin(),
-						institute, creationdate, version, moduleID);
+						institute, creationdate, newVersion, moduleID);
 				// TODO pruefen ob Pflichfelder befuellt sind
 
 				// insert into History "Module created"

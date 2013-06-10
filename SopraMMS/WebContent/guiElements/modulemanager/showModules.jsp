@@ -24,7 +24,7 @@
 		%>
 		<tr>
 			<td><input type="radio" name="selectedModuleToEdit"
-				value='<%=module.getModuleID()%>' /></td>
+				value='<%=module.getModuleID()+" "+module.getVersion()%>' /></td>
 			<td><%=module.getName()%></td>
 			<td><%=module.getModificationauthor()%></td>
 			<td><%
