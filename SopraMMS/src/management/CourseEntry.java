@@ -14,6 +14,7 @@ import java.util.List;
  * Use only Constructors that are marked as "useful". All other Constructors
  * are used for test purposes.
  * @see Module
+ * @see Entry
  * @author AJ, Teresa, add names here...
  *
  */

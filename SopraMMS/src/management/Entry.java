@@ -74,7 +74,7 @@ public abstract class Entry {
 	/**
 	 * A random number generator.
 	 * <p>
-	 * Used so generate new IDs on creation of new entries.
+	 * Used to generate new IDs on creation of new entries.
 	 */
 	private Random random;
 

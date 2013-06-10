@@ -15,6 +15,7 @@ package management;
  * All other Constructors are used for test purposes.
  * 
  * @see Module
+ * @see Entry
  * @see SelfStudy
  * @author AJ, add names here...
  * 
