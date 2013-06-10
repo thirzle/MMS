@@ -22,7 +22,7 @@
 	<table class='tablesorter' id="modulesForCoordinator">
 	<thead>
 		<tr>
-			<th style="width: 1%"></th>
+			<th></th>
 			<th>Titel</th>
 			<th>Version</th>
 			<th>Autor</th>

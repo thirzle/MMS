@@ -123,8 +123,7 @@
 <%
 	} else if (contentPage.equals("showModulesForModulemanager")) {
 %>
-<jsp:include
-	page="/guiElements/modulemanager/showModulesForModulemanager.jsp"></jsp:include>
+<jsp:include page="/guiElements/modulemanager/showModulesForModulemanager.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("editModule")) {
 %>
@@ -132,8 +131,7 @@
 <%
 	} else if (contentPage.equals("showModulesForCoordinator")) {
 %>
-<jsp:include
-	page="/guiElements/coordinator/showModulesForCoordinator.jsp"></jsp:include>
+<jsp:include page="/guiElements/coordinator/showModulesForCoordinator.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("showModulesForEditor")) {
 %>
