@@ -52,4 +52,7 @@ background-color: #8dbdd8;
 	float: left;
 	vertical-align: middle;
 }
+.tablesorter th:first {
+	width: 1%;
+}
 
