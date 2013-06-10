@@ -185,6 +185,11 @@ public class EffortEntry extends Entry {
 
     // TODO:
     // Summe des Aufwands fehlt.
+    /**
+     * Overrides the toString method.
+     * <p>
+     * Just an output of this object's content.
+     */
     public String toString() {
 	StringBuilder sb = new StringBuilder();
 	sb.append("Aufwand\n");

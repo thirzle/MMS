@@ -12,7 +12,10 @@ import java.text.SimpleDateFormat;
  * This class is the super class of several Entry related subclasses.
  * <p>
  * Following extensions are related to this class: 
- * {@link CourseEntry}, {@link EffortEntry}, {@link TextualEntry}
+ * {@link CourseEntry}, {@link EffortEntry}, {@link TextualEntry}.
+ * <p>
+ * All extensions have at least two constructors. One for creating completely new data,
+ * that is going to be stored in the database, and one for storing already retrieved data. 
  * <p>
  * Entries are used to build {@link Module}s and fill them with content. 
  * @see Module
