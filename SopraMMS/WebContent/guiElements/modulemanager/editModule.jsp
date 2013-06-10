@@ -7,28 +7,28 @@
 
 <form action="/SopraMMS/ShowEditModule" method="get">
 	<%
-			ArrayList<String[]> fieldsTypeA = (ArrayList) session.getAttribute("fieldsTypeAEdit");
+		ArrayList<String[]> fieldsTypeA = (ArrayList) session.getAttribute("fieldsTypeAEdit");
 
-			ArrayList<String[]> fieldsTypeB = (ArrayList) session.getAttribute("fieldsTypeBEdit");
+		ArrayList<String[]> fieldsTypeB = (ArrayList) session.getAttribute("fieldsTypeBEdit");
 
-			ArrayList<String[]> fieldsTypeC = (ArrayList) session.getAttribute("fieldsTypeCEdit");
+		ArrayList<String[]> fieldsTypeC = (ArrayList) session.getAttribute("fieldsTypeCEdit");
 
-			ArrayList<String[]> fieldsTypeD = (ArrayList) session.getAttribute("fieldsTypeDEdit");
+		ArrayList<String[]> fieldsTypeD = (ArrayList) session.getAttribute("fieldsTypeDEdit");
 			
-			System.out.println("fieldsTypeDEdit: "+(session.getAttribute("fieldsTypeDEdit") == null));
+		System.out.println("fieldsTypeDEdit: "+(session.getAttribute("fieldsTypeDEdit") == null));
 
 		for (int i = 0; i < fieldsTypeA.size(); i++) {
-		String[] description = fieldsTypeA.get(i);
+			String[] description = fieldsTypeA.get(i);
 	%>
-	<div class='moduleEntry'>
-		<table>
-			<tr>
-				<td class='descriptionModule'><%=description[0]%></td>
-				<td class='entryModule'><input name='<%=i%>ContentA'
-					type="text" value="<%=description[1].trim()%>"></td>
-			</tr>
-		</table>
-	</div>
+			<div class='moduleEntry'>
+				<table>
+					<tr>
+						<td class='descriptionModule'><%=description[0]%></td>
+						<td class='entryModule'><input name='<%=i%>ContentA'
+							type="text" value="<%=description[1].trim()%>"></td>
+					</tr>
+				</table>
+			</div>
 	<%
 		}
 	%>
@@ -41,9 +41,15 @@
 							<tr>
 								<%
 									System.out.println("Fucking Zeitaufwand fieldsTypeD: null: "+ (fieldsTypeD == null) + " empty: "+fieldsTypeD.isEmpty());
-																					String[] pt = new String[2];
-																					pt = fieldsTypeD.get(0);
-																					System.out.println("pt: "+pt[0] + " " + pt[1]);
+									String[] pt = new String[2];
+									if(fieldsTypeD.size() > 0){
+										pt = fieldsTypeD.get(0);
+										System.out.println("pt: "+pt[0] + " " + pt[1]);
+									}
+									else{
+									    pt[0] = "empty";
+									    pt[1] = "empty";
+									}
 								%>
 								<td class="effortEntryTitel">Präsenzzeit</td>
 								<td>:</td>
@@ -52,8 +58,11 @@
 							</tr>
 
 							<%
+							
+								System.out.println("nach <tr>");
+							
 								for (int i = 1; i < fieldsTypeD.size(); i++) {
-																								String[] description = fieldsTypeD.get(i);
+									String[] description = fieldsTypeD.get(i);
 							%>
 							<tr>
 								<td class="effortEntryTitel"><input name='<%=i%>TitleD'
@@ -78,8 +87,7 @@
 				<td class='descriptionModule'>Institut</td>
 				<td class='entryModule'>
 					<%
-						List<String[]> institutes = (List<String[]>) session
-																	.getAttribute("institutesModuleEntry");
+						List<String[]> institutes = (List<String[]>) session.getAttribute("institutesModuleEntry");
 					%> <select name='selectedInstitute' id="instituteSelect">
 						<%
 							for (int i = 0; i < institutes.size(); i++) {
