@@ -119,9 +119,10 @@
 %>
 <jsp:include page="/guiElements/generally/changedName.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("showModules")) {
+	} else if (contentPage.equals("showModulesForModulemanager")) {
 %>
-<jsp:include page="/guiElements/modulemanager/showModules.jsp"></jsp:include>
+<jsp:include
+	page="/guiElements/modulemanager/showModulesForModulemanager.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("editModule")) {
 %>
@@ -131,6 +132,10 @@
 %>
 <jsp:include
 	page="/guiElements/coordinator/showModulesForCoordinator.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("showModulesForEditor")) {
+%>
+<jsp:include page="/guiElements/editor/showModulesForEditor.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("didEditModule")) {
 %>

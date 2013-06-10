@@ -2,11 +2,12 @@
 <%@page import="management.Module" import="java.util.LinkedList"%>
 <%
 	LinkedList<Module> moduleList = (LinkedList) session
-			.getAttribute("moduleListForModulemanager");
-	session.removeAttribute("moduleListForModulemanager");
+			.getAttribute("moduleListForEditor");
+	session.removeAttribute("moduleListForEditor");
 %>
 
 <h1>Modul bearbeiten</h1>
+<%//TODO %>
 <form action="/SopraMMS/ShowEditModule" method="get">
 	<table class="informationAboutModule">
 		<tr>

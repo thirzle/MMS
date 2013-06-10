@@ -15,16 +15,16 @@ import management.ModuleAdministration;
 import user.User;
 
 /**
- * Servlet implementation class ShowModules
+ * Servlet implementation class ShowModulesOverviewForEditor
  */
-@WebServlet("/ShowModules")
-public class ShowModules extends HttpServlet {
+@WebServlet("/ShowModulesOverviewForEditor")
+public class ShowModulesOverviewForEditor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowModules() {
+    public ShowModulesOverviewForEditor() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,8 +40,8 @@ public class ShowModules extends HttpServlet {
 //		TODO getModulesOverview
 		List<Module> moduleList = mAdmin.getModulesByAuthor(user.getLogin());
 
-		session.setAttribute("moduleListForModulemanager", moduleList);
-		session.setAttribute("content", "showModules");
+		session.setAttribute("moduleListForEditor", moduleList);
+		session.setAttribute("content", "showModulesForEditor");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
