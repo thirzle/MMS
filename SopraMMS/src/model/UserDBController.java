@@ -584,18 +584,20 @@ public class UserDBController {
 			pStatement.setString(1, loginname);
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
+				deleteForgotPwd(loginname, connection);
 				correctPassword = resultSet.getString(1);
 				close(connection);
 				return correctPassword.equals(password);
 			}
+			return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't check password from user: "
 					+ loginname);
+			return false;
 		} finally {
 			close(connection);
 		}
-		return false;
 	}
 
 	// change password of specified user
@@ -1102,6 +1104,22 @@ public class UserDBController {
 		}
 		return userList;
 	}
+	
+	
+	public boolean deleteForgotPwd(String loginname, Connection connection) {
+		query = "UPDATE user SET forgotpwd = null WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			return pStatement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("ForgotPassword variable of user "+loginname+" could't be set null.");
+			return false;
+		}
+	}
+	
 
 	// close connection
 	private void close(Connection connection) {
