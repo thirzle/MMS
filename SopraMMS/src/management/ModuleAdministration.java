@@ -1,6 +1,8 @@
 package management;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,25 +49,22 @@ public class ModuleAdministration {
 	}
 
 	public List<Entry> sortModuleEntryListByOrder(Module module) {
-		ArrayList<Entry> entryListUnsorted = new ArrayList<>();
-		entryListUnsorted.addAll(module.getEntryList());
-		Entry[] list = new Entry[entryListUnsorted.size()];
-		ArrayList<Entry> entryListSorted = new ArrayList<>();
-		System.out.println("########### DB Eintr�ge ###########");
-
-		for (Entry entry : entryListUnsorted) {
-			System.out.println(entry.toString());
-		}
-		System.out.println("################################");
-		for (int i = 0; i < list.length; i++) {
-			list[entryListUnsorted.get(i).getOrder()] = entryListUnsorted.get(i);
-		}
-
-		for (int i = 0; i < list.length; i++) {
-			entryListSorted.add(list[i]);
-		}
-
-		return entryListSorted;
+		LinkedList<Entry> entryList = (LinkedList<Entry>) module.getEntryList();
+		Collections.sort(entryList, new Comparator<Entry>() {
+			@Override
+			public int compare(Entry o1, Entry o2) {
+				if(o1.getOrder()<o2.getOrder()){
+					return -1;
+				}
+				else if(o1.getOrder()>o2.getOrder()) {
+					return 1;
+				}
+				else {
+					return 0;
+				}
+			}
+		});
+		return entryList;
 	}
 	
 	
