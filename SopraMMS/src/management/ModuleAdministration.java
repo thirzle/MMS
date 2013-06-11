@@ -139,7 +139,7 @@ public class ModuleAdministration {
 		Module module = new Module(name, creationDate, modificationDate,
 				approved, insituteID, entryList, subject, modificationauthor);
 		module.print();
-		moduleDBController.createModuleByModuleManager(module);
+		moduleDBController.createModule(module);
 	}
 
 	public void createModuleByModuleManager(List<Entry> list, String author,
@@ -157,7 +157,7 @@ public class ModuleAdministration {
 				modificationDate, approved, insituteID, entryList, subject,
 				modificationauthor);
 		module.print();
-		moduleDBController.createModuleByModuleManager(module);
+		moduleDBController.createModule(module);
 	}
 
 

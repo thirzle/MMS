@@ -86,9 +86,9 @@ public class TextualEntry extends Entry {
      * @param order		The order of this entry. (Used to initialize the super class)
      * @param text		The textual content.
      */
-    public TextualEntry(int version, String date, boolean classification, boolean approvalstatus, boolean declined, long entryID, String title, int order, String text) {
+    public TextualEntry(String date, boolean classification, boolean approvalstatus, boolean declined, long entryID, String title, int order, String text) {
 	// all parameters are related to abstract class Entry...
-	super(version, date, classification, approvalstatus, declined, entryID, title, order);
+	super(date, classification, approvalstatus, declined, entryID, title, order);
 	// actual data is text...
 	this.text = text;
     }

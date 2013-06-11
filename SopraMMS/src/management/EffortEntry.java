@@ -77,8 +77,8 @@ public class EffortEntry extends Entry {
      * @param presenceTime	The presence time of this EffortEntry.
      * @param selfStudyList	A list of {@link SelfStudy} objects. Used to specify the time that needs to be spent for the given {@link Module}.
      */
-    public EffortEntry(int version, String date, boolean classification, boolean approvalstatus, boolean declined, long entryID, String title, int order, int presenceTime, List<SelfStudy> selfStudyList) {
-	super(version, date, classification, approvalstatus, declined, entryID, title, order);
+    public EffortEntry(String date, boolean classification, boolean approvalstatus, boolean declined, long entryID, String title, int order, int presenceTime, List<SelfStudy> selfStudyList) {
+	super(date, classification, approvalstatus, declined, entryID, title, order);
 	this.presenceTime = presenceTime;
 	this.selfStudyList = selfStudyList;
     }
@@ -101,8 +101,8 @@ public class EffortEntry extends Entry {
      * @param order		The order of this entry. (Used to initialize the super class)
      * @param presenceTime	The presence time of this EffortEntry.
      */
-    public EffortEntry(int version, String date, boolean classification, boolean approvalstatus, boolean declined, long entryID, String title, int order, int presenceTime) {
-	super(version, date, classification, approvalstatus, declined, entryID, title, order);
+    public EffortEntry(String date, boolean classification, boolean approvalstatus, boolean declined, long entryID, String title, int order, int presenceTime) {
+	super(date, classification, approvalstatus, declined, entryID, title, order);
 	this.presenceTime = presenceTime;
 	this.selfStudyList = null;
     }
@@ -194,7 +194,7 @@ public class EffortEntry extends Entry {
     public String toString() {
 	StringBuilder sb = new StringBuilder();
 	sb.append("Aufwand\n");
-	sb.append("    Präsenzzeit: " + presenceTime + "\n");
+	sb.append("    Prï¿½senzzeit: " + presenceTime + "\n");
 	for (SelfStudy ss : selfStudyList) {
 	    sb.append("    " + ss.toString() + "\n");
 	}
@@ -203,7 +203,7 @@ public class EffortEntry extends Entry {
 
     public String getContent() {
 	StringBuilder sb = new StringBuilder();
-	sb.append("Präsenzzeit: " + presenceTime + " Stunden\n");
+	sb.append("Prï¿½senzzeit: " + presenceTime + " Stunden\n");
 	for (SelfStudy ss : selfStudyList) {
 	    sb.append("" + ss.toString() + " Stunden\n");
 	}
