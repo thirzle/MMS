@@ -27,7 +27,7 @@
 
 <%
 	}
-		session.setAttribute("content","home");
+		//session.setAttribute("content","home");
 %>
 
 <form action="/SopraMMS/AcceptNewPassword" method="get">
@@ -50,7 +50,7 @@
 
 <%
 	} else if (session.getAttribute("content").equals("ceateNewPwDone")) {
-		session.setAttribute("content","home");
+		//session.setAttribute("content","home");
 %>
 
 <h3>Ihr Passwort wurde erfolgreich ge&auml;ndert</h3>

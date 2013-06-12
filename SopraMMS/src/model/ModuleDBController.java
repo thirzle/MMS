@@ -91,9 +91,8 @@ public class ModuleDBController {
 		EffortEntry effort = null;
 		List<SelfStudy> selfstudy = new LinkedList<SelfStudy>();
 		query = "SELECT c.courseID, e.*"
-				+ " FROM courseentry AS c JOIN latestentry AS l"
-				+ " ON c.entryID = l.entryID AND c.version = l.version JOIN entry "
-				+ "AS e on c.entryID = e.entryID AND c.version = e.version"
+				+ " FROM courseentry AS c JOIN entry "
+				+ "AS e on c.entryID = e.entryID"
 				+ " WHERE e.moduleID = ? AND e.moduleversion = ?";
 		try {
 			// load courses of module
@@ -102,8 +101,7 @@ public class ModuleDBController {
 			pStatement.setInt(2, module.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				courses = new CourseEntry(resultSet.getInt("version"),
-						resultSet.getTimestamp("timestamp").toString(),
+				courses = new CourseEntry(resultSet.getTimestamp("timestamp").toString(),
 						resultSet.getBoolean("classification"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getBoolean("declined"),
@@ -119,18 +117,17 @@ public class ModuleDBController {
 			}
 			// load textual entries of module
 			query = "SELECT e.*, t.text "
-					+ "FROM entry AS e JOIN latestentry AS l ON e.entryID = l.entryID "
-					+ "AND e.version = l.version JOIN textualentry AS t ON "
-					+ "e.entryID = t.entryID AND e.version = t.version "
-					+ "WHERE moduleID = ? AND moduleversion = ?";
+					+ "FROM entry AS e "
+					+ "JOIN textualentry AS t ON "
+					+ "e.entryID = t.entryID "
+					+ "WHERE e.moduleID = ? AND e.moduleversion = ?";
 
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(1, module.getModuleID());
 			pStatement.setInt(2, module.getVersion());
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				textual.add(new TextualEntry(resultSet.getInt("version"),
-						resultSet.getDate("date").toString(), resultSet
+				textual.add(new TextualEntry(resultSet.getDate("date").toString(), resultSet
 								.getBoolean("classification"), resultSet
 								.getBoolean("approvalstatus"), resultSet
 								.getBoolean("declined"), resultSet
@@ -140,17 +137,14 @@ public class ModuleDBController {
 			}
 
 			query = "SELECT e.*,  ef.presencetime "
-					+ "FROM entry AS e JOIN effortentry AS ef ON e.entryID = ef.entryID"
-					+ " AND e.version = ef.version JOIN latestentry AS l ON "
-					+ "ef.entryID = l.entryID AND ef.version = l.version "
+					+ "FROM entry AS e JOIN effortentry AS ef ON e.entryID = ef.entryID "
 					+ "WHERE e.moduleID = ? AND e.moduleversion = ?";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(1, module.getModuleID());
 			pStatement.setInt(2, module.getVersion());
 			resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				effort = new EffortEntry(resultSet.getInt("version"), resultSet
-						.getDate("date").toString(),
+				effort = new EffortEntry(resultSet.getDate("date").toString(),
 						resultSet.getBoolean("classification"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getBoolean("declined"),
@@ -161,9 +155,7 @@ public class ModuleDBController {
 				
 				// get selfstudies of effort entry
 				query = "SELECT s.selfstudyID, s.time, s.title "
-						+ "FROM entry AS e JOIN selfstudy AS s ON e.entryID = s.entryID"
-						+ " AND e.version = s.version JOIN latestentry AS l ON "
-						+ "s.entryID = l.entryID AND s.version = l.version "
+						+ "FROM entry AS e JOIN selfstudy AS s ON e.entryID = s.entryID "
 						+ "WHERE e.moduleID = ? AND e.moduleversion = ?";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, module.getModuleID());
@@ -769,111 +761,14 @@ public class ModuleDBController {
 		return moduleList;
 	}
 	
-
-	// TODO
-	// create a new incomplete module in database
-	public boolean createModuleByModuleManager(Module module) {
-		Connection connection = connect();
-		List<Entry> entryList = module.getEntryList();
-		CourseEntry courseEntry = null;
-		TextualEntry te = null;
-		EffortEntry ee = null;
-		query = "INSERT INTO module(moduleID, version, name, creationdate,"
-				+ " modificationdate, approvalstatus, instituteID,"
-				+ " modificationauthor) VALUES (?,?,?,?,?,?,?,?);";
-		try {
-			// insert basic module
-			connection.setAutoCommit(false);
-			pStatement = connection.prepareStatement(query);
-			pStatement.setLong(1, module.getModuleID());
-			pStatement.setInt(2, module.getVersion());
-			pStatement.setString(3, module.getName());
-			pStatement.setDate(4, (java.sql.Date) module.getCreationDate());
-			pStatement.setDate(5, (java.sql.Date) module.getModificationDate());
-			pStatement.setBoolean(6, module.isApproved());
-			pStatement.setString(7, module.getInstituteID());
-			pStatement.setString(8, module.getModificationauthor());
-			pStatement.execute();
-
-			// insert basic entries
-			query = "INSERT INTO entry(entryID, version, moduleID, moduleversion,"
-					+ " author, classification, approvalstatus, declined,"
-					+ " title, `order`) VALUES (?,?,?,?,?,?,?,?,?,?)";
-			pStatement = connection.prepareStatement(query);
-			pStatement.setInt(2, 1);
-			pStatement.setLong(3, module.getModuleID());
-			pStatement.setInt(4, module.getVersion());
-			pStatement.setString(5, module.getModificationauthor());
-			pStatement.setBoolean(6, false);
-			pStatement.setBoolean(7, false);
-			pStatement.setBoolean(8, false);
-			for (Entry entry : entryList) {
-				pStatement.setLong(1, entry.getEntryID());
-				pStatement.setString(9, entry.getTitle());
-				pStatement.setInt(10, entry.getOrder());
-				pStatement.execute();
-			}
-
-			// insert textual entries
-			query = "INSERT INTO textualentry VALUES(?,?,?)";
-			pStatement = connection.prepareStatement(query);
-			for (Entry entry : entryList) {
-				if (entry.getClass() == TextualEntry.class) {
-					te = (TextualEntry) entry;
-					pStatement.setLong(1, te.getEntryID());
-					pStatement.setInt(2, te.getVersion());
-					pStatement.setString(3, te.getContent());
-					pStatement.execute();
-					System.out.println("text");
-				}
-			}
-
-			// insert effort entry
-			query = "INSERT INTO effortentry VALUES(?,?,?)";
-			pStatement = connection.prepareStatement(query);
-			for (Entry entry : entryList) {
-				if (entry.getClass() == EffortEntry.class) {
-					ee = (EffortEntry) entry;
-					pStatement.setLong(1, ee.getEntryID());
-					pStatement.setInt(2, ee.getVersion());
-					pStatement.setInt(3, ee.getTime());
-					pStatement.execute();
-					System.out.println("effort");
-				}
-			}
-			if (ee != null) {
-				query = "INSERT INTO selfstudy VALUES(?,?,?,?,?)";
-				pStatement = connection.prepareStatement(query);
-				pStatement.setLong(2, ee.getEntryID());
-				pStatement.setInt(3, ee.getVersion());
-				for (SelfStudy study : ee.getSelfStudyList()) {
-					pStatement.setLong(1, study.getSelfstudyID());
-					pStatement.setString(4, study.getTitle());
-					pStatement.setInt(5, study.getTime());
-					pStatement.execute();
-					System.out.println("study");
-				}
-			}
-			connection.commit();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Couldn't create module: " + module.getName());
-			rollback(connection);
-			return false;
-		} finally {
-			close(connection);
-		}
-	}
-	
 	
 	// create a new complete module in database
-	public boolean createModuleByEditor(Module module) {
+	public boolean createModule(Module module) {
 		Connection connection = connect();
 		List<Entry> entryList = module.getEntryList();
 		CourseEntry courseEntry = null;
-		TextualEntry te = null;
-		EffortEntry ee = null;
+		TextualEntry textualEntry = null;
+		EffortEntry effortEntry = null;
 		query = "INSERT INTO module(moduleID, version, name, creationdate,"
 				+ " modificationdate, approvalstatus, instituteID,"
 				+ " modificationauthor) VALUES (?,?,?,?,?,?,?,?);";
@@ -892,21 +787,20 @@ public class ModuleDBController {
 			pStatement.execute();
 
 			// insert basic entries
-			query = "INSERT INTO entry(entryID, version, moduleID, moduleversion,"
+			query = "INSERT INTO entry(entryID, moduleID, moduleversion,"
 					+ " author, classification, approvalstatus, declined,"
-					+ " title, order) VALUES (?,?,?,?,?,?,?,?,?,?)";
+					+ " title, order) VALUES (?,?,?,?,?,?,?,?,?)";
 			pStatement = connection.prepareStatement(query);
-			pStatement.setInt(2, 1);
-			pStatement.setLong(3, module.getModuleID());
-			pStatement.setInt(4, module.getVersion());
-			pStatement.setString(5, module.getModificationauthor());
+			pStatement.setLong(2, module.getModuleID());
+			pStatement.setInt(3, module.getVersion());
+			pStatement.setString(4, module.getModificationauthor());
+			pStatement.setBoolean(5, false);
 			pStatement.setBoolean(6, false);
 			pStatement.setBoolean(7, false);
-			pStatement.setBoolean(8, false);
 			for (Entry entry : entryList) {
 				pStatement.setLong(1, entry.getEntryID());
-				pStatement.setString(9, entry.getTitle());
-				pStatement.setInt(10, entry.getOrder());
+				pStatement.setString(8, entry.getTitle());
+				pStatement.setInt(9, entry.getOrder());
 				pStatement.execute();
 			}
 			
@@ -919,54 +813,50 @@ public class ModuleDBController {
 			}
 			if(courseEntry != null){
 				//insert courses
-				query = "INSERT INTO courseentry VALUES (?,?,?,?)";
+				query = "INSERT INTO courseentry VALUES (?,?,?)";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, courseEntry.getEntryID());
-				pStatement.setInt(2, courseEntry.getVersion());
 				for (String[] course : courseEntry.getCourses()) {
-					pStatement.setString(3, course[0]);
-					pStatement.setString(4, course[1]);
+					pStatement.setString(2, course[0]);
+					pStatement.setString(3, course[1]);
 					pStatement.execute();
 				}
 			}
 			
 
 			// insert textual entries
-			query = "INSERT INTO textualentry VALUES(?,?,?)";
+			query = "INSERT INTO textualentry VALUES(?,?)";
 			pStatement = connection.prepareStatement(query);
 			for (Entry entry : entryList) {
 				if (entry.getClass() == TextualEntry.class) {
-					te = (TextualEntry) entry;
-					pStatement.setLong(1, te.getEntryID());
-					pStatement.setInt(2, te.getVersion());
-					pStatement.setString(3, te.getContent());
+					textualEntry = (TextualEntry) entry;
+					pStatement.setLong(1, textualEntry.getEntryID());
+					pStatement.setString(2, textualEntry.getContent());
 					pStatement.execute();
 					System.out.println("text");
 				}
 			}
 
 			// insert effort entry
-			query = "INSERT INTO effortentry VALUES(?,?,?)";
+			query = "INSERT INTO effortentry VALUES(?,?)";
 			pStatement = connection.prepareStatement(query);
 			for (Entry entry : entryList) {
 				if (entry.getClass() == EffortEntry.class) {
-					ee = (EffortEntry) entry;
-					pStatement.setLong(1, ee.getEntryID());
-					pStatement.setInt(2, ee.getVersion());
-					pStatement.setInt(3, ee.getTime());
+					effortEntry = (EffortEntry) entry;
+					pStatement.setLong(1, effortEntry.getEntryID());
+					pStatement.setInt(2, effortEntry.getTime());
 					pStatement.execute();
 					System.out.println("effort");
 				}
 			}
-			if (ee != null) {
-				query = "INSERT INTO selfstudy VALUES(?,?,?,?,?)";
+			if (effortEntry != null) {
+				query = "INSERT INTO selfstudy VALUES(?,?,?,?)";
 				pStatement = connection.prepareStatement(query);
-				pStatement.setLong(2, ee.getEntryID());
-				pStatement.setInt(3, ee.getVersion());
-				for (SelfStudy study : ee.getSelfStudyList()) {
+				pStatement.setLong(2, effortEntry.getEntryID());
+				for (SelfStudy study : effortEntry.getSelfStudyList()) {
 					pStatement.setLong(1, study.getSelfstudyID());
-					pStatement.setString(4, study.getTitle());
-					pStatement.setInt(5, study.getTime());
+					pStatement.setString(3, study.getTitle());
+					pStatement.setInt(4, study.getTime());
 					pStatement.execute();
 					System.out.println("study");
 				}
@@ -1008,28 +898,26 @@ public class ModuleDBController {
 				//insert bacic entry
 				query = "INSERT INTO entry (entryID, version, moduleID, moduleversion,"
 						+ " author, classification, approvalstatus, declined,"
-						+ " title, order) VALUES (?,?,?,?,?,?,?,?,?,?)";
+						+ " title, order) VALUES (?,?,?,?,?,?,?,?,?)";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, courseEntry.getEntryID());
-				pStatement.setInt(2, 1);
-				pStatement.setLong(3, module.getModuleID());
-				pStatement.setInt(4, module.getVersion());
-				pStatement.setString(5, module.getModificationauthor());
+				pStatement.setLong(2, module.getModuleID());
+				pStatement.setInt(3, module.getVersion());
+				pStatement.setString(4, module.getModificationauthor());
+				pStatement.setBoolean(5, false);
 				pStatement.setBoolean(6, false);
 				pStatement.setBoolean(7, false);
-				pStatement.setBoolean(8, false);
-				pStatement.setString(9, courseEntry.getTitle());
-				pStatement.setInt(10, courseEntry.getOrder());
+				pStatement.setString(8, courseEntry.getTitle());
+				pStatement.setInt(9, courseEntry.getOrder());
 				pStatement.execute();
 				
 				//insert courses
-				query = "INSERT INTO courseentry VALUES (?,?,?,?)";
+				query = "INSERT INTO courseentry VALUES (?,?,?)";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, courseEntry.getEntryID());
-				pStatement.setInt(2, courseEntry.getVersion());
 				for (String[] course : courseEntry.getCourses()) {
-					pStatement.setString(3, course[0]);
-					pStatement.setString(4, course[1]);
+					pStatement.setString(2, course[0]);
+					pStatement.setString(3, course[1]);
 					pStatement.execute();
 				}
 			}
@@ -1063,8 +951,8 @@ public class ModuleDBController {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(1, moduleID);
 			pStatement.setString(2, name);
-			pStatement.setDate(3, (java.sql.Date) creationDate);
-			pStatement.setDate(4, (java.sql.Date) modificationDate);
+			pStatement.setDate(3, new Date(creationDate.getYear(), creationDate.getMonth(), creationDate.getDay()));
+			pStatement.setDate(4, new Date(modificationDate.getYear(), modificationDate.getMonth(), modificationDate.getDay()));
 			pStatement.setBoolean(5, approved);
 			pStatement.setString(6, instituteID);
 			pStatement.setLong(7, moduleIDOld);

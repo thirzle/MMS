@@ -12,7 +12,10 @@ import java.text.SimpleDateFormat;
  * This class is the super class of several Entry related subclasses.
  * <p>
  * Following extensions are related to this class: 
- * {@link CourseEntry}, {@link EffortEntry}, {@link TextualEntry}
+ * {@link CourseEntry}, {@link EffortEntry}, {@link TextualEntry}.
+ * <p>
+ * All extensions have at least two constructors. One for creating completely new data,
+ * that is going to be stored in the database, and one for storing already retrieved data. 
  * <p>
  * Entries are used to build {@link Module}s and fill them with content. 
  * @see Module
@@ -28,10 +31,6 @@ public abstract class Entry {
     	 * This entry's ID
     	 */
 	private long entryID;
-	/**
-	 * The version number of this entry.
-	 */
-	private int version; // version number
 	/**
 	 * Time stamp.
 	 * <p>
@@ -71,7 +70,7 @@ public abstract class Entry {
 	/**
 	 * A random number generator.
 	 * <p>
-	 * Used so generate new IDs on creation of new entries.
+	 * Used to generate new IDs on creation of new entries.
 	 */
 	private Random random;
 
@@ -107,7 +106,6 @@ public abstract class Entry {
 		// default init...
 		random = new Random();
 		this.entryID = createEntryID();
-		this.version = 1;
 		this.timestamp = get_current_time();
 		this.classification = false;
 		this.approved = false;
@@ -138,10 +136,9 @@ public abstract class Entry {
          * @param title			The title of this entry. Used by the document creation as content title. (Used by extensions to initialize this super class)
          * @param order			The order of this entry. (Used by extensions to initialize this super class)
          */
-	public Entry(int version, String date, boolean classification,
+	public Entry(String date, boolean classification,
 			boolean approvalstatus, boolean declined, long entryID, String title, int order) {
 		random = new Random();
-		this.version = version;
 		this.classification = classification;
 		this.title = title;
 		this.entryID = entryID;
@@ -168,7 +165,6 @@ public abstract class Entry {
 		// default init...
 		random = new Random();
 		this.entryID = createEntryID();
-		this.version = 1;
 		this.timestamp = get_current_time();
 		this.classification = false;
 		this.approved = false;
@@ -210,15 +206,6 @@ public abstract class Entry {
 	 */
 	public long getEntryID() {
 		return entryID;
-	}
-
-	/**
-	 * Returns the entry's version.
-	 * 
-	 * @return	This entry's version.
-	 */
-	public int getVersion() {
-		return version;
 	}
 
 	/**

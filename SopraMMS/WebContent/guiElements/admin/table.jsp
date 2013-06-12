@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
-	
+<script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.usertable.js"></script>
 <%@ page import="model.UserDBController"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
@@ -18,7 +19,7 @@
 <table id="userTable" class="tablesorter">
 	<thead>
 		<tr>
-			<th style="width: 1%"></th>
+			<th></th>
 			<th>Benutzername</th>
 			<th>Vorname</th>
 			<th>Nachname</th>
@@ -79,7 +80,3 @@ if(task.equals("edit")) { %>
 if(session.getAttribute("errormessage") != null) { %>
 	<p style="color: #FF0000"><%= session.getAttribute("errormessage") %></p>
 <%} %>
-
-
-<script type="text/javascript" src="/SopraMMS/js/jquery.usertable.js"></script>
-<script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>

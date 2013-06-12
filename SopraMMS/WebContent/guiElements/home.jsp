@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>MMS</title>
-<link rel="stylesheet" type="text/css"
-	href="/SopraMMS/css/default.css">
+<link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
+<link rel="stylesheet" type="text/css" href="/SopraMMS/css/default.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/menuManager.js"></script>
 </head>

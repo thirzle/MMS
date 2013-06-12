@@ -21,47 +21,40 @@ import user.User;
  */
 @WebServlet("/DeleteUser")
 public class DeleteUser extends SessionCheck implements Servlet {
-	private static final long serialVersionUID = 1L;
-       
+    private static final long serialVersionUID = 1L;
+
     /**
      * @see SessionCheck#SessionCheck()
      */
     public DeleteUser() {
-        super();
-        // TODO Auto-generated constructor stub
+	super();
+	// TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("(DeleteUser.java):doGet() called");
-    	HttpSession session = request.getSession();
-		if(isLoggedIn(request, response)&&actionGranted(request, 3)) {
-			String loginname = request.getParameter("selectedRowID");
-	    	User user = ua.getUser(loginname);
-	    	System.out.println("(DeleteUser.java):user:"+user);
-	    	// insert into History "User removed"
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			Date currentTime = new Date();
-			String date = formatter.format(currentTime);
-			ua.insertHistory(user.getLogin(), date, "Wurde geloescht");
-			
-	    	ua.deleteUser(user);
-	    	session.setAttribute("task", "edit");
-			response.sendRedirect("/SopraMMS/LoadTable");
-			
-    	} else {
-    		session.setAttribute("content","start");
-    		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-    	}
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	System.out.println("(DeleteUser.java):doGet() called");
+	HttpSession session = request.getSession();
+	if (isLoggedIn(request, response) && actionGranted(request, 3)) {
+	    String loginname = request.getParameter("selectedRowID");
+	    System.out.println("(DeleteUser.java):user:" + loginname);
+	    // insert into History "User removed"
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	    Date currentTime = new Date();
+	    String date = formatter.format(currentTime);
+	    ua.insertHistory(loginname, date, "Wurde geloescht");
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	    ua.deleteUser(loginname);
+	    session.setAttribute("task", "edit");
+	    response.sendRedirect("/SopraMMS/LoadTable");
+
+	} else {
+	    session.setAttribute("content", "start");
+	    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	// TODO Auto-generated method stub
+    }
 
 }

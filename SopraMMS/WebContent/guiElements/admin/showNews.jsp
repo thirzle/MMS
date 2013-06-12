@@ -1,3 +1,6 @@
+
+<script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.newstable.js"></script>
 <link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
 <%@page import="java.util.List"%>
 <%@page import="user.UserAdministration"%>
@@ -39,6 +42,15 @@
 				}
 		%>
 		<tr>
+			<!--  here is Waldoo ('.') 
+							#	#######
+							 #			#
+								#######	##
+										#
+								######
+								#	#
+								#	#
+			-->
 			<td><input type="checkbox" name="delete<%=index%>"
 				value="<%=entry[0]%>"></td>
 			<td><%=entry[0]%></td>
@@ -56,7 +68,5 @@
 	</table>
 	<input type="submit" value="L&ouml;schen">
 </form>
-<script type="text/javascript" src="/SopraMMS/js/jquery.newstable.js"></script>
-<script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
 
 

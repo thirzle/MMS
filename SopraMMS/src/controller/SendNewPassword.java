@@ -36,12 +36,12 @@ public class SendNewPassword extends HttpServlet {
 		UserAdministration ua = new UserAdministration();
 		try {
 			ua.sendNewPasswordLink(email);
+			session.setAttribute("content", "start");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendRedirect("SopraMMS/guiElements/error.jsp");
 		}
-		session.setAttribute("content", "start");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
 	/**

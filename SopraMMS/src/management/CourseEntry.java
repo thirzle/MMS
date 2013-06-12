@@ -14,6 +14,7 @@ import java.util.List;
  * Use only Constructors that are marked as "useful". All other Constructors
  * are used for test purposes.
  * @see Module
+ * @see Entry
  * @author AJ, Teresa, add names here...
  *
  */
@@ -55,7 +56,7 @@ public class CourseEntry extends Entry {
 	/**
 	 * Creates a CourseEntry with given parameters. (Overloaded)
 	 * <p>
-	 * Difference: multiple courses needed as parameter.
+	 * Difference: multiple courses needed as parameter. Used to create an Entry from already loaded data.
 	 * <p>
 	 * useful
 	 * @param version		The version of this {@link Entry}-extension. (Used to initialize the super class)
@@ -68,10 +69,10 @@ public class CourseEntry extends Entry {
 	 * @param order			The order of this entry. (Used to initialize the super class)
 	 * @param courses		A List of courses. Consists of string arrays with two entries: course and degree.
 	 */
-	public CourseEntry(int version, String date, boolean classification,
+	public CourseEntry(String date, boolean classification,
 			boolean approvalstatus, boolean declined, long entryID,
 			String title, int order, List<String[]> courses) {
-		super(version, date, classification, approvalstatus, declined, entryID,
+		super(date, classification, approvalstatus, declined, entryID,
 				title, order);
 		this.courses = courses;
 	}
@@ -79,7 +80,7 @@ public class CourseEntry extends Entry {
 	/**
 	 * Creates a CourseEntry with given parameters. (Overloaded)
 	 * <p>
-	 * Difference: single course needed as parameter.
+	 * Difference: single course needed as parameter. Used to create an Entry from already loaded data.
 	 * <p>
 	 * useful
 	 * @param version		The version of this {@link Entry}-extension. (Used to initialize the super class)
@@ -93,10 +94,10 @@ public class CourseEntry extends Entry {
 	 * @param course		A single course parameter.
 	 * @param degree		Is used as degree entry for the single course parameter.
 	 */
-	public CourseEntry(int version, String date, boolean classification,
+	public CourseEntry(String date, boolean classification,
 			boolean approvalstatus, boolean declined, long entryID,
 			String title, int order, String course, String degree) {
-		super(version, date, classification, approvalstatus, declined, entryID,
+		super(date, classification, approvalstatus, declined, entryID,
 				title, order);
 		courses.add(new String[] { course, degree });
 	}
@@ -105,6 +106,7 @@ public class CourseEntry extends Entry {
 	 * Creates a CourseEntry with given parameters. (Overloaded)
 	 * <p>
 	 * Difference: No course parameter, no degree parameter. Add courses with {@link #addCourse(String course, String degree) addCourse}.
+	 * Used to create an Entry from already loaded data.
 	 * <p>
 	 * useful
 	 * @param version		The version of this {@link Entry}-extension. (Used to initialize the super class)
@@ -116,10 +118,10 @@ public class CourseEntry extends Entry {
 	 * @param title			The title of this entry. Used by the document creation as content title. (Used to initialize the super class)
 	 * @param order			The order of this entry. (Used to initialize the super class)
 	 */
-	public CourseEntry(int version, String date, boolean classification,
+	public CourseEntry(String date, boolean classification,
 			boolean approvalstatus, boolean declined, long entryID,
 			String title, int order) {
-		super(version, date, classification, approvalstatus, declined, entryID,
+		super(date, classification, approvalstatus, declined, entryID,
 				title, order);
 		courses = new LinkedList<String[]>();
 	}
