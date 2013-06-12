@@ -7,15 +7,13 @@
 
 <form action="/SopraMMS/ShowEditModule" method="get">
 	<%
-		ArrayList<String[]> fieldsTypeA = (ArrayList) session.getAttribute("fieldsTypeAEdit");
+		ArrayList<String[]> fieldsTypeA = (ArrayList<String[] >) session.getAttribute("fieldsTypeAEdit");
 
 		ArrayList<String[]> fieldsTypeB = (ArrayList) session.getAttribute("fieldsTypeBEdit");
 
 		ArrayList<String[]> fieldsTypeC = (ArrayList) session.getAttribute("fieldsTypeCEdit");
 
 		ArrayList<String[]> fieldsTypeD = (ArrayList) session.getAttribute("fieldsTypeDEdit");
-			
-		System.out.println("fieldsTypeDEdit: "+(session.getAttribute("fieldsTypeDEdit") == null));
 
 		for (int i = 0; i < fieldsTypeA.size(); i++) {
 			String[] description = fieldsTypeA.get(i);
@@ -87,7 +85,7 @@
 				<td class='descriptionModule'>Institut</td>
 				<td class='entryModule'>
 					<%
-						List<String[]> institutes = (List<String[]>) session.getAttribute("institutesModuleEntry");
+						//List<String[]> institutes = (List<String[]>) session.getAttribute("institutesModuleEntry");
 					%> <select name='selectedInstitute' id="instituteSelect">
 						<%
 							for (int i = 0; i < institutes.size(); i++) {
