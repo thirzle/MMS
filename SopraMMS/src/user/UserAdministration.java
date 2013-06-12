@@ -34,6 +34,8 @@ public class UserAdministration {
 
 	// Gets an object User and send it to the database controller
 	public User createUser(User user) {
+	    	// generate random password
+	    	user.setPassword(Integer.toString(user.getPassword().hashCode()));
 		List<String> institutes = userDBController.convertInstituteToID(user
 				.getInstitute());
 		user.setInstitute(institutes);
