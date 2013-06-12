@@ -49,7 +49,7 @@ public class ShowEditModule extends HttpServlet {
 		UserAdministration uAdmin = new UserAdministration();
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		HttpSession session = request.getSession();
-		ArrayList<Entry> entryList = new ArrayList<Entry>();
+		LinkedList<Entry> entryList = new LinkedList<Entry>();
 		// speichert das ausgeählte Modul + Version
 		String selectedModule = null;
 		// ModulID steht an Stelle 0, Versionsnummer an Stelle 1
@@ -74,7 +74,7 @@ public class ShowEditModule extends HttpServlet {
 		}
 
 		Module editModule = mAdmin.getModuleByID(moduleID, version);
-		entryList = (ArrayList<Entry>) mAdmin
+		entryList = (LinkedList<Entry>) mAdmin
 				.sortModuleEntryListByOrder(editModule);
 		
 		String institute = editModule.getInstituteID();
@@ -262,7 +262,7 @@ public class ShowEditModule extends HttpServlet {
 			// Bei Klick Module Speichern
 			else if (request.getParameter("createModule").equals("sendModule")) {
 
-				ArrayList<Entry> entryListForNewModule = new ArrayList<>();
+				LinkedList<Entry> entryListForNewModule = new LinkedList<>();
 				entryListForNewModule.addAll(entryList);
 
 				for (String[] strings : fieldsTypeA) {
