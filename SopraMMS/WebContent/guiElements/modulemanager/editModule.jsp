@@ -1,3 +1,5 @@
+<%@page import="management.ModuleAdministration"%>
+<%@page import="user.User"%>
 <%@page import="java.util.LinkedList"%>
 <%@ page import="java.util.List, java.util.ArrayList"%>
 <link rel="stylesheet" type="text/css"
@@ -14,6 +16,9 @@
 		ArrayList<String[]> fieldsTypeC = (ArrayList) session.getAttribute("fieldsTypeCEdit");
 
 		ArrayList<String[]> fieldsTypeD = (ArrayList) session.getAttribute("fieldsTypeDEdit");
+		
+		User user = (User) session.getAttribute("user");
+		LinkedList<String> institutes = (LinkedList<String>) user.getInstitute();
 
 		for (int i = 0; i < fieldsTypeA.size(); i++) {
 			String[] description = fieldsTypeA.get(i);
@@ -84,13 +89,12 @@
 			<tr>
 				<td class='descriptionModule'>Institut</td>
 				<td class='entryModule'>
-					<%
-						//List<String[]> institutes = (List<String[]>) session.getAttribute("institutesModuleEntry");
-					%> <select name='selectedInstitute' id="instituteSelect">
-						<%
-							for (int i = 0; i < institutes.size(); i++) {
+					 <select name='selectedInstitute' id="instituteSelect">
+						<%			
+						ModuleAdministration mAdmin = new ModuleAdministration();	
+						for (int i = 0; i < institutes.size(); i++) {
 						%>
-						<option value='<%=institutes.get(i)[0]%>'><%=institutes.get(i)[1]%></option>
+						<option value="<%=institutes.get(i)%>"><%=mAdmin.getInstituteName(institutes.get(i)) %></option>
 
 						<%
 							}
