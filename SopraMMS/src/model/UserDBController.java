@@ -230,16 +230,18 @@ public class UserDBController {
 			pStatement.setString(5, oldUser.getLogin());
 			pStatement.executeUpdate();
 			
-			changeRights(newUser, newUser.getRights(), connection);
-			changeInstitutes(newUser, newUser.getInstitute(), connection);
-			
+			changeRights(oldUser.getLogin(), newUser.getLogin(), newUser.getRights(), connection);
+			changeInstitutes(oldUser.getLogin(), newUser.getLogin(), newUser.getInstitute(), connection);
+			connection.commit();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			rollback(connection);
 			System.out.println("User " + oldUser.getLogin() + " couldn't be changed.");
+			return false;
 		} finally {
 			close(connection);
 		}
-		return false;
 	}
 
 	// deletes User
@@ -249,7 +251,8 @@ public class UserDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
-			return pStatement.execute();
+			pStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("User could not be deleted.");
@@ -367,13 +370,13 @@ public class UserDBController {
 	
 	
 	// change rights of specified user
-	public boolean changeRights(User user, boolean[] newRights, Connection connection) {
+	public boolean changeRights(String oldLogin, String newLogin, boolean[] newRights, Connection connection) {
 		// delete old rights
 		query = "DELETE FROM rightsaffiliation WHERE loginname = ?";
 		try {
 			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, user.getLogin());
+			pStatement.setString(1, oldLogin);
 			pStatement.execute();
 			System.out.println("deleted");
 
@@ -381,7 +384,7 @@ public class UserDBController {
 		query = "INSERT INTO rightsaffiliation VALUES (?, ?)";
 		int i = 0;
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, user.getLogin());
+			pStatement.setString(1, newLogin);
 			for (; i < newRights.length; i++) {
 				if (newRights[i]) {
 					pStatement.setInt(2, i);
@@ -394,7 +397,7 @@ public class UserDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't change rights of user: "
-					+ user.getLogin());
+					+newLogin);
 			rollback(connection);
 			return false;
 		}
@@ -435,19 +438,19 @@ public class UserDBController {
 	
 	
 	// change institutes of specified user
-	public boolean changeInstitutes(User user, List<String> institutes, Connection connection) {
+	public boolean changeInstitutes(String oldLogin, String newLogin, List<String> institutes, Connection connection) {
 		// delete old institutes
 		query = "DELETE FROM instituteaffiliation WHERE loginname = ?";
 		try {
 			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, user.getLogin());
+			pStatement.setString(1, oldLogin);
 			pStatement.execute();
 
 		// insert new institutes
 		query = "INSERT INTO instituteaffiliation VALUES (?, ?)";
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, user.getLogin());
+			pStatement.setString(1, newLogin);
 			for (String institute : institutes) {
 				pStatement.setString(2, institute);
 				pStatement.execute();
@@ -457,7 +460,7 @@ public class UserDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't change instututes of user: "
-					+ user.getLogin());
+					+ newLogin);
 			rollback(connection);
 			return false;
 		}
@@ -584,10 +587,12 @@ public class UserDBController {
 			pStatement.setString(1, loginname);
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				deleteForgotPwd(loginname, connection);
 				correctPassword = resultSet.getString(1);
 				close(connection);
-				return correctPassword.equals(password);
+				if(correctPassword.equals(password)){
+					deleteForgotPwd(loginname, connection);
+					return true;
+				}
 			}
 			return false;
 		} catch (SQLException e) {
@@ -756,7 +761,8 @@ public class UserDBController {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, forgotPwd);
 			pStatement.setString(2, mail);
-			return pStatement.execute();
+			pStatement.execute();
+			return true;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -773,7 +779,8 @@ public class UserDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
-			return pStatement.execute();
+			pStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -888,7 +895,8 @@ public class UserDBController {
 			pStatement.setDate(1, deadline.getDeadline());
 			pStatement.setDate(2, deadline.getBeginremember());
 			pStatement.setString(3, deadline.getFacultyID());
-			return pStatement.execute();
+			pStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -907,7 +915,8 @@ public class UserDBController {
 			pStatement.setDate(1, deadline.getDeadline());
 			pStatement.setDate(2, deadline.getBeginremember());
 			pStatement.setString(3, deadline.getFacultyID());
-			return pStatement.execute();
+			pStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -957,7 +966,8 @@ public class UserDBController {
 			pStatement.setString(1, title);
 			pStatement.setString(2, content);
 			pStatement.setInt(3, type);
-			return pStatement.execute();
+			pStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -974,7 +984,8 @@ public class UserDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, title);
-			return pStatement.execute();
+			pStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1111,13 +1122,57 @@ public class UserDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
-			return pStatement.execute();
+			pStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("ForgotPassword variable of user "+loginname+" could't be set null.");
 			return false;
 		}
+	}
+	
+	
+	public boolean setCurriculum(String loginname, String url) {
+		Connection connection = connect();
+		query = "UPDATE user SET curriculum = ? WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, url);
+			pStatement.setString(2, loginname);
+			pStatement.execute();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Couldn't set curriculum for user "+loginname);
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
+	
+	public String getCurriculum(String loginname) {
+		Connection connection = connect();
+		String url = null;
+		query = "SELECT curriculum FROM user WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				url = resultSet.getString("curriculum");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Couldn't get curriculum for user "+loginname);
+			return null;
+		} finally {
+			close(connection);
+		}
+		return url;
 	}
 	
 

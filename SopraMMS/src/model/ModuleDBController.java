@@ -9,11 +9,6 @@ import java.sql.Statement;
 import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.apache.tomcat.jni.OS;
-
-import user.User;
-
 import management.CourseEntry;
 import management.EffortEntry;
 import management.Entry;
@@ -934,38 +929,38 @@ public class ModuleDBController {
 	}
 	
 
-	// change an existing module
-	public boolean changeModuleByModuleMananger(Module module, long moduleIDOld) {
-		Connection connection = connect();
-		long moduleID = module.getModuleID();
-		String name = module.getName();
-		Date creationDate = (Date) module.getCreationDate();
-		Date modificationDate = (Date) module.getModificationDate();
-		boolean approved = module.isApproved();
-		String instituteID = module.getInstituteID();
-
-		query = "UPDATE module"
-				+ "SET moduleID = ?, name = ?, creationDate = ?, modificationDate = ?, approved = ?, instituteID = ?"
-				+ "WHERE moduleID = ?";
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setLong(1, moduleID);
-			pStatement.setString(2, name);
-			pStatement.setDate(3, new Date(creationDate.getYear(), creationDate.getMonth(), creationDate.getDay()));
-			pStatement.setDate(4, new Date(modificationDate.getYear(), modificationDate.getMonth(), modificationDate.getDay()));
-			pStatement.setBoolean(5, approved);
-			pStatement.setString(6, instituteID);
-			pStatement.setLong(7, moduleIDOld);
-			return pStatement.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Couldn't change module: " + moduleID);
-			return false;
-		} finally {
-			close(connection);
-		}
-
-	}
+//	// change an existing module
+//	public boolean changeModuleByModuleMananger(Module module, long moduleIDOld) {
+//		Connection connection = connect();
+//		long moduleID = module.getModuleID();
+//		String name = module.getName();
+//		Date creationDate = (Date) module.getCreationDate();
+//		Date modificationDate = (Date) module.getModificationDate();
+//		boolean approved = module.isApproved();
+//		String instituteID = module.getInstituteID();
+//
+//		query = "UPDATE module"
+//				+ "SET moduleID = ?, name = ?, creationDate = ?, modificationDate = ?, approved = ?, instituteID = ?"
+//				+ "WHERE moduleID = ?";
+//		try {
+//			pStatement = connection.prepareStatement(query);
+//			pStatement.setLong(1, moduleID);
+//			pStatement.setString(2, name);
+//			pStatement.setDate(3, new Date(creationDate.getYear(), creationDate.getMonth(), creationDate.getDay()));
+//			pStatement.setDate(4, new Date(modificationDate.getYear(), modificationDate.getMonth(), modificationDate.getDay()));
+//			pStatement.setBoolean(5, approved);
+//			pStatement.setString(6, instituteID);
+//			pStatement.setLong(7, moduleIDOld);
+//			return pStatement.execute();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			System.out.println("Couldn't change module: " + moduleID);
+//			return false;
+//		} finally {
+//			close(connection);
+//		}
+//
+//	}
 
 	// delete an existing module
 	public boolean deleteModule(Module module) {
@@ -974,7 +969,8 @@ public class ModuleDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(1, module.getModuleID());
-			return pStatement.execute();
+			pStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't delete module: "
@@ -1277,7 +1273,8 @@ public class ModuleDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, subject);
-			return pStatement.execute();
+			pStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1293,7 +1290,8 @@ public class ModuleDBController {
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, subject);
-			return pStatement.execute();
+			pStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1303,7 +1301,7 @@ public class ModuleDBController {
 		}
 	}
 
-	public void createModuleMaunal(String version, String courseID,
+	public boolean createModuleMaunal(String version, String courseID,
 			String degree, String creationdate, String modificationdate,
 			boolean approvalstatus, int examregulation) {
 		Connection connection = connect();
@@ -1320,9 +1318,11 @@ public class ModuleDBController {
 			pStatement.setBoolean(6, approvalstatus);
 			pStatement.setInt(7, examregulation);
 			pStatement.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("couldn't create modulemanual");
+			return false;
 		}
 	}
 
@@ -1342,6 +1342,29 @@ public class ModuleDBController {
 			close(connection);
 		}
 	}
+	
+	
+	public boolean clearDatabase(){
+		java.util.Date today = new java.util.Date();
+		Date limit = new Date(today.getYear()-2, today.getMonth(), today.getDate());
+		Connection connection = connect();
+		query = "DELETE FROM module WHERE modificationdate < ? AND (moduleID, version) NOT IN (SELECT * FROM latestmodule)";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setDate(1, limit);
+			pStatement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Couldn't clear Database");
+			return false;
+		} finally {
+			close(connection);
+		}
+		
+	}
+	
 
 	// roll back changes made in database if something went wrong
 	private void rollback(Connection connection) {

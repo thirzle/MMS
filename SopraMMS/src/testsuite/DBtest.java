@@ -168,14 +168,13 @@ public class DBtest {
 	
 //		uController.getEmails
 		
-		User basti = uController.getUser("nigschb");
+//		User basti = uController.getUser("nigschb");
+//
+//		uController.changeRights(basti, new boolean[]{true, false, false, false, true, true, false});
+//		System.out.println("done");+
 
-		uController.changeRights(basti, new boolean[]{true, false, false, false, true, true, false});
-		System.out.println("done");
-
-		
-		
-
+		System.out.println(mController.clearDatabase());
+				
 	}
 
 }

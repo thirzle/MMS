@@ -290,6 +290,12 @@ public class UserAdministration {
 
 	}
 	
+	
+	public String getCurriculum(String loginname){
+		return userDBController.getCurriculum(loginname);
+	}
+	
+	
 	public void insertHistory(String loginname, String date, String content){
 		userDBController.insertHistory(loginname, date, content);
 	}
@@ -297,6 +303,12 @@ public class UserAdministration {
 	public List<String[]> showHistory(){
 		return userDBController.showHistory();
 	}
+	
+	
+	public void setCurriculum(String loginname, String url){
+		userDBController.setCurriculum(loginname, url);
+	}
+	
 
 	public void deleteNews(String title) {
 		userDBController.deleteNews(title);

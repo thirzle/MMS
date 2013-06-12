@@ -44,12 +44,13 @@ public class CurrVitae extends SessionCheck implements Servlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		UserAdministration uAdmin = new UserAdministration();
 		User user = (User) session.getAttribute("user");
 		String loginname = user.getLogin();
 		String currurl = request.getParameter("currurl");
 		
-		UserAdministration uAdmin = new UserAdministration();
-		//uAdmin.changeCurr(currurl);
+		
+		uAdmin.setCurriculum(user.getLogin(), currurl);
 		
 		session.setAttribute("currurl", currurl);
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
