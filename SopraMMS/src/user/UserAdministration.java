@@ -166,6 +166,40 @@ public class UserAdministration {
 
 		mail.send_mail("MMS - Neues Passwort", email, text.toString());
 	}
+	
+	public void sendNewPasswordLinkForNewUser(User user) throws IOException {
+
+		String newLink = Math.random() * 1000000000 * Math.PI + ""
+				+ Math.random() * 1000000000 * Math.PI + ""
+				+ (Math.random() * 1000000000 * Math.PI);
+		String email = user.getMail();
+		userDBController.setForgotPwdByMail(email, newLink);
+
+		String url = "http://localhost:8080/SopraMMS/CreateNewPassword?link="
+				+ newLink;
+
+		EmailTelnet mail = new EmailTelnet();
+
+		StringBuilder text = new StringBuilder();
+		text.append("Sehr geehrte/geehrter Frau/Herr " + user.getLastName()
+				+ ",");
+		text.append("\n\n");
+		text.append("Sie wurden soeben an dem Modul Management System der Universität Ulm registriert.");
+		text.append("\n\n");
+		text.append("Der Benutzername für Ihren registrierten Account lautet: "+user.getLogin());
+		text.append("\n\n");
+		text.append("Bitte rufen Sie folgenden Link auf und erstellen Sie ihr Passwort.");
+		text.append("\n\n");
+		text.append(url);
+		text.append("\n\n");
+		text.append("Sie haben die Möglichkeit das neu erstellte Passwort zu einem späteren Zeitpunkt zu ändern.");
+		text.append("\n\n");
+		text.append("Mit freundlichen Grüßen");
+		text.append("\n");
+		text.append("MMS-Team");
+
+		mail.send_mail("MMS - Neues Passwort", email, text.toString());
+	}
 
 	public User checkNewPasswordLink(String link) {
 		return userDBController.getUserByForgotPwd(link);
