@@ -37,10 +37,6 @@ public class ChangeUser extends SessionCheck implements Servlet {
 	if (isLoggedIn(request, response) && actionGranted(request, right)) {
 	    User origUser = (User) session.getAttribute("userToEdit");
 	    String loginname = origUser.getLogin();
-	    if (origUser == null) {
-		System.out.println("(ChangeUser.java): user is null");
-		return;
-	    }
 	    User tmpUser = createUser(request);
 	    if (origUser.getFaculty() != null) {
 		tmpUser.setFaculty(origUser.getFaculty());

@@ -43,7 +43,7 @@ public class SaveUser extends SessionCheck {
 			User user = createUser(request);
 			ua.createUser(user);
 			try {
-				ua.sendNewPasswordLink(user.getMail());
+				ua.sendNewPasswordLinkForNewUser(user);
 				session.removeAttribute("emptyInputs");
 				System.out
 						.println("User successfully transmitted to UserAdministration!");

@@ -50,9 +50,9 @@ public class ShowEditModule extends HttpServlet {
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		HttpSession session = request.getSession();
 		LinkedList<Entry> entryList = new LinkedList<Entry>();
-//		speichert das ausgeählte Modul + Version
+		// speichert das ausgeählte Modul + Version
 		String selectedModule = null;
-//		ModulID steht an Stelle 0, Versionsnummer an Stelle 1
+		// ModulID steht an Stelle 0, Versionsnummer an Stelle 1
 		String[] selectedModuleArray = new String[2];
 
 		long moduleID = 0;
@@ -61,12 +61,12 @@ public class ShowEditModule extends HttpServlet {
 		if (request.getParameter("selectedModuleToEdit") == null) {
 			moduleID = (long) session.getAttribute("selectedModuleIDToEdit");
 			version = (int) session.getAttribute("selectedVersionToEdit");
+
 		}
 		// erster Aufruf von showModules
 		else {
 			selectedModule = request.getParameter("selectedModuleToEdit");
 			selectedModuleArray = selectedModule.split(" ");
-			System.out.println("selectedModuleArray: "+selectedModuleArray[0]+" "+selectedModuleArray[1]);
 			moduleID = Long.parseLong(selectedModuleArray[0]);
 			version = Integer.parseInt(selectedModuleArray[1]);
 			session.setAttribute("selectedModuleIDToEdit", moduleID);
@@ -74,14 +74,17 @@ public class ShowEditModule extends HttpServlet {
 		}
 
 		Module editModule = mAdmin.getModuleByID(moduleID, version);
-//		entryList = (LinkedList<Entry>) mAdmin.sortModuleEntryListByOrder(editModule);
-
-		if (session.getAttribute("institutesModuleEntry") == null) {
-
-			List<String[]> institutes = uAdmin.getAllInstitutesByName(session
-					.getAttribute("loginname").toString());
-			session.setAttribute("institutesModuleEntry", institutes);
-		}
+		entryList = (LinkedList<Entry>) mAdmin
+				.sortModuleEntryListByOrder(editModule);
+		
+		String institute = editModule.getInstituteID();
+		
+		// if (session.getAttribute("institutesModuleEntry") == null) {
+		//
+		// List<String[]> institutes = uAdmin.getAllInstitutesByName(session
+		// .getAttribute("loginname").toString());
+		// session.setAttribute("institutesModuleEntry", institutes);
+		// }
 
 		// TypA --> Vordefinierte Pflichfelder Feld
 		// TypB --> Vordefinierte Pflichfelder Textarea
@@ -92,9 +95,9 @@ public class ShowEditModule extends HttpServlet {
 		ArrayList<String[]> fieldsTypeC = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeD = new ArrayList<>();
 
-		String institute = request.getParameter("selectedInstitute");
-		System.out.println("(ShowEditModule.java) selectedInstituteID: "
-				+ institute);
+		// String institute = request.getParameter("selectedInstitute");
+		// System.out.println("(ShowEditModule.java) selectedInstituteID: "
+		// + institute);
 		// Fuelle Liste mit Standartwerten falls das Session Attribut noch nicht
 		// besteht, anderenfalls kopiere das Session Attribut in das lokale
 		// Attribut
@@ -259,7 +262,8 @@ public class ShowEditModule extends HttpServlet {
 			// Bei Klick Module Speichern
 			else if (request.getParameter("createModule").equals("sendModule")) {
 
-				ArrayList<Entry> entryListForNewModule = new ArrayList<>();
+				LinkedList<Entry> entryListForNewModule = new LinkedList<>();
+				entryListForNewModule.addAll(entryList);
 
 				for (String[] strings : fieldsTypeA) {
 					TextualEntry entry = new TextualEntry(strings[0],
@@ -320,8 +324,8 @@ public class ShowEditModule extends HttpServlet {
 						((User) session.getAttribute("user")).getLogin(), date,
 						"Hat ein Modul ge&auml;ndert: " + title);
 
-//				session.setAttribute("content", "didEditModule");
-//				System.out.println("did edit module");
+				// session.setAttribute("content", "didEditModule");
+				// System.out.println("did edit module");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
 		}
@@ -334,6 +338,7 @@ public class ShowEditModule extends HttpServlet {
 		}
 		// Anzeige beim Aufruf von Modul einfuegen
 		else {
+			session.setAttribute("institutesModuleEntry", institute);
 			session.setAttribute("content", "editModule");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}

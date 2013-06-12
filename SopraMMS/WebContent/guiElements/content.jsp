@@ -2,11 +2,14 @@
 <%
 	String contentPage;
 	Object user = session.getAttribute("user");
-	System.out.println("-- content: "+session.getAttribute("content"));
-	System.out.println("-- home: "+request.getParameter("home"));
-	System.out.println("-- user: "+session.getAttribute("user"));
-	if ((session.getAttribute("content") == null || request.getParameter("home") != null) && session.getAttribute("user") == null) {
-	
+	System.out
+			.println("-- content: " + session.getAttribute("content"));
+	System.out.println("-- home: " + request.getParameter("home"));
+	System.out.println("-- user: " + session.getAttribute("user"));
+	if ((session.getAttribute("content") == null || request
+			.getParameter("home") != null)
+			&& session.getAttribute("user") == null) {
+
 		contentPage = "start";
 		if (request.getParameter("contentPdf") != null) {
 			contentPage = "contentPdf";
@@ -123,15 +126,13 @@
 <%
 	} else if (contentPage.equals("showModulesForModulemanager")) {
 %>
-<jsp:include page="/guiElements/modulemanager/showModulesForModulemanager.jsp"></jsp:include>
-<%
-	} else if (contentPage.equals("editModule")) {
-%>
-<jsp:include page="/guiElements/modulemanager/editModule.jsp"></jsp:include>
+<jsp:include
+	page="/guiElements/modulemanager/showModulesForModulemanager.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("showModulesForCoordinator")) {
 %>
-<jsp:include page="/guiElements/coordinator/showModulesForCoordinator.jsp"></jsp:include>
+<jsp:include
+	page="/guiElements/coordinator/showModulesForCoordinator.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("showModulesForEditor")) {
 %>
@@ -140,6 +141,10 @@
 	} else if (contentPage.equals("didEditModule")) {
 %>
 <jsp:include page="/guiElements/modulemanager/didEditModule.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("editModule")) {
+%>
+<jsp:include page="/guiElements/modulemanager/editModule.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("CurrVitae")) {
 %>

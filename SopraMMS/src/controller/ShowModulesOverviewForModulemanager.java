@@ -25,7 +25,9 @@ public class ShowModulesOverviewForModulemanager extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public ShowModulesOverviewForModulemanager() {
+
         super();
+		System.out.println("ShowModulesOverviewForModulemanager");
         // TODO Auto-generated constructor stub
     }
 
@@ -33,6 +35,8 @@ public class ShowModulesOverviewForModulemanager extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		System.out.println("ShowModulesOverviewForModulemanager");
 		HttpSession session = request.getSession();
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		User user = (User) session.getAttribute("user");
