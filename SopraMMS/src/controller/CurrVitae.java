@@ -46,22 +46,20 @@ public class CurrVitae extends SessionCheck implements Servlet {
 		HttpSession session = request.getSession();
 		UserAdministration uAdmin = new UserAdministration();
 		User user = (User) session.getAttribute("user");
-		String loginname = user.getLogin();
-		String currurl = request.getParameter("currurl");
-		
-		
-		uAdmin.setCurriculum(user.getLogin(), currurl);
-		
-		session.setAttribute("currurl", currurl);
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-		
-		// insert into History "New CurricullumVitae"
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date currentTime = new Date();
-		String date = formatter.format(currentTime);
-		ua.insertHistory(loginname, date, "Lebenslauf angelegt");
-		
-		session.removeAttribute("errormessage");
+		if ( user != null ){
+			String loginname = user.getLogin();
+			String currurl = request.getParameter("currurl");
+
+			uAdmin.setCurriculum(loginname, currurl);
+
+			session.setAttribute("currurl", currurl);
+
+			// insert into History "New CurricullumVitae"
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date currentTime = new Date();
+			String date = formatter.format(currentTime);
+			uAdmin.insertHistory(loginname, date, "Lebenslauf angelegt");
+		}
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 

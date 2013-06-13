@@ -306,7 +306,7 @@ public class UserAdministration {
 	
 	public List<String> getInstituteNames(User user) {
 		List<String[]> listA = userDBController.getInstituteNames(user.getLogin());
-		List<String> listB = new ArrayList<>();
+		List<String> listB = new ArrayList<String>();
 		for (String[] strings : listA) {
 			listB.add(strings[1]);
 		}
