@@ -127,7 +127,7 @@ public class ModuleDBController {
 								.getBoolean("approvalstatus"), resultSet
 								.getBoolean("declined"), resultSet
 								.getLong("entryID"), resultSet
-								.getString("title"), resultSet.getInt("`order`"),
+								.getString("title"), resultSet.getInt("order"),
 						resultSet.getString("text")));
 			}
 
@@ -145,7 +145,7 @@ public class ModuleDBController {
 						resultSet.getBoolean("declined"),
 						resultSet.getLong("entryID"),
 						resultSet.getString("title"),
-						resultSet.getInt("`order`"),
+						resultSet.getInt("order"),
 						resultSet.getInt("presencetime"));
 				
 				// get selfstudies of effort entry

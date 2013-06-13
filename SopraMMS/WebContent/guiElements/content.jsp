@@ -150,9 +150,5 @@
 %>
 <jsp:include page="/guiElements/lecturer/seecurriculumvitae.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("editExistingModule")) {
-%>
-<jsp:include page="/guiElements/modulemanager/editExistingModule.jsp"></jsp:include>
-<%
-			}
+	}
 %>
