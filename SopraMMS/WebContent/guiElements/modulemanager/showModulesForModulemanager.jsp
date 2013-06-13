@@ -8,7 +8,7 @@
 %>
 
 <h1>Modul bearbeiten</h1>
-<form action="/SopraMMS/EditModule" method="get">
+<form action="/SopraMMS/ShowEditModule" method="get">
 	<table class="tablesorter informationAboutModule" id="modulesForModulmanager">
 		<thead>
 			<tr>
