@@ -4,7 +4,7 @@
 <p>Sie sind angemeldet als</p>
 <%
 	User user = (User) session.getAttribute("user");
-	out.print(user.getFirstName() + " " + user.getLastName() + ".");
+	out.print(user.getFirstName() + " " + user.getLastName());
 %>
 <form action="/SopraMMS/ChangeName" method="get">
 	<table>
