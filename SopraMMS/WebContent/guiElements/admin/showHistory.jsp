@@ -17,12 +17,12 @@
 	</thead>
 	<tbody>
 		<%
-			for(String[] string : userHistory) {
+			for(int i=userHistory.size()-1; i > 0; i--) {
 		%>
 		<tr>
-			<td><% out.println(string[0]);%></td>
-			<td><%out.println(string[1]);%></td>
-			<td><%out.println(string[2]);%></td>
+			<td><% out.println(userHistory.get(i)[0]);%></td>
+			<td><%out.println(userHistory.get(i)[1]);%></td>
+			<td><%out.println(userHistory.get(i)[2]);%></td>
 		</tr>
 		<%
 			}
