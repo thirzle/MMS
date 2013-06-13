@@ -10,7 +10,6 @@
 <form action="/SopraMMS/ShowEditModule" method="get">
 	<%
 		ArrayList<String[]> fieldsTypeA = (ArrayList) session.getAttribute("fieldsTypeAEdit");
-		System.out.println("fieldsTypeA: null: "+(fieldsTypeA == null)+" empty: "+fieldsTypeA.isEmpty());
 
 		ArrayList<String[]> fieldsTypeB = (ArrayList) session.getAttribute("fieldsTypeBEdit");
 

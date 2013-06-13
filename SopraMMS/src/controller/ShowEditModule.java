@@ -328,7 +328,7 @@ public class ShowEditModule extends HttpServlet {
 		}
 		// Anzeige beim Aufruf von Modul einfuegen
 		else {
-			session.setAttribute("institutesModuleEntry", institute);
+			//session.setAttribute("institutesModuleEntry", institute);
 			session.setAttribute("content", "editModule");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
