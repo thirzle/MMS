@@ -78,13 +78,6 @@ public class ShowEditModule extends HttpServlet {
 				.sortModuleEntryListByOrder(editModule);
 		
 		String institute = editModule.getInstituteID();
-		
-		// if (session.getAttribute("institutesModuleEntry") == null) {
-		//
-		// List<String[]> institutes = uAdmin.getAllInstitutesByName(session
-		// .getAttribute("loginname").toString());
-		// session.setAttribute("institutesModuleEntry", institutes);
-		// }
 
 		// TypA --> Vordefinierte Pflichfelder Feld
 		// TypB --> Vordefinierte Pflichfelder Textarea
@@ -95,9 +88,6 @@ public class ShowEditModule extends HttpServlet {
 		ArrayList<String[]> fieldsTypeC = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeD = new ArrayList<>();
 
-		// String institute = request.getParameter("selectedInstitute");
-		// System.out.println("(ShowEditModule.java) selectedInstituteID: "
-		// + institute);
 		// Fuelle Liste mit Standartwerten falls das Session Attribut noch nicht
 		// besteht, anderenfalls kopiere das Session Attribut in das lokale
 		// Attribut
