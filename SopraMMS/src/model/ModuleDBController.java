@@ -102,7 +102,7 @@ public class ModuleDBController {
 						resultSet.getBoolean("declined"),
 						resultSet.getLong("entryID"),
 						resultSet.getString("title"),
-						resultSet.getInt("order"),
+						resultSet.getInt("`order`"),
 						resultSet.getString("courseID"), 
 						resultSet.getString("degree"));
 			}
@@ -127,7 +127,7 @@ public class ModuleDBController {
 								.getBoolean("approvalstatus"), resultSet
 								.getBoolean("declined"), resultSet
 								.getLong("entryID"), resultSet
-								.getString("title"), resultSet.getInt("order"),
+								.getString("title"), resultSet.getInt("`order`"),
 						resultSet.getString("text")));
 			}
 
@@ -145,7 +145,7 @@ public class ModuleDBController {
 						resultSet.getBoolean("declined"),
 						resultSet.getLong("entryID"),
 						resultSet.getString("title"),
-						resultSet.getInt("order"),
+						resultSet.getInt("`order`"),
 						resultSet.getInt("presencetime"));
 				
 				// get selfstudies of effort entry
@@ -784,7 +784,7 @@ public class ModuleDBController {
 			// insert basic entries
 			query = "INSERT INTO entry(entryID, moduleID, moduleversion,"
 					+ " author, classification, approvalstatus, declined,"
-					+ " title, order) VALUES (?,?,?,?,?,?,?,?,?)";
+					+ " title, `order`) VALUES (?,?,?,?,?,?,?,?,?)";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(2, module.getModuleID());
 			pStatement.setInt(3, module.getVersion());
@@ -893,7 +893,7 @@ public class ModuleDBController {
 				//insert bacic entry
 				query = "INSERT INTO entry (entryID, version, moduleID, moduleversion,"
 						+ " author, classification, approvalstatus, declined,"
-						+ " title, order) VALUES (?,?,?,?,?,?,?,?,?)";
+						+ " title, `order`) VALUES (?,?,?,?,?,?,?,?,?)";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, courseEntry.getEntryID());
 				pStatement.setLong(2, module.getModuleID());
