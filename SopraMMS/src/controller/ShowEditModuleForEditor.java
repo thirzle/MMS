@@ -1,9 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,21 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import management.Module;
-import management.ModuleAdministration;
-import user.User;
-
 /**
- * Servlet implementation class ShowModulesOverviewForEditor
+ * Servlet implementation class ShowEditModuleForEditor
  */
-@WebServlet("/ShowModulesOverviewForEditor")
-public class ShowModulesOverviewForEditor extends HttpServlet {
+@WebServlet("/ShowEditModuleForEditor")
+public class ShowEditModuleForEditor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowModulesOverviewForEditor() {
+    public ShowEditModuleForEditor() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,19 +27,9 @@ public class ShowModulesOverviewForEditor extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		ModuleAdministration mAdmin = new ModuleAdministration();
-		User user = (User) session.getAttribute("user");
-		LinkedList<String> instituteIDListOfUser = (LinkedList) user.getInstitute();
-		LinkedList<Module> moduleListForEditor = new LinkedList();
-		
-//		TODO getModulesOverview for Editor
-		for (String instituteID : instituteIDListOfUser) {
-			moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteID));
-		}
-
-		session.setAttribute("moduleListForEditor", moduleListForEditor);
-		session.setAttribute("content", "showModulesForEditor");
+		session.setAttribute("content", "showEditModuleForEditor");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 

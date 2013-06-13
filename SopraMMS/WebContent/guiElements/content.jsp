@@ -154,5 +154,13 @@
 %>
 <jsp:include page="/guiElements/modulemanager/editExistingModule.jsp"></jsp:include>
 <%
-			}
+	} else if (contentPage.equals("showModulesForEditor")) {
+%>
+<jsp:include page="/guiElements/editor/showModulesForEditor.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("showEditModuleForEditor")) {
+%>
+<jsp:include page="/guiElements/editor/showEditModuleForEditor.jsp"></jsp:include>
+<%
+	}
 %>

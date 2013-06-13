@@ -85,8 +85,7 @@ public class ModuleDBController {
 		List<TextualEntry> textual = new LinkedList<TextualEntry>();
 		EffortEntry effort = null;
 		List<SelfStudy> selfstudy = new LinkedList<SelfStudy>();
-		query = "SELECT c.courseID, e.*"
-				+ " FROM courseentry AS c JOIN entry "
+		query = "SELECT c.courseID, e.*" + " FROM courseentry AS c JOIN entry "
 				+ "AS e on c.entryID = e.entryID"
 				+ " WHERE e.moduleID = ? AND e.moduleversion = ?";
 		try {
@@ -96,25 +95,23 @@ public class ModuleDBController {
 			pStatement.setInt(2, module.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				courses = new CourseEntry(resultSet.getTimestamp("timestamp").toString(),
-						resultSet.getBoolean("classification"),
+				courses = new CourseEntry(resultSet.getTimestamp("timestamp")
+						.toString(), resultSet.getBoolean("classification"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getBoolean("declined"),
 						resultSet.getLong("entryID"),
 						resultSet.getString("title"),
 						resultSet.getInt("`order`"),
-						resultSet.getString("courseID"), 
+						resultSet.getString("courseID"),
 						resultSet.getString("degree"));
 			}
 			while (resultSet.next()) {
-				courses.addCourse(resultSet.getString("courseID"), 
+				courses.addCourse(resultSet.getString("courseID"),
 						resultSet.getString("degree"));
 			}
 			// load textual entries of module
-			query = "SELECT e.*, t.text "
-					+ "FROM entry AS e "
-					+ "JOIN textualentry AS t ON "
-					+ "e.entryID = t.entryID "
+			query = "SELECT e.*, t.text " + "FROM entry AS e "
+					+ "JOIN textualentry AS t ON " + "e.entryID = t.entryID "
 					+ "WHERE e.moduleID = ? AND e.moduleversion = ?";
 
 			pStatement = connection.prepareStatement(query);
@@ -122,13 +119,13 @@ public class ModuleDBController {
 			pStatement.setInt(2, module.getVersion());
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				textual.add(new TextualEntry(resultSet.getDate("date").toString(), resultSet
-								.getBoolean("classification"), resultSet
-								.getBoolean("approvalstatus"), resultSet
+				textual.add(new TextualEntry(resultSet.getDate("date")
+						.toString(), resultSet.getBoolean("classification"),
+						resultSet.getBoolean("approvalstatus"), resultSet
 								.getBoolean("declined"), resultSet
 								.getLong("entryID"), resultSet
-								.getString("title"), resultSet.getInt("`order`"),
-						resultSet.getString("text")));
+								.getString("title"), resultSet
+								.getInt("`order`"), resultSet.getString("text")));
 			}
 
 			query = "SELECT e.*,  ef.presencetime "
@@ -147,7 +144,7 @@ public class ModuleDBController {
 						resultSet.getString("title"),
 						resultSet.getInt("`order`"),
 						resultSet.getInt("presencetime"));
-				
+
 				// get selfstudies of effort entry
 				query = "SELECT s.selfstudyID, s.time, s.title "
 						+ "FROM entry AS e JOIN selfstudy AS s ON e.entryID = s.entryID "
@@ -266,8 +263,8 @@ public class ModuleDBController {
 	public List<Module> getModulesByFaculty(String facultyID) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT module.* FROM module AS m JOIN institute AS i ON " +
-				"m.instituteID = i.institute WHERE i.facultyID = ?";
+		query = "SELECT module.* FROM module AS m JOIN institute AS i ON "
+				+ "m.instituteID = i.institute WHERE i.facultyID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, facultyID);
@@ -365,8 +362,7 @@ public class ModuleDBController {
 		}
 		return module;
 	}
-	
-	
+
 	// get specified module
 	// tested: check
 	public Module getModule(long moduleID, int version) {
@@ -398,8 +394,7 @@ public class ModuleDBController {
 		}
 		return module;
 	}
-	
-	
+
 	// get latest version of specified module
 	public Module getLatestModule(long moduleID) {
 		Connection connection = connect();
@@ -410,10 +405,10 @@ public class ModuleDBController {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(1, moduleID);
 			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
+			if (resultSet.next()) {
 				version = resultSet.getInt("version");
 			}
-			if(version != -1) {
+			if (version != -1) {
 				query = "SELECT * FROM module WHERE moduleID = ? AND version = ?";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, moduleID);
@@ -440,7 +435,6 @@ public class ModuleDBController {
 		}
 		return module;
 	}
-	
 
 	// load all modified modules
 	// tested: check
@@ -727,9 +721,9 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-	
+
 	// get overview of unfinished modules for coordinator
-	public List<Module> getUnfinishedModulesOverview () {
+	public List<Module> getUnfinishedModulesOverview() {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
 		query = "SELECT DISTINCT * FROM module WHERE subject IS NULL";
@@ -755,8 +749,35 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-	
-	
+
+	public List<Module> getModuleOverviewForEditor(String instituteID) {
+		Connection connection = connect();
+		List<Module> moduleList = new LinkedList<Module>();
+		query = "SELECT * FROM module WHERE approvalstatus = 0 AND instituteID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, instituteID);
+			ResultSet resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				moduleList.add(new Module(resultSet.getInt("moduleID"),
+						resultSet.getInt("version"), resultSet
+								.getString("name"), resultSet
+								.getDate("creationDate"), resultSet
+								.getDate("modificationDate"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getString("insituteID"), resultSet
+								.getString("subject"), resultSet
+								.getString("modificationauthor")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get modulesoverview for editor");
+		}finally {
+			close(connection);
+		}
+		return moduleList;
+	}
+
 	// create a new complete module in database
 	public boolean createModule(Module module) {
 		Connection connection = connect();
@@ -798,16 +819,16 @@ public class ModuleDBController {
 				pStatement.setInt(9, entry.getOrder());
 				pStatement.execute();
 			}
-			
-			//insert course entry
-			//find the course entry
+
+			// insert course entry
+			// find the course entry
 			for (Entry entry : module.getEntryList()) {
-				if(entry.getClass() == CourseEntry.class){
+				if (entry.getClass() == CourseEntry.class) {
 					courseEntry = (CourseEntry) entry;
 				}
 			}
-			if(courseEntry != null){
-				//insert courses
+			if (courseEntry != null) {
+				// insert courses
 				query = "INSERT INTO courseentry VALUES (?,?,?)";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, courseEntry.getEntryID());
@@ -817,7 +838,6 @@ public class ModuleDBController {
 					pStatement.execute();
 				}
 			}
-			
 
 			// insert textual entries
 			query = "INSERT INTO textualentry VALUES(?,?)";
@@ -867,30 +887,29 @@ public class ModuleDBController {
 			close(connection);
 		}
 	}
-	
-	
+
 	public boolean finishNewModule(Module module) {
 		Connection connection = connect();
 		CourseEntry courseEntry = null;
 		query = "UPDATE module SET subject = ? WHERE moduleID = ? AND version = ?";
 		try {
 			connection.setAutoCommit(false);
-			//set subject of unfinished module
+			// set subject of unfinished module
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, module.getSubject());
 			pStatement.setLong(2, module.getModuleID());
 			pStatement.setInt(3, module.getVersion());
 			pStatement.execute();
-			
-			//find the course entry
+
+			// find the course entry
 			for (Entry entry : module.getEntryList()) {
-				if(entry.getClass() == CourseEntry.class){
+				if (entry.getClass() == CourseEntry.class) {
 					courseEntry = (CourseEntry) entry;
 				}
 			}
-			if(courseEntry != null){
-				//set courses of unfinished module
-				//insert bacic entry
+			if (courseEntry != null) {
+				// set courses of unfinished module
+				// insert bacic entry
 				query = "INSERT INTO entry (entryID, version, moduleID, moduleversion,"
 						+ " author, classification, approvalstatus, declined,"
 						+ " title, `order`) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -905,8 +924,8 @@ public class ModuleDBController {
 				pStatement.setString(8, courseEntry.getTitle());
 				pStatement.setInt(9, courseEntry.getOrder());
 				pStatement.execute();
-				
-				//insert courses
+
+				// insert courses
 				query = "INSERT INTO courseentry VALUES (?,?,?)";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, courseEntry.getEntryID());
@@ -927,40 +946,43 @@ public class ModuleDBController {
 		}
 		return true;
 	}
-	
 
-//	// change an existing module
-//	public boolean changeModuleByModuleMananger(Module module, long moduleIDOld) {
-//		Connection connection = connect();
-//		long moduleID = module.getModuleID();
-//		String name = module.getName();
-//		Date creationDate = (Date) module.getCreationDate();
-//		Date modificationDate = (Date) module.getModificationDate();
-//		boolean approved = module.isApproved();
-//		String instituteID = module.getInstituteID();
-//
-//		query = "UPDATE module"
-//				+ "SET moduleID = ?, name = ?, creationDate = ?, modificationDate = ?, approved = ?, instituteID = ?"
-//				+ "WHERE moduleID = ?";
-//		try {
-//			pStatement = connection.prepareStatement(query);
-//			pStatement.setLong(1, moduleID);
-//			pStatement.setString(2, name);
-//			pStatement.setDate(3, new Date(creationDate.getYear(), creationDate.getMonth(), creationDate.getDay()));
-//			pStatement.setDate(4, new Date(modificationDate.getYear(), modificationDate.getMonth(), modificationDate.getDay()));
-//			pStatement.setBoolean(5, approved);
-//			pStatement.setString(6, instituteID);
-//			pStatement.setLong(7, moduleIDOld);
-//			return pStatement.execute();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			System.out.println("Couldn't change module: " + moduleID);
-//			return false;
-//		} finally {
-//			close(connection);
-//		}
-//
-//	}
+	// // change an existing module
+	// public boolean changeModuleByModuleMananger(Module module, long
+	// moduleIDOld) {
+	// Connection connection = connect();
+	// long moduleID = module.getModuleID();
+	// String name = module.getName();
+	// Date creationDate = (Date) module.getCreationDate();
+	// Date modificationDate = (Date) module.getModificationDate();
+	// boolean approved = module.isApproved();
+	// String instituteID = module.getInstituteID();
+	//
+	// query = "UPDATE module"
+	// +
+	// "SET moduleID = ?, name = ?, creationDate = ?, modificationDate = ?, approved = ?, instituteID = ?"
+	// + "WHERE moduleID = ?";
+	// try {
+	// pStatement = connection.prepareStatement(query);
+	// pStatement.setLong(1, moduleID);
+	// pStatement.setString(2, name);
+	// pStatement.setDate(3, new Date(creationDate.getYear(),
+	// creationDate.getMonth(), creationDate.getDay()));
+	// pStatement.setDate(4, new Date(modificationDate.getYear(),
+	// modificationDate.getMonth(), modificationDate.getDay()));
+	// pStatement.setBoolean(5, approved);
+	// pStatement.setString(6, instituteID);
+	// pStatement.setLong(7, moduleIDOld);
+	// return pStatement.execute();
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	// System.out.println("Couldn't change module: " + moduleID);
+	// return false;
+	// } finally {
+	// close(connection);
+	// }
+	//
+	// }
 
 	// delete an existing module
 	public boolean deleteModule(Module module) {
@@ -1342,11 +1364,11 @@ public class ModuleDBController {
 			close(connection);
 		}
 	}
-	
-	
-	public boolean clearDatabase(){
+
+	public boolean clearDatabase() {
 		java.util.Date today = new java.util.Date();
-		Date limit = new Date(today.getYear()-2, today.getMonth(), today.getDate());
+		Date limit = new Date(today.getYear() - 2, today.getMonth(),
+				today.getDate());
 		Connection connection = connect();
 		query = "DELETE FROM module WHERE modificationdate < ? AND (moduleID, version) NOT IN (SELECT * FROM latestmodule)";
 		try {
@@ -1362,9 +1384,8 @@ public class ModuleDBController {
 		} finally {
 			close(connection);
 		}
-		
+
 	}
-	
 
 	// roll back changes made in database if something went wrong
 	private void rollback(Connection connection) {
