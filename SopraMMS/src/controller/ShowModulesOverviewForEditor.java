@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -36,11 +37,19 @@ public class ShowModulesOverviewForEditor extends HttpServlet {
 		HttpSession session = request.getSession();
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		User user = (User) session.getAttribute("user");
+		LinkedList<String> instituteIDListOfUser = (LinkedList) user.getInstitute();
+		LinkedList<Module> moduleListForEditor = new LinkedList();
 		
-//		TODO getModulesOverview
-		List<Module> moduleList = mAdmin.getModulesByAuthor(user.getLogin());
+//		TODO getModulesOverview for Editor
+		for (String instituteID : instituteIDListOfUser) {
+			System.out.println("mAdmin.getModuleOverviewForEditor: is empty: "+mAdmin.getModuleOverviewForEditor(instituteID).isEmpty());
+			moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteID));
+		}
+		
+		System.out.println("ShowModulesOverviewForEditor:");
+		System.out.println("moduleList is null: "+(moduleListForEditor==null)+" moduleList is empty: "+moduleListForEditor.isEmpty());
 
-		session.setAttribute("moduleListForEditor", moduleList);
+		session.setAttribute("moduleListForEditor", moduleListForEditor);
 		session.setAttribute("content", "showModulesForEditor");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}

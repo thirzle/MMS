@@ -9,13 +9,18 @@
 	LinkedList<Module> moduleList = (LinkedList) session
 			.getAttribute("moduleListForEditor");
 	session.removeAttribute("moduleListForEditor");
+	System.out.println("showModulesForEditor:");
+	System.out.println("moduleList is null: "+(moduleList==null)+" moduleList is empty: "+moduleList.isEmpty());
+	for(Module module : moduleList){
+		System.out.println(module.getName());
+	}
 %>
 
-<h1>Modul bearbeiten</h1>
+<h1>Freizugebende Module</h1>
 <%
 	//TODO
 %>
-<form action="/SopraMMS/ShowEditModule" method="get">
+<form action="/SopraMMS/ShowEditModuleForEditor" method="get">
 	<table class="tablesorter informationAboutModule" id="modulesForEditor">
 		<thead>
 			<tr>
@@ -70,5 +75,5 @@
 		</tbody>
 	</table>
 	<button type="submit" name="editButton" value="editButton">Modul
-		bearbeiten</button>
+		anschauen</button>
 </form>
