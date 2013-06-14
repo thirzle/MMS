@@ -20,14 +20,13 @@ import java.util.List;
  */
 public class CourseEntry extends Entry {
 
-	// course --> String[] {courseID, degree}
     	/**
     	 * A List of courses. Consists of string arrays with two entries: courseID, description, degree, type.
     	 * <p>
     	 * course = Shorthand symbol 
     	 * description = name of the course
-    	 * degree = Bachelor, Masterm, ...
-    	 * type = true: the course is necessary - false: the course is voluntarily
+    	 * degree = Bachelor, Master, ...
+    	 * obligatory = true: the course is necessary - false: the course is voluntarily
     	 */
 	private List<Course> courses = new LinkedList<Course>();
 
@@ -99,14 +98,14 @@ public class CourseEntry extends Entry {
 	 * @param course		A single course parameter.
 	 * @param description	Name of the course
 	 * @param degree		Is used as degree entry for the single course parameter.
-	 * @param type			true: module necessary false: module voluntarily
+	 * @param obligatory	true: module necessary false: module voluntarily
 	 */
 	public CourseEntry(String date, boolean classification,
 			boolean approvalstatus, boolean declined, long entryID,
-			String title, int order, String courseID, String description, String degree, boolean type) {
+			String title, int order, String courseID, String description, String degree, boolean obligatory) {
 		super(date, classification, approvalstatus, declined, entryID,
 				title, order);
-		courses.add(new Course(courseID, description, degree, type));
+		courses.add(new Course(courseID, description, degree, obligatory));
 	}
 
 	/**
@@ -181,13 +180,13 @@ public class CourseEntry extends Entry {
 	/**
 	 * Adds this CourseEntry an additional course.
 	 * 
-	 * @param courseID	The course which is going to be added.
-	 * @param degree	The degree which is stored in relation to the course parameter.
+	 * @param courseID		The course which is going to be added.
+	 * @param degree		The degree which is stored in relation to the course parameter.
 	 * @param description	Name of the Course
-	 * @param type		The type 
+	 * @param obligatory	The type 
 	 */
-	public void addCourse(String courseID, String  description,String degree, boolean type) {
-		courses.add(new Course(courseID, description, degree, type));
+	public void addCourse(String courseID, String  description,String degree, boolean obligatory) {
+		courses.add(new Course(courseID, description, degree, obligatory));
 	}
 
 	/**

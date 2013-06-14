@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import management.Course;
 import management.CourseEntry;
 import management.EffortEntry;
 import management.Entry;
@@ -86,8 +87,9 @@ public class ModuleDBController {
 		List<TextualEntry> textual = new LinkedList<TextualEntry>();
 		EffortEntry effort = null;
 		List<SelfStudy> selfstudy = new LinkedList<SelfStudy>();
-		query = "SELECT c.courseID, e.*" + " FROM courseentry AS c JOIN entry "
-				+ "AS e on c.entryID = e.entryID"
+		query = "SELECT ce.courseID, ce.degree, c.description, e.* FROM courseentry AS ce JOIN entry "
+				+ "AS e on ce.entryID = e.entryID JOIN course AS c ON " +
+				"ce.courseID = c.courseID AND ce.degree = c.degree"
 				+ " WHERE e.moduleID = ? AND e.moduleversion = ?";
 		try {
 			// load courses of module
@@ -104,11 +106,15 @@ public class ModuleDBController {
 						resultSet.getString("title"),
 						resultSet.getInt("`order`"),
 						resultSet.getString("courseID"),
-						resultSet.getString("degree"));
+						resultSet.getString("degree"),
+						resultSet.getString("description"),
+						resultSet.getBoolean("obligatory"));
 			}
 			while (resultSet.next()) {
 				courses.addCourse(resultSet.getString("courseID"),
-						resultSet.getString("degree"));
+						resultSet.getString("desciption"), 
+						resultSet.getString("degree"),
+						resultSet.getBoolean("obligatory"));
 			}
 			// load textual entries of module
 			query = "SELECT e.*, t.text " + "FROM entry AS e "
@@ -830,12 +836,13 @@ public class ModuleDBController {
 			}
 			if (courseEntry != null) {
 				// insert courses
-				query = "INSERT INTO courseentry VALUES (?,?,?)";
+				query = "INSERT INTO courseentry VALUES (?,?,?,?)";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, courseEntry.getEntryID());
-				for (String[] course : courseEntry.getCourses()) {
-					pStatement.setString(2, course[0]);
-					pStatement.setString(3, course[1]);
+				for (Course course : courseEntry.getCourses()) {
+					pStatement.setString(2, course.getCourseID());
+					pStatement.setString(3, course.getDegree());
+					pStatement.setBoolean(4, course.isObligatory());
 					pStatement.execute();
 				}
 			}
@@ -927,12 +934,13 @@ public class ModuleDBController {
 				pStatement.execute();
 
 				// insert courses
-				query = "INSERT INTO courseentry VALUES (?,?,?)";
+				query = "INSERT INTO courseentry VALUES (?,?,?,?)";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, courseEntry.getEntryID());
-				for (String[] course : courseEntry.getCourses()) {
-					pStatement.setString(2, course[0]);
-					pStatement.setString(3, course[1]);
+				for (Course course : courseEntry.getCourses()) {
+					pStatement.setString(2, course.getCourseID());
+					pStatement.setString(3, course.getDegree());
+					pStatement.setBoolean(4, course.isObligatory());
 					pStatement.execute();
 				}
 			}

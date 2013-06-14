@@ -3,7 +3,7 @@ package management;
 public class Course {
 
 	private String courseID,description,degree,faculty;
-	boolean type;
+	boolean obligatory;
 	
 	public Course(String courseID, String description, String degree,
 			String facult, boolean type) {
@@ -11,7 +11,7 @@ public class Course {
 		this.description = description;
 		this.degree = degree;
 		this.faculty = facult;
-		this.type = type;
+		this.obligatory = type;
 	}
 
 	public Course(String courseID, String description, String degree,
@@ -19,7 +19,7 @@ public class Course {
 		this.courseID = courseID;
 		this.description = description;
 		this.degree = degree;
-		this.type = type;
+		this.obligatory = type;
 	}
 	
 	public String toString() {
@@ -58,12 +58,12 @@ public class Course {
 		this.faculty = faculty;
 	}
 
-	public boolean isType() {
-		return type;
+	public boolean isObligatory() {
+		return obligatory;
 	}
 
-	public void setType(boolean type) {
-		this.type = type;
+	public void setObligatory(boolean type) {
+		this.obligatory = type;
 	}
 	
 	
