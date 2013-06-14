@@ -1392,14 +1392,76 @@ public class ModuleDBController {
 	// String [1] description
 	// String [2] degree
 	public List<String[]> getCourses() {
-		return null;
+		Connection connection = connect();
+		query  = "SELECT * FROM course";
+		List<String[]> courses = new LinkedList<String[]>();
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				courses.add(new String[]{resultSet.getString("courseID"),
+						resultSet.getString("description"),
+						resultSet.getString("degree")});
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Couldn't get courses");
+		} finally {
+			close(connection);
+		}
+		return courses;
 	}
 
 	//Setzt Studiengaenge in einem Modul
 	// String Array wie oben
-	public void setCoursesToModule(long moduleID, int version, List<String[]> courses) {
-
+	public boolean setCoursesToModule(long moduleID, int version, List<String[]> courses) {
+		return false;
 	}
+	
+	
+	public boolean approveModuleEntries(Module module){
+		Connection connection = connect();
+		boolean approveModule = true;
+		List<Entry> entryList = new LinkedList<Entry>();
+		query = "UPDATE entry SET approvalstatus = ?, declined = ? WHERE moduleID = ? AND moduleversion = ?";
+		try {
+			connection.setAutoCommit(false);
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(3, module.getModuleID());
+			pStatement.setInt(4, module.getVersion());
+			for (Entry entry : entryList) {
+				pStatement.setBoolean(1, entry.isApproved());
+				pStatement.setBoolean(2, entry.isRejected());
+				pStatement.execute();
+			}
+			
+			for (Entry entry : entryList) {
+				if(!entry.isApproved()){
+					approveModule = false;
+				}
+			}
+			if(approveModule){
+				query = "UPDATE module SET approvalstatus = ? WHERE moduleID = ? AND version = ?";
+				pStatement = connection.prepareStatement(query);	
+				pStatement.setBoolean(1, approveModule);
+				pStatement.setLong(2, module.getModuleID());
+				pStatement.setInt(3, module.getVersion());
+			}
+			connection.commit();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			rollback(connection);
+			System.out.println("Couldn't approve entris of module "+module.getName());
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
 
 	public boolean clearDatabase() {
 		java.util.Date today = new java.util.Date();
