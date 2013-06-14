@@ -594,7 +594,6 @@ public class UserDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				correctPassword = resultSet.getString(1);
-				close(connection);
 				if (correctPassword.equals(password)) {
 					deleteForgotPwd(loginname, connection);
 					return true;
