@@ -16,13 +16,13 @@ import management.ModuleAdministration;
  * Servlet implementation class ShowModulListForCoordinator
  */
 @WebServlet("/ShowModulListForCoordinator")
-public class ShowModulListForCoordinator extends HttpServlet {
+public class ShowModuleOverviewForCoordinator extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ShowModulListForCoordinator() {
+	public ShowModuleOverviewForCoordinator() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -34,12 +34,22 @@ public class ShowModulListForCoordinator extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if (request.getParameter("action") != null) {
-			if (request.getParameter("action").equals("editModule")) {
 
+			if (request.getParameter("action").equals("editModule")) {
+				if (request.getParameter("selectedModule") != null) {
+					String[] selectedModule = request.getParameter("selectedModule")
+							.split("%");
+					response.sendRedirect("/SopraMMS/ShowEditModule?selectedModuleToEdit="
+							+ selectedModule[0] + " " + selectedModule[1]);
+				} else {
+					request.getSession().setAttribute("content",
+							"showModulesForCoordinator");
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?info=chooseModule");
+				}
 			} else if (request.getParameter("action").equals("enterCourse")) {
 				if (request.getParameter("selectedModule") != null) {
-					String[] selectedModule = request.getParameter(
-							"selectedModule").split("%");
+					String[] selectedModule = request.getParameter("selectedModule")
+							.split("%");
 					response.sendRedirect("/SopraMMS/EnterCourseToModule?moduleID="
 							+ selectedModule[0]
 							+ "&version="

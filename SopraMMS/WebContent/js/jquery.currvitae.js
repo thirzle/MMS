@@ -10,6 +10,7 @@ function curravail() {
 	if (currurl == "") {
 		document.getElementById("text1").textContent = "Es ist kein Lebenslauf vorhanden, bitte legen Sie einen Lebenslauf an.";
 		document.getElementById("text2").textContent = "";
+		document.getElementById("text1").textContent = currurl;
 	} else {
 		window.location.href = currurl;
 	}

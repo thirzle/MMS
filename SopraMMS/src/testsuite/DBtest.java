@@ -23,9 +23,11 @@ public class DBtest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		UserDBController uController = new UserDBController();
-		ModuleDBController mController = new ModuleDBController();
-
-		
+		//ModuleDBController mController = new ModuleDBController();
+		uController.connect();
+		for (User user : uController.getAllUsers()) {
+			System.out.println(user);
+		}
 //		uController.getRights
 //		boolean [] rights = uController.getRights("lehrd");
 //		System.out.println("get rights of lehrd: "+rights[1]);		
@@ -173,7 +175,7 @@ public class DBtest {
 //		uController.changeRights(basti, new boolean[]{true, false, false, false, true, true, false});
 //		System.out.println("done");+
 
-		System.out.println(mController.clearDatabase());
+		//System.out.println(mController.clearDatabase());
 				
 	}
 

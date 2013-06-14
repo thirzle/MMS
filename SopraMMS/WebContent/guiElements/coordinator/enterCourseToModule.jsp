@@ -1,3 +1,4 @@
+<%@page import="management.CourseEntry"%>
 <%@page import="management.Entry"%>
 <%@ page import="java.util.List, java.util.ArrayList"%>
 <link rel="stylesheet" type="text/css"
@@ -9,6 +10,8 @@
 	if (list != null) {
 		entryList.addAll((List<Entry>) list);
 	}
+	
+	
 %>
 <h1>Studiengang und Fach festlegen</h1>
 
@@ -21,6 +24,11 @@
 </table>
 
 <form action="/SopraMMS/EnterCourseToModule" method="get">
+	
+	
+	<!-- Fächer eintragen & Studiengang + Pflicht oder nicht -->
+	
+	
 	<%for (Entry entry : entryList) {
 				String[] entryText = new String[2];
 				entryText[0] = entry.getTitle();
