@@ -181,21 +181,28 @@ public class ModuleAdministration {
 
 	
 	public void addSubject(String subject) {
-		moduleDBController.addSubject(subject);
+		moduleDBController.createSubject(subject);
 	}
 
-	// TODO
-	public void setSubjectToModule(Module module, String subject) {
-
+	public void setSubjectToModule(long moduleID, int version, String subject) {
+		moduleDBController.setSubjectToModule(moduleID, version, subject);
+	
 	}
 
 	// TODO
 	public List<String[]> getCourses() {
+		// String [0] courseID
+		// String [1] description
+		// String [2] degree
+		// courseID und degree bilden PrimKey
 		return null;
 	}
 
 	// TODO
 	public void setCoursesToModule(List<String[]> courses) {
+		// String [0] courseID
+		// String [1] description
+		// String [2] degree
 
 	}
 }

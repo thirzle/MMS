@@ -1366,22 +1366,39 @@ public class ModuleDBController {
 		}
 	}
 
-	// Fuegt ein Fach in die Datenbank ein
-	public boolean addSubject(String subject){
+	
+	// Setzt das Fach in einem Modul
+	public boolean setSubjectToModule(long moduleID,int version, String subject) {
 		Connection connection = connect();
-		query ="INSERT INTOsubjects (name) VALUES (?)";
+		query ="UPDATE module SET subject = ? WHERE moduleID = ? AND version = ?";
 		try{
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, subject);
+			pStatement.setLong(2, moduleID);
+			pStatement.setInt(3, version);
 			pStatement.execute();
 			return true;
 		}catch(SQLException e){
 			e.printStackTrace();
-			System.err.println("Couldn't add Subject");
+			System.err.println("Couldn't add Subject To Module");
 			return false;
 		}finally{
 			close(connection);
 		}
+	}
+	
+	//Liefert eine Liste mit Studiengaengen
+	// String [0] courseID
+	// String [1] description
+	// String [2] degree
+	public List<String[]> getCourses() {
+		return null;
+	}
+
+	//Setzt Studiengaenge in einem Modul
+	// String Array wie oben
+	public void setCoursesToModule(long moduleID, int version, List<String[]> courses) {
+
 	}
 
 	public boolean clearDatabase() {
@@ -1405,6 +1422,7 @@ public class ModuleDBController {
 		}
 
 	}
+	
 
 	// roll back changes made in database if something went wrong
 	private void rollback(Connection connection) {
