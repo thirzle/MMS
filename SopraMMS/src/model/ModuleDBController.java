@@ -759,13 +759,13 @@ public class ModuleDBController {
 			pStatement.setString(1, instituteID);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getInt("moduleID"),
+				moduleList.add(new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"), resultSet
 								.getString("name"), resultSet
 								.getDate("creationDate"), resultSet
 								.getDate("modificationDate"), resultSet
 								.getBoolean("approvalstatus"), resultSet
-								.getString("insituteID"), resultSet
+								.getString("instituteID"), resultSet
 								.getString("subject"), resultSet
 								.getString("modificationauthor")));
 			}
