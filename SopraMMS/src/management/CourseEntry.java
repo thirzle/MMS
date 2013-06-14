@@ -22,9 +22,14 @@ public class CourseEntry extends Entry {
 
 	// course --> String[] {courseID, degree}
     	/**
-    	 * A List of courses. Consists of string arrays with two entries: course and degree.
+    	 * A List of courses. Consists of string arrays with two entries: courseID, description, degree, type.
+    	 * <p>
+    	 * course = Shorthand symbol 
+    	 * description = name of the course
+    	 * degree = Bachelor, Masterm, ...
+    	 * type = true: the course is necessary - false: the course is voluntarily
     	 */
-	private List<String[]> courses = new LinkedList<String[]>();
+	private List<Course> courses = new LinkedList<Course>();
 
 
 	// public CourseEntry(int version, String date, boolean classification,
@@ -71,7 +76,7 @@ public class CourseEntry extends Entry {
 	 */
 	public CourseEntry(String date, boolean classification,
 			boolean approvalstatus, boolean declined, long entryID,
-			String title, int order, List<String[]> courses) {
+			String title, int order, List<Course> courses) {
 		super(date, classification, approvalstatus, declined, entryID,
 				title, order);
 		this.courses = courses;
@@ -92,14 +97,16 @@ public class CourseEntry extends Entry {
 	 * @param title			The title of this entry. Used by the document creation as content title. (Used to initialize the super class)
 	 * @param order			The order of this entry. (Used to initialize the super class)
 	 * @param course		A single course parameter.
+	 * @param description	Name of the course
 	 * @param degree		Is used as degree entry for the single course parameter.
+	 * @param type			true: module necessary false: module voluntarily
 	 */
 	public CourseEntry(String date, boolean classification,
 			boolean approvalstatus, boolean declined, long entryID,
-			String title, int order, String course, String degree) {
+			String title, int order, String courseID, String description, String degree, boolean type) {
 		super(date, classification, approvalstatus, declined, entryID,
 				title, order);
-		courses.add(new String[] { course, degree });
+		courses.add(new Course(courseID, description, degree, type));
 	}
 
 	/**
@@ -123,7 +130,7 @@ public class CourseEntry extends Entry {
 			String title, int order) {
 		super(date, classification, approvalstatus, declined, entryID,
 				title, order);
-		courses = new LinkedList<String[]>();
+		courses = new LinkedList<Course>();
 	}
 
 	/**
@@ -137,7 +144,7 @@ public class CourseEntry extends Entry {
 	 * @param order		The order of this entry. (Used to initialize the super class)
 	 * @param courses	A List of courses. Consists of string arrays with two entries: course and degree.
 	 */
-	public CourseEntry(String title, int order, List<String[]> courses) {
+	public CourseEntry(String title, int order, List<Course> courses) {
 		super(title, order);
 		this.courses = courses;
 	}
@@ -152,7 +159,7 @@ public class CourseEntry extends Entry {
 	 * @param courses	A List of courses. Consists of string arrays with two entries: course and degree.
 	 */
 	@Deprecated
-	public CourseEntry(String title, List<String[]> courses) {
+	public CourseEntry(String title, List<Course> courses) {
 		super(title);
 		this.courses = courses;
 	}
@@ -166,7 +173,7 @@ public class CourseEntry extends Entry {
 	 * @param courses	A List of courses. Consists of string arrays with two entries: course and degree.
 	 */
 	@Deprecated
-	public CourseEntry(List<String[]> courses) {
+	public CourseEntry(List<Course> courses) {
 		super("Empty Title");
 		this.courses = courses;
 	}
@@ -174,18 +181,20 @@ public class CourseEntry extends Entry {
 	/**
 	 * Adds this CourseEntry an additional course.
 	 * 
-	 * @param course	The course which is going to be added.
+	 * @param courseID	The course which is going to be added.
 	 * @param degree	The degree which is stored in relation to the course parameter.
+	 * @param description	Name of the Course
+	 * @param type		The type 
 	 */
-	public void addCourse(String course, String degree) {
-		courses.add(new String[] { course, degree });
+	public void addCourse(String courseID, String  description,String degree, boolean type) {
+		courses.add(new Course(courseID, description, degree, type));
 	}
 
 	/**
 	 * Returns all courses of this CoursEntry object.
 	 * @return	List of courses. Consists of string arrays with two entries: course and degree.
 	 */
-	public List<String[]> getCourses() {
+	public List<Course> getCourses() {
 		return courses;
 	}
 
@@ -193,7 +202,7 @@ public class CourseEntry extends Entry {
 	 * Overwrites this CourseEntry object's course list.
 	 * @param courses	List of courses. Consists of string arrays with two entries: course and degree.
 	 */
-	public void setCourses(List<String[]> courses) {
+	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
 }
