@@ -1395,21 +1395,19 @@ public class ModuleDBController {
 		}
 	}
 	
-	//Liefert eine Liste mit Studiengaengen
-	// String [0] courseID
-	// String [1] description
-	// String [2] degree
-	public List<String[]> getCourses() {
+	//get all courses listed in database
+	public List<Course> getCourses() {
 		Connection connection = connect();
 		query  = "SELECT * FROM course";
-		List<String[]> courses = new LinkedList<String[]>();
+		List<Course> courses = new LinkedList<Course>();
 		try {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
-				courses.add(new String[]{resultSet.getString("courseID"),
+				courses.add(new Course(resultSet.getString("courseID"),
 						resultSet.getString("description"),
-						resultSet.getString("degree")});
+						resultSet.getString("degree"),
+						resultSet.getString("faculty"), false));
 			}
 			
 		} catch (SQLException e) {
