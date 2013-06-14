@@ -32,6 +32,13 @@ public class UserDBController {
 	private static final String USER = "teamaccount";
 	private static final String PASSWORD = "6lsj7tdm";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
+
+	// Tim database
+	// private static final String URL = "jdbc:mysql://127.0.0.1:3306/MMS";
+	// private static final String USER = "sopramms";
+	// private static final String PASSWORD = "sopra13";
+	// private static final String DRIVER = "com.mysql.jdbc.Driver";
+	
 	static final int NUMBEROFRIGHTS = 7;
 
 	// establish connection
@@ -50,7 +57,6 @@ public class UserDBController {
 		return connection;
 	}
 
-	
 	// get all user listed in database
 	public List<User> getAllUsers() {
 		Connection connection = connect();
@@ -80,7 +86,6 @@ public class UserDBController {
 		}
 		return userList;
 	}
-	
 
 	// find specified user by loginname
 	public User getUser(String loginname) {
@@ -229,15 +234,18 @@ public class UserDBController {
 			pStatement.setString(4, newUser.getMail());
 			pStatement.setString(5, oldUser.getLogin());
 			pStatement.executeUpdate();
-			
-			changeRights(oldUser.getLogin(), newUser.getLogin(), newUser.getRights(), connection);
-			changeInstitutes(oldUser.getLogin(), newUser.getLogin(), newUser.getInstitute(), connection);
+
+			changeRights(oldUser.getLogin(), newUser.getLogin(),
+					newUser.getRights(), connection);
+			changeInstitutes(oldUser.getLogin(), newUser.getLogin(),
+					newUser.getInstitute(), connection);
 			connection.commit();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			rollback(connection);
-			System.out.println("User " + oldUser.getLogin() + " couldn't be changed.");
+			System.out.println("User " + oldUser.getLogin()
+					+ " couldn't be changed.");
 			return false;
 		} finally {
 			close(connection);
@@ -275,15 +283,17 @@ public class UserDBController {
 			while (resultSet.next()) {
 				rightsArray[resultSet.getInt("rightsID")] = true;
 			}
-			pStatement = connection.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
-			pStatement.setString(1,  loginname);
+			pStatement = connection
+					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
+			pStatement.setString(1, loginname);
 			resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
+			if (resultSet.next()) {
 				loginname = resultSet.getString("supervisor");
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, loginname);
 				resultSet = pStatement.executeQuery();
-				// set all rights of supervisor listed in table rightsaffiliation
+				// set all rights of supervisor listed in table
+				// rightsaffiliation
 				while (resultSet.next()) {
 					rightsArray[resultSet.getInt("rightsID")] = true;
 				}
@@ -296,8 +306,7 @@ public class UserDBController {
 		}
 		return rightsArray;
 	}
-	
-	
+
 	// get rights of specified user with established connection
 	public boolean[] getRights(String loginname, Connection connection) {
 		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
@@ -310,15 +319,17 @@ public class UserDBController {
 			while (resultSet.next()) {
 				rightsArray[resultSet.getInt("rightsID")] = true;
 			}
-			pStatement = connection.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
-			pStatement.setString(1,  loginname);
+			pStatement = connection
+					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
+			pStatement.setString(1, loginname);
 			resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
+			if (resultSet.next()) {
 				loginname = resultSet.getString("supervisor");
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, loginname);
 				resultSet = pStatement.executeQuery();
-				// set all rights of supervisor listed in table rightsaffiliation
+				// set all rights of supervisor listed in table
+				// rightsaffiliation
 				while (resultSet.next()) {
 					rightsArray[resultSet.getInt("rightsID")] = true;
 				}
@@ -329,7 +340,6 @@ public class UserDBController {
 		}
 		return rightsArray;
 	}
-	
 
 	// change rights of specified user
 	public boolean changeRights(User user, boolean[] newRights) {
@@ -343,9 +353,9 @@ public class UserDBController {
 			pStatement.execute();
 			System.out.println("deleted");
 
-		// insert new rights
-		query = "INSERT INTO rightsaffiliation VALUES (?, ?)";
-		int i = 0;
+			// insert new rights
+			query = "INSERT INTO rightsaffiliation VALUES (?, ?)";
+			int i = 0;
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, user.getLogin());
 			for (; i < newRights.length; i++) {
@@ -367,10 +377,10 @@ public class UserDBController {
 			close(connection);
 		}
 	}
-	
-	
+
 	// change rights of specified user
-	public boolean changeRights(String oldLogin, String newLogin, boolean[] newRights, Connection connection) {
+	public boolean changeRights(String oldLogin, String newLogin,
+			boolean[] newRights, Connection connection) {
 		// delete old rights
 		query = "DELETE FROM rightsaffiliation WHERE loginname = ?";
 		try {
@@ -380,9 +390,9 @@ public class UserDBController {
 			pStatement.execute();
 			System.out.println("deleted");
 
-		// insert new rights
-		query = "INSERT INTO rightsaffiliation VALUES (?, ?)";
-		int i = 0;
+			// insert new rights
+			query = "INSERT INTO rightsaffiliation VALUES (?, ?)";
+			int i = 0;
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, newLogin);
 			for (; i < newRights.length; i++) {
@@ -396,14 +406,12 @@ public class UserDBController {
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Couldn't change rights of user: "
-					+newLogin);
+			System.out.println("Couldn't change rights of user: " + newLogin);
 			rollback(connection);
 			return false;
 		}
 	}
-	
-	
+
 	// change institutes of specified user
 	public boolean changeInstitutes(User user, List<String> institutes) {
 		Connection connection = connect();
@@ -415,8 +423,8 @@ public class UserDBController {
 			pStatement.setString(1, user.getLogin());
 			pStatement.execute();
 
-		// insert new institutes
-		query = "INSERT INTO instituteaffiliation VALUES (?, ?)";
+			// insert new institutes
+			query = "INSERT INTO instituteaffiliation VALUES (?, ?)";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, user.getLogin());
 			for (String institute : institutes) {
@@ -435,10 +443,10 @@ public class UserDBController {
 			close(connection);
 		}
 	}
-	
-	
+
 	// change institutes of specified user
-	public boolean changeInstitutes(String oldLogin, String newLogin, List<String> institutes, Connection connection) {
+	public boolean changeInstitutes(String oldLogin, String newLogin,
+			List<String> institutes, Connection connection) {
 		// delete old institutes
 		query = "DELETE FROM instituteaffiliation WHERE loginname = ?";
 		try {
@@ -447,8 +455,8 @@ public class UserDBController {
 			pStatement.setString(1, oldLogin);
 			pStatement.execute();
 
-		// insert new institutes
-		query = "INSERT INTO instituteaffiliation VALUES (?, ?)";
+			// insert new institutes
+			query = "INSERT INTO instituteaffiliation VALUES (?, ?)";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, newLogin);
 			for (String institute : institutes) {
@@ -465,7 +473,6 @@ public class UserDBController {
 			return false;
 		}
 	}
-	
 
 	// get all user of specified institute
 	public List<User> getAllUsersFromInstitute(String institute) {
@@ -529,10 +536,10 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
-	
-	
+
 	// get institute of existing user with established connection
-	public List<String> getInstitutesByName(String loginname, Connection connection) {
+	public List<String> getInstitutesByName(String loginname,
+			Connection connection) {
 		LinkedList<String> instituteList = new LinkedList<String>();
 		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
 		try {
@@ -549,12 +556,11 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
-	
 
 	// get institutenames of user
 	public List<String[]> getInstituteNames(String loginname) {
 		Connection connection = connect();
-		LinkedList<String []> instituteList = new LinkedList<String[]>();
+		LinkedList<String[]> instituteList = new LinkedList<String[]>();
 		query = "SELECT i.instituteID, i.name FROM institute AS i JOIN instituteaffiliation AS ia "
 				+ "ON i.instituteID = ia.instituteID WHERE ia.loginname = ?";
 		try {
@@ -562,7 +568,8 @@ public class UserDBController {
 			pStatement.setString(1, loginname);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				instituteList.add(new String[]{resultSet.getString(1),resultSet.getString(2)});
+				instituteList.add(new String[] { resultSet.getString(1),
+						resultSet.getString(2) });
 			}
 			return instituteList;
 		} catch (SQLException e) {
@@ -574,7 +581,6 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
-	
 
 	// compare hashed password typed in with password in database of specified
 	// user
@@ -589,7 +595,7 @@ public class UserDBController {
 			if (resultSet.next()) {
 				correctPassword = resultSet.getString(1);
 				close(connection);
-				if(correctPassword.equals(password)){
+				if (correctPassword.equals(password)) {
 					deleteForgotPwd(loginname, connection);
 					return true;
 				}
@@ -671,26 +677,26 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
-	
+
 	// get all institutes listed in databse
-		public List<String> getInstituteID() {
-			Connection connection = connect();
-			List<String> instituteList = new LinkedList<String>();
-			query = "SELECT instituteID FROM institute";
-			try {
-				statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery(query);
-				while (resultSet.next()) {
-					instituteList.add(resultSet.getString("instituteID"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("Couldn't get InstituteIDs");
-			} finally {
-				close(connection);
+	public List<String> getInstituteID() {
+		Connection connection = connect();
+		List<String> instituteList = new LinkedList<String>();
+		query = "SELECT instituteID FROM institute";
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				instituteList.add(resultSet.getString("instituteID"));
 			}
-			return instituteList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get InstituteIDs");
+		} finally {
+			close(connection);
 		}
+		return instituteList;
+	}
 
 	public List<String> getCoursesByFaculty(String facultyID) {
 		Connection connection = connect();
@@ -885,9 +891,8 @@ public class UserDBController {
 		}
 		return null;
 	}
-	
-	
-	public boolean setDeadlineByFaculty(Deadline deadline){
+
+	public boolean setDeadlineByFaculty(Deadline deadline) {
 		Connection connection = connect();
 		query = "INSERT INTO deadline VALUES(?,?,?)";
 		try {
@@ -905,9 +910,8 @@ public class UserDBController {
 			close(connection);
 		}
 	}
-	
-	
-	public boolean updateDeadlineByFaculty(Deadline deadline){
+
+	public boolean updateDeadlineByFaculty(Deadline deadline) {
 		Connection connection = connect();
 		query = "UPDATE deadline SET deadline = ?, beginremember = ? WHERE facultyID = ?";
 		try {
@@ -925,17 +929,15 @@ public class UserDBController {
 			close(connection);
 		}
 	}
-	
 
 	public List<String[]> getNews(int type) {
 		List<String[]> news = new LinkedList<String[]>();
 		Connection connection = connect();
-		if(type==0){
+		if (type == 0) {
 			query = "SELECT * FROM news ORDER by timestamp DESC";
-		}
-		else if (type==1) {
+		} else if (type == 1) {
 			query = "SELECT * FROM news WHERE visibility = 0 OR visibility = 1  ORDER by timestamp DESC";
-		} else if(type==2){
+		} else if (type == 2) {
 			query = "SELECT * FROM news WHERE visibility = 0 OR visibility = 2  ORDER by timestamp DESC";
 		}
 		try {
@@ -946,7 +948,9 @@ public class UserDBController {
 				SimpleDateFormat dateformat = new SimpleDateFormat("dd.MM.yyyy");
 
 				news.add(new String[] { resultSet.getString("title"),
-						resultSet.getString("content"), dateformat.format(date),resultSet.getInt("visibility")+""});
+						resultSet.getString("content"),
+						dateformat.format(date),
+						resultSet.getInt("visibility") + "" });
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -996,13 +1000,12 @@ public class UserDBController {
 		}
 	}
 
-	public int numberOfNews()
-	{
+	public int numberOfNews() {
 		Connection connection = connect();
 		query = "SELECT COUNT(title) AS number FROM news";
 		try {
 			pStatement = connection.prepareStatement(query);
-			ResultSet rs= pStatement.executeQuery();
+			ResultSet rs = pStatement.executeQuery();
 			rs.next();
 			return rs.getInt("number");
 		} catch (SQLException e) {
@@ -1014,7 +1017,7 @@ public class UserDBController {
 			close(connection);
 		}
 	}
-	
+
 	public List<String> convertInstituteToID(List<String> instituteName) {
 		Connection connection = connect();
 		List<String> instituteID = new LinkedList<String>();
@@ -1037,22 +1040,22 @@ public class UserDBController {
 		}
 		return instituteID;
 	}
-	
-	public List<String[]> getEmails(boolean[] rights){
+
+	public List<String[]> getEmails(boolean[] rights) {
 		Connection connection = connect();
 		LinkedList<String[]> mailList = new LinkedList<String[]>();
 		String[] string;
 		ResultSet resultSet;
-		query = "SELECT u.firstname, u.lastname, u.mail " +
-				"FROM user AS u JOIN rightsaffiliation AS r " +
-				"ON u.loginname = r.loginname WHERE r.rightsID = ?";
+		query = "SELECT u.firstname, u.lastname, u.mail "
+				+ "FROM user AS u JOIN rightsaffiliation AS r "
+				+ "ON u.loginname = r.loginname WHERE r.rightsID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			for (int i = 0; i < rights.length; i++) {
-				if(rights[i]){
+				if (rights[i]) {
 					pStatement.setInt(1, i);
 					resultSet = pStatement.executeQuery();
-					while(resultSet.next()){
+					while (resultSet.next()) {
 						string = new String[3];
 						string[0] = resultSet.getString(1);
 						string[1] = resultSet.getString(2);
@@ -1065,13 +1068,13 @@ public class UserDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("couldn't get emails of users by rights");
-		}finally {
+		} finally {
 			close(connection);
 		}
 		return mailList;
 	}
 
-	public void insertHistory(String loginname, String date, String content){
+	public void insertHistory(String loginname, String date, String content) {
 		Connection connection = connect();
 		query = "INSERT INTO history (loginname, date, content) VALUES (?,?,?)";
 		try {
@@ -1080,18 +1083,19 @@ public class UserDBController {
 			pStatement.setString(2, date);
 			pStatement.setString(3, content);
 			pStatement.execute();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("couldn't insert history: "+content+" of user: "+loginname);
-		}finally {
+			System.out.println("couldn't insert history: " + content
+					+ " of user: " + loginname);
+		} finally {
 			close(connection);
 		}
 	}
-	
-//	TODO checkLoginName
-	
-	public List<String[]> showHistory(){
+
+	// TODO checkLoginName
+
+	public List<String[]> showHistory() {
 		Connection connection = connect();
 		LinkedList<String[]> userList = new LinkedList<String[]>();
 		String[] string;
@@ -1099,10 +1103,10 @@ public class UserDBController {
 		try {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
-			while(resultSet.next()){
+			while (resultSet.next()) {
 				string = new String[3];
 				string[0] = resultSet.getString(1);
-				string[1] = ""+resultSet.getDate(2);
+				string[1] = "" + resultSet.getDate(2);
 				string[2] = resultSet.getString(3);
 				userList.add(string);
 			}
@@ -1110,13 +1114,12 @@ public class UserDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("couldn't show history");
-		}finally {
+		} finally {
 			close(connection);
 		}
 		return userList;
 	}
-	
-	
+
 	public boolean deleteForgotPwd(String loginname, Connection connection) {
 		query = "UPDATE user SET forgotpwd = null WHERE loginname = ?";
 		try {
@@ -1127,12 +1130,12 @@ public class UserDBController {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("ForgotPassword variable of user "+loginname+" could't be set null.");
+			System.out.println("ForgotPassword variable of user " + loginname
+					+ " could't be set null.");
 			return false;
 		}
 	}
-	
-	
+
 	public boolean setCurriculum(String loginname, String url) {
 		Connection connection = connect();
 		query = "UPDATE user SET curriculum = ? WHERE loginname = ?";
@@ -1145,14 +1148,13 @@ public class UserDBController {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Couldn't set curriculum for user "+loginname);
+			System.out.println("Couldn't set curriculum for user " + loginname);
 			return false;
 		} finally {
 			close(connection);
 		}
 	}
-	
-	
+
 	public String getCurriculum(String loginname) {
 		Connection connection = connect();
 		String url = null;
@@ -1161,20 +1163,19 @@ public class UserDBController {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
 			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
+			if (resultSet.next()) {
 				url = resultSet.getString("curriculum");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Couldn't get curriculum for user "+loginname);
+			System.out.println("Couldn't get curriculum for user " + loginname);
 			return null;
 		} finally {
 			close(connection);
 		}
 		return url;
 	}
-	
 
 	// close connection
 	private void close(Connection connection) {

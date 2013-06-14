@@ -1,14 +1,15 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
+
 import management.CourseEntry;
 import management.EffortEntry;
 import management.Entry;
@@ -124,8 +125,8 @@ public class ModuleDBController {
 						resultSet.getBoolean("approvalstatus"), resultSet
 								.getBoolean("declined"), resultSet
 								.getLong("entryID"), resultSet
-								.getString("title"), resultSet
-								.getInt("order"), resultSet.getString("text")));
+								.getString("title"), resultSet.getInt("order"),
+						resultSet.getString("text")));
 			}
 
 			query = "SELECT e.*,  ef.presencetime "
@@ -772,7 +773,7 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("couldn't get modulesoverview for editor");
-		}finally {
+		} finally {
 			close(connection);
 		}
 		return moduleList;
@@ -1365,6 +1366,24 @@ public class ModuleDBController {
 		}
 	}
 
+	// Fuegt ein Fach in die Datenbank ein
+	public boolean addSubject(String subject){
+		Connection connection = connect();
+		query ="INSERT INTOsubjects (name) VALUES (?)";
+		try{
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, subject);
+			pStatement.execute();
+			return true;
+		}catch(SQLException e){
+			e.printStackTrace();
+			System.err.println("Couldn't add Subject");
+			return false;
+		}finally{
+			close(connection);
+		}
+	}
+
 	public boolean clearDatabase() {
 		java.util.Date today = new java.util.Date();
 		Date limit = new Date(today.getYear() - 2, today.getMonth(),
@@ -1379,7 +1398,7 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Couldn't clear Database");
+			System.err.println("Couldn't clear Database");
 			return false;
 		} finally {
 			close(connection);
