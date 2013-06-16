@@ -1,14 +1,16 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
+
+import management.Course;
 import management.CourseEntry;
 import management.EffortEntry;
 import management.Entry;
@@ -85,8 +87,9 @@ public class ModuleDBController {
 		List<TextualEntry> textual = new LinkedList<TextualEntry>();
 		EffortEntry effort = null;
 		List<SelfStudy> selfstudy = new LinkedList<SelfStudy>();
-		query = "SELECT c.courseID, e.*" + " FROM courseentry AS c JOIN entry "
-				+ "AS e on c.entryID = e.entryID"
+		query = "SELECT ce.courseID, ce.degree, c.description, e.* FROM courseentry AS ce JOIN entry "
+				+ "AS e on ce.entryID = e.entryID JOIN course AS c ON " +
+				"ce.courseID = c.courseID AND ce.degree = c.degree"
 				+ " WHERE e.moduleID = ? AND e.moduleversion = ?";
 		try {
 			// load courses of module
@@ -103,11 +106,15 @@ public class ModuleDBController {
 						resultSet.getString("title"),
 						resultSet.getInt("`order`"),
 						resultSet.getString("courseID"),
-						resultSet.getString("degree"));
+						resultSet.getString("degree"),
+						resultSet.getString("description"),
+						resultSet.getBoolean("obligatory"));
 			}
 			while (resultSet.next()) {
 				courses.addCourse(resultSet.getString("courseID"),
-						resultSet.getString("degree"));
+						resultSet.getString("desciption"), 
+						resultSet.getString("degree"),
+						resultSet.getBoolean("obligatory"));
 			}
 			// load textual entries of module
 			query = "SELECT e.*, t.text " + "FROM entry AS e "
@@ -124,8 +131,8 @@ public class ModuleDBController {
 						resultSet.getBoolean("approvalstatus"), resultSet
 								.getBoolean("declined"), resultSet
 								.getLong("entryID"), resultSet
-								.getString("title"), resultSet
-								.getInt("order"), resultSet.getString("text")));
+								.getString("title"), resultSet.getInt("order"),
+						resultSet.getString("text")));
 			}
 
 			query = "SELECT e.*,  ef.presencetime "
@@ -772,7 +779,7 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("couldn't get modulesoverview for editor");
-		}finally {
+		} finally {
 			close(connection);
 		}
 		return moduleList;
@@ -829,12 +836,13 @@ public class ModuleDBController {
 			}
 			if (courseEntry != null) {
 				// insert courses
-				query = "INSERT INTO courseentry VALUES (?,?,?)";
+				query = "INSERT INTO courseentry VALUES (?,?,?,?)";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, courseEntry.getEntryID());
-				for (String[] course : courseEntry.getCourses()) {
-					pStatement.setString(2, course[0]);
-					pStatement.setString(3, course[1]);
+				for (Course course : courseEntry.getCourses()) {
+					pStatement.setString(2, course.getCourseID());
+					pStatement.setString(3, course.getDegree());
+					pStatement.setBoolean(4, course.isObligatory());
 					pStatement.execute();
 				}
 			}
@@ -926,12 +934,13 @@ public class ModuleDBController {
 				pStatement.execute();
 
 				// insert courses
-				query = "INSERT INTO courseentry VALUES (?,?,?)";
+				query = "INSERT INTO courseentry VALUES (?,?,?,?)";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, courseEntry.getEntryID());
-				for (String[] course : courseEntry.getCourses()) {
-					pStatement.setString(2, course[0]);
-					pStatement.setString(3, course[1]);
+				for (Course course : courseEntry.getCourses()) {
+					pStatement.setString(2, course.getCourseID());
+					pStatement.setString(3, course.getDegree());
+					pStatement.setBoolean(4, course.isObligatory());
 					pStatement.execute();
 				}
 			}
@@ -1365,6 +1374,101 @@ public class ModuleDBController {
 		}
 	}
 
+	
+	// Setzt das Fach in einem Modul
+	public boolean setSubjectToModule(long moduleID,int version, String subject) {
+		Connection connection = connect();
+		query ="UPDATE module SET subject = ? WHERE moduleID = ? AND version = ?";
+		try{
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, subject);
+			pStatement.setLong(2, moduleID);
+			pStatement.setInt(3, version);
+			pStatement.execute();
+			return true;
+		}catch(SQLException e){
+			e.printStackTrace();
+			System.err.println("Couldn't add Subject To Module");
+			return false;
+		}finally{
+			close(connection);
+		}
+	}
+	
+	//get all courses listed in database
+	public List<Course> getCourses() {
+		Connection connection = connect();
+		query  = "SELECT * FROM course";
+		List<Course> courses = new LinkedList<Course>();
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				courses.add(new Course(resultSet.getString("courseID"),
+						resultSet.getString("description"),
+						resultSet.getString("degree"),
+						resultSet.getString("faculty"), false));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Couldn't get courses");
+		} finally {
+			close(connection);
+		}
+		return courses;
+	}
+
+	//Setzt Studiengaenge in einem Modul
+	// String Array wie oben
+	public boolean setCoursesToModule(long moduleID, int version, List<String[]> courses) {
+		return false;
+	}
+	
+	
+	public boolean approveModuleEntries(Module module){
+		Connection connection = connect();
+		boolean approveModule = true;
+		List<Entry> entryList = new LinkedList<Entry>();
+		query = "UPDATE entry SET approvalstatus = ?, declined = ? WHERE moduleID = ? AND moduleversion = ?";
+		try {
+			connection.setAutoCommit(false);
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(3, module.getModuleID());
+			pStatement.setInt(4, module.getVersion());
+			for (Entry entry : entryList) {
+				pStatement.setBoolean(1, entry.isApproved());
+				pStatement.setBoolean(2, entry.isRejected());
+				pStatement.execute();
+			}
+			
+			for (Entry entry : entryList) {
+				if(!entry.isApproved()){
+					approveModule = false;
+				}
+			}
+			if(approveModule){
+				query = "UPDATE module SET approvalstatus = ? WHERE moduleID = ? AND version = ?";
+				pStatement = connection.prepareStatement(query);	
+				pStatement.setBoolean(1, approveModule);
+				pStatement.setLong(2, module.getModuleID());
+				pStatement.setInt(3, module.getVersion());
+			}
+			connection.commit();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			rollback(connection);
+			System.out.println("Couldn't approve entris of module "+module.getName());
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
+
 	public boolean clearDatabase() {
 		java.util.Date today = new java.util.Date();
 		Date limit = new Date(today.getYear() - 2, today.getMonth(),
@@ -1379,13 +1483,14 @@ public class ModuleDBController {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Couldn't clear Database");
+			System.err.println("Couldn't clear Database");
 			return false;
 		} finally {
 			close(connection);
 		}
 
 	}
+	
 
 	// roll back changes made in database if something went wrong
 	private void rollback(Connection connection) {

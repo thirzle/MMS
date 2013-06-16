@@ -53,25 +53,21 @@ public class ModuleAdministration {
 		Collections.sort(entryList, new Comparator<Entry>() {
 			@Override
 			public int compare(Entry o1, Entry o2) {
-				if(o1.getOrder()<o2.getOrder()){
+				if (o1.getOrder() < o2.getOrder()) {
 					return -1;
-				}
-				else if(o1.getOrder()>o2.getOrder()) {
+				} else if (o1.getOrder() > o2.getOrder()) {
 					return 1;
-				}
-				else {
+				} else {
 					return 0;
 				}
 			}
 		});
 		return entryList;
 	}
-	
-	
-	public List<Entry> getEntryListOfModule(Module module){
+
+	public List<Entry> getEntryListOfModule(Module module) {
 		return moduleDBController.getEntryListOfModule(module);
 	}
-	
 
 	public String getCourseID(String course) {
 		return moduleDBController.getCourseID(course);
@@ -110,17 +106,14 @@ public class ModuleAdministration {
 		moduleDBController.createModuleMaunal(version, courseID, degree,
 				creationdate, modificationdate, approvalstatus, examregulation);
 	}
-	
-	
-	//TODO
+
+	// TODO
 	/*
-	 * 	Beispiel um den veralteten Konstruktor zu umgehen....
+	 * Beispiel um den veralteten Konstruktor zu umgehen....
 	 * 
-	 * 	Calendar cal = Calendar.getInstance();
-    	 *	cal.set(Calendar.YEAR, 1988);
-    	 *	cal.set(Calendar.MONTH, 1);
-    	 *	cal.set(Calendar.DAY_OF_MONTH, 1);
-    	 *	Date dateRepresentation = cal.getTime();
+	 * Calendar cal = Calendar.getInstance(); cal.set(Calendar.YEAR, 1988);
+	 * cal.set(Calendar.MONTH, 1); cal.set(Calendar.DAY_OF_MONTH, 1); Date
+	 * dateRepresentation = cal.getTime();
 	 */
 
 	public void createModuleByModuleManager(List<Entry> list, String author,
@@ -160,7 +153,6 @@ public class ModuleAdministration {
 		moduleDBController.createModule(module);
 	}
 
-
 	public Module getModuleByID(long moduleID, int version) {
 		Module module = moduleDBController.getModule(moduleID, version);
 		module.setEntryList(sortModuleEntryListByOrder(module));
@@ -178,8 +170,29 @@ public class ModuleAdministration {
 	public List<Module> getUnfinishedModulesOverview() {
 		return moduleDBController.getUnfinishedModulesOverview();
 	}
-	
-	public List<Module> getModuleOverviewForEditor(String instituteID){
+
+	public List<Module> getModuleOverviewForEditor(String instituteID) {
 		return moduleDBController.getModuleOverviewForEditor(instituteID);
+	}
+
+	public List<String> getSubjects() {
+		return moduleDBController.getSubjects();
+	}
+
+	public void addSubject(String subject) {
+		moduleDBController.createSubject(subject);
+	}
+
+	public void setSubjectToModule(long moduleID, int version, String subject) {
+		moduleDBController.setSubjectToModule(moduleID, version, subject);
+
+	}
+
+	public List<Course> getCourses() {
+		return moduleDBController.getCourses();
+	}
+
+	public void setCoursesToModule(Module module) {
+		moduleDBController.finishNewModule(module);
 	}
 }
