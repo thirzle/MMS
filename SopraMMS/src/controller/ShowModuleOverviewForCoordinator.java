@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import management.Module;
 import management.ModuleAdministration;
@@ -16,7 +18,7 @@ import management.ModuleAdministration;
  * Servlet implementation class ShowModulListForCoordinator
  */
 @WebServlet("/ShowModulListForCoordinator")
-public class ShowModuleOverviewForCoordinator extends HttpServlet {
+public class ShowModuleOverviewForCoordinator extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -33,6 +35,7 @@ public class ShowModuleOverviewForCoordinator extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		if (request.getParameter("action") != null) {
 
 			if (request.getParameter("action").equals("editModule")) {
@@ -50,6 +53,11 @@ public class ShowModuleOverviewForCoordinator extends HttpServlet {
 				if (request.getParameter("selectedModule") != null) {
 					String[] selectedModule = request.getParameter("selectedModule")
 							.split("%");
+					// List<String> courses = ua.getAllCourses(); <--- muss noch implementiert werden
+					List<String> courses = new ArrayList<String>(); courses.add("Medieninformatik"); courses.add("Informatik"); courses.add("Informatik Lehramt");
+					List<String> subjects = new ArrayList<String>(); courses.add("Technische Informatik"); courses.add("Theoretische Informatik"); courses.add("Mathematik");
+					session.setAttribute("subjects",subjects);
+					session.setAttribute("courses", courses);
 					response.sendRedirect("/SopraMMS/EnterCourseToModule?moduleID="
 							+ selectedModule[0]
 							+ "&version="
