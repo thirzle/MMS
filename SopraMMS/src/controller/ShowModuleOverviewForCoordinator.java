@@ -53,9 +53,12 @@ public class ShowModuleOverviewForCoordinator extends SessionCheck {
 				if (request.getParameter("selectedModule") != null) {
 					String[] selectedModule = request.getParameter("selectedModule")
 							.split("%");
+					//############################################################################
 					// List<String> courses = ua.getAllCourses(); <--- muss noch implementiert werden
-					List<String> courses = new ArrayList<String>(); courses.add("Medieninformatik"); courses.add("Informatik"); courses.add("Informatik Lehramt");
-					List<String> subjects = new ArrayList<String>(); courses.add("Technische Informatik"); courses.add("Theoretische Informatik"); courses.add("Mathematik");
+					String[] tmp = {"MI","Medieninformatik"};
+					List<String[]> courses = new ArrayList<String[]>(); courses.add(tmp); courses.add(tmp); courses.add(tmp);
+					List<String> subjects = new ArrayList<String>(); subjects.add("Technische Informatik"); subjects.add("Theoretische Informatik"); subjects.add("Mathematik");
+					//#############################################################################
 					session.setAttribute("subjects",subjects);
 					session.setAttribute("courses", courses);
 					response.sendRedirect("/SopraMMS/EnterCourseToModule?moduleID="

@@ -1,8 +1,10 @@
 <%@page import="management.CourseEntry"%>
 <%@page import="management.Entry"%>
 <%@ page import="java.util.List, java.util.ArrayList"%>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/moduleView.css">
+<script type="text/javascript" src="/SopraMMS/js/jquery.multiple.select.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.entercoursetomodule.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/moduleView.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/multiple-select.css">
 <%
 	List<String> subjects = (ArrayList<String>) session
 			.getAttribute("subjects");
@@ -38,13 +40,13 @@
 		<table>
 			<tr>
 				<td class='descriptionModule'>Fächer:</td>
-				<td class='entryModule'><select>
-						<%
+				<td class='entryModule'><select style="width: 250px;">
+						<%int a=0;
 							for (String subject : subjects) {
 						%>
-						<option><%=subject%></option>
+						<option value=<%=a %>><%=subject%></option>
 						<%
-							}
+							a++;}
 						%>
 				</select></td>
 			</tr>
@@ -54,15 +56,25 @@
 		<table>
 			<tr>
 				<td class='descriptionModule'>Plichtmodul für:</td>
-				<td class='entryModule'><select>
-						<option></option>
-				</select></td>
+				<td>
+					<select id="obligatoryModulSelect" style="width: 250px;">
+						<%int i = 0;
+						  for(String[] course : courses) { %>
+							<option value=<%=i %>><%=course[1] %></option>
+						<%i++;} %>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td class='descriptionModule'>Wahlpflichtmodul für:</td>
-				<td class='entryModule'><select>
-						<option></option>
-				</select></td>
+				<td width="450px">
+					<select id="voteModuleSelect" style="width: 250px;">
+						<%int j=0;
+						  for(String[] course : courses) { %>
+							<option value=<%=j %>><%=course[1] %></option>
+						<%j++;} %>
+					</select>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -96,12 +108,16 @@
 		hinzuf&uuml;gen</button>
 	<button type="submit" value="saveModule" name="createModule">Modul
 		f&uuml;r Sitzung speichern</button>
-	<button type="submit" value="sendModule" name="createModule" disabled>Modul
+	<button type="submit" value="sendModule" name="createModule" id="submitModule" disabled>Modul
 		einreichen</button>
-
+	<textarea name="obligatoryModulSelect" style="display: none;" id="obligatoryLabel"></textarea>
+	<textarea name="voteModuleSelect" style="display: none;" id="voteLabel"></textarea>
 </form>
 <%
 	} catch (NullPointerException e) {
 		System.out.println("nullpointerexception");
 	}
 %>
+<script type="text/javascript">
+initMultiSelect();
+</script>
