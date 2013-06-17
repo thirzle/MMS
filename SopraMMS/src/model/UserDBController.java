@@ -697,26 +697,6 @@ public class UserDBController {
 		return instituteList;
 	}
 
-	public List<String> getCoursesByFaculty(String facultyID) {
-		Connection connection = connect();
-		List<String> courses = new LinkedList<String>();
-		query = "SELECT DISTINCT description FROM course JOIN faculty on course.faculty = faculty.facultyID "
-				+ "WHERE faculty = ?";
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, facultyID);
-			ResultSet resultSet = pStatement.executeQuery();
-			while (resultSet.next()) {
-				courses.add(resultSet.getString("description"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Couldn't get courses of faculty: " + facultyID);
-		} finally {
-			close(connection);
-		}
-		return courses;
-	}
 
 	// get facultyname of user
 	public String getFacultyName(User user) {

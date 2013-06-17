@@ -16,7 +16,9 @@ function initMultiSelect() {
 	$("#voteModuleSelect").multipleSelect(); 
 }
 
-
+function getSelectedIndex() {
+	$("#subjectLabel").html($("#subject").val());
+}
 body.click(function() {
 	setBooleans();
 });

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import management.ModuleAdministration;
+
 import user.User;
 import user.UserAdministration;
 
@@ -19,12 +21,14 @@ import user.UserAdministration;
 public class SessionCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L; 
 	protected UserAdministration ua;
+	protected ModuleAdministration ma;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public SessionCheck() {
         super();
         ua = new UserAdministration();
+        ma = new ModuleAdministration();
     }
 
 	/**

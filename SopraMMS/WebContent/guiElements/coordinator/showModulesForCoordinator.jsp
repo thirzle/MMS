@@ -18,7 +18,7 @@
 	}
 %>
 
-<form action="/SopraMMS/ShowModulListForCoordinator" method="get">
+<form action="/SopraMMS/ShowModuleOverviewForCoordinator" method="get">
 	<table class='tablesorter' id="modulesForCoordinator">
 	<thead>
 		<tr>

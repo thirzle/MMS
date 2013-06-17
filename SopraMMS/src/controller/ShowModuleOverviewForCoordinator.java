@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import management.Course;
 import management.Module;
 import management.ModuleAdministration;
 
 /**
  * Servlet implementation class ShowModulListForCoordinator
  */
-@WebServlet("/ShowModulListForCoordinator")
+@WebServlet("/ShowModuleOverviewForCoordinator")
 public class ShowModuleOverviewForCoordinator extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
@@ -53,13 +54,8 @@ public class ShowModuleOverviewForCoordinator extends SessionCheck {
 				if (request.getParameter("selectedModule") != null) {
 					String[] selectedModule = request.getParameter("selectedModule")
 							.split("%");
-					//##########################################################################
-					// List<String> courses = ua.getAllCourses(); <--- muss noch implementiert werden
-					String[] tmp = {"MI","Medieninformatik"};
-					List<String[]> courses = new ArrayList<String[]>(); courses.add(tmp); courses.add(tmp); courses.add(tmp);
-					List<String> subjects = new ArrayList<String>(); subjects.add("Technische Informatik"); subjects.add("Theoretische Informatik"); subjects.add("Mathematik");
-					//#############################################################################
-					session.setAttribute("subjects",subjects);
+					List<Course> courses = ma.getCourses();
+					List<String> subjects = ma.getSubjects();					session.setAttribute("subjects",subjects);
 					session.setAttribute("courses", courses);
 					response.sendRedirect("/SopraMMS/EnterCourseToModule?moduleID="
 							+ selectedModule[0]
