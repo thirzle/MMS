@@ -17,10 +17,6 @@
 
 		ArrayList<String[]> fieldsTypeD = (ArrayList) session.getAttribute("fieldsTypeDEdit");
 		
-		
-		
-		
-		
 		User user = (User) session.getAttribute("user");
 		LinkedList<String> institutes = (LinkedList<String>) user.getInstitute();
 
@@ -47,7 +43,7 @@
 						<table>
 							<tr>
 								<%
-									System.out.println("(editModule.jsp):Fucking Zeitaufwand fieldsTypeD: null: "+ (fieldsTypeD == null) + " empty: "+fieldsTypeD.isEmpty());
+									System.out.println("Fucking Zeitaufwand fieldsTypeD: null: "+ (fieldsTypeD == null) + " empty: "+fieldsTypeD.isEmpty());
 									String[] pt = new String[2];
 									if(fieldsTypeD.size() > 0){
 										pt = fieldsTypeD.get(0);
@@ -124,7 +120,6 @@
 	</div>
 	<%
 		}
-		System.out.println("(editModule.jsp): fieldsTypeC.isEmpty="+fieldsTypeC.isEmpty());
 			for (int i = 0; i < fieldsTypeC.size(); i++) {
 		String[] description = new String[2];
 		description = fieldsTypeC.get(i);

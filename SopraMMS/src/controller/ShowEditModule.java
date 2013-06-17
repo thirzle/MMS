@@ -58,11 +58,9 @@ public class ShowEditModule extends HttpServlet {
 		long moduleID = 0;
 		int version = 0;
 		// selectedModuleToEdit == null --> Aufruf von Buttons
-		System.out.println(request.getParameter("selectedModuleToEdit") == null);
 		if (request.getParameter("selectedModuleToEdit") == null) {
 			moduleID = (long) session.getAttribute("selectedModuleIDToEdit");
 			version = (int) session.getAttribute("selectedVersionToEdit");
-		//	System.out.println("(ShowEditModule.java): moduleID="+moduleID+" versoion="+version);
 
 		}
 		// erster Aufruf von showModules
