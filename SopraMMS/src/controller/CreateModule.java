@@ -109,8 +109,8 @@ public class CreateModule extends HttpServlet {
 
 		// Fuer TypB
 		if (session.getAttribute("fieldsTypeB") == null) {
-			fieldsTypeA.add(new String[] { "Prüfungsform", "" });
-			fieldsTypeA.add(new String[] { "Notenbildung", "" });
+			fieldsTypeB.add(new String[] { "Prüfungsform", "" });
+			fieldsTypeB.add(new String[] { "Notenbildung", "" });
 			fieldsTypeB.add(new String[] { "Inhalt", "" });
 			fieldsTypeB.add(new String[] { "Lernziele", "" });
 			fieldsTypeB.add(new String[] { "Literatur", "" });

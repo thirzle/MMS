@@ -46,8 +46,7 @@ public class GetAllUsers extends SessionCheck implements Servlet {
 				session.setAttribute("content", "CurrVitae"); 
 			}
 		} catch(NullPointerException e){
-			session.setAttribute("task", "edit");
-			session.setAttribute("content", "loadTable");
+			e.printStackTrace();
 		} finally {
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}

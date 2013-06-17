@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import management.Module;
 import management.ModuleAdministration;
@@ -16,13 +18,13 @@ import management.ModuleAdministration;
  * Servlet implementation class ShowModulListForCoordinator
  */
 @WebServlet("/ShowModulListForCoordinator")
-public class ShowModulListForCoordinator extends HttpServlet {
+public class ShowModuleOverviewForCoordinator extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ShowModulListForCoordinator() {
+	public ShowModuleOverviewForCoordinator() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -33,13 +35,32 @@ public class ShowModulListForCoordinator extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		if (request.getParameter("action") != null) {
-			if (request.getParameter("action").equals("editModule")) {
 
+			if (request.getParameter("action").equals("editModule")) {
+				if (request.getParameter("selectedModule") != null) {
+					String[] selectedModule = request.getParameter("selectedModule")
+							.split("%");
+					response.sendRedirect("/SopraMMS/ShowEditModule?selectedModuleToEdit="
+							+ selectedModule[0] + " " + selectedModule[1]);
+				} else {
+					request.getSession().setAttribute("content",
+							"showModulesForCoordinator");
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?info=chooseModule");
+				}
 			} else if (request.getParameter("action").equals("enterCourse")) {
 				if (request.getParameter("selectedModule") != null) {
-					String[] selectedModule = request.getParameter(
-							"selectedModule").split("%");
+					String[] selectedModule = request.getParameter("selectedModule")
+							.split("%");
+					//############################################################################
+					// List<String> courses = ua.getAllCourses(); <--- muss noch implementiert werden
+					String[] tmp = {"MI","Medieninformatik"};
+					List<String[]> courses = new ArrayList<String[]>(); courses.add(tmp); courses.add(tmp); courses.add(tmp);
+					List<String> subjects = new ArrayList<String>(); subjects.add("Technische Informatik"); subjects.add("Theoretische Informatik"); subjects.add("Mathematik");
+					//#############################################################################
+					session.setAttribute("subjects",subjects);
+					session.setAttribute("courses", courses);
 					response.sendRedirect("/SopraMMS/EnterCourseToModule?moduleID="
 							+ selectedModule[0]
 							+ "&version="

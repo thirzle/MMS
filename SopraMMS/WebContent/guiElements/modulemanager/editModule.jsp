@@ -9,7 +9,7 @@
 
 <form action="/SopraMMS/ShowEditModule" method="get">
 	<%
-		ArrayList<String[]> fieldsTypeA = (ArrayList<String[] >) session.getAttribute("fieldsTypeAEdit");
+		ArrayList<String[]> fieldsTypeA = (ArrayList) session.getAttribute("fieldsTypeAEdit");
 
 		ArrayList<String[]> fieldsTypeB = (ArrayList) session.getAttribute("fieldsTypeBEdit");
 
@@ -43,7 +43,6 @@
 						<table>
 							<tr>
 								<%
-									System.out.println("Fucking Zeitaufwand fieldsTypeD: null: "+ (fieldsTypeD == null) + " empty: "+fieldsTypeD.isEmpty());
 									String[] pt = new String[2];
 									if(fieldsTypeD.size() > 0){
 										pt = fieldsTypeD.get(0);

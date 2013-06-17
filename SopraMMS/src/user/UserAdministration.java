@@ -306,7 +306,7 @@ public class UserAdministration {
 	
 	public List<String> getInstituteNames(User user) {
 		List<String[]> listA = userDBController.getInstituteNames(user.getLogin());
-		List<String> listB = new ArrayList<>();
+		List<String> listB = new ArrayList<String>();
 		for (String[] strings : listA) {
 			listB.add(strings[1]);
 		}
@@ -326,6 +326,12 @@ public class UserAdministration {
 
 	}
 	
+	
+	public String getCurriculum(String loginname){
+		return userDBController.getCurriculum(loginname);
+	}
+	
+	
 	public void insertHistory(String loginname, String date, String content){
 		userDBController.insertHistory(loginname, date, content);
 	}
@@ -333,6 +339,12 @@ public class UserAdministration {
 	public List<String[]> showHistory(){
 		return userDBController.showHistory();
 	}
+	
+	
+	public void setCurriculum(String loginname, String url){
+		userDBController.setCurriculum(loginname, url);
+	}
+	
 
 	public void deleteNews(String title) {
 		userDBController.deleteNews(title);

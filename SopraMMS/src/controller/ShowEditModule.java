@@ -78,13 +78,6 @@ public class ShowEditModule extends HttpServlet {
 				.sortModuleEntryListByOrder(editModule);
 		
 		String institute = editModule.getInstituteID();
-		
-		// if (session.getAttribute("institutesModuleEntry") == null) {
-		//
-		// List<String[]> institutes = uAdmin.getAllInstitutesByName(session
-		// .getAttribute("loginname").toString());
-		// session.setAttribute("institutesModuleEntry", institutes);
-		// }
 
 		// TypA --> Vordefinierte Pflichfelder Feld
 		// TypB --> Vordefinierte Pflichfelder Textarea
@@ -95,9 +88,6 @@ public class ShowEditModule extends HttpServlet {
 		ArrayList<String[]> fieldsTypeC = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeD = new ArrayList<>();
 
-		// String institute = request.getParameter("selectedInstitute");
-		// System.out.println("(ShowEditModule.java) selectedInstituteID: "
-		// + institute);
 		// Fuelle Liste mit Standartwerten falls das Session Attribut noch nicht
 		// besteht, anderenfalls kopiere das Session Attribut in das lokale
 		// Attribut
@@ -338,10 +328,16 @@ public class ShowEditModule extends HttpServlet {
 		}
 		// Anzeige beim Aufruf von Modul einfuegen
 		else {
-			session.setAttribute("institutesModuleEntry", institute);
+			//session.setAttribute("institutesModuleEntry", institute);
 			session.setAttribute("content", "editModule");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
+		
+		System.out.println("--------");
+		for (String[] strings2 : fieldsTypeA) {
+			System.out.println("string2[0]");
+		}
+		System.out.println("--------");
 
 		session.setAttribute("fieldsTypeAEdit", fieldsTypeA);
 		session.setAttribute("fieldsTypeBEdit", fieldsTypeB);

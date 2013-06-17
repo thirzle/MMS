@@ -1,10 +1,15 @@
 <%@page import="user.User"%>
 <%@page import="model.UserDBController"%>
+<%@page import="user.UserAdministration" %>
 
 <%
 	User user = (User) session.getAttribute("user");
 	String lebenslauf = ("Lebenslauf von " + user.getFirstName() + " " + user
 			.getLastName());
+	String loginname = user.getLogin();
+	UserAdministration uAdmin = new UserAdministration();
+	//read the url from the database
+	String url = uAdmin.getCurriculum(loginname);
 %>
 <h1>Lebenslauf ansehen</h1>
 <table id="currtable" cellpadding="10" cellspacing="10">
@@ -18,13 +23,6 @@
 		</td>
 	</tr>
 </table>
-<div id="currvitae" style="visibility: hidden">
-	<!-- user.getCurr() -->
-</div>
+<div id="currvitae" style="visibility: hidden"><%out.print(url);%></div>
 </body>
-
-
-<!-- TODO URL aus DB auslesen-->
-<!-- TESTURL http://localhost:8080/SopraMMS/guiElements/home.jsp -->
-
 <script type="text/javascript" src="/SopraMMS/js/jquery.currvitae.js"></script>
