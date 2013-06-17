@@ -8,7 +8,7 @@
 <%
 	LinkedList<Module> moduleList = (LinkedList) session
 			.getAttribute("moduleListForEditor");
-	session.removeAttribute("moduleListForEditor");
+	
 %>
 
 <h1>Modul bearbeiten</h1>
