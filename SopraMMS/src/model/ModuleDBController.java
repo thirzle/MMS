@@ -905,7 +905,6 @@ public class ModuleDBController {
 					pStatement.setLong(1, textualEntry.getEntryID());
 					pStatement.setString(2, textualEntry.getContent());
 					pStatement.execute();
-					System.out.println("text");
 				}
 			}
 
@@ -918,7 +917,6 @@ public class ModuleDBController {
 					pStatement.setLong(1, effortEntry.getEntryID());
 					pStatement.setInt(2, effortEntry.getTime());
 					pStatement.execute();
-					System.out.println("effort");
 				}
 			}
 			if (effortEntry != null) {
@@ -930,7 +928,6 @@ public class ModuleDBController {
 					pStatement.setString(3, study.getTitle());
 					pStatement.setInt(4, study.getTime());
 					pStatement.execute();
-					System.out.println("study");
 				}
 			}
 			connection.commit();

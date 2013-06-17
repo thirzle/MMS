@@ -206,8 +206,6 @@ public class UserDBController {
 					pStatement.execute();
 				}
 			}
-
-			System.out.println("User created!");
 			connection.commit();
 			return true;
 		} catch (SQLException e) {
@@ -295,7 +293,9 @@ public class UserDBController {
 				// set all rights of supervisor listed in table
 				// rightsaffiliation
 				while (resultSet.next()) {
-					rightsArray[resultSet.getInt("rightsID")] = true;
+					if(resultSet.getInt("rightsID")!=1){
+						rightsArray[resultSet.getInt("rightsID")] = true;
+					}
 				}
 			}
 		} catch (SQLException e) {
@@ -351,7 +351,6 @@ public class UserDBController {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, user.getLogin());
 			pStatement.execute();
-			System.out.println("deleted");
 
 			// insert new rights
 			query = "INSERT INTO rightsaffiliation VALUES (?, ?)";
@@ -362,7 +361,6 @@ public class UserDBController {
 				if (newRights[i]) {
 					pStatement.setInt(2, i);
 					pStatement.execute();
-					System.out.println("inserted");
 				}
 			}
 			connection.commit();
@@ -388,7 +386,6 @@ public class UserDBController {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, oldLogin);
 			pStatement.execute();
-			System.out.println("deleted");
 
 			// insert new rights
 			query = "INSERT INTO rightsaffiliation VALUES (?, ?)";
@@ -399,7 +396,6 @@ public class UserDBController {
 				if (newRights[i]) {
 					pStatement.setInt(2, i);
 					pStatement.execute();
-					System.out.println("inserted");
 				}
 			}
 			connection.commit();
