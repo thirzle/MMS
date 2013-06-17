@@ -53,7 +53,7 @@ public class ShowModuleOverviewForCoordinator extends SessionCheck {
 				if (request.getParameter("selectedModule") != null) {
 					String[] selectedModule = request.getParameter("selectedModule")
 							.split("%");
-					//############################################################################
+					//##########################################################################
 					// List<String> courses = ua.getAllCourses(); <--- muss noch implementiert werden
 					String[] tmp = {"MI","Medieninformatik"};
 					List<String[]> courses = new ArrayList<String[]>(); courses.add(tmp); courses.add(tmp); courses.add(tmp);
