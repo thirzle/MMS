@@ -67,10 +67,15 @@ public class EnterCourseToModule extends SessionCheck {
 		    for (int i = 0; i < obligatoryModulSelect.length(); i++) {
 			vote.add(courses.get(Character.getNumericValue(voteModuleSelect.charAt(i))));
 		    }
-		    
-		    entryList.add(new TextualEntry("Fach",5,subjects.get(Character.getNumericValue(subject.charAt(0)))));
-		    entryList.add(new CourseEntry("Pflichtmodul",6, obligatory));
-		    entryList.add(new CourseEntry("Wahlpflicht",7,vote));
+		    TextualEntry te = new TextualEntry("Fach",5,subjects.get(Character.getNumericValue(subject.charAt(0))));
+		    CourseEntry ce = new CourseEntry("Pflichtmodul",6, obligatory);
+		    CourseEntry ce2 = new CourseEntry("Wahlpflicht",7,vote);
+		    System.out.println("te: "+te.toString());
+		    System.out.println("ce: "+ce.toString());
+		    System.out.println("ce2: "+ce2.toString());
+		    entryList.add(te);
+		    entryList.add(ce);
+		    entryList.add(ce2);
 
 		    long moduleID = Long.parseLong(session.getAttribute("moduleID").toString());
 		    int version = Integer.parseInt(session.getAttribute("version").toString());

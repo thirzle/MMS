@@ -20,7 +20,16 @@ import java.util.List;
  */
 public class CourseEntry extends Entry {
 
-    	/**
+    	/* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+
+	return "CourseEntry [courses=" + courses + "]";
+    }
+
+	/**
     	 * A List of courses. Consists of string arrays with two entries: courseID, description, degree, type.
     	 * <p>
     	 * course = Shorthand symbol 
