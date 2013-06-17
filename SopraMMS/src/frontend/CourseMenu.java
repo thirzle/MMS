@@ -3,16 +3,16 @@ package frontend;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.UserDBController;
+import model.ModuleDBController;
 
 
 public class CourseMenu {
 
-	static UserDBController userDBController = new UserDBController();
+	static ModuleDBController moduleDBController = new ModuleDBController();
 
 	public List<String> getCourses() {
 		ArrayList<String> courses = new ArrayList<String>();
-		courses.addAll(userDBController.getCoursesByFaculty("in"));	
+		courses.addAll(moduleDBController.getCoursesByFaculty("in"));
 		return courses;
 	}
 

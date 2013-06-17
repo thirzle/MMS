@@ -96,9 +96,9 @@ public class CourseEntry extends Entry {
 	 * @param title			The title of this entry. Used by the document creation as content title. (Used to initialize the super class)
 	 * @param order			The order of this entry. (Used to initialize the super class)
 	 * @param course		A single course parameter.
-	 * @param description	Name of the course
+	 * @param description		Name of the course
 	 * @param degree		Is used as degree entry for the single course parameter.
-	 * @param obligatory	true: module necessary false: module voluntarily
+	 * @param obligatory		true: module necessary false: module voluntarily
 	 */
 	public CourseEntry(String date, boolean classification,
 			boolean approvalstatus, boolean declined, long entryID,

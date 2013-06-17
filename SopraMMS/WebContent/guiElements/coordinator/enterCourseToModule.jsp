@@ -1,22 +1,23 @@
 <%@page import="management.CourseEntry"%>
 <%@page import="management.Entry"%>
-<%@ page import="java.util.List, java.util.ArrayList"%>
+<%@ page import="java.util.List, java.util.LinkedList, management.Course"%>
 <script type="text/javascript" src="/SopraMMS/js/jquery.multiple.select.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.entercoursetomodule.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/moduleView.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/multiple-select.css">
 <%
-	List<String> subjects = (ArrayList<String>) session
+try {
+	List<String> subjects = (LinkedList<String>) session
 			.getAttribute("subjects");
-	List<String[]> courses = (ArrayList<String[]>) session
+	List<Course> courses = (LinkedList<Course>) session
 			.getAttribute("courses");
-	ArrayList<Entry> entryList = new ArrayList();
+	List<Entry> entryList = new LinkedList();
 	Object list = session.getAttribute("showEntryListFromModule");
 	System.out.println(list);
 	if (list != null) {
 		entryList.addAll((List<Entry>) list);
 	}
-	try {
+	
 		System.out.println("(enterCourseToModule.jsp): subjects="+subjects);
 		System.out.println("(enterCourseToModule.jsp): courses="+courses);
 %>
@@ -31,7 +32,6 @@
 						.getAttribute("showModificationauthorFromModule")%>
 	</tr>
 </table>
-
 <form action="/SopraMMS/EnterCourseToModule" method="get">
 
 
@@ -39,8 +39,8 @@
 	<div class='moduleEntry'>
 		<table>
 			<tr>
-				<td class='descriptionModule'>Fächer:</td>
-				<td class='entryModule'><select style="width: 250px;">
+				<td class='descriptionModule'>Fach:</td>
+				<td class='entryModule'><select onchange="getSelectedIndex()" id="subject" style="width: 250px;">
 						<%int a=0;
 							for (String subject : subjects) {
 						%>
@@ -59,8 +59,8 @@
 				<td>
 					<select id="obligatoryModulSelect" style="width: 250px;">
 						<%int i = 0;
-						  for(String[] course : courses) { %>
-							<option value=<%=i %>><%=course[1] %></option>
+						  for(Course course : courses) { %>
+							<option value=<%=i %>><%=course %></option>
 						<%i++;} %>
 					</select>
 				</td>
@@ -70,8 +70,8 @@
 				<td width="450px">
 					<select id="voteModuleSelect" style="width: 250px;">
 						<%int j=0;
-						  for(String[] course : courses) { %>
-							<option value=<%=j %>><%=course[1] %></option>
+						  for(Course course : courses) { %>
+							<option value=<%=j %>><%=course %></option>
 						<%j++;} %>
 					</select>
 				</td>
@@ -112,7 +112,9 @@
 		einreichen</button>
 	<textarea name="obligatoryModulSelect" style="display: none;" id="obligatoryLabel"></textarea>
 	<textarea name="voteModuleSelect" style="display: none;" id="voteLabel"></textarea>
+	<textarea name="subjectSelect" style="display: none;" id="subjectLabel">0</textarea>
 </form>
+
 <%
 	} catch (NullPointerException e) {
 		System.out.println("nullpointerexception");
