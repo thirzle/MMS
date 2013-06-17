@@ -330,6 +330,7 @@ public class ModuleDBController {
 					}
 
 				}
+			moduleList.addAll(getModulesOberviewBySupervisor(author, connection));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -339,6 +340,54 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
+	
+	
+	public List<Module> getModulesOberviewBySupervisor(String loginname, Connection connection){
+		query = "SELECT supervisor FROM supervisor WHERE username = ?";
+		String supervisor = "no supervisor found";
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Long> temp = new LinkedList<Long>();
+		Module module;
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				supervisor = resultSet.getString("supervisor");
+				query = "SELECT DISTINCT module.* FROM module WHERE modificationauthor = ?";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, supervisor);
+				resultSet = pStatement.executeQuery();
+				while (resultSet.next()) {
+					module = new Module(resultSet.getLong("moduleID"),
+							resultSet.getInt("version"),
+							resultSet.getString("name"),
+							resultSet.getDate("creationdate"),
+							resultSet.getDate("modificationdate"),
+							resultSet.getBoolean("approvalstatus"),
+							resultSet.getString("instituteID"),
+							resultSet.getString("subject"),
+							resultSet.getString("modificationauthor"));
+					// check for duplicate
+					if (moduleList.isEmpty()) {
+						moduleList.add(module);
+						temp.add(module.getModuleID());
+					} else {
+						if (!temp.contains(module.getModuleID())) {
+							moduleList.add(module);
+							temp.add(module.getModuleID());
+						}
+					}
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();	
+			System.out.println("Couldn't get modules by supervisor: " + supervisor);
+		}
+			return moduleList;
+	}
+	
 
 	// get all versions of specified module
 	// tested: check
