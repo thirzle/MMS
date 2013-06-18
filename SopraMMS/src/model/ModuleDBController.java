@@ -99,7 +99,7 @@ public class ModuleDBController {
 			pStatement.setInt(2, module.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				courses = new CourseEntry(resultSet.getTimestamp("timestamp")
+				courses = new CourseEntry(resultSet.getDate("date")
 						.toString(), resultSet.getBoolean("classification"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getBoolean("declined"),
