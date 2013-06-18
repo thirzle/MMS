@@ -985,7 +985,7 @@ public class ModuleDBController {
 			if (courseEntry != null) {
 				// set courses of unfinished module
 				// insert bacic entry
-				query = "INSERT INTO entry (entryID, version, moduleID, moduleversion,"
+				query = "INSERT INTO entry (entryID, moduleID, moduleversion,"
 						+ " author, classification, approvalstatus, declined,"
 						+ " title, `order`) VALUES (?,?,?,?,?,?,?,?,?)";
 				pStatement = connection.prepareStatement(query);
