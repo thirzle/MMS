@@ -203,4 +203,9 @@ public class ModuleAdministration {
 	public void setCoursesToModule(Module module) {
 		moduleDBController.finishNewModule(module);
 	}
+	
+	public void changeEntryListOfModule(long moduleID, int version){
+		Module module = getModuleByID(moduleID, version);
+		moduleDBController.approveModuleEntries(module);
+	}
 }

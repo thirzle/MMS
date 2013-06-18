@@ -16,8 +16,6 @@
 
 		ArrayList<String[]> fieldsTypeC = (ArrayList) session.getAttribute("fieldsTypeCApprove");
 			
-		System.out.println("fieldsTypeC is empty: "+fieldsTypeC.isEmpty());
-
 		ArrayList<String[]> fieldsTypeD = (ArrayList) session.getAttribute("fieldsTypeDApprove");
 			
 		String institute = (String) session.getAttribute("instituteListForApproveModule");
@@ -124,14 +122,10 @@
 	<div class='moduleEntry'>
 		<table>
 			<tr>
-				<td class='descriptionModule'><input name="<%=i%>TitleC"
-					type="text" value="<%=description[0].trim()%>"></td>
-				<td class='entryModule'><textarea name="<%=i%>ContentC"><%=description[1].trim()%></textarea></td>
-				<td class='buttonDeleteRow'>
-					<button type="submit" value="<%=i%>Delete" name="deleteRow">
-						<img src="/SopraMMS/images/deleteModuleEntry.png" />
-					</button>
-				</td>
+				<td class='descriptionModule'><%=description[0].trim()%></td>
+				<td class='entryModule'><%=description[1].trim()%></td>
+				<td><input type="radio" name="radioEntryC+<%=description[0]%>" value="true"></td> 
+				<td><input type="radio" name="radioEntryC+<%=description[0]%>" value="false"></td> 
 			</tr>
 		</table>
 	</div>
@@ -144,7 +138,7 @@
 	<button type="submit" value="saveModule" name="approveModule">Modul
 		f&uuml;r Sitzung speichern</button>
 	
-	<button type="submit" value="sendModule" name="approveModule" disabled>Einträge freigeben</button>
+	<button type="submit" value="sendModule" name="approveModule" >Einträge freigeben</button>
 
 </form>
 <script type="text/javascript"

@@ -35,8 +35,6 @@ public class ShowEditModuleForEditor extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 
-
-
 	public ShowEditModuleForEditor() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -54,6 +52,7 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		UserAdministration uAdmin = new UserAdministration();
 		LinkedList<Entry> entryList = new LinkedList<Entry>();
 		LinkedList<Entry> entryListForTypeC = new LinkedList<Entry>();
+		boolean allEntriesApproved = true;
 		// speichert das ausgeählte Modul + Version
 		String selectedModule = null;
 		// ModulID steht an Stelle 0, Versionsnummer an Stelle 1
@@ -62,7 +61,8 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		long moduleID = 0;
 		int version = 0;
 		// selectedModuleToEdit == null --> call from a button
-		System.out.println("selectedModuletoApprove is null: "+(request.getParameter("selectedModuleToApprove") == null));
+		System.out.println("selectedModuletoApprove is null: "
+				+ (request.getParameter("selectedModuleToApprove") == null));
 		if (request.getParameter("selectedModuleToApprove") == null) {
 			moduleID = (long) session.getAttribute("selectedModuleIDToApprove");
 			version = (int) session.getAttribute("selectedVersionToApprove");
@@ -74,7 +74,8 @@ public class ShowEditModuleForEditor extends HttpServlet {
 			selectedModuleArray = selectedModule.split(" ");
 			moduleID = Long.parseLong(selectedModuleArray[0]);
 			version = Integer.parseInt(selectedModuleArray[1]);
-			System.out.println("ModuleID: "+moduleID+" version: "+version);
+			System.out
+					.println("ModuleID: " + moduleID + " version: " + version);
 			session.setAttribute("selectedModuleIDToApprove", moduleID);
 			session.setAttribute("selectedVersionToApprove", version);
 		}
@@ -209,10 +210,10 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		// For TypeC
 		if (session.getAttribute("fieldsTypeCApprove") == null) {
 			for (Entry entry : entryListForTypeC) {
-				fieldsTypeC.add(new String[] {entry.getTitle(), entry.getContent()});
+				fieldsTypeC.add(new String[] { entry.getTitle(),
+						entry.getContent() });
 			}
-		}
-		else{
+		} else {
 			fieldsTypeC.addAll((ArrayList<String[]>) session
 					.getAttribute("fieldsTypeCApprove"));
 		}
@@ -254,73 +255,135 @@ public class ShowEditModuleForEditor extends HttpServlet {
 			}
 			fieldsTypeC.set(i, entry);
 		}
-		
-		
+
 		if (request.getParameter("approveModule") != null) {
 			// add row
 			if (request.getParameter("approveModule").equals("addRow")) {
 				fieldsTypeC.add(new String[] { "", "" });
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
-			//save module for this session
+			// save module for this session
 			else if (request.getParameter("approveModule").equals("saveModule")) {
 				System.out
 						.println("(ShowEditModuleForEditor.java): Modul für Sitzung gespeichert");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
-		}
-			//approve the whole module
-//			else if (request.getParameter("createModule").equals("sendModule")) {
-//
-//				LinkedList<Entry> entryListForNewModule = new LinkedList<>();
-//				entryListForNewModule.addAll(entryList);
-//
-//				for (String[] strings : fieldsTypeA) {
-//					TextualEntry entry = new TextualEntry(strings[0],
-//							strings[1]);
-//					entryListForNewModule.add(entry);
-//				}
-//
-//				// save effort
-//				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
-//				EffortEntry effort = new EffortEntry("Präsenzzeit", pt);
-//				List<SelfStudy> selfStudyList = new ArrayList<>();
-//
-//				for (int i = 1; i < fieldsTypeD.size(); i++) {
-//					String[] entry = fieldsTypeD.get(i);
-//					if (!(entry[0].equals("") || entry[1].equals(""))) {
-//						selfStudyList.add(new SelfStudy(entry[0], Integer
-//								.parseInt(entry[1])));
-//					}
-//				}
-//				effort.setSelfStudyList(selfStudyList);
-//				entryListForNewModule.add(effort);
-//
-//				// Textfelder speichern
-//				for (String[] strings : fieldsTypeB) {
-//					TextualEntry entry = new TextualEntry(strings[0],
-//							strings[1]);
-//					entryListForNewModule.add(entry);
-//				}
-//				for (String[] strings : fieldsTypeC) {
-//					TextualEntry entry = new TextualEntry(strings[0],
-//							strings[1]);
-//					entryListForNewModule.add(entry);
-//				}
-//				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
-//				// TODO leere selbsterstellte felder aussortieren
-//
-//				// Spezifische Felder für Turnus, LP, Aufwand, Studiengang
-//				// Versionsnummer von Modul aktualisieren
-//				java.sql.Date creationdate = (java.sql.Date) editModule
-//						.getCreationDate();
-//				int newVersion = editModule.getVersion() + 1;
-//				mAdmin.createModuleByModuleManager(entryListForNewModule,
-//						((User) session.getAttribute("user")).getLogin(),
-//						institute, creationdate, newVersion, moduleID);
-//				// TODO pruefen ob Pflichfelder befuellt sind
 
-				// insert into History "Module approved"
+			// approve the whole module
+			else if (request.getParameter("approveModule").equals("sendModule")) {
+
+				LinkedList<Entry> entryListForNewModule = new LinkedList<>();
+				entryListForNewModule.addAll(entryList);
+
+				for (String[] strings : fieldsTypeA) {
+					TextualEntry entry = new TextualEntry(strings[0],
+							strings[1]);
+					entryListForNewModule.add(entry);
+				}
+
+				// save effort
+				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
+				EffortEntry effort = new EffortEntry("Präsenzzeit", pt);
+				List<SelfStudy> selfStudyList = new ArrayList<>();
+
+				for (int i = 1; i < fieldsTypeD.size(); i++) {
+					String[] entry = fieldsTypeD.get(i);
+					if (!(entry[0].equals("") || entry[1].equals(""))) {
+						selfStudyList.add(new SelfStudy(entry[0], Integer
+								.parseInt(entry[1])));
+					}
+				}
+				effort.setSelfStudyList(selfStudyList);
+				entryListForNewModule.add(effort);
+
+				// Textfelder speichern
+				for (String[] strings : fieldsTypeB) {
+					TextualEntry entry = new TextualEntry(strings[0],
+							strings[1]);
+					entryListForNewModule.add(entry);
+				}
+				for (String[] strings : fieldsTypeC) {
+					TextualEntry entry = new TextualEntry(strings[0],
+							strings[1]);
+					entryListForNewModule.add(entry);
+				}
+				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
+
+				// if the whole module isn't approved yet save changed in the
+				// existing module
+				for (Entry entry : entryList) {
+					// if the value of the button is true, set the status of
+					// this entry as approved
+					if (request.getParameter("radioEffort" + entry.getTitle()) != null) {
+						if (request.getParameter(
+								"radioEffort" + entry.getTitle())
+								.equals("true")) {
+							entry.setApprovalstatus(true);
+							entry.setRejectionstatus(false);
+						} else {
+							entry.setApprovalstatus(false);
+							entry.setRejectionstatus(true);
+							allEntriesApproved = false;
+						}
+
+					}
+					if (request.getParameter("radioZeitaufwand") != null) {
+						if (request.getParameter("radioZeitaufwand").equals(
+								"true")) {
+							entry.setApprovalstatus(true);
+							entry.setRejectionstatus(false);
+						} else {
+							entry.setApprovalstatus(false);
+							entry.setRejectionstatus(true);
+							allEntriesApproved = false;
+						}
+
+					}
+					if (request.getParameter("radioInstitute") != null) {
+						if (request.getParameter("radioInstitute").equals(
+								"true")) {
+							entry.setApprovalstatus(true);
+							entry.setRejectionstatus(false);
+						} else {
+							entry.setApprovalstatus(false);
+							entry.setRejectionstatus(true);
+							allEntriesApproved = false;
+						}
+
+					}
+					if (request.getParameter("radioEntryB") != null) {
+						if (request.getParameter(
+								"radioEntryB" + entry.getTitle())
+								.equals("true")) {
+							entry.setApprovalstatus(true);
+							entry.setRejectionstatus(false);
+						} else {
+							entry.setApprovalstatus(false);
+							entry.setRejectionstatus(true);
+							allEntriesApproved = false;
+						}
+
+					}
+					if (request.getParameter("radioEntryC") != null) {
+						if (request.getParameter(
+								"radioEntryC" + entry.getTitle())
+								.equals("true")) {
+							entry.setApprovalstatus(true);
+							entry.setRejectionstatus(false);
+						} else {
+							entry.setApprovalstatus(false);
+							entry.setRejectionstatus(true);
+							allEntriesApproved = false;
+						}
+
+					}
+				}
+			}
+			// change entries of module
+			mAdmin.changeEntryListOfModule(moduleID, version);
+
+			// insert into History "Module approved"
+			if (allEntriesApproved) {
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				Date currentTime = new Date();
 				String date = formatter.format(currentTime);
@@ -333,16 +396,18 @@ public class ShowEditModuleForEditor extends HttpServlet {
 				uAdmin.insertHistory(
 						((User) session.getAttribute("user")).getLogin(), date,
 						"Hat folgendes Modul freigegeben: " + title);
-
+			}
+		}
 		session.setAttribute("fieldsTypeAApprove", fieldsTypeA);
 		session.setAttribute("fieldsTypeBApprove", fieldsTypeB);
 		session.setAttribute("fieldsTypeCApprove", fieldsTypeC);
 		session.setAttribute("fieldsTypeDApprove", fieldsTypeD);
-		session.setAttribute("instituteListForApproveModule", mAdmin.getInstituteName(instituteID));
+		session.setAttribute("instituteListForApproveModule",
+				mAdmin.getInstituteName(instituteID));
 
 		session.setAttribute("content", "showEditModuleForEditor");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-			
+
 	}
 
 	/**

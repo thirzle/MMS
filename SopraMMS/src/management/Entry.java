@@ -273,5 +273,13 @@ public abstract class Entry {
 	public int getOrder() {
 		return order;
 	}
+	
+	public void setApprovalstatus(boolean b){
+		approved = b;
+	}
+	
+	public void setRejectionstatus(boolean b){
+		rejected = b;
+	}
 
 }
