@@ -41,81 +41,77 @@ public class EnterCourseToModule extends SessionCheck {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      *      response)
      */
-    protected void doGet(HttpServletRequest request,
-	    HttpServletResponse response) throws ServletException, IOException {
-
-	HttpSession session = request.getSession();
-	try {
-	    String button = request.getParameter("createModule");
-	    if (button != null) {
-		if (button.equals("sendModule")) {
-		    
-		    List<String> subjects = ma.getSubjects();
-		    List<Course> courses = ma.getCourses();
-		    List<Entry> entryList = (List<Entry>) session.getAttribute("showEntryListFromModule");
-		   
-		    String obligatoryModulSelect = request.getParameter("obligatoryModulSelect");
-		    String voteModuleSelect = request.getParameter("voteModuleSelect");
-		    String subject = request.getParameter("subjectSelect");
-
-		    List<Course> obligatory = new ArrayList<Course>();
-		    List<Course> vote = new ArrayList<Course>();
-		    		
-		    for (int i = 0; i < obligatoryModulSelect.length(); i++) {
-			obligatory.add(courses.get(Character.getNumericValue(obligatoryModulSelect.charAt(i))));
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		try {
+		    String button = request.getParameter("createModule");
+		    if (button != null) {
+				if (button.equals("sendModule")) {
+				    
+				    new ArrayList<Course>();
+				    new ArrayList<Course>();
+				    List<String> subjects = ma.getSubjects();
+				    List<Course> courses = ma.getCourses();
+				    List<Entry> entryList = (List<Entry>) session.getAttribute("showEntryListFromModule");
+				    String obligatoryModulSelect = request.getParameter("obligatoryModulSelect");
+				    String voteModuleSelect = request.getParameter("voteModuleSelect");
+				    String subject = request.getParameter("subjectSelect");
+	
+				    for (int i = 0; i < obligatoryModulSelect.length(); i++) {
+					courses.get(Character.getNumericValue(obligatoryModulSelect.charAt(i))).setObligatory(true);
+				    }
+				    for (int i = 0; i < voteModuleSelect.length(); i++) {
+					courses.get(Character.getNumericValue(voteModuleSelect.charAt(i))).setObligatory(false);
+				    }
+				    
+				    entryList.add(new TextualEntry("Fach",5,subjects.get(Character.getNumericValue(subject.charAt(0)))));
+				    entryList.add(new CourseEntry("Studiengänge",6, courses));
+					
+				    long moduleID = Long.parseLong(session.getAttribute("moduleID").toString());
+				    int version = Integer.parseInt(session.getAttribute("version").toString());
+				    
+				    Module module = ma.getModuleByID(moduleID, version);
+				    module.setEntryList(entryList);
+				    System.out.println(subjects.get(Character.getNumericValue(subject.charAt(0))));
+				    module.setSubject(subjects.get(Character.getNumericValue(subject.charAt(0))));
+				    ma.setCoursesToModule(module);
+				  
+				    response.sendRedirect("/SopraMMS/ShowModuleOverviewForCoordinator");
+				}
+		    } else {
+		    	
+				long moduleID = Long.parseLong(request.getParameter("moduleID"));
+				session.setAttribute("moduleID", moduleID);
+				
+				int version = Integer.parseInt(request.getParameter("version"));
+				session.setAttribute("version", version);
+				
+				Module module = ma.getModuleByID(moduleID, version);
+				System.out.println("########### Einträge ###########");
+				if (module != null) {
+				    for (Entry entry : module.getEntryList()) {
+					System.out.println(entry.toString());
+				    }
+				    System.out.println("################################");
+				    List<Entry> entry = module.getEntryList();
+				    session.setAttribute("showModificationauthorFromModule",
+					    module.getModificationauthor());
+				    session.setAttribute("showModificationDateFromModule",
+					    module.getModificationDate());
+				    session.setAttribute("showCreationDateFromModule",
+					    module.getCreationDate());
+				    session.setAttribute("showEntryListFromModule", entry);
+				}
+				session.setAttribute("content", "enterCourseToModule");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		    }
-		    for (int i = 0; i < obligatoryModulSelect.length(); i++) {
-			vote.add(courses.get(Character.getNumericValue(voteModuleSelect.charAt(i))));
-		    }
-		    TextualEntry te = new TextualEntry("Fach",5,subjects.get(Character.getNumericValue(subject.charAt(0))));
-		    CourseEntry ce = new CourseEntry("Pflichtmodul",6, obligatory);
-		    CourseEntry ce2 = new CourseEntry("Wahlpflicht",7,vote);
-		    System.out.println("te: "+te.toString());
-		    System.out.println("ce: "+ce.toString());
-		    System.out.println("ce2: "+ce2.toString());
-		    entryList.add(te);
-		    entryList.add(ce);
-		    entryList.add(ce2);
-
-		    long moduleID = Long.parseLong(session.getAttribute("moduleID").toString());
-		    int version = Integer.parseInt(session.getAttribute("version").toString());
-		    Module module = ma.getModuleByID(moduleID, version);
-		    module.setEntryList(entryList);
-		    ma.setCoursesToModule(module);
-		    session.setAttribute("content", "showModulesForCoordinator");
-		    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		} catch (NullPointerException e) {
+		    System.err.println(e);
+		    System.err.println(e.getMessage());
+		} catch (StringIndexOutOfBoundsException e) {
+			System.err.println(e);
+		    System.err.println(e.getMessage());
 		}
-		
-	    } else {
-		long moduleID = Long
-			.parseLong(request.getParameter("moduleID"));
-		session.setAttribute("modulID", moduleID);
-		int version = Integer.parseInt(request.getParameter("version"));
-		session.setAttribute("version", version);
-		Module module = ma.getModuleByID(moduleID, version);
-		System.out.println("########### Einträge ###########");
-		if (module != null) {
-		    for (Entry entry : module.getEntryList()) {
-			System.out.println(entry.toString());
-		    }
-		    System.out.println("################################");
-		    List<Entry> entry = module.getEntryList();
-		    session.setAttribute("showModificationauthorFromModule",
-			    module.getModificationauthor());
-		    session.setAttribute("showModificationDateFromModule",
-			    module.getModificationDate());
-		    session.setAttribute("showCreationDateFromModule",
-			    module.getCreationDate());
-		    session.setAttribute("showEntryListFromModule", entry);
-		}
-		session.setAttribute("content", "enterCourseToModule");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-	    }
-	} catch (NullPointerException e) {
-	    System.err.println(e);
-	    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-	}
-
     }
 
 

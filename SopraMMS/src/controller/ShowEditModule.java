@@ -50,6 +50,7 @@ public class ShowEditModule extends HttpServlet {
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		HttpSession session = request.getSession();
 		LinkedList<Entry> entryList = new LinkedList<Entry>();
+		LinkedList<Entry> entryListForTypeC = new LinkedList<Entry>();
 		// speichert das ausgeählte Modul + Version
 		String selectedModule = null;
 		// ModulID steht an Stelle 0, Versionsnummer an Stelle 1
@@ -76,23 +77,23 @@ public class ShowEditModule extends HttpServlet {
 		Module editModule = mAdmin.getModuleByID(moduleID, version);
 		entryList = (LinkedList<Entry>) mAdmin
 				.sortModuleEntryListByOrder(editModule);
-		
+		entryListForTypeC.addAll(entryList);
+
 		String institute = editModule.getInstituteID();
 
-		// TypA --> Vordefinierte Pflichfelder Feld
-		// TypB --> Vordefinierte Pflichfelder Textarea
-		// TypC --> Selbstdefinierte Felder Textarea
-		// TypD --> Vordefiniertes Feld Aufwand
+		// TypeA --> predefined mandatory fields Feld
+		// TypeB --> predefined mandatory fields Textarea
+		// TypeC --> self defined fields Textarea
+		// TypeD --> predefined mandatory field Aufwand
 		ArrayList<String[]> fieldsTypeA = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeB = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeC = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeD = new ArrayList<>();
 
-		// Fuelle Liste mit Standartwerten falls das Session Attribut noch nicht
-		// besteht, anderenfalls kopiere das Session Attribut in das lokale
-		// Attribut
+		//fill all fields with default values if the session attribute doesn't exist yet
+		//else copy the session attribute into the local attribute
 
-		// Fuer TypA
+		// For TypeA
 
 		if (session.getAttribute("fieldsTypeAEdit") == null) {
 			// Type A
@@ -100,18 +101,23 @@ public class ShowEditModule extends HttpServlet {
 				if (entry.getTitle().equals("Kürzel")) {
 					fieldsTypeA
 							.add(new String[] { "Kürzel", entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Titel")) {
 					fieldsTypeA
 							.add(new String[] { "Titel", entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Verantwortlicher")) {
 					fieldsTypeA.add(new String[] { "Verantwortlicher",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Turnus")) {
 					fieldsTypeA
 							.add(new String[] { "Turnus", entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Sprache")) {
 					fieldsTypeA.add(new String[] { "Sprache",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				}
 
 			}
@@ -123,7 +129,7 @@ public class ShowEditModule extends HttpServlet {
 					.getAttribute("fieldsTypeAEdit"));
 		}
 
-		// Fuer TypD
+		// For TypeD
 		if (session.getAttribute("fieldsTypeDEdit") == null) {
 			for (Entry entry : entryList) {
 				if (entry.getClass() == EffortEntry.class
@@ -132,6 +138,7 @@ public class ShowEditModule extends HttpServlet {
 					LinkedList<SelfStudy> selfStudyList = (LinkedList<SelfStudy>) effortEntry
 							.getSelfStudyList();
 
+					entryListForTypeC.remove(entry);
 					int selfStudySize = selfStudyList.size();
 					for (int i = 0; i < selfStudySize; i++) {
 						if (selfStudyList.get(i).getTitle()
@@ -165,24 +172,29 @@ public class ShowEditModule extends HttpServlet {
 					.getAttribute("fieldsTypeDEdit"));
 		}
 
-		// Fuer TypB
+		// For TypeB
 		if (session.getAttribute("fieldsTypeBEdit") == null) {
 			for (Entry entry : entryList) {
 				if (entry.getTitle().equals("Inhalt")) {
 					fieldsTypeB
 							.add(new String[] { "Inhalt", entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Lernziele")) {
 					fieldsTypeB.add(new String[] { "Lernziele",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Literatur")) {
 					fieldsTypeB.add(new String[] { "Literatur",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Notenbildung")) {
 					fieldsTypeB.add(new String[] { "Notenbildung",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Prüfungsform")) {
 					fieldsTypeB.add(new String[] { "Prüfungsform",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				}
 			}
 
@@ -193,21 +205,22 @@ public class ShowEditModule extends HttpServlet {
 					.getAttribute("fieldsTypeBEdit"));
 		}
 
-		// Fuer TypC
-		if (session.getAttribute("fieldsTypeCEdit") != null) {
-			fieldsTypeC.addAll((ArrayList<String[]>) session
-					.getAttribute("fieldsTypeCEdit"));
+		// For TypeC
+		if (session.getAttribute("fieldsTypeCApprove") == null) {
+			for (Entry entry : entryListForTypeC) {
+				fieldsTypeC.add(new String[] {entry.getTitle(), entry.getContent()});
+			}
 		}
 
-		// Lese Parameter aus der URL und fuege Sie den jeweiligen Listen hinzu
-		// Fuer TypA
+		// get parameters from request and add them to their particular list
+		// For TypeA
 		for (int i = 0; i < fieldsTypeA.size(); i++) {
 			String[] entry = fieldsTypeA.get(i);
 			if (request.getParameter(i + "ContentA") != null) {
 				entry[1] = request.getParameter(i + "ContentA").trim();
 			}
 		}
-		// Fuer TypD
+		// For TypeD
 		for (int i = 0; i < fieldsTypeD.size(); i++) {
 			String[] entry = fieldsTypeD.get(i);
 			if (request.getParameter(i + "TitleD") != null) {
@@ -218,14 +231,14 @@ public class ShowEditModule extends HttpServlet {
 			}
 		}
 
-		// Fuer TypB
+		// For TypeB
 		for (int i = 0; i < fieldsTypeB.size(); i++) {
 			String[] entry = fieldsTypeB.get(i);
 			if (request.getParameter(i + "ContentB") != null) {
 				entry[1] = request.getParameter(i + "ContentB").trim();
 			}
 		}
-		// Fuer TypC
+		// For TypeC
 		for (int i = 0; i < fieldsTypeC.size(); i++) {
 			String[] entry = fieldsTypeC.get(i);
 			if (request.getParameter(i + "TitleC") != null) {
@@ -237,20 +250,20 @@ public class ShowEditModule extends HttpServlet {
 			fieldsTypeC.set(i, entry);
 		}
 
-		if (request.getParameter("createModule") != null) {
-			// Bei Klick Zeile hinzufuegen
-			if (request.getParameter("createModule").equals("addRow")) {
+		if (request.getParameter("editModule") != null) {
+			// add row
+			if (request.getParameter("editModule").equals("addRow")) {
 				fieldsTypeC.add(new String[] { "", "" });
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
-			// Modul für Sitzung Speichern
-			else if (request.getParameter("createModule").equals("saveModule")) {
+			//save module for this session
+			else if (request.getParameter("editModule").equals("saveModule")) {
 				System.out
-						.println("(CreateModule.java): Modul für Sitzung gespeichert");
+						.println("(ShowEditModule.java): Modul für Sitzung gespeichert");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
-			// Bei Klick Module Speichern
-			else if (request.getParameter("createModule").equals("sendModule")) {
+			// save module
+			else if (request.getParameter("editModule").equals("sendModule")) {
 
 				LinkedList<Entry> entryListForNewModule = new LinkedList<>();
 				entryListForNewModule.addAll(entryList);
@@ -261,7 +274,7 @@ public class ShowEditModule extends HttpServlet {
 					entryListForNewModule.add(entry);
 				}
 
-				// Aufwand speichern
+				// save effort
 				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
 				EffortEntry effort = new EffortEntry("Präsenzzeit", pt);
 				List<SelfStudy> selfStudyList = new ArrayList<>();
@@ -276,7 +289,7 @@ public class ShowEditModule extends HttpServlet {
 				effort.setSelfStudyList(selfStudyList);
 				entryListForNewModule.add(effort);
 
-				// Textfelder speichern
+				// save textfields
 				for (String[] strings : fieldsTypeB) {
 					TextualEntry entry = new TextualEntry(strings[0],
 							strings[1]);
@@ -300,7 +313,7 @@ public class ShowEditModule extends HttpServlet {
 						institute, creationdate, newVersion, moduleID);
 				// TODO pruefen ob Pflichfelder befuellt sind
 
-				// insert into History "Module created"
+				// insert into History "Module changed"
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				Date currentTime = new Date();
 				String date = formatter.format(currentTime);
@@ -312,7 +325,7 @@ public class ShowEditModule extends HttpServlet {
 				}
 				uAdmin.insertHistory(
 						((User) session.getAttribute("user")).getLogin(), date,
-						"Hat ein Modul ge&auml;ndert: " + title);
+						"Hat folgendes Modul ge&auml;ndert: " + title);
 
 				// session.setAttribute("content", "didEditModule");
 				// System.out.println("did edit module");
@@ -328,11 +341,11 @@ public class ShowEditModule extends HttpServlet {
 		}
 		// Anzeige beim Aufruf von Modul einfuegen
 		else {
-			//session.setAttribute("institutesModuleEntry", institute);
+			// session.setAttribute("institutesModuleEntry", institute);
 			session.setAttribute("content", "editModule");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
-		
+
 		System.out.println("--------");
 		for (String[] strings2 : fieldsTypeA) {
 			System.out.println("string2[0]");

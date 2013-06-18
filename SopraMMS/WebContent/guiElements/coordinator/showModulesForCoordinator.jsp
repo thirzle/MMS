@@ -8,7 +8,7 @@
 			.getAttribute("unfinishedModuleListForCoordinator");
 %>
 
-<h1>Studieng&auml;nge und F&auml;cher hinzuf&uuml:gen</h1>
+<h1>Studieng&auml;nge und F&auml;cher hinzuf&uuml;gen</h1>
 
 <%
 	if (request.getParameter("info") != null) {

@@ -174,6 +174,10 @@ public class ModuleAdministration {
 	public List<Module> getUnfinishedModulesOverview() {
 		return moduleDBController.getUnfinishedModulesOverview();
 	}
+	
+	public List<Module> getLatestModulesOverview() {
+		return moduleDBController.getModules();
+	}
 
 	public List<Module> getModuleOverviewForEditor(String instituteID) {
 		return moduleDBController.getModuleOverviewForEditor(instituteID);

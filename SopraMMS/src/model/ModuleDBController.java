@@ -55,7 +55,8 @@ public class ModuleDBController {
 	public List<Module> getModules() {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT * FROM module";
+		query = "SELECT * FROM module AS m JOIN latestmodule AS l " +
+				"ON m.moduleID = l.moduleID AND m.version = l.version";
 
 		try {
 			statement = connection.createStatement();
@@ -87,7 +88,7 @@ public class ModuleDBController {
 		List<TextualEntry> textual = new LinkedList<TextualEntry>();
 		EffortEntry effort = null;
 		List<SelfStudy> selfstudy = new LinkedList<SelfStudy>();
-		query = "SELECT ce.courseID, ce.degree, c.description, e.* FROM courseentry AS ce JOIN entry "
+		query = "SELECT ce.courseID, ce.degree, ce.obligatory, c.description, e.* FROM courseentry AS ce JOIN entry "
 				+ "AS e on ce.entryID = e.entryID JOIN course AS c ON " +
 				"ce.courseID = c.courseID AND ce.degree = c.degree"
 				+ " WHERE e.moduleID = ? AND e.moduleversion = ?";
@@ -98,13 +99,13 @@ public class ModuleDBController {
 			pStatement.setInt(2, module.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				courses = new CourseEntry(resultSet.getTimestamp("timestamp")
+				courses = new CourseEntry(resultSet.getDate("date")
 						.toString(), resultSet.getBoolean("classification"),
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getBoolean("declined"),
 						resultSet.getLong("entryID"),
 						resultSet.getString("title"),
-						resultSet.getInt("`order`"),
+						resultSet.getInt("order"),
 						resultSet.getString("courseID"),
 						resultSet.getString("degree"),
 						resultSet.getString("description"),
@@ -112,7 +113,7 @@ public class ModuleDBController {
 			}
 			while (resultSet.next()) {
 				courses.addCourse(resultSet.getString("courseID"),
-						resultSet.getString("desciption"), 
+						resultSet.getString("description"), 
 						resultSet.getString("degree"),
 						resultSet.getBoolean("obligatory"));
 			}
@@ -985,7 +986,7 @@ public class ModuleDBController {
 			if (courseEntry != null) {
 				// set courses of unfinished module
 				// insert bacic entry
-				query = "INSERT INTO entry (entryID, version, moduleID, moduleversion,"
+				query = "INSERT INTO entry (entryID, moduleID, moduleversion,"
 						+ " author, classification, approvalstatus, declined,"
 						+ " title, `order`) VALUES (?,?,?,?,?,?,?,?,?)";
 				pStatement = connection.prepareStatement(query);

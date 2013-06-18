@@ -141,5 +141,5 @@
 		id="submitModulButton" disabled>Modul einreichen</button>
 
 </form>
-<script type="text/javascript"
-	src="/SopraMMS/js/jquery.createnewmodule.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.createnewmodule.js"></script>
+<script>enableSubmitButton();</script>

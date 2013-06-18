@@ -438,6 +438,16 @@ public class Module {
     public void setVersion(int version) {
 	this.version = version;
     }
+    
+    /**
+     * Sets the subject of this Module.
+     * <p>
+     * Useful for finishing a Module.
+     * @param subject The new subject of this Module.
+     */
+    public void setSubject(String subject) {
+    this.subject = subject;	
+    }
 
     @SuppressWarnings("unused")
     /**

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import management.ModuleAdministration;
+
 import user.UserAdministration;
 
 /**
@@ -33,11 +35,12 @@ public class CreatePDF extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		UserAdministration uAdmin = new UserAdministration();
+		ModuleAdministration mAdmin = new ModuleAdministration();
 		HttpSession session = request.getSession();
 		
 		LinkedList<String> facListNames = (LinkedList) uAdmin.getAllFacultiesByName();
 		LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
-		LinkedList<String> courses = (LinkedList) uAdmin.getCoursesByFaculty(facListID.getFirst());
+		LinkedList<String> courses = (LinkedList) mAdmin.getCourses();
 		 
 		session.setAttribute("faculty", facListNames.getFirst());
 		session.setAttribute("courses", courses);

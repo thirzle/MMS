@@ -40,14 +40,14 @@
 	<tr>
 			<td>Stichtag:</td>
 			<td>
-				<input name="deadline" type="date" id="datepicker1" 
+				<input name="deadline" type="text" id="datepicker1" 
 				value="<%=new SimpleDateFormat("dd.MM.yyyy").format(session.getAttribute("deadline"))%>"/>
 			</td>
 	</tr>
 	<tr>		
 			<td>Erinnerungsbeginn:</td>
 			<td>
-				<input name="beginremember" type="date" id="datepicker2" 
+				<input name="beginremember" type="text" id="datepicker2" 
 				value="<%=new SimpleDateFormat("dd.MM.yyyy").format(session.getAttribute("beginremember"))%>"/>
 			</td>
 	</tr>

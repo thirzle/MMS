@@ -189,7 +189,7 @@ public class CreateModule extends HttpServlet {
 							strings[1]);
 					module.add(entry);
 				}
-				order+=3;
+				order+=2;
 				// Aufwand speichern
 				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
 				EffortEntry effort = new EffortEntry("Zeitaufwand",order++,pt);
