@@ -143,11 +143,11 @@
 		}
 	%>
 
-	<button type="submit" value="addRow" name="createModule">Zeile
+	<button type="submit" value="addRow" name="editModule">Zeile
 		hinzuf&uuml;gen</button>
-	<button type="submit" value="saveModule" name="createModule">Modul
+	<button type="submit" value="saveModule" name="editModule">Modul
 		f&uuml;r Sitzung speichern</button>
-	<button type="submit" value="sendModule" name="createModule" disabled>Bearbeitetes
+	<button type="submit" value="sendModule" name="editModule" disabled>Bearbeitetes
 		Modul einreichen</button>
 
 </form>

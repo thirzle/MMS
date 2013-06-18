@@ -39,7 +39,7 @@
 				for (Module module : moduleList) {
 			%>
 			<tr>
-				<td><input type="radio" name="selectedModuleToEdit"
+				<td><input type="radio" name="selectedModuleToApprove"
 					value='<%=module.getModuleID() + " " + module.getVersion()%>' /></td>
 				<td><%=module.getName()%></td>
 				<td><%=module.getModificationauthor()%></td>
