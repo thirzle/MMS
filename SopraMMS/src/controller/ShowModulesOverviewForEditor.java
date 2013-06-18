@@ -42,7 +42,6 @@ public class ShowModulesOverviewForEditor extends HttpServlet {
 		
 //		TODO getModulesOverview for Editor
 		for (String instituteID : instituteIDListOfUser) {
-			System.out.println("mAdmin.getModuleOverviewForEditor: is empty: "+mAdmin.getModuleOverviewForEditor(instituteID).isEmpty());
 			moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteID));
 		}
 		

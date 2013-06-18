@@ -79,7 +79,7 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		Module approveModule = mAdmin.getModuleByID(moduleID, version);
 		entryList = (LinkedList<Entry>) mAdmin
 				.sortModuleEntryListByOrder(approveModule);
-		entryListForTypeC = (LinkedList<Entry>) mAdmin.sortModuleEntryListByOrder(approveModule);
+		entryListForTypeC.addAll(entryList);
 
 		String instituteID = approveModule.getInstituteID();
 
@@ -141,6 +141,7 @@ public class ShowEditModuleForEditor extends HttpServlet {
 					LinkedList<SelfStudy> selfStudyList = (LinkedList<SelfStudy>) effortEntry
 							.getSelfStudyList();
 
+					entryListForTypeC.remove(entry);
 					int selfStudySize = selfStudyList.size();
 					for (int i = 0; i < selfStudySize; i++) {
 						if (selfStudyList.get(i).getTitle()
@@ -161,7 +162,6 @@ public class ShowEditModuleForEditor extends HttpServlet {
 									"" + selfStudyList.get(i).getTime() });
 						}
 					}
-					entryListForTypeC.remove(entry);
 				}
 			}
 
