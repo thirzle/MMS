@@ -5,6 +5,8 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/moduleView.css">
 
+
+
 <h1>Modul bearbeiten</h1>
 
 <form action="/SopraMMS/ShowEditModule" method="get">
@@ -27,7 +29,7 @@
 				<table>
 					<tr>
 						<td class='descriptionModule'><%=description[0]%></td>
-						<td class='entryModule'><input name='<%=i%>ContentA'
+						<td class='entryModule'><input class="mustNotBeEmpty" name='<%=i%>ContentA'
 							type="text" value="<%=description[1].trim()%>"></td>
 					</tr>
 				</table>
@@ -113,7 +115,7 @@
 		<table>
 			<tr>
 				<td class='descriptionModule'><%=description[0]%></td>
-				<td class='entryModule'><textarea name='<%=i%>ContentB'><%=description[1].trim()%></textarea></td>
+				<td class='entryModule'><textarea class="mustNotBeEmpty" name='<%=i%>ContentB'><%=description[1].trim()%></textarea></td>
 			</tr>
 		</table>
 	</div>
@@ -147,12 +149,11 @@
 		hinzuf&uuml;gen</button>
 	<button type="submit" value="saveModule" name="editModule">Modul
 		f&uuml;r Sitzung speichern</button>
-	<button type="submit" value="sendModule" name="editModule" disabled>Bearbeitetes
+	<button type="submit" value="sendModule" name="editModule" id="editModuleButton" disabled>Bearbeitetes
 		Modul einreichen</button>
 
 </form>
-<script type="text/javascript"
-	src="/SopraMMS/js/jquery.createnewmodule.js"></script>
-<script>
-	fieldsEmpty();
+<script type="text/javascript" src="/SopraMMS/js/jquery.editnewmodule.js"></script>
+<script>	
+enableSubmitButton();
 </script>
