@@ -132,7 +132,7 @@
 			<tr>
 				<td class='descriptionModule'><input name="<%=i%>TitleC"
 					type="text" value="<%=description[0].trim()%>"></td>
-				<td class='entryModule'><textarea name="<%=i%>ContentC"><%=description[1].trim()%></textarea></td>
+				<td class='entryModule'><textarea class="mustNotBeEmpty" name="<%=i%>ContentC"><%=description[1].trim()%></textarea></td>
 				<td class='buttonDeleteRow'>
 					<button type="submit" value="<%=i%>Delete" name="deleteRow">
 						<img src="/SopraMMS/images/deleteModuleEntry.png" />
