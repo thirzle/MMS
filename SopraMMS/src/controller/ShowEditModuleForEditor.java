@@ -50,6 +50,7 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		UserAdministration uAdmin = new UserAdministration();
 		LinkedList<Entry> entryList = new LinkedList<Entry>();
+		LinkedList<Entry> entryListForTypeC = new LinkedList<Entry>();
 		// speichert das ausgeählte Modul + Version
 		String selectedModule = null;
 		// ModulID steht an Stelle 0, Versionsnummer an Stelle 1
@@ -78,6 +79,7 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		Module approveModule = mAdmin.getModuleByID(moduleID, version);
 		entryList = (LinkedList<Entry>) mAdmin
 				.sortModuleEntryListByOrder(approveModule);
+		entryListForTypeC = (LinkedList<Entry>) mAdmin.sortModuleEntryListByOrder(approveModule);
 
 		String instituteID = approveModule.getInstituteID();
 
@@ -102,18 +104,23 @@ public class ShowEditModuleForEditor extends HttpServlet {
 				if (entry.getTitle().equals("Kürzel")) {
 					fieldsTypeA
 							.add(new String[] { "Kürzel", entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Titel")) {
 					fieldsTypeA
 							.add(new String[] { "Titel", entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Verantwortlicher")) {
 					fieldsTypeA.add(new String[] { "Verantwortlicher",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Turnus")) {
 					fieldsTypeA
 							.add(new String[] { "Turnus", entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Sprache")) {
 					fieldsTypeA.add(new String[] { "Sprache",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				}
 
 			}
@@ -122,7 +129,7 @@ public class ShowEditModuleForEditor extends HttpServlet {
 
 		} else {
 			fieldsTypeA.addAll((ArrayList<String[]>) session
-					.getAttribute("fieldsTypeAApprovet"));
+					.getAttribute("fieldsTypeAApprove"));
 		}
 
 		// For TypeD
@@ -154,6 +161,7 @@ public class ShowEditModuleForEditor extends HttpServlet {
 									"" + selfStudyList.get(i).getTime() });
 						}
 					}
+					entryListForTypeC.remove(entry);
 				}
 			}
 
@@ -168,18 +176,23 @@ public class ShowEditModuleForEditor extends HttpServlet {
 				if (entry.getTitle().equals("Inhalt")) {
 					fieldsTypeB
 							.add(new String[] { "Inhalt", entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Lernziele")) {
 					fieldsTypeB.add(new String[] { "Lernziele",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Literatur")) {
 					fieldsTypeB.add(new String[] { "Literatur",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Notenbildung")) {
 					fieldsTypeB.add(new String[] { "Notenbildung",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				} else if (entry.getTitle().equals("Prüfungsform")) {
 					fieldsTypeB.add(new String[] { "Prüfungsform",
 							entry.getContent() });
+					entryListForTypeC.remove(entry);
 				}
 			}
 
@@ -191,7 +204,12 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		}
 
 		// For TypeC
-		if (session.getAttribute("fieldsTypeCApprove") != null) {
+		if (session.getAttribute("fieldsTypeCApprove") == null) {
+			for (Entry entry : entryListForTypeC) {
+				fieldsTypeC.add(new String[] {entry.getTitle(), entry.getContent()});
+			}
+		}
+		else{
 			fieldsTypeC.addAll((ArrayList<String[]>) session
 					.getAttribute("fieldsTypeCApprove"));
 		}

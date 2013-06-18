@@ -12,29 +12,29 @@
 	<%
 		ArrayList<String[]> fieldsTypeA = (ArrayList) session.getAttribute("fieldsTypeAApprove");
 
-			ArrayList<String[]> fieldsTypeB = (ArrayList) session.getAttribute("fieldsTypeBApprove");
+		ArrayList<String[]> fieldsTypeB = (ArrayList) session.getAttribute("fieldsTypeBApprove");
 
-			ArrayList<String[]> fieldsTypeC = (ArrayList) session.getAttribute("fieldsTypeCApprove");
+		ArrayList<String[]> fieldsTypeC = (ArrayList) session.getAttribute("fieldsTypeCApprove");
 			
-			System.out.println("fieldsTypeC is empty: "+fieldsTypeC.isEmpty());
+		System.out.println("fieldsTypeC is empty: "+fieldsTypeC.isEmpty());
 
-			ArrayList<String[]> fieldsTypeD = (ArrayList) session.getAttribute("fieldsTypeDApprove");
+		ArrayList<String[]> fieldsTypeD = (ArrayList) session.getAttribute("fieldsTypeDApprove");
 			
-			String institute = (String) session.getAttribute("instituteListForApproveModule");
+		String institute = (String) session.getAttribute("instituteListForApproveModule");
 		
-			User user = (User) session.getAttribute("user");
-			LinkedList<String> institutes = (LinkedList<String>) user.getInstitute();
+		User user = (User) session.getAttribute("user");
+		LinkedList<String> institutes = (LinkedList<String>) user.getInstitute();
 
-			for (int i = 0; i < fieldsTypeA.size(); i++) {
-		String[] description = fieldsTypeA.get(i);
+		for (int i = 0; i < fieldsTypeA.size(); i++) {
+			String[] description = fieldsTypeA.get(i);
 	%>
 	<div class='moduleEntry'>
 		<table>
 			<tr>
 				<td class='descriptionModule'><%=description[0]%></td>
 				<td class='entryModule'><%=description[1].trim()%></td>
-				<td class='radioModule'><input type="radio"></td>
-				<button type="submit" value="approveEntry"+<%=description[0] %> name="approveModule">Freigeben</button>
+				<td><input type="radio" name="radioEffort+<%=description[0]%>" value="true"></td>
+				<td><input type="radio" name="radioEffort+<%=description[0]%>" value="false"></td> 
 			</tr>
 		</table>
 	</div>
@@ -79,8 +79,8 @@
 							
 						</table>
 					</div></td>
-				<td class="radioModule"><input type="radio"></td>
-				<button type="submit" value="approveEffortEntry" name="approveModule">Freigeben</button>
+				<td><input type="radio" name="radioZeitaufwand" value="true"></td>
+				<td><input type="radio" name="radioZeitaufwand" value="false"></td> 
 			</tr>
 
 		</table>
@@ -91,8 +91,8 @@
 			<tr>
 				<td class='descriptionModule'>Institut</td>
 				<td class='entryModule'><%=institute %></td>
-				<td class="radioModule"><input type="radio"></td>
-				<button type="submit" value="approveInstitute" name="approveModule">Freigeben</button>
+				<td><input type="radio" name="radioInstitute" value="true"></td>
+				<td><input type="radio" name="radioInstitute" value="false"></td> 
 			</tr>
 		</table>
 
@@ -107,8 +107,9 @@
 			<tr>
 				<td class='descriptionModule'><%=description[0]%></td>
 				<td class='entryModule'><%=description[1].trim()%></td>
-				<td class="radioModule"><input type="radio"></td>
-				<button type="submit" value="approveEntry"+<%=description[0] %> name="approveModule">Freigeben</button>
+				<td><input type="radio" name="radioEntryB+<%=description[0]%>" value="true"></td>
+				<td><input type="radio" name="radioEntryB+<%=description[0]%>" value="false"></td> 
+
 			</tr>
 		</table>
 	</div>
@@ -142,7 +143,8 @@
 		hinzuf&uuml;gen</button>
 	<button type="submit" value="saveModule" name="approveModule">Modul
 		f&uuml;r Sitzung speichern</button>
-	<button type="submit" value="sendModule" name="approveModule" disabled>Gesamtes Modul freigeben</button>
+	
+	<button type="submit" value="sendModule" name="approveModule" disabled>Einträge freigeben</button>
 
 </form>
 <script type="text/javascript"
