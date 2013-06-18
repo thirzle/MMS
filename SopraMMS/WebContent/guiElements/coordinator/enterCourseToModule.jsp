@@ -17,9 +17,6 @@ try {
 	if (list != null) {
 		entryList.addAll((List<Entry>) list);
 	}
-	
-		System.out.println("(enterCourseToModule.jsp): subjects="+subjects);
-		System.out.println("(enterCourseToModule.jsp): courses="+courses);
 %>
 <h1>Studiengang und Fach festlegen</h1>
 

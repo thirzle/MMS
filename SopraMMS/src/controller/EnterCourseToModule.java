@@ -48,26 +48,24 @@ public class EnterCourseToModule extends SessionCheck {
 		    if (button != null) {
 				if (button.equals("sendModule")) {
 				    
-					List<Course> obligatory = new ArrayList<Course>();
-				    List<Course> vote = new ArrayList<Course>();
+				    new ArrayList<Course>();
+				    new ArrayList<Course>();
 				    List<String> subjects = ma.getSubjects();
 				    List<Course> courses = ma.getCourses();
 				    List<Entry> entryList = (List<Entry>) session.getAttribute("showEntryListFromModule");
-				   
 				    String obligatoryModulSelect = request.getParameter("obligatoryModulSelect");
 				    String voteModuleSelect = request.getParameter("voteModuleSelect");
 				    String subject = request.getParameter("subjectSelect");
 	
 				    for (int i = 0; i < obligatoryModulSelect.length(); i++) {
-					obligatory.add(courses.get(Character.getNumericValue(obligatoryModulSelect.charAt(i))));
+					courses.get(Character.getNumericValue(obligatoryModulSelect.charAt(i))).setObligatory(true);
 				    }
 				    for (int i = 0; i < voteModuleSelect.length(); i++) {
-					vote.add(courses.get(Character.getNumericValue(voteModuleSelect.charAt(i))));
+					courses.get(Character.getNumericValue(voteModuleSelect.charAt(i))).setObligatory(false);
 				    }
 				    
-					entryList.add(new TextualEntry("Fach",5,subjects.get(Character.getNumericValue(subject.charAt(0)))));
-					entryList.add(new CourseEntry("Pflichtmodul",6, obligatory));
-					entryList.add(new CourseEntry("Wahlpflicht",7,vote));
+				    entryList.add(new TextualEntry("Fach",5,subjects.get(Character.getNumericValue(subject.charAt(0)))));
+				    entryList.add(new CourseEntry("Studiengänge",6, courses));
 					
 				    long moduleID = Long.parseLong(session.getAttribute("moduleID").toString());
 				    int version = Integer.parseInt(session.getAttribute("version").toString());
@@ -77,10 +75,8 @@ public class EnterCourseToModule extends SessionCheck {
 				    System.out.println(subjects.get(Character.getNumericValue(subject.charAt(0))));
 				    module.setSubject(subjects.get(Character.getNumericValue(subject.charAt(0))));
 				    ma.setCoursesToModule(module);
-				    
-				    
-				    session.setAttribute("content", "showModulesForCoordinator");
-				    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				  
+				    response.sendRedirect("/SopraMMS/ShowModuleOverviewForCoordinator");
 				}
 		    } else {
 		    	
