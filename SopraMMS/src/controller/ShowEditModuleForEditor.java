@@ -29,6 +29,16 @@ public class ShowEditModuleForEditor extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
+		
+		long moduleID = 0;
+		int version = 0;
+		// selectedModuleToApprove == null --> Aufruf von Buttons
+		if (request.getParameter("selectedModuleToApprove") == null) {
+			moduleID = (long) session.getAttribute("selectedModuleIDToApprove");
+			version = (int) session.getAttribute("selectedVersionToApprove");
+
+		}
+		
 		session.setAttribute("content", "showEditModuleForEditor");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
