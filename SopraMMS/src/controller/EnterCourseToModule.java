@@ -74,7 +74,8 @@ public class EnterCourseToModule extends SessionCheck {
 				    
 				    Module module = ma.getModuleByID(moduleID, version);
 				    module.setEntryList(entryList);
-				    module.setSubject(subject);
+				    System.out.println(subjects.get(Character.getNumericValue(subject.charAt(0))));
+				    module.setSubject(subjects.get(Character.getNumericValue(subject.charAt(0))));
 				    ma.setCoursesToModule(module);
 				    
 				    
