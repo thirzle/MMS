@@ -55,7 +55,8 @@ public class ModuleDBController {
 	public List<Module> getModules() {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT * FROM module";
+		query = "SELECT * FROM module AS m JOIN latestmodule AS l " +
+				"ON m.moduleID = l.moduleID AND m.version = l.version";
 
 		try {
 			statement = connection.createStatement();

@@ -9,6 +9,8 @@
 			<ul class="subNav">
 				<li><a href="/SopraMMS/ShowModuleOverviewForCoordinator">Module
 						fertigstellen</a></li>
+				<li><a href="">Module
+						bearbeiten</a></li>
 			</ul>
 		</div>
 	</ul>
