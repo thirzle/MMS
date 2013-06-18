@@ -331,8 +331,9 @@ public class ModuleDBController {
 					}
 
 				}
-			moduleList.addAll(getModulesOberviewBySupervisor(author, connection));
 			}
+			moduleList.addAll(getModulesOverviewBySupervisor(author, connection));
+			moduleList.addAll(getModulesOverviewByRepresentative(author, connection));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get modules by author: " + author);
@@ -343,7 +344,7 @@ public class ModuleDBController {
 	}
 	
 	
-	public List<Module> getModulesOberviewBySupervisor(String loginname, Connection connection){
+	public List<Module> getModulesOverviewBySupervisor(String loginname, Connection connection){
 		query = "SELECT supervisor FROM supervisor WHERE username = ?";
 		String supervisor = "no supervisor found";
 		LinkedList<Module> moduleList = new LinkedList<Module>();
@@ -385,6 +386,49 @@ public class ModuleDBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();	
 			System.out.println("Couldn't get modules by supervisor: " + supervisor);
+		}
+			return moduleList;
+	}
+	
+	
+	public List<Module> getModulesOverviewByRepresentative(String loginname, Connection connection){
+		query = "SELECT representative FROM user WHERE loginname = ?";
+		String representative = "no representative found";
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		LinkedList<Long> temp = new LinkedList<Long>();
+		Module module;
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				representative = resultSet.getString("representative");
+				query = "SELECT DISTINCT module.* FROM module WHERE modificationauthor = ?";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, representative);
+				resultSet = pStatement.executeQuery();
+				while (resultSet.next()) {
+					module = new Module(resultSet.getLong("moduleID"),
+							resultSet.getInt("version"),
+							resultSet.getString("name"),
+							resultSet.getDate("creationdate"),
+							resultSet.getDate("modificationdate"),
+							resultSet.getBoolean("approvalstatus"),
+							resultSet.getString("instituteID"),
+							resultSet.getString("subject"),
+							resultSet.getString("modificationauthor"));
+					// check for duplicate
+					if (!temp.contains(module.getModuleID())) {
+						moduleList.add(module);
+						System.out.println("test");
+						temp.add(module.getModuleID());
+					}
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();	
+			System.out.println("Couldn't get modules by representative: " + representative);
 		}
 			return moduleList;
 	}
@@ -516,15 +560,9 @@ public class ModuleDBController {
 						resultSet.getString("subject"),
 						resultSet.getString("modificationauthor"));
 				// check for duplicate
-				if (moduleList.isEmpty()) {
+				if (!temp.contains(module.getModuleID())) {
 					moduleList.add(module);
 					temp.add(module.getModuleID());
-				} else {
-					if (!temp.contains(module.getModuleID())) {
-						moduleList.add(module);
-						temp.add(module.getModuleID());
-					}
-
 				}
 			}
 			for (Module modules : moduleList) {
@@ -563,15 +601,9 @@ public class ModuleDBController {
 						resultSet.getString("subject"),
 						resultSet.getString("modificationauthor"));
 				// check for duplicate
-				if (moduleList.isEmpty()) {
+				if (!temp.contains(module.getModuleID())) {
 					moduleList.add(module);
 					temp.add(module.getModuleID());
-				} else {
-					if (!temp.contains(module.getModuleID())) {
-						moduleList.add(module);
-						temp.add(module.getModuleID());
-					}
-
 				}
 			}
 			for (Module modules : moduleList) {
@@ -611,15 +643,9 @@ public class ModuleDBController {
 						resultSet.getString("subject"),
 						resultSet.getString("modificationauthor"));
 				// check for duplicate
-				if (moduleList.isEmpty()) {
+				if (!temp.contains(module.getModuleID())) {
 					moduleList.add(module);
 					temp.add(module.getModuleID());
-				} else {
-					if (!temp.contains(module.getModuleID())) {
-						moduleList.add(module);
-						temp.add(module.getModuleID());
-					}
-
 				}
 			}
 			for (Module modules : moduleList) {
@@ -659,15 +685,9 @@ public class ModuleDBController {
 						resultSet.getString("subject"),
 						resultSet.getString("modificationauthor"));
 				// check for duplicate
-				if (moduleList.isEmpty()) {
+				if (!temp.contains(module.getModuleID())) {
 					moduleList.add(module);
 					temp.add(module.getModuleID());
-				} else {
-					if (!temp.contains(module.getModuleID())) {
-						moduleList.add(module);
-						temp.add(module.getModuleID());
-					}
-
 				}
 			}
 			for (Module modules : moduleList) {
@@ -707,15 +727,9 @@ public class ModuleDBController {
 						resultSet.getString("subject"),
 						resultSet.getString("modificationauthor"));
 				// check for duplicate
-				if (moduleList.isEmpty()) {
+				if (!temp.contains(module.getModuleID())) {
 					moduleList.add(module);
 					temp.add(module.getModuleID());
-				} else {
-					if (!temp.contains(module.getModuleID())) {
-						moduleList.add(module);
-						temp.add(module.getModuleID());
-					}
-
 				}
 			}
 			for (Module modules : moduleList) {
@@ -755,15 +769,9 @@ public class ModuleDBController {
 						resultSet.getString("subject"),
 						resultSet.getString("modificationauthor"));
 				// check for duplicate
-				if (moduleList.isEmpty()) {
+				if (!temp.contains(module.getModuleID())) {
 					moduleList.add(module);
 					temp.add(module.getModuleID());
-				} else {
-					if (!temp.contains(module.getModuleID())) {
-						moduleList.add(module);
-						temp.add(module.getModuleID());
-					}
-
 				}
 			}
 			for (Module modules : moduleList) {
@@ -1024,42 +1032,6 @@ public class ModuleDBController {
 		return true;
 	}
 
-	// // change an existing module
-	// public boolean changeModuleByModuleMananger(Module module, long
-	// moduleIDOld) {
-	// Connection connection = connect();
-	// long moduleID = module.getModuleID();
-	// String name = module.getName();
-	// Date creationDate = (Date) module.getCreationDate();
-	// Date modificationDate = (Date) module.getModificationDate();
-	// boolean approved = module.isApproved();
-	// String instituteID = module.getInstituteID();
-	//
-	// query = "UPDATE module"
-	// +
-	// "SET moduleID = ?, name = ?, creationDate = ?, modificationDate = ?, approved = ?, instituteID = ?"
-	// + "WHERE moduleID = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setLong(1, moduleID);
-	// pStatement.setString(2, name);
-	// pStatement.setDate(3, new Date(creationDate.getYear(),
-	// creationDate.getMonth(), creationDate.getDay()));
-	// pStatement.setDate(4, new Date(modificationDate.getYear(),
-	// modificationDate.getMonth(), modificationDate.getDay()));
-	// pStatement.setBoolean(5, approved);
-	// pStatement.setString(6, instituteID);
-	// pStatement.setLong(7, moduleIDOld);
-	// return pStatement.execute();
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out.println("Couldn't change module: " + moduleID);
-	// return false;
-	// } finally {
-	// close(connection);
-	// }
-	//
-	// }
 
 	// delete an existing module
 	public boolean deleteModule(Module module) {
@@ -1542,21 +1514,33 @@ public class ModuleDBController {
 		Date limit = new Date(today.getYear() - 2, today.getMonth(),
 				today.getDate());
 		Connection connection = connect();
-		query = "DELETE FROM module WHERE modificationdate < ? AND (moduleID, version) NOT IN (SELECT * FROM latestmodule)";
+		query = "SELECT moduleID, version FROM module WHERE modificationdate < ? AND (moduleID, version) NOT IN (SELECT * FROM latestmodule)";
 		try {
+			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
 			pStatement.setDate(1, limit);
-			pStatement.executeUpdate();
+			ResultSet resultSet = pStatement.executeQuery();
+			query = "DELETE FROM entry WHERE moduleID = ? AND moduleversion = ?";
+			while (resultSet.next()) {
+				pStatement.setLong(1, resultSet.getLong("moduleID"));
+				pStatement.setInt(2, resultSet.getInt("version"));
+				pStatement.execute();
+			}
+			query = "DELETE FROM module WHERE modificationdate < ? AND (moduleID, version) NOT IN (SELECT * FROM latestmodule)";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setDate(1, limit);
+			pStatement.execute();
+			connection.commit();
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			rollback(connection);
 			System.err.println("Couldn't clear Database");
 			return false;
 		} finally {
 			close(connection);
 		}
-
 	}
 	
 
