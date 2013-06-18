@@ -313,9 +313,7 @@ public class UserAdministration {
 		return listB;
 	}
 
-	public List<String> getCoursesByFaculty(String facultyID) {
-		return userDBController.getCoursesByFaculty(facultyID);
-	}
+
 
 	// News
 

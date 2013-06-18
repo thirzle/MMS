@@ -38,7 +38,7 @@ public class ShowEntries extends HttpServlet {
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		UserAdministration uAdmin = new UserAdministration();
 		LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
-		LinkedList<String> courses = (LinkedList) uAdmin.getCoursesByFaculty(facListID.getFirst());
+		LinkedList<String> courses = (LinkedList) mAdmin.getCourses();
 		
 //		all courses of faculty in courseArray[]
 		String[] courseArray = new String[2*courses.size()];

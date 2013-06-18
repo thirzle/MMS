@@ -61,8 +61,7 @@ public class GeneratePDF extends HttpServlet {
 		LinkedList<String> facListName = (LinkedList) uAdmin
 				.getAllFacultiesByName();
 		LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
-		LinkedList<String> courses = (LinkedList) uAdmin
-				.getCoursesByFaculty(facListID.getFirst());
+		LinkedList<String> courses = (LinkedList) mAdmin.getCourses();
 
 		// all courses of faculty in courseArray[]
 		String[] courseArray = new String[2 * courses.size()];
