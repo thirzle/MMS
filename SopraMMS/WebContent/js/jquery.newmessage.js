@@ -2,16 +2,16 @@ var mailaddress = $("#mailaddress");
 var mailto = $("#mailto");
 
 /**
- * due to the input(Wert) of the user in the text area, the function searches the appropriate email address in the drop
- * 
- * @param Wert
+ * due to the input(value) of the user in the text area, the function searches the appropriate email address in the drop.
+ * <p>
+ * @param value			value is the input the user makes in the text area
  * 
  */
-function Eingabe(Wert)
+function Eingabe(value)
 {
     for(i = 0; i < document.getElementById("mailaddress").options.length; i++)
     {
-        if(Wert.substr(0, Wert.length).toLowerCase() == document.getElementById("mailaddress").options[i].value.substr(0, Wert.length).toLowerCase() && Wert.length != 0)
+        if(value.substr(0, value.length).toLowerCase() == document.getElementById("mailaddress").options[i].value.substr(0, value.length).toLowerCase() && value.length != 0)
         {
             document.getElementById("mailaddress").options[i].selected = true;
             break;
@@ -20,7 +20,8 @@ function Eingabe(Wert)
 }
 
 /**
- * Transfers the content into the text field after selecting an email from the drop
+ * Transfers the content from the drop into the text field after selecting an email.
+ * 
  */
 function uebertrag(){
 	var text = document.getElementById("mailaddress").options[document.getElementById("mailaddress").selectedIndex].value;

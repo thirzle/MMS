@@ -19,6 +19,8 @@ import user.UserAdministration;
 
 /**
  * Servlet implementation class CurrVitae
+ * 
+ * @author Lisa
  */
 @WebServlet("/CurrVitae")
 public class CurrVitae extends SessionCheck implements Servlet {
@@ -40,6 +42,11 @@ public class CurrVitae extends SessionCheck implements Servlet {
 	}
 
 	/**
+	 * Stores the URL for the curriculum vitae and insert the event in the history.
+	 * <p>
+	 * Reads the user-entered URL of the request and stores it in the database.
+	 * This event is then entered under the user's name in the history. Finally, the main page is loaded.
+	 * <p>
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,7 +59,7 @@ public class CurrVitae extends SessionCheck implements Servlet {
 
 			uAdmin.setCurriculum(loginname, currurl);
 
-			session.setAttribute("currurl", currurl);
+			//session.setAttribute("currurl", currurl);
 
 			// insert into History "New CurricullumVitae"
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
