@@ -4,6 +4,7 @@ var mailto = $("#mailto");
 /**
  * due to the input(value) of the user in the text area, the function searches the appropriate email address in the drop.
  * <p>
+ * 
  * @param value			value is the input the user makes in the text area
  * 
  */

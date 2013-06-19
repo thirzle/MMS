@@ -30,6 +30,13 @@ public class ChangePassword extends HttpServlet {
 	}
 
 	/**
+	 * Checks whether the creation of a new password is allowed.
+	 * <p>
+	 * Reads the old as well as the two new passwords. Checks the equality of the two new passwords.
+	 * If they match, the old password is checked and the new password gets stored.
+	 * The event is recorded in the history.
+	 * <p>
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

@@ -26,7 +26,7 @@ public class EmailTelnet {
     private static String mail_address_from = "adresse@gmail.com";
     private static String mail_from = mail_address_from;
 
-    private static String mail_footer = "\n\nDo not reply...";
+    private static String mail_footer = "\n\nThis message was sent by the MMS of the University of Ulm. It is not possible to reply.";
 
     public static void send_mail(String mail_address_from, String mail_from, String subject, String mail_address_to, String content) throws IOException {
 	mail_transfer(mail_address_from, mail_from, mail_address_to, mail_address_to, subject, content + mail_footer);

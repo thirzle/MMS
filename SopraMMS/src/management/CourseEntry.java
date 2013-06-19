@@ -13,6 +13,7 @@ import java.util.List;
  * Several Constructors are given, but only a few are useful.
  * Use only Constructors that are marked as "useful". All other Constructors
  * are used for test purposes.
+ * 
  * @see Module
  * @see Entry
  * @author AJ, Teresa, add names here...

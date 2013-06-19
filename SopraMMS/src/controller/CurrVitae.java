@@ -46,7 +46,7 @@ public class CurrVitae extends SessionCheck implements Servlet {
 	 * <p>
 	 * Reads the user-entered URL of the request and stores it in the database.
 	 * This event is then entered under the user's name in the history. Finally, the main page is loaded.
-	 * <p>
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
