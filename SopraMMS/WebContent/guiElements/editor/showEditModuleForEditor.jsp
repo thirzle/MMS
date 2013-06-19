@@ -31,7 +31,7 @@
 			<tr>
 				<td class='descriptionModule'><%=description[0]%></td>
 				<td class='entryModule'><%=description[1].trim()%></td>
-				<td><input type="radio" name="radioEffort+<%=description[0]%>" value="true"></td>
+				<td><input type="radio" name="radioEntry+<%=description[0]%>" value="true"></td>
 				<td><input type="radio" name="radioEffort+<%=description[0]%>" value="false"></td> 
 			</tr>
 		</table>

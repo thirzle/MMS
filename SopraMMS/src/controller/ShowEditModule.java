@@ -72,15 +72,17 @@ public class ShowEditModule extends HttpServlet {
 			moduleID = Long.parseLong(selectedModuleArray[0]);
 			version = Integer.parseInt(selectedModuleArray[1]);
 			session.setAttribute("selectedModuleIDToEdit", moduleID);
-			session.setAttribute("selectedVersionToEdit", version);
+			session.setAttribute("selectedVersionToEdit", version);		
 		}
-
+		
 		Module editModule = mAdmin.getModuleByID(moduleID, version);
 		entryList = (LinkedList<Entry>) mAdmin
 				.sortModuleEntryListByOrder(editModule);
 		entryListForTypeC.addAll(entryList);
 
 		String institute = editModule.getInstituteID();
+
+		
 
 		// TypeA --> predefined mandatory fields Feld
 		// TypeB --> predefined mandatory fields Textarea
