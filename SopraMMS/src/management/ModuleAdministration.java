@@ -170,6 +170,10 @@ public class ModuleAdministration {
 	public List<Module> getModulesByAuthor(String loginname) {
 		return moduleDBController.getModulesOverviewByAuthor(loginname);
 	}
+	
+	public List<Module> getUnapprovedModulesByAuthor(String loginname) {
+		return moduleDBController.getUnapprovedModulesOverviewByAuthor(loginname);
+	}
 
 	public List<Module> getUnfinishedModulesOverview() {
 		return moduleDBController.getUnfinishedModulesOverview();
