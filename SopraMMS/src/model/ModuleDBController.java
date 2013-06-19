@@ -305,7 +305,9 @@ public class ModuleDBController {
 		LinkedList<Module> moduleList = new LinkedList<Module>();
 		LinkedList<Long> temp = new LinkedList<Long>();
 		Module module;
-		query = "SELECT DISTINCT module.* FROM module WHERE modificationauthor = ?";
+		query = "SELECT m.* FROM module AS m JOIN latestmodule AS l ON " +
+				"m.moduleID = l.moduleID AND m.version = l.version " +
+				"WHERE modificationauthor = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, author);
@@ -356,7 +358,9 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			if(resultSet.next()){
 				supervisor = resultSet.getString("supervisor");
-				query = "SELECT DISTINCT module.* FROM module WHERE modificationauthor = ?";
+				query = "SELECT m.* FROM module AS m JOIN latestmodule AS l ON " +
+						"m.moduleID = l.moduleID AND m.version = l.version " +
+						"WHERE modificationauthor = ?";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, supervisor);
 				resultSet = pStatement.executeQuery();
@@ -403,7 +407,9 @@ public class ModuleDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			if(resultSet.next()){
 				representative = resultSet.getString("representative");
-				query = "SELECT DISTINCT module.* FROM module WHERE modificationauthor = ?";
+				query = "SELECT m.* FROM module AS m JOIN latestmodule AS l ON " +
+						"m.moduleID = l.moduleID AND m.version = l.version " +
+						"WHERE modificationauthor = ?";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, representative);
 				resultSet = pStatement.executeQuery();
@@ -747,44 +753,33 @@ public class ModuleDBController {
 
 	// load all rejected modules (entries) by a chosen author
 	// tested: check
-	public List<Module> getRejectedModulesByAuthor(String author) {
-		Connection connection = connect();
-		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Long> temp = new LinkedList<Long>();
-		Module module;
-		query = "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
-				+ "WHERE declined = TRUE AND author = ?";
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, author);
-			ResultSet resultSet = pStatement.executeQuery();
-			while (resultSet.next()) {
-				module = new Module(resultSet.getLong("moduleID"),
-						resultSet.getInt("version"),
-						resultSet.getString("name"),
-						resultSet.getDate("creationdate"),
-						resultSet.getDate("modificationdate"),
-						resultSet.getBoolean("approvalstatus"),
-						resultSet.getString("instituteID"),
-						resultSet.getString("subject"),
-						resultSet.getString("modificationauthor"));
-				// check for duplicate
-				if (!temp.contains(module.getModuleID())) {
-					moduleList.add(module);
-					temp.add(module.getModuleID());
+	public List<Module> getUnapprovedModulesOverviewByAuthor(String author) {
+			Connection connection = connect();
+			LinkedList<Module> moduleList = new LinkedList<Module>();
+			query = "SELECT m.* FROM module AS m WHERE modificationauthor = ? " +
+					"AND m.approvalstatus = FALSE;";
+			try {
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, author);
+				ResultSet resultSet = pStatement.executeQuery();
+				while (resultSet.next()) {
+					moduleList.add(new Module(resultSet.getLong("moduleID"),
+							resultSet.getInt("version"),
+							resultSet.getString("name"),
+							resultSet.getDate("creationdate"),
+							resultSet.getDate("modificationdate"),
+							resultSet.getBoolean("approvalstatus"),
+							resultSet.getString("instituteID"),
+							resultSet.getString("subject"),
+							resultSet.getString("modificationauthor")));
 				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Couldn't get unapproved modules by author: " + author);
+			} finally {
+				close(connection);
 			}
-			for (Module modules : moduleList) {
-				modules.setEntryList(getEntryListOfModule(modules));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Couldn't get rejected modules by author: "
-					+ author);
-		} finally {
-			close(connection);
-		}
-		return moduleList;
+			return moduleList;
 	}
 
 	// get overview of unfinished modules for coordinator
