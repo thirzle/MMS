@@ -51,7 +51,6 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		UserAdministration uAdmin = new UserAdministration();
 		LinkedList<Entry> entryList = new LinkedList<Entry>();
-		LinkedList<Entry> entryListForTypeC = new LinkedList<Entry>();
 		boolean allEntriesApproved = true;
 		// speichert das ausgeählte Modul + Version
 		String selectedModule = null;
@@ -83,187 +82,17 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		Module approveModule = mAdmin.getModuleByID(moduleID, version);
 		entryList = (LinkedList<Entry>) mAdmin
 				.sortModuleEntryListByOrder(approveModule);
-		entryListForTypeC.addAll(entryList);
+		
+		System.out.println("ShowEditModuleForEditor################################");
+		for (Entry entry : entryList) {
+			System.out.println(entry.getTitle()+" approved: "+entry.isApproved());
+		}
 
 		String instituteID = approveModule.getInstituteID();
-
-		// TypeA --> predefined mandatory fields Feld
-		// TypeB --> predefined mandatory fields Textarea
-		// TypeC --> self defined fields Textarea
-		// TypeD --> predefined mandatory field Aufwand
-		ArrayList<String[]> fieldsTypeA = new ArrayList<>();
-		ArrayList<String[]> fieldsTypeB = new ArrayList<>();
-		ArrayList<String[]> fieldsTypeC = new ArrayList<>();
-		ArrayList<String[]> fieldsTypeD = new ArrayList<>();
-
-		// fill all fields with default values if the session attribute doesn't
-		// exist yet
-		// else copy the session attribute into the local attribute
-
-		// For TypA
-
-		if (session.getAttribute("fieldsTypeAApprove") == null) {
-			// Type A
-			for (Entry entry : entryList) {
-				if (entry.getTitle().equals("Kürzel")) {
-					fieldsTypeA
-							.add(new String[] { "Kürzel", entry.getContent() });
-					entryListForTypeC.remove(entry);
-				} else if (entry.getTitle().equals("Titel")) {
-					fieldsTypeA
-							.add(new String[] { "Titel", entry.getContent() });
-					entryListForTypeC.remove(entry);
-				} else if (entry.getTitle().equals("Verantwortlicher")) {
-					fieldsTypeA.add(new String[] { "Verantwortlicher",
-							entry.getContent() });
-					entryListForTypeC.remove(entry);
-				} else if (entry.getTitle().equals("Turnus")) {
-					fieldsTypeA
-							.add(new String[] { "Turnus", entry.getContent() });
-					entryListForTypeC.remove(entry);
-				} else if (entry.getTitle().equals("Sprache")) {
-					fieldsTypeA.add(new String[] { "Sprache",
-							entry.getContent() });
-					entryListForTypeC.remove(entry);
-				}
-
-			}
-
-			System.out.println("fieldsTypeAApprove");
-
-		} else {
-			fieldsTypeA.addAll((ArrayList<String[]>) session
-					.getAttribute("fieldsTypeAApprove"));
-		}
-
-		// For TypeD
-		if (session.getAttribute("fieldsTypeDApprove") == null) {
-			for (Entry entry : entryList) {
-				if (entry.getClass() == EffortEntry.class
-						&& entry.getTitle().equals("Zeitaufwand")) {
-					EffortEntry effortEntry = (EffortEntry) entry;
-					LinkedList<SelfStudy> selfStudyList = (LinkedList<SelfStudy>) effortEntry
-							.getSelfStudyList();
-
-					entryListForTypeC.remove(entry);
-					int selfStudySize = selfStudyList.size();
-					for (int i = 0; i < selfStudySize; i++) {
-						if (selfStudyList.get(i).getTitle()
-								.equals("Präsenzzeit")) {
-							fieldsTypeD.add(new String[] { "Präsenzzeit",
-									"" + selfStudyList.get(i).getTime() });
-						} else if (selfStudyList.get(i).getTitle()
-								.equals("Nacharbeitung")) {
-							fieldsTypeD.add(new String[] { "Nacharbeitung",
-									"" + selfStudyList.get(i).getTime() });
-						} else if (selfStudyList.get(i).getTitle()
-								.equals("Übungsaufgaben")) {
-							fieldsTypeD.add(new String[] { "Übungsaufgaben",
-									"" + selfStudyList.get(i).getTime() });
-						} else if (selfStudyList.get(i).getTitle()
-								.equals("Prüfung")) {
-							fieldsTypeD.add(new String[] { "Prüfung",
-									"" + selfStudyList.get(i).getTime() });
-						}
-					}
-				}
-			}
-
-		} else {
-			fieldsTypeD.addAll((ArrayList<String[]>) session
-					.getAttribute("fieldsTypeDApprove"));
-		}
-
-		// For TypeB
-		if (session.getAttribute("fieldsTypeBApprove") == null) {
-			for (Entry entry : entryList) {
-				if (entry.getTitle().equals("Inhalt")) {
-					fieldsTypeB
-							.add(new String[] { "Inhalt", entry.getContent() });
-					entryListForTypeC.remove(entry);
-				} else if (entry.getTitle().equals("Lernziele")) {
-					fieldsTypeB.add(new String[] { "Lernziele",
-							entry.getContent() });
-					entryListForTypeC.remove(entry);
-				} else if (entry.getTitle().equals("Literatur")) {
-					fieldsTypeB.add(new String[] { "Literatur",
-							entry.getContent() });
-					entryListForTypeC.remove(entry);
-				} else if (entry.getTitle().equals("Notenbildung")) {
-					fieldsTypeB.add(new String[] { "Notenbildung",
-							entry.getContent() });
-					entryListForTypeC.remove(entry);
-				} else if (entry.getTitle().equals("Prüfungsform")) {
-					fieldsTypeB.add(new String[] { "Prüfungsform",
-							entry.getContent() });
-					entryListForTypeC.remove(entry);
-				}
-			}
-
-			System.out.println("fieldsTypeBApprove");
-
-		} else {
-			fieldsTypeB.addAll((ArrayList<String[]>) session
-					.getAttribute("fieldsTypeBApprove"));
-		}
-
-		// For TypeC
-		if (session.getAttribute("fieldsTypeCApprove") == null) {
-			for (Entry entry : entryListForTypeC) {
-				fieldsTypeC.add(new String[] { entry.getTitle(),
-						entry.getContent() });
-			}
-		} else {
-			fieldsTypeC.addAll((ArrayList<String[]>) session
-					.getAttribute("fieldsTypeCApprove"));
-		}
-
-		// get parameters from request and add them to their particular list
-		// For TypeA
-		for (int i = 0; i < fieldsTypeA.size(); i++) {
-			String[] entry = fieldsTypeA.get(i);
-			if (request.getParameter(i + "ContentA") != null) {
-				entry[1] = request.getParameter(i + "ContentA").trim();
-			}
-		}
-		// For TypeD
-		for (int i = 0; i < fieldsTypeD.size(); i++) {
-			String[] entry = fieldsTypeD.get(i);
-			if (request.getParameter(i + "TitleD") != null) {
-				entry[0] = request.getParameter(i + "TitleD").trim();
-			}
-			if (request.getParameter(i + "ContentD") != null) {
-				entry[1] = request.getParameter(i + "ContentD").trim();
-			}
-		}
-
-		// For TypeB
-		for (int i = 0; i < fieldsTypeB.size(); i++) {
-			String[] entry = fieldsTypeB.get(i);
-			if (request.getParameter(i + "ContentB") != null) {
-				entry[1] = request.getParameter(i + "ContentB").trim();
-			}
-		}
-		// For TypeC
-		for (int i = 0; i < fieldsTypeC.size(); i++) {
-			String[] entry = fieldsTypeC.get(i);
-			if (request.getParameter(i + "TitleC") != null) {
-				entry[0] = request.getParameter(i + "TitleC").trim();
-			}
-			if (request.getParameter(i + "ContentC") != null) {
-				entry[1] = request.getParameter(i + "ContentC").trim();
-			}
-			fieldsTypeC.set(i, entry);
-		}
-
+		
 		if (request.getParameter("approveModule") != null) {
-			// add row
-			if (request.getParameter("approveModule").equals("addRow")) {
-				fieldsTypeC.add(new String[] { "", "" });
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-			}
 			// save module for this session
-			else if (request.getParameter("approveModule").equals("saveModule")) {
+			if (request.getParameter("approveModule").equals("saveModule")) {
 				System.out
 						.println("(ShowEditModuleForEditor.java): Modul für Sitzung gespeichert");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
@@ -275,42 +104,7 @@ public class ShowEditModuleForEditor extends HttpServlet {
 				LinkedList<Entry> entryListForNewModule = new LinkedList<>();
 				entryListForNewModule.addAll(entryList);
 
-				for (String[] strings : fieldsTypeA) {
-					TextualEntry entry = new TextualEntry(strings[0],
-							strings[1]);
-					entryListForNewModule.add(entry);
-				}
-
-				// save effort
-				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
-				EffortEntry effort = new EffortEntry("Präsenzzeit", pt);
-				List<SelfStudy> selfStudyList = new ArrayList<>();
-
-				for (int i = 1; i < fieldsTypeD.size(); i++) {
-					String[] entry = fieldsTypeD.get(i);
-					if (!(entry[0].equals("") || entry[1].equals(""))) {
-						selfStudyList.add(new SelfStudy(entry[0], Integer
-								.parseInt(entry[1])));
-					}
-				}
-				effort.setSelfStudyList(selfStudyList);
-				entryListForNewModule.add(effort);
-
-				// Textfelder speichern
-				for (String[] strings : fieldsTypeB) {
-					TextualEntry entry = new TextualEntry(strings[0],
-							strings[1]);
-					entryListForNewModule.add(entry);
-				}
-				for (String[] strings : fieldsTypeC) {
-					TextualEntry entry = new TextualEntry(strings[0],
-							strings[1]);
-					entryListForNewModule.add(entry);
-				}
-				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
-
-				// if the whole module isn't approved yet save changed in the
-				// existing module
+				//set new approvalstatus
 				for (Entry entry : entryList) {
 					// if the value of the button is true, set the status of
 					// this entry as approved
@@ -398,11 +192,8 @@ public class ShowEditModuleForEditor extends HttpServlet {
 						"Hat folgendes Modul freigegeben: " + title);
 			}
 		}
-		session.setAttribute("fieldsTypeAApprove", fieldsTypeA);
-		session.setAttribute("fieldsTypeBApprove", fieldsTypeB);
-		session.setAttribute("fieldsTypeCApprove", fieldsTypeC);
-		session.setAttribute("fieldsTypeDApprove", fieldsTypeD);
-		session.setAttribute("instituteListForApproveModule",
+		session.setAttribute("entryListForEditor", entryList);
+		session.setAttribute("instituteApproveModule",
 				mAdmin.getInstituteName(instituteID));
 
 		session.setAttribute("content", "showEditModuleForEditor");
