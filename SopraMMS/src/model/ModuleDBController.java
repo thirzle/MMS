@@ -303,8 +303,6 @@ public class ModuleDBController {
 	public List<Module> getModulesOverviewByAuthor(String author) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Long> temp = new LinkedList<Long>();
-		Module module;
 		query = "SELECT m.* FROM module AS m JOIN latestmodule AS l ON " +
 				"m.moduleID = l.moduleID AND m.version = l.version " +
 				"WHERE modificationauthor = ?";
@@ -313,7 +311,7 @@ public class ModuleDBController {
 			pStatement.setString(1, author);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				module = new Module(resultSet.getLong("moduleID"),
+				moduleList.add(new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -321,18 +319,7 @@ public class ModuleDBController {
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
 						resultSet.getString("subject"),
-						resultSet.getString("modificationauthor"));
-				// check for duplicate
-				if (moduleList.isEmpty()) {
-					moduleList.add(module);
-					temp.add(module.getModuleID());
-				} else {
-					if (!temp.contains(module.getModuleID())) {
-						moduleList.add(module);
-						temp.add(module.getModuleID());
-					}
-
-				}
+						resultSet.getString("modificationauthor")));
 			}
 			moduleList.addAll(getModulesOverviewBySupervisor(author, connection));
 			moduleList.addAll(getModulesOverviewByRepresentative(author, connection));
@@ -350,8 +337,6 @@ public class ModuleDBController {
 		query = "SELECT supervisor FROM supervisor WHERE username = ?";
 		String supervisor = "no supervisor found";
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Long> temp = new LinkedList<Long>();
-		Module module;
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
@@ -365,7 +350,7 @@ public class ModuleDBController {
 				pStatement.setString(1, supervisor);
 				resultSet = pStatement.executeQuery();
 				while (resultSet.next()) {
-					module = new Module(resultSet.getLong("moduleID"),
+					moduleList.add(new Module(resultSet.getLong("moduleID"),
 							resultSet.getInt("version"),
 							resultSet.getString("name"),
 							resultSet.getDate("creationdate"),
@@ -373,17 +358,7 @@ public class ModuleDBController {
 							resultSet.getBoolean("approvalstatus"),
 							resultSet.getString("instituteID"),
 							resultSet.getString("subject"),
-							resultSet.getString("modificationauthor"));
-					// check for duplicate
-					if (moduleList.isEmpty()) {
-						moduleList.add(module);
-						temp.add(module.getModuleID());
-					} else {
-						if (!temp.contains(module.getModuleID())) {
-							moduleList.add(module);
-							temp.add(module.getModuleID());
-						}
-					}
+							resultSet.getString("modificationauthor")));
 				}
 			}
 		} catch (SQLException e) {
@@ -399,8 +374,6 @@ public class ModuleDBController {
 		query = "SELECT representative FROM user WHERE loginname = ?";
 		String representative = "no representative found";
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Long> temp = new LinkedList<Long>();
-		Module module;
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
@@ -414,7 +387,7 @@ public class ModuleDBController {
 				pStatement.setString(1, representative);
 				resultSet = pStatement.executeQuery();
 				while (resultSet.next()) {
-					module = new Module(resultSet.getLong("moduleID"),
+					moduleList.add(new Module(resultSet.getLong("moduleID"),
 							resultSet.getInt("version"),
 							resultSet.getString("name"),
 							resultSet.getDate("creationdate"),
@@ -422,13 +395,7 @@ public class ModuleDBController {
 							resultSet.getBoolean("approvalstatus"),
 							resultSet.getString("instituteID"),
 							resultSet.getString("subject"),
-							resultSet.getString("modificationauthor"));
-					// check for duplicate
-					if (!temp.contains(module.getModuleID())) {
-						moduleList.add(module);
-						System.out.println("test");
-						temp.add(module.getModuleID());
-					}
+							resultSet.getString("modificationauthor")));
 				}
 			}
 		} catch (SQLException e) {
@@ -442,16 +409,16 @@ public class ModuleDBController {
 
 	// get all versions of specified module
 	// tested: check
-	public Module getAllVersionsOfModule(long moduleID) {
+	public List<Module> getAllVersionsOfModule(long moduleID) {
 		Connection connection = connect();
-		Module module = null;
+		LinkedList<Module> versions = new LinkedList<Module>();
 		query = "SELECT * FROM module WHERE moduleID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(1, moduleID);
 			ResultSet resultSet = pStatement.executeQuery();
-			if (resultSet.next()) {
-				module = new Module(resultSet.getLong("moduleID"),
+			while (resultSet.next()) {
+				versions.add(new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -459,7 +426,7 @@ public class ModuleDBController {
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
 						resultSet.getString("subject"),
-						resultSet.getString("modificationauthor"));
+						resultSet.getString("modificationauthor")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -467,7 +434,7 @@ public class ModuleDBController {
 		} finally {
 			close(connection);
 		}
-		return module;
+		return versions;
 	}
 
 	// get specified module
@@ -945,6 +912,104 @@ public class ModuleDBController {
 			close(connection);
 		}
 	}
+	
+	
+	public boolean editRejectedModule(Module module) {
+		Connection connection = connect();
+		List<Entry> entryList = module.getEntryList();
+		CourseEntry courseEntry = null;
+		TextualEntry textualEntry = null;
+		EffortEntry effortEntry = null;
+		query = "UPDATE module SET name = ?, modificationdate = ?, instituteID = ? WHERE moduleID = ? AND version = ?;";
+		try {
+			// update basic module
+			connection.setAutoCommit(false);
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, module.getName());
+			pStatement.setDate(2, (java.sql.Date) module.getModificationDate());
+			pStatement.setString(3, module.getInstituteID());
+			pStatement.setLong(4, module.getModuleID());
+			pStatement.setInt(5, module.getVersion());
+			pStatement.executeUpdate();
+
+			// update basic entries
+			query = "UPDATE entry SET author = ?, title = ? rejected = FALSE WHERE entryID = ? AND moduleID = ? AND moduleversion = ?";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, module.getModificationauthor());
+			pStatement.setLong(4, module.getModuleID());
+			pStatement.setInt(5, module.getVersion());
+			for (Entry entry : entryList) {
+				pStatement.setString(2, entry.getTitle());
+				pStatement.setLong(3, entry.getEntryID());
+				pStatement.executeUpdate();
+			}
+
+			// update course entry
+			// find the course entry
+			for (Entry entry : module.getEntryList()) {
+				if (entry.getClass() == CourseEntry.class) {
+					courseEntry = (CourseEntry) entry;
+				}
+			}
+			if (courseEntry != null) {
+				// update courses
+				query = "UPDATE courseentry SET courseID = ?, degree = ?, obligatory = ? WHERE entryID = ?";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(4, courseEntry.getEntryID());
+				for (Course course : courseEntry.getCourses()) {
+					pStatement.setString(1, course.getCourseID());
+					pStatement.setString(2, course.getDegree());
+					pStatement.setBoolean(3, course.isObligatory());
+					pStatement.executeUpdate();
+				}
+			}
+
+			// update textual entries
+			query = "UPDATE textualentry SET text = ? WHERE entryID = ?";
+			pStatement = connection.prepareStatement(query);
+			for (Entry entry : entryList) {
+				if (entry.getClass() == TextualEntry.class) {
+					textualEntry = (TextualEntry) entry;
+					pStatement.setString(1, textualEntry.getContent());
+					pStatement.setLong(2, textualEntry.getEntryID());
+					pStatement.executeUpdate();
+				}
+			}
+
+			// update effort entry
+			query = "UPDATE effortentry SET presencetime = ? WHERE entryID = ?";
+			pStatement = connection.prepareStatement(query);
+			for (Entry entry : entryList) {
+				if (entry.getClass() == EffortEntry.class) {
+					effortEntry = (EffortEntry) entry;
+					pStatement.setInt(1, effortEntry.getTime());
+					pStatement.setLong(2, effortEntry.getEntryID());
+					pStatement.executeUpdate();
+				}
+			}
+			if (effortEntry != null) {
+				query = "UPDATE selfstudy SET title = ?, time = ? WHERE entryID = ? AND selfstudyID = ?";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(3, effortEntry.getEntryID());
+				for (SelfStudy study : effortEntry.getSelfStudyList()) {
+					pStatement.setString(1, study.getTitle());
+					pStatement.setInt(2, study.getTime());
+					pStatement.setLong(4, study.getSelfstudyID());
+					pStatement.executeUpdate();
+				}
+			}
+			connection.commit();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't update module: " + module.getName());
+			rollback(connection);
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
 	
 	public List<String> getCoursesByFaculty(String facultyID) {
 		Connection connection = connect();

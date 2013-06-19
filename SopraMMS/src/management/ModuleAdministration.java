@@ -174,6 +174,10 @@ public class ModuleAdministration {
 	public List<Module> getUnapprovedModulesByAuthor(String loginname) {
 		return moduleDBController.getUnapprovedModulesOverviewByAuthor(loginname);
 	}
+	
+	public List<Module> getVersionsOfModule(long moduleID) {
+		return moduleDBController.getAllVersionsOfModule(moduleID);
+	}
 
 	public List<Module> getUnfinishedModulesOverview() {
 		return moduleDBController.getUnfinishedModulesOverview();

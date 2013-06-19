@@ -1,6 +1,6 @@
 
 <link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
-<%@page import="management.Module" import="java.util.LinkedList"%>
+<%@page import="management.Module" import="management.Entry" import="java.util.LinkedList"%>
 <%
 	LinkedList<Module> moduleList = (LinkedList) session.getAttribute("moduleListForModulemanager");
 	session.removeAttribute("moduleListForModulemanager");
@@ -47,10 +47,21 @@
 			<td><%=module.getModificationDate()%></td>
 			<td>
 				<%
+					boolean rejected = false;
 					if (module.isApproved()) {
 							out.println("Freigegeben");
 						} else {
-							out.println("Offen");
+							for(Entry entry: module.getEntryList()){
+								if(entry.isRejected()){
+									rejected = true;
+									break;
+								}
+							}
+							if(rejected){
+								out.println("Abgelehnt");
+							} else {
+								out.println("Offen");
+							}
 						}
 				%>
 			</td>
@@ -62,5 +73,10 @@
 </table>
 	<button type="submit" name="editButton" value="editButton">Modul bearbeiten</button>
 </form>
+<form name="showVersions" action="" method="get">
+	<button type="submit" name="showVersionsButton" value="showVersionsButton">Alle
+		Versionen anzeigen</button>
+</form>
+
 <script type="text/javascript" src="/SopraMMS/js/jquery.showModules.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
