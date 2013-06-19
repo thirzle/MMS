@@ -37,6 +37,8 @@ public class ChangePassword extends HttpServlet {
 	 * The event is recorded in the history.
 	 * <p>
 	 * 
+	 * @see UserAdministration
+	 * @see User
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
