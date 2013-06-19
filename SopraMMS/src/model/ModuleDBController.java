@@ -93,7 +93,7 @@ public class ModuleDBController {
 	}
 
 	/**
-	 * loads all entries of a specified module
+	 * loads all entries of a specified module.
 	 * 
 	 * @param module
 	 * @return
