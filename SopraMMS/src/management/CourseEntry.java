@@ -213,4 +213,24 @@ public class CourseEntry extends Entry {
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
+	
+	public String obligatoryCoursesToString(){
+		StringBuilder sb = new StringBuilder();
+		for (Course c : courses) {
+			if(c.isObligatory()){
+				sb.append(c.toString()+"\n");
+			}
+		}
+		return sb.toString();
+	}
+	
+	public String necessaryCoursesToString(){
+		StringBuilder sb = new StringBuilder();
+		for (Course c : courses) {
+			if(!c.isObligatory()){
+				sb.append(c.toString()+"\n");
+			}
+		}
+		return sb.toString();
+	}
 }

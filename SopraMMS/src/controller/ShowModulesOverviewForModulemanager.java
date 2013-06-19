@@ -20,39 +20,49 @@ import user.User;
 @WebServlet("/ShowModulesOverviewForModulemanager")
 public class ShowModulesOverviewForModulemanager extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ShowModulesOverviewForModulemanager() {
-
-        super();
-		System.out.println("ShowModulesOverviewForModulemanager");
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public ShowModulesOverviewForModulemanager() {
+
+		super();
+		System.out.println("ShowModulesOverviewForModulemanager");
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
 		System.out.println("ShowModulesOverviewForModulemanager");
 		HttpSession session = request.getSession();
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		User user = (User) session.getAttribute("user");
-		
-//		TODO getModulesOverview
+
+		// TODO getModulesOverview
 		List<Module> moduleList = mAdmin.getModulesByAuthor(user.getLogin());
 
 		session.setAttribute("moduleListForModulemanager", moduleList);
 		session.setAttribute("content", "showModulesForModulemanager");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+
+		session.removeAttribute("fieldsTypeAEdit");
+		session.removeAttribute("fieldsTypeBEdit");
+		session.removeAttribute("fieldsTypeCEdit");
+		session.removeAttribute("fieldsTypeDEdit");
+		session.removeAttribute("fieldsTypeEEdit");
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 

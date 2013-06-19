@@ -209,5 +209,10 @@ public class EffortEntry extends Entry {
 	}
 	return sb.toString();
     }
+    
+    public int getPresenceTime()
+    {
+    	return presenceTime;
+    }
 
 }

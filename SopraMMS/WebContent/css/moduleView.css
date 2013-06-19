@@ -77,3 +77,7 @@ table {
 .informationAboutModule td {
 	width: 225px;
 }
+
+notEditable {
+	color: gray;
+}

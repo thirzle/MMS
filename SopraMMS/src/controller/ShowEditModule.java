@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import management.CourseEntry;
 import management.EffortEntry;
 import management.Entry;
 import management.Module;
@@ -85,16 +86,20 @@ public class ShowEditModule extends HttpServlet {
 		// TypeB --> predefined mandatory fields Textarea
 		// TypeC --> self defined fields Textarea
 		// TypeD --> predefined mandatory field Aufwand
+		// TypeE --> field
 		ArrayList<String[]> fieldsTypeA = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeB = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeC = new ArrayList<>();
 		ArrayList<String[]> fieldsTypeD = new ArrayList<>();
+		ArrayList<String[]> fieldsTypeE = new ArrayList<>();
 
-		//fill all fields with default values if the session attribute doesn't exist yet
-		//else copy the session attribute into the local attribute
+		ArrayList<Entry> deleteFields = new ArrayList<>();
+			
+		// fill all fields with default values if the session attribute doesn't
+		// exist yet
+		// else copy the session attribute into the local attribute
 
 		// For TypeA
-
 		if (session.getAttribute("fieldsTypeAEdit") == null) {
 			// Type A
 			for (Entry entry : entryList) {
@@ -102,22 +107,32 @@ public class ShowEditModule extends HttpServlet {
 					fieldsTypeA
 							.add(new String[] { "Kürzel", entry.getContent() });
 					entryListForTypeC.remove(entry);
+					deleteFields.add(entry);
 				} else if (entry.getTitle().equals("Titel")) {
 					fieldsTypeA
 							.add(new String[] { "Titel", entry.getContent() });
 					entryListForTypeC.remove(entry);
+					deleteFields.add(entry);
 				} else if (entry.getTitle().equals("Verantwortlicher")) {
 					fieldsTypeA.add(new String[] { "Verantwortlicher",
 							entry.getContent() });
 					entryListForTypeC.remove(entry);
+					deleteFields.add(entry);
 				} else if (entry.getTitle().equals("Turnus")) {
 					fieldsTypeA
 							.add(new String[] { "Turnus", entry.getContent() });
 					entryListForTypeC.remove(entry);
+					deleteFields.add(entry);
 				} else if (entry.getTitle().equals("Sprache")) {
 					fieldsTypeA.add(new String[] { "Sprache",
 							entry.getContent() });
 					entryListForTypeC.remove(entry);
+					deleteFields.add(entry);
+				} else if (entry.getTitle().equals("Prüfungsform")) {
+					fieldsTypeB.add(new String[] { "Prüfungsform",
+							entry.getContent() });
+					entryListForTypeC.remove(entry);
+					deleteFields.add(entry);
 				}
 
 			}
@@ -127,6 +142,25 @@ public class ShowEditModule extends HttpServlet {
 		} else {
 			fieldsTypeA.addAll((ArrayList<String[]>) session
 					.getAttribute("fieldsTypeAEdit"));
+		}
+
+		// For TypeE
+		if (session.getAttribute("fieldsTypeEEdit") == null) {
+			if( editModule.getSubject()!=null){
+			fieldsTypeE.add(new String[] { "Fach", editModule.getSubject() });}
+			CourseEntry courseEntry = null;
+			for (Entry entry : entryList) {
+				if (entry.getClass().equals(CourseEntry.class)) {
+					courseEntry = (CourseEntry) entry;
+					deleteFields.add(entry);
+				}
+			}
+			if (courseEntry != null) {
+				fieldsTypeE.add(new String[] { "Plichtmodul",
+						courseEntry.necessaryCoursesToString() });
+				fieldsTypeE.add(new String[] { "Wahlplichtmodul",
+						courseEntry.obligatoryCoursesToString() });
+			}
 		}
 
 		// For TypeD
@@ -140,30 +174,35 @@ public class ShowEditModule extends HttpServlet {
 
 					entryListForTypeC.remove(entry);
 					int selfStudySize = selfStudyList.size();
-					for (int i = 0; i < selfStudySize; i++) {
-						if (selfStudyList.get(i).getTitle()
-								.equals("Präsenzzeit")) {
-							fieldsTypeD.add(new String[] { "Präsenzzeit",
-									"" + selfStudyList.get(i).getTime() });
-						} else if (selfStudyList.get(i).getTitle()
-								.equals("Nacharbeitung")) {
-							fieldsTypeD.add(new String[] { "Nacharbeitung",
-									"" + selfStudyList.get(i).getTime() });
-						} else if (selfStudyList.get(i).getTitle()
-								.equals("Übungsaufgaben")) {
-							fieldsTypeD.add(new String[] { "Übungsaufgaben",
-									"" + selfStudyList.get(i).getTime() });
-						} else if (selfStudyList.get(i).getTitle()
-								.equals("Prüfung")) {
-							fieldsTypeD.add(new String[] { "Prüfung",
-									"" + selfStudyList.get(i).getTime() });
-						}
+					fieldsTypeD.add(new String[] {"Präsenzzeit",effortEntry.getPresenceTime()+""});
+					for (SelfStudy selfStudy : selfStudyList) {
+						fieldsTypeD.add(new String[]{selfStudy.getTitle(),selfStudy.getTime()+""});
 					}
+//					for (int i = 0; i < selfStudySize; i++) {
+//						if (selfStudyList.get(i).getTitle()
+//								.equals("Präsenzzeit")) {
+//							fieldsTypeD.add(new String[] { "Präsenzzeit",
+//									"" + selfStudyList.get(i).getTime() });
+//						} else if (selfStudyList.get(i).getTitle()
+//								.equals("Nacharbeitung")) {
+//							fieldsTypeD.add(new String[] { "Nacharbeitung",
+//									"" + selfStudyList.get(i).getTime() });
+//						} else if (selfStudyList.get(i).getTitle()
+//								.equals("Übungsaufgaben")) {
+//							fieldsTypeD.add(new String[] { "Übungsaufgaben",
+//									"" + selfStudyList.get(i).getTime() });
+//						} else if (selfStudyList.get(i).getTitle()
+//								.equals("Prüfung")) {
+//							fieldsTypeD.add(new String[] { "Prüfung",
+//									"" + selfStudyList.get(i).getTime() });
+//						}
+//					}
 					if (selfStudySize < 5) {
 						for (int i = selfStudySize; i < 5; i++) {
 							fieldsTypeD.add(new String[] { "", "" });
 						}
 					}
+					deleteFields.add(entry);
 				}
 			}
 
@@ -179,22 +218,22 @@ public class ShowEditModule extends HttpServlet {
 					fieldsTypeB
 							.add(new String[] { "Inhalt", entry.getContent() });
 					entryListForTypeC.remove(entry);
+					deleteFields.add(entry);
 				} else if (entry.getTitle().equals("Lernziele")) {
 					fieldsTypeB.add(new String[] { "Lernziele",
 							entry.getContent() });
 					entryListForTypeC.remove(entry);
+					deleteFields.add(entry);
 				} else if (entry.getTitle().equals("Literatur")) {
 					fieldsTypeB.add(new String[] { "Literatur",
 							entry.getContent() });
 					entryListForTypeC.remove(entry);
+					deleteFields.add(entry);
 				} else if (entry.getTitle().equals("Notenbildung")) {
 					fieldsTypeB.add(new String[] { "Notenbildung",
 							entry.getContent() });
 					entryListForTypeC.remove(entry);
-				} else if (entry.getTitle().equals("Prüfungsform")) {
-					fieldsTypeB.add(new String[] { "Prüfungsform",
-							entry.getContent() });
-					entryListForTypeC.remove(entry);
+					deleteFields.add(entry);
 				}
 			}
 
@@ -205,10 +244,21 @@ public class ShowEditModule extends HttpServlet {
 					.getAttribute("fieldsTypeBEdit"));
 		}
 
+		// Delete necesarry Fields
+		for (Entry e0 : deleteFields) {
+			for (Entry e1 : entryList) {
+				if(e1.equals(e0)){
+					entryList.remove(e1);
+					break;
+				}
+			}
+		}
+		
 		// For TypeC
 		if (session.getAttribute("fieldsTypeCApprove") == null) {
 			for (Entry entry : entryListForTypeC) {
-				fieldsTypeC.add(new String[] {entry.getTitle(), entry.getContent()});
+				fieldsTypeC.add(new String[] { entry.getTitle(),
+						entry.getContent() });
 			}
 		}
 
@@ -256,7 +306,7 @@ public class ShowEditModule extends HttpServlet {
 				fieldsTypeC.add(new String[] { "", "" });
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
-			//save module for this session
+			// save module for this session
 			else if (request.getParameter("editModule").equals("saveModule")) {
 				System.out
 						.println("(ShowEditModule.java): Modul für Sitzung gespeichert");
@@ -356,6 +406,7 @@ public class ShowEditModule extends HttpServlet {
 		session.setAttribute("fieldsTypeBEdit", fieldsTypeB);
 		session.setAttribute("fieldsTypeCEdit", fieldsTypeC);
 		session.setAttribute("fieldsTypeDEdit", fieldsTypeD);
+		session.setAttribute("fieldsTypeEEdit", fieldsTypeE);
 	}
 
 	/**
