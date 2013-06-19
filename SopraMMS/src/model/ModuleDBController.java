@@ -35,7 +35,12 @@ public class ModuleDBController {
 	private static PreparedStatement pStatement = null;
 	private static Statement statement = null;
 
-	// establish connection to database
+	/**
+	 * establishes connection to database.
+	 * 
+	 * @return
+	 * @see Connection
+	 */
 	public Connection connect() {
 		Connection connection = null;
 		try {
@@ -51,7 +56,13 @@ public class ModuleDBController {
 		return connection;
 	}
 
-	// load all available modules
+	/**
+	 * loads all available modules.
+	 * <p>
+	 * gets all available modules from the database and stores them in a {@link List} of modules.
+	 * @throws			SQLException
+	 * @return			list of modules
+	 */
 	public List<Module> getModules() {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
@@ -81,7 +92,13 @@ public class ModuleDBController {
 		return moduleList;
 	}
 
-	// load all entries of a specified module
+	/**
+	 * loads all entries of a specified module
+	 * 
+	 * @param module
+	 * @return
+	 * @see Module
+	 */
 	public List<Entry> getEntryListOfModule(Module module) {
 		Connection connection = connect();
 		CourseEntry courses = null;
