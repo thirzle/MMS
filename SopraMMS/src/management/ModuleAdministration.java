@@ -149,6 +149,9 @@ public class ModuleAdministration {
 		String insituteID = institut;
 		List<Entry> entryList = list;
 		String subject = null;
+		for (Entry entry : entryList) {
+			entry.setNewEntryID();
+		}
 		String modificationauthor = author;
 		Module module = new Module(moduleID, version, name, creationdate,
 				modificationDate, approved, insituteID, entryList, subject,

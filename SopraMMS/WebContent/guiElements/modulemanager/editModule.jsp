@@ -9,23 +9,23 @@
 
 <h1>Modul bearbeiten</h1>
 
-<form action="/SopraMMS/ShowEditModule" method="get">
+<form action="/SopraMMS/EditModule" method="get">
 	<%
 		ArrayList<String[]> fieldsTypeA = (ArrayList) session.getAttribute("fieldsTypeAEdit");
 
-			ArrayList<String[]> fieldsTypeB = (ArrayList) session.getAttribute("fieldsTypeBEdit");
+		ArrayList<String[]> fieldsTypeB = (ArrayList) session.getAttribute("fieldsTypeBEdit");
 
-			ArrayList<String[]> fieldsTypeC = (ArrayList) session.getAttribute("fieldsTypeCEdit");
+		ArrayList<String[]> fieldsTypeC = (ArrayList) session.getAttribute("fieldsTypeCEdit");
 
-			ArrayList<String[]> fieldsTypeD = (ArrayList) session.getAttribute("fieldsTypeDEdit");
-			
-			ArrayList<String[]> fieldsTypeE = (ArrayList) session.getAttribute("fieldsTypeEEdit");
-			
-			User user = (User) session.getAttribute("user");
-			LinkedList<String> institutes = (LinkedList<String>) user.getInstitute();
+		ArrayList<String[]> fieldsTypeD = (ArrayList) session.getAttribute("fieldsTypeDEdit");
+		
+		ArrayList<String[]> fieldsTypeE = (ArrayList) session.getAttribute("fieldsTypeEEdit");
+		
+		User user = (User) session.getAttribute("user");
+		LinkedList<String> institutes = (LinkedList<String>) user.getInstitute();
 
-			for (int i = 0; i < fieldsTypeA.size(); i++) {
-		String[] description = fieldsTypeA.get(i);
+		for (int i = 0; i < fieldsTypeA.size(); i++) {
+			String[] description = fieldsTypeA.get(i);
 	%>
 	<div class='moduleEntry'>
 		<table>
@@ -43,21 +43,19 @@
 
 	<%
 		for (int i =0;i<fieldsTypeE.size();i++){ 
-			String[] description = fieldsTypeE.get(i);
+		String[] description = fieldsTypeE.get(i);
 	%>
 
 	<div class='moduleEntry'>
 		<table>
 			<tr>
 				<td class='descriptionModule'><%=description[0]%></td>
-				<td class='entryModule'><notEditable>
-					<%
-						String list[]=description[1].split("\n");
-									for(String s:list){
-										out.println(""+s+"<br>");
-									}
-					%>
-					</notEditable></td>
+				<td class='entryModule'><notEditable> <%
+ 	String list[]=description[1].split("\n");
+           							for(String s:list){
+           								out.println(""+s+"<br>");
+           							}
+ %> </notEditable></td>
 			</tr>
 		</table>
 	</div>
@@ -76,14 +74,13 @@
 							<tr>
 								<%
 									String[] pt = new String[2];
-															if(fieldsTypeD.size() > 0){
-																pt = fieldsTypeD.get(0);
-																System.out.println("pt: "+pt[0] + " " + pt[1]);
-															}
-															else{
-															    pt[0] = "empty";
-															    pt[1] = "empty";
-															}
+								if(fieldsTypeD.size() > 0){
+								pt = fieldsTypeD.get(0);
+								}else
+								{
+								pt[0] = "empty";
+								pt[1] = "empty";
+								}
 								%>
 								<td class="effortEntryTitel">Präsenzzeit</td>
 								<td>:</td>
@@ -92,10 +89,8 @@
 							</tr>
 
 							<%
-								System.out.println("nach <tr>");
-												
-													for (int i = 1; i < fieldsTypeD.size(); i++) {
-														String[] description = fieldsTypeD.get(i);
+								for (int i = 1; i < fieldsTypeD.size(); i++) {
+							String[] description = fieldsTypeD.get(i);
 							%>
 							<tr>
 								<td class="effortEntryTitel"><input name='<%=i%>TitleD'
@@ -122,7 +117,7 @@
 					id="instituteSelect">
 						<%
 							ModuleAdministration mAdmin = new ModuleAdministration();	
-										for (int i = 0; i < institutes.size(); i++) {
+																																																						for (int i = 0; i < institutes.size(); i++) {
 						%>
 						<option value="<%=institutes.get(i)%>"><%=mAdmin.getInstituteName(institutes.get(i))%></option>
 
@@ -137,7 +132,7 @@
 
 	<%
 		for (int i = 0; i < fieldsTypeB.size(); i++) {
-			String[] description = fieldsTypeB.get(i);
+		String[] description = fieldsTypeB.get(i);
 	%>
 	<div class='moduleEntry'>
 		<table>
@@ -150,11 +145,11 @@
 	</div>
 	<%
 		}
-		for (int i = 0; i < fieldsTypeC.size(); i++) {
-			String[] description = new String[2];
-			description = fieldsTypeC.get(i);
-			System.out.println("description");
-			System.out.println(description[0]+" "+description[1]);
+			for (int i = 0; i < fieldsTypeC.size(); i++) {
+		String[] description = new String[2];
+		description = fieldsTypeC.get(i);
+		System.out.println("description");
+		System.out.println(description[0]+" "+description[1]);
 	%>
 	<div class='moduleEntry'>
 		<table>
