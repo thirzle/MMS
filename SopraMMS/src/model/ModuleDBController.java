@@ -60,8 +60,9 @@ public class ModuleDBController {
 	 * loads all available modules.
 	 * <p>
 	 * gets all available modules from the database and stores them in a {@link List} of modules.
-	 * @throws			SQLException
-	 * @return			list of modules
+	 * 
+	 * @return			List of modules
+	 * @see Module
 	 */
 	public List<Module> getModules() {
 		Connection connection = connect();
@@ -93,11 +94,20 @@ public class ModuleDBController {
 	}
 
 	/**
-	 * loads all entries of a specified module.
+	 * Loads all entries of a specified module.
+	 * <p>
+	 * Gets a module and with his "moduleID" and his "module version"
+	 * it gets the appropriate entries the module consists of.
+	 * These are returned in the form of a {@link Module#entryList}.
 	 * 
-	 * @param module
-	 * @return
+	 * @param module		The name of the Module.
+	 * @return				The entryList of the Module.
 	 * @see Module
+	 * @see Entry
+	 * @see Course
+	 * @see CourseEntry
+	 * @see SelfStudy
+	 * @see TextualEntry
 	 */
 	public List<Entry> getEntryListOfModule(Module module) {
 		Connection connection = connect();
@@ -200,8 +210,17 @@ public class ModuleDBController {
 		return module.getEntryList();
 	}
 
-	// load all available modules by a chosen institute
+	
 	// tested: check
+	/**
+	 * Load all available modules by a chosen institute.
+	 * <p>
+	 * Gets a module and with the instituteID from the given institute.
+	 * 
+	 * @param institute		The institute of this Module.
+	 * @return				List of modules
+	 * @see Module
+	 */
 	public List<Module> getModulesByInstitute(String institute) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
@@ -236,6 +255,11 @@ public class ModuleDBController {
 
 	// load all available modules by a chosen course
 	// TODO
+	/**
+	 * @param course
+	 * @param degree
+	 * @return
+	 */
 	public List<Module> getModulesByCourse(String course, String degree) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
