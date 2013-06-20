@@ -124,8 +124,8 @@ public class ModuleDBController {
 						resultSet.getString("title"),
 						resultSet.getInt("order"),
 						resultSet.getString("courseID"),
-						resultSet.getString("degree"),
 						resultSet.getString("description"),
+						resultSet.getString("degree"),
 						resultSet.getBoolean("obligatory"));
 			}
 			while (resultSet.next()) {

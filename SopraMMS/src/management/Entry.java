@@ -74,6 +74,9 @@ public abstract class Entry {
 	 */
 	private Random random;
 
+	
+	private boolean predefinedField=false;
+	
 	// use this when you import existing data
 //	public Entry(int version, String date, boolean classification,
 //			boolean approvalstatus, boolean declined, long entryID, String title) {
@@ -280,6 +283,19 @@ public abstract class Entry {
 	
 	public void setRejectionstatus(boolean b){
 		rejected = b;
+	}
+	
+	public void setPredefined(boolean predefined)
+	{
+		this.predefinedField=predefined;
+	}
+	
+	public boolean isPredefinedField(){
+		return predefinedField;
+	}
+	
+	public void setNewEntryID() {
+		entryID = createEntryID();
 	}
 
 }
