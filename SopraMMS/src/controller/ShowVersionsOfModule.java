@@ -36,20 +36,25 @@ public class ShowVersionsOfModule extends HttpServlet {
 		System.out.println("ShowVersionsOfModules");
 		HttpSession session = request.getSession();
 		ModuleAdministration mAdmin = new ModuleAdministration();
-		User user = (User) session.getAttribute("user");
+		String module = request.getParameter("selectedModuleToEdit");
+		long moduleID;
+		if(module!=null){
+			String[] parts = module.split(" ");
+			moduleID = Long.parseLong(parts[0]);
 
-		// TODO getModulesOverview
-		List<Module> moduleList = mAdmin.getUnapprovedModulesByAuthor(user.getLogin());
+			// TODO getModulesOverview
+			List<Module> moduleList = mAdmin.getVersionsOfModule(moduleID);
 
-		session.setAttribute("moduleListForModulemanager", moduleList);
-		session.setAttribute("content", "showModulesForModulemanager");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			session.setAttribute("moduleListForModulemanager", moduleList);
+			session.setAttribute("content", "showModulesForModulemanager");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 
-		session.removeAttribute("fieldsTypeAEdit");
-		session.removeAttribute("fieldsTypeBEdit");
-		session.removeAttribute("fieldsTypeCEdit");
-		session.removeAttribute("fieldsTypeDEdit");
-		session.removeAttribute("fieldsTypeEEdit");
+			session.removeAttribute("fieldsTypeAEdit");
+			session.removeAttribute("fieldsTypeBEdit");
+			session.removeAttribute("fieldsTypeCEdit");
+			session.removeAttribute("fieldsTypeDEdit");
+			session.removeAttribute("fieldsTypeEEdit");
+		}
 	}
 
 	/**
