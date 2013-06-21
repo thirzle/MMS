@@ -60,8 +60,6 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		long moduleID = 0;
 		int version = 0;
 		// selectedModuleToEdit == null --> call from a button
-		System.out.println("selectedModuletoApprove is null: "
-				+ (request.getParameter("selectedModuleToApprove") == null));
 		if (request.getParameter("selectedModuleToApprove") == null) {
 			moduleID = (long) session.getAttribute("selectedModuleIDToApprove");
 			version = (int) session.getAttribute("selectedVersionToApprove");
@@ -104,7 +102,6 @@ public class ShowEditModuleForEditor extends HttpServlet {
 						if (request.getParameter(
 								"radioEntry" + entry.getTitle())
 								.equals("true")) {
-							System.out.println("ShowEditModuleForEditor: entry.setApprovalstatus == true");
 							entry.setApprovalstatus(true);
 							entry.setRejectionstatus(false);
 						} else {
@@ -117,11 +114,9 @@ public class ShowEditModuleForEditor extends HttpServlet {
 						entry.setRejectionstatus(false);
 					}
 				}
-
-
 				// change entries of module
 				mAdmin.changeEntryListOfModule(approveModule);
-
+				
 				// insert into History "Module approved"
 				if (allEntriesApproved) {
 					SimpleDateFormat formatter = new SimpleDateFormat(

@@ -1794,8 +1794,7 @@ public class ModuleDBController {
 		Connection connection = connect();
 		boolean approveModule = true;
 		List<Entry> entryList = module.getEntryList();
-		System.out.println("ModuleDBController approveModuleEntries");
-		query = "UPDATE entry SET approvalstatus = ?, declined = ? WHERE moduleID = ? AND moduleversion = ?";
+		query = "UPDATE entry SET approvalstatus = ?, declined = ? WHERE moduleID = ? AND moduleversion = ? AND entryID = ?";
 		try {
 			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
@@ -1804,8 +1803,8 @@ public class ModuleDBController {
 			for (Entry entry : entryList) {
 				pStatement.setBoolean(1, entry.isApproved());
 				pStatement.setBoolean(2, entry.isRejected());
-				pStatement.executeUpdate();
-				System.out.println("entry update");
+				pStatement.setLong(5, entry.getEntryID());
+				int k = pStatement.executeUpdate();
 			}
 			
 			for (Entry entry : entryList) {
