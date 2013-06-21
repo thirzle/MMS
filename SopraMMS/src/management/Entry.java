@@ -146,6 +146,8 @@ public abstract class Entry {
 		this.title = title;
 		this.entryID = entryID;
 		this.order = order;
+		this.approved = approvalstatus;
+		this.rejected = declined;
 	}
 
 	// updated version

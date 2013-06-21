@@ -1793,7 +1793,8 @@ public class ModuleDBController {
 	public boolean approveModuleEntries(Module module){
 		Connection connection = connect();
 		boolean approveModule = true;
-		List<Entry> entryList = new LinkedList<Entry>();
+		List<Entry> entryList = module.getEntryList();
+		System.out.println("ModuleDBController approveModuleEntries");
 		query = "UPDATE entry SET approvalstatus = ?, declined = ? WHERE moduleID = ? AND moduleversion = ?";
 		try {
 			connection.setAutoCommit(false);
@@ -1803,7 +1804,8 @@ public class ModuleDBController {
 			for (Entry entry : entryList) {
 				pStatement.setBoolean(1, entry.isApproved());
 				pStatement.setBoolean(2, entry.isRejected());
-				pStatement.execute();
+				pStatement.executeUpdate();
+				System.out.println("entry update");
 			}
 			
 			for (Entry entry : entryList) {
@@ -1817,11 +1819,11 @@ public class ModuleDBController {
 				pStatement.setBoolean(1, approveModule);
 				pStatement.setLong(2, module.getModuleID());
 				pStatement.setInt(3, module.getVersion());
+				pStatement.executeUpdate();
 			}
 			connection.commit();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			rollback(connection);
 			System.out.println("Couldn't approve entris of module "+module.getName());
