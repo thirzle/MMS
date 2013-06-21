@@ -40,14 +40,16 @@ public class ShowModulesOverviewForEditor extends HttpServlet {
 		LinkedList<String> instituteIDListOfUser = (LinkedList) user.getInstitute();
 		LinkedList<Module> moduleListForEditor = new LinkedList();
 		
-//		TODO getModulesOverview for Editor
-		for (String instituteID : instituteIDListOfUser) {
-			moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteID));
-		}
-		
-		System.out.println("ShowModulesOverviewForEditor:");
-		System.out.println("moduleList is null: "+(moduleListForEditor==null)+" moduleList is empty: "+moduleListForEditor.isEmpty());
-
+//		if(session.getAttribute("editModuleForEditor") != null){
+//			moduleListForEditor = (LinkedList) mAdmin.getModules();
+//			session.removeAttribute("editModuleForEditor");
+//		}
+//		else{
+			for (String instituteID : instituteIDListOfUser) {
+				moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteID));
+			}
+//		}
+				
 		session.setAttribute("moduleListForEditor", moduleListForEditor);
 		session.setAttribute("content", "showModulesForEditor");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");

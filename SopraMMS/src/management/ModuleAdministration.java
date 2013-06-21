@@ -76,6 +76,10 @@ public class ModuleAdministration {
 	    return moduleDBController.getCoursesByFaculty(id);
 	}
 
+	public List<Module> getModules(){
+		return moduleDBController.getModules();
+	}
+	
 	public List<Module> getModulesByCourse(String course, String degree) {
 		return moduleDBController.getModulesByCourse(course, degree);
 	}
