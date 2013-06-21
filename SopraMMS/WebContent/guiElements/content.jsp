@@ -158,5 +158,13 @@
 %>
 <jsp:include page="/guiElements/editor/showEditModuleForEditor.jsp"></jsp:include>
 <%
-	}
+	} else if (contentPage.equals("createNewCourse")) {
+%>
+<jsp:include page="/guiElements/coordinator/createNewCourse.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("createNewSubject")) {
+%>
+<jsp:include page="/guiElements/coordinator/createNewSubject.jsp"></jsp:include>
+<%
+}
 %>

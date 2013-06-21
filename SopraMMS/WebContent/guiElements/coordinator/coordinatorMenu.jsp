@@ -10,7 +10,19 @@
 				<li><a href="/SopraMMS/ShowModuleOverviewForCoordinator">Module
 						fertigstellen</a></li>
 				<li><a href="">Module
-						bearbeiten</a></li>
+						bearbeiten</a>
+			</ul>
+		</div>
+
+		<div class="headerNavCoordinatorAdministration">
+			<li>Verwaltung</li>
+		</div>
+		<div class="expandCoordinatorAdministration">
+			<ul class="subNav">
+				<li><a href="/SopraMMS/CreateCourse">Studiengang
+						erstellen</a></li>
+				<li><a href="/SopraMMS/CreateSubject">Studienfach
+						erstellen</a></li>
 			</ul>
 		</div>
 	</ul>

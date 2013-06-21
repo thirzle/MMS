@@ -1667,6 +1667,46 @@ public class ModuleDBController {
 			close(connection);
 		}
 	}
+	
+	
+	public boolean createCourse(Course course) {
+		Connection connection = connect();
+		query = "INSERT INTO course VALUES(?,?,?,?)";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, course.getCourseID());
+			pStatement.setString(2, course.getDescription());
+			pStatement.setString(3, course.getDegree());
+			pStatement.setString(4, course.getFaculty());
+			pStatement.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't create course "+course.getDescription());
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
+	
+	public boolean deleteCourse(Course course) {
+		Connection connection = connect();
+		query = "DELETE FROM course WHERE courseID = ? AND degree = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, course.getCourseID());
+			pStatement.setString(2, course.getDegree());
+			pStatement.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
 
 	/**
 	 * @param version

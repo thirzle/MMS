@@ -6,11 +6,11 @@ public class Course {
 	boolean obligatory;
 	
 	public Course(String courseID, String description, String degree,
-			String facult, boolean type) {
+			String faculty, boolean type) {
 		this.courseID = courseID;
 		this.description = description;
 		this.degree = degree;
-		this.faculty = facult;
+		this.faculty = faculty;
 		this.obligatory = type;
 	}
 
@@ -20,6 +20,14 @@ public class Course {
 		this.description = description;
 		this.degree = degree;
 		this.obligatory = type;
+	}
+	
+	public Course(String courseID, String description, String degree,
+			String faculty) {
+		this.courseID = courseID;
+		this.description = description;
+		this.degree = degree;
+		this.faculty = faculty;
 	}
 	
 	public String toString() {

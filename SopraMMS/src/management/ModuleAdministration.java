@@ -200,6 +200,10 @@ public class ModuleAdministration {
 	public void addSubject(String subject) {
 		moduleDBController.createSubject(subject);
 	}
+	
+	public void addCourse(Course course) {
+		moduleDBController.createCourse(course);
+	}
 
 	public void setSubjectToModule(long moduleID, int version, String subject) {
 		moduleDBController.setSubjectToModule(moduleID, version, subject);

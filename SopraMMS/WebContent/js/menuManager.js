@@ -77,7 +77,7 @@ $(document).ready(function() {
 	}
 });
 
-// Neuichkeiten 
+// Neuigkeiten 
 $(document).ready(function() {
 	$(".headerNavAdminNews").click(function(e) {
 		var exp = sessionStorage.getItem('expAdminNews');
@@ -252,7 +252,31 @@ $(document).ready(function() {
 	}
 });
 
-//Dezernet 2
+//Verwaltung
+$(document).ready(function() {
+	$(".headerNavCoordinatorAdministration").click(function(e) {
+		var exp = sessionStorage.getItem('expCoordAdministration');
+		if (exp == 'true') {
+			$(".expandCoordinatorAdministration").toggleClass("expanded", false);
+			sessionStorage.setItem('expCoordAdministration', 'false');
+		} else {
+			$(".expandCoordinatorAdministration").toggleClass("expanded", true);
+			sessionStorage.setItem('expCoordAdministration', 'true');
+		}
+		$(".expandCoordinatorAdministration").children("ul:first").slideToggle("fast");
+	});
+});
+
+$(document).ready(function() {
+	var exp = sessionStorage.getItem('expCoordAdministration');
+	if (exp == 'true') {
+		$(".expandCoordinatorAdministration").toggleClass("expanded", false);
+		$(".expandCoordinatorAdministration").children("ul:first").slideToggle(0);
+	} else {
+		$(".expandCoordinatorAdministration").toggleClass("expanded", true);
+	}
+});
+//Dezernat 2
 $(document).ready(function() {
 	$(".headerNavDez2Module").click(function(e) {
 		var exp = sessionStorage.getItem('expandDez2Module');
