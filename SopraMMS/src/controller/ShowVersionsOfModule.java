@@ -44,7 +44,7 @@ public class ShowVersionsOfModule extends HttpServlet {
 
 			// TODO getModulesOverview
 			List<Module> moduleList = mAdmin.getVersionsOfModule(moduleID);
-
+			session.setAttribute("showVersions", true);
 			session.setAttribute("moduleListForModulemanager", moduleList);
 			session.setAttribute("content", "showModulesForModulemanager");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");

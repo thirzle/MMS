@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -72,6 +73,10 @@ public class EditModule extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		session = request.getSession();
+		if(request.getParameter("showVersionsButton")!=null){
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ShowVersionsOfModule");
+			dispatcher.forward(request,response);
+		} else {
 
 		if (request.getParameter("selectedModuleToEdit") != null) {
 
@@ -137,6 +142,7 @@ public class EditModule extends HttpServlet {
 			System.out.println(s[0]);
 		}
 		System.out.println("###############################");
+		}
 
 	}
 

@@ -75,8 +75,13 @@
 			%>
 		</tbody>
 	</table>
+	<%if(session.getAttribute("showVersions")!=null){ %>
+	<button type="submit" name="showButton" value="showButton">Modul
+		betrachten</button>
+	<%} else { %>
 	<button type="submit" name="editButton" value="editButton">Modul
 		bearbeiten</button>
 	<button type="submit" name="showVersionsButton" value="showVersionsButton">Alle
 		Versionen anzeigen</button>
+	<%} %>
 </form>
