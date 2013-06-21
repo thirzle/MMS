@@ -14,8 +14,10 @@
 <form action="/SopraMMS/ShowEditModuleForEditor" method="get">
 	<%
 		LinkedList<Entry> entryListForEditor = (LinkedList<Entry>) session.getAttribute("entryListForEditor");
+		session.removeAttribute("entryListForEditor");
 		User user = (User) session.getAttribute("user");	
 		String institute = (String) session.getAttribute("instituteApproveModule");
+		session.removeAttribute("instituteApproveModule");
 
 		for (int i = 0; i < entryListForEditor.size(); i++) {
 			Entry entry = entryListForEditor.get(i);
@@ -47,24 +49,22 @@
 					}
 				String trueChecked = "empty";
 				String falseChecked = "empty";
-				if(entry.isApproved()){
-					trueChecked = "checked";
-					falseChecked = "empty";
+				if(entry.isApproved()){%>
+					<td><input type="radio" name="radioEntry<%=entry.getTitle()%>" checked="checked" value="true"></td>
+					<td><input type="radio" name="radioEntry<%=entry.getTitle()%>" value="false"></td>
+				<%
 				}
-				else if(entry.isRejected()){
-					trueChecked = "empty";
-					falseChecked = "checked";
+				else if(entry.isRejected()){%>
+					<td><input type="radio" name="radioEntry<%=entry.getTitle()%>" value="true"></td>
+					<td><input type="radio" name="radioEntry<%=entry.getTitle()%>" checked="checked" value="false"></td>
+				<%
 				}
-				else{
-					trueChecked = "empty";
-					falseChecked = "empty";
+				else{%>
+					<td><input type="radio" name="radioEntry<%=entry.getTitle()%>" value="true"></td>
+					<td><input type="radio" name="radioEntry<%=entry.getTitle()%>" value="false"></td>
+				<%
 				}
-				System.out.println(entry.getTitle()+" approved: "+entry.isApproved()+" trueChecked: "+trueChecked+" falseChecked: "+falseChecked);
 				%>
-				<td><input type="radio" name="radioEntry+<%=entry.getTitle()%>"
-					checked=<%=trueChecked %> value="true"></td>
-				<td><input type="radio"
-					name="radioEntry+<%=entry.getTitle()%>" checked=<%=falseChecked %> value="false"></td>
 			</tr>
 		</table>
 	</div>

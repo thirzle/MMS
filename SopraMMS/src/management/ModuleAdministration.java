@@ -215,8 +215,7 @@ public class ModuleAdministration {
 		moduleDBController.finishNewModule(module);
 	}
 	
-	public void changeEntryListOfModule(long moduleID, int version){
-		Module module = getModuleByID(moduleID, version);
+	public void changeEntryListOfModule(Module module){
 		moduleDBController.approveModuleEntries(module);
 	}
 }
