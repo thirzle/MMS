@@ -1,6 +1,5 @@
 package management;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -139,25 +138,25 @@ public class ModuleAdministration {
 		moduleDBController.createModule(module);
 	}
 
-	public void createModuleByModuleManager(List<Entry> list, String author,
-			String institut, Date creationdate, int version, long moduleID) {
-		String name = list.get(1).getContent();
+	public void createModuleByModuleManager(Module module,
+			String author,
+		Date creationdate, int version) {
+		System.out.println("(ModulAdministration.java): Subject 3: "+module.getSubject());
+		String name = module.getEntryList().get(1).getContent();
 		Date d = new Date();
 		java.sql.Date modificationDate = new java.sql.Date(d.getYear(),
 				d.getMonth(), d.getDay());
 		boolean approved = false;
-		String insituteID = institut;
-		List<Entry> entryList = list;
-		String subject = null;
-		for (Entry entry : entryList) {
-			entry.setNewEntryID();
-		}
+		String insituteID = module.getInstituteID();
+		List<Entry> entryList = module.getEntryList();
+		String subject = module.getSubject();
 		String modificationauthor = author;
-		Module module = new Module(moduleID, version, name, creationdate,
+		Module moduleFinished = new Module(module.getModuleID(), version, name, creationdate,
 				modificationDate, approved, insituteID, entryList, subject,
 				modificationauthor);
-		module.print();
-		moduleDBController.createModule(module);
+		moduleFinished.print();
+		System.out.println("(ModulAdministration.java): Subject 4: "+moduleFinished.getSubject());
+		moduleDBController.createModule(moduleFinished);
 	}
 
 	public Module getModuleByID(long moduleID, int version) {
@@ -215,8 +214,7 @@ public class ModuleAdministration {
 		moduleDBController.finishNewModule(module);
 	}
 	
-	public void changeEntryListOfModule(long moduleID, int version){
-		Module module = getModuleByID(moduleID, version);
+	public void changeEntryListOfModule(Module module){
 		moduleDBController.approveModuleEntries(module);
 	}
 }

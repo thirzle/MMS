@@ -32,11 +32,10 @@ import user.UserAdministration;
 public class EditModule extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	
 	// TODO Subject mit eintragen
 	// TODO Liste doppelt, Order setzten
-	// TODO Institut mit Aktuallisieren 
-	
+	// TODO Institut mit Aktuallisieren
+
 	HttpSession session = null;
 
 	UserAdministration uAdmin = new UserAdministration();
@@ -73,75 +72,61 @@ public class EditModule extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		session = request.getSession();
-		if(request.getParameter("showVersionsButton")!=null){
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ShowVersionsOfModule");
-			dispatcher.forward(request,response);
+		if (request.getParameter("showVersionsButton") != null) {
+			RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/ShowVersionsOfModule");
+			dispatcher.forward(request, response);
 		} else {
 
-		if (request.getParameter("selectedModuleToEdit") != null) {
+			if (request.getParameter("selectedModuleToEdit") != null) {
 
-			String selectedModule = request
-					.getParameter("selectedModuleToEdit");
-			String[] selectedModuleArray = selectedModule.split(" ");
-			moduleID = Long.parseLong(selectedModuleArray[0]);
-			moduleVersion = Integer.parseInt(selectedModuleArray[1]);
-			session.setAttribute("selectedModuleIDToEdit", moduleID);
-			session.setAttribute("selectedVersionToEdit", moduleVersion);
-			firstRun = true;
+				String selectedModule = request
+						.getParameter("selectedModuleToEdit");
+				String[] selectedModuleArray = selectedModule.split(" ");
+				moduleID = Long.parseLong(selectedModuleArray[0]);
+				moduleVersion = Integer.parseInt(selectedModuleArray[1]);
+				session.setAttribute("selectedModuleIDToEdit", moduleID);
+				session.setAttribute("selectedVersionToEdit", moduleVersion);
+				firstRun = true;
 
-			module = mAdmin.getModuleByID(moduleID, moduleVersion);
-			entryList = mAdmin.sortModuleEntryListByOrder(module);
+				module = mAdmin.getModuleByID(moduleID, moduleVersion);
+				System.out.println("(EditModule.java): Subject 1: "+module.getSubject());
+				entryList = mAdmin.sortModuleEntryListByOrder(module);
 
-			fieldsTypeA.clear();
-			fieldsTypeB.clear();
-			fieldsTypeC.clear();
-			fieldsTypeD.clear();
-			fieldsTypeE.clear();
-			textualEntrys.clear();
+				fieldsTypeA.clear();
+				fieldsTypeB.clear();
+				fieldsTypeC.clear();
+				fieldsTypeD.clear();
+				fieldsTypeE.clear();
+				textualEntrys.clear();
 
-			for (Entry entry : entryList) {
-				if (entry.getClass().equals(EffortEntry.class)) {
-					effortEntry = (EffortEntry) entry;
-				} else if (entry.getClass().equals(CourseEntry.class)) {
-					courseEntry = (CourseEntry) entry;
-				} else {
-					textualEntrys.add((TextualEntry) entry);
+				for (Entry entry : entryList) {
+					if (entry.getClass().equals(EffortEntry.class)) {
+						effortEntry = (EffortEntry) entry;
+					} else if (entry.getClass().equals(CourseEntry.class)) {
+						courseEntry = (CourseEntry) entry;
+					} else {
+						textualEntrys.add((TextualEntry) entry);
+					}
 				}
+				System.out
+						.println("(EditModule.java): Initialisierung abgeschlossen");
+
+			} else {
+				moduleID = (long) session
+						.getAttribute("selectedModuleIDToEdit");
+				moduleVersion = (int) session
+						.getAttribute("selectedVersionToEdit");
+				firstRun = false;
 			}
-			System.out
-					.println("(EditModule.java): Initialisierung abgeschlossen");
 
-		} else {
-			moduleID = (long) session.getAttribute("selectedModuleIDToEdit");
-			moduleVersion = (int) session.getAttribute("selectedVersionToEdit");
-			firstRun = false;
-		}
+			institute = module.getInstituteID();
 
-		institute = module.getInstituteID();
+			setContentToFields(request);
 
-		setContentToFields(request);
+			loadFieldsOnSession();
 
-		loadFieldsOnSession();
-
-		handleButtonEvents(request, response);
-
-		System.out.println("###############################");
-		for (String[] s : fieldsTypeA) {
-			System.out.println(s[0]);
-		}
-		for (String[] s : fieldsTypeB) {
-			System.out.println(s[0]);
-		}
-		for (String[] s : fieldsTypeC) {
-			System.out.println(s[0]);
-		}
-		for (String[] s : fieldsTypeD) {
-			System.out.println(s[0]);
-		}
-		for (String[] s : fieldsTypeE) {
-			System.out.println(s[0]);
-		}
-		System.out.println("###############################");
+			handleButtonEvents(request, response);
 		}
 
 	}
@@ -153,6 +138,7 @@ public class EditModule extends HttpServlet {
 			session.removeAttribute("fieldsTypeCEdit");
 			session.removeAttribute("fieldsTypeDEdit");
 			session.removeAttribute("fieldsTypeEEdit");
+			// session.removeAttribute("selectedInstitute");
 			loadFieldsA();
 			loadFieldsB();
 			loadFieldsC();
@@ -165,6 +151,7 @@ public class EditModule extends HttpServlet {
 			reloadFieldsB(request);
 			reloadFieldsC(request);
 			reloadFieldsD(request);
+
 			System.out.println("(EditModule.java): Setze Inhalt");
 		}
 
@@ -178,6 +165,8 @@ public class EditModule extends HttpServlet {
 		session.setAttribute("fieldsTypeCEdit", fieldsTypeC);
 		session.setAttribute("fieldsTypeDEdit", fieldsTypeD);
 		session.setAttribute("fieldsTypeEEdit", fieldsTypeE);
+		// session.setAttribute("selectedInstitute",
+		// mAdmin.getInstituteName(module.getInstituteID()));
 
 		System.out.println("(EditModule.java): Felder in Session geladen");
 	}
@@ -330,8 +319,6 @@ public class EditModule extends HttpServlet {
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 				System.out
 						.println("(EditModule.java): Reihe zum Modul hinzugefügt");
-			} else if (request.getParameter("editModule").equals("addRow")) {
-
 			} else if (request.getParameter("editModule").equals("saveModule")) {
 				System.out
 						.println("(EditModule.java): Modul für Sitzung gespeichert");
@@ -339,17 +326,17 @@ public class EditModule extends HttpServlet {
 			} else if (request.getParameter("editModule").equals("sendModule")) {
 
 				LinkedList<Entry> entryListForNewModule = new LinkedList<>();
-				entryListForNewModule.addAll(entryList);
-
+				// entryListForNewModule.addAll(entryList);
+				int order = 0;
 				for (String[] strings : fieldsTypeA) {
-					TextualEntry entry = new TextualEntry(strings[0],
+					TextualEntry entry = new TextualEntry(strings[0], order++,
 							strings[1]);
 					entryListForNewModule.add(entry);
 				}
 
 				// save effort
 				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
-				EffortEntry effort = new EffortEntry("Präsenzzeit", pt);
+				EffortEntry effort = new EffortEntry("Präsenzzeit", order++, pt);
 				List<SelfStudy> selfStudyList = new ArrayList<>();
 
 				for (int i = 1; i < fieldsTypeD.size(); i++) {
@@ -364,12 +351,12 @@ public class EditModule extends HttpServlet {
 
 				// save textfields
 				for (String[] strings : fieldsTypeB) {
-					TextualEntry entry = new TextualEntry(strings[0],
+					TextualEntry entry = new TextualEntry(strings[0], order++,
 							strings[1]);
 					entryListForNewModule.add(entry);
 				}
 				for (String[] strings : fieldsTypeC) {
-					TextualEntry entry = new TextualEntry(strings[0],
+					TextualEntry entry = new TextualEntry(strings[0], order++,
 							strings[1]);
 					entryListForNewModule.add(entry);
 				}
@@ -381,9 +368,12 @@ public class EditModule extends HttpServlet {
 				java.sql.Date creationdate = (java.sql.Date) module
 						.getCreationDate();
 				int newVersion = module.getVersion() + 1;
-				mAdmin.createModuleByModuleManager(entryListForNewModule,
+				System.out.println("(EditModule.java): Subject 2: "+module.getSubject());
+				
+				module.setEntryList(entryListForNewModule);
+				mAdmin.createModuleByModuleManager(module,
 						((User) session.getAttribute("user")).getLogin(),
-						institute, creationdate, newVersion, moduleID);
+						module.getCreationDate(), newVersion);
 				// TODO pruefen ob Pflichfelder befuellt sind
 
 				// insert into History "Module changed"
@@ -396,6 +386,7 @@ public class EditModule extends HttpServlet {
 						title = entry.getContent();
 					}
 				}
+				
 				uAdmin.insertHistory(
 						((User) session.getAttribute("user")).getLogin(), date,
 						"Hat folgendes Modul ge&auml;ndert: " + title);

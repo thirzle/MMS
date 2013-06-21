@@ -969,21 +969,23 @@ public class ModuleDBController {
 		CourseEntry courseEntry = null;
 		TextualEntry textualEntry = null;
 		EffortEntry effortEntry = null;
-		query = "INSERT INTO module(moduleID, version, name, creationdate,"
-				+ " modificationdate, approvalstatus, instituteID,"
-				+ " modificationauthor) VALUES (?,?,?,?,?,?,?,?);";
 		try {
 			// insert basic module
+			int version = getHighestVersionOfModule(module.getModuleID(), connection);
+			query = "INSERT INTO module(moduleID, version, name, creationdate,"
+					+ " modificationdate, approvalstatus, instituteID, subject,"
+					+ " modificationauthor) VALUES (?,?,?,?,?,?,?,?,?)";
 			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(1, module.getModuleID());
-			pStatement.setInt(2, module.getVersion());
+			pStatement.setInt(2, version);
 			pStatement.setString(3, module.getName());
 			pStatement.setDate(4, (java.sql.Date) module.getCreationDate());
 			pStatement.setDate(5, (java.sql.Date) module.getModificationDate());
 			pStatement.setBoolean(6, module.isApproved());
 			pStatement.setString(7, module.getInstituteID());
-			pStatement.setString(8, module.getModificationauthor());
+			pStatement.setString(8, module.getSubject());
+			pStatement.setString(9, module.getModificationauthor());
 			pStatement.execute();
 
 			// insert basic entries
@@ -992,7 +994,7 @@ public class ModuleDBController {
 					+ " title, `order`) VALUES (?,?,?,?,?,?,?,?,?)";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(2, module.getModuleID());
-			pStatement.setInt(3, module.getVersion());
+			pStatement.setInt(3, version);
 			pStatement.setString(4, module.getModificationauthor());
 			pStatement.setBoolean(5, false);
 			pStatement.setBoolean(6, false);
@@ -1864,6 +1866,25 @@ public class ModuleDBController {
 			return false;
 		} finally {
 			close(connection);
+		}
+	}
+	
+	
+	//get new Version of module
+	private int getHighestVersionOfModule(long moduleID, Connection connection){
+		query = "SELECT MAX(version) FROM module WHERE moduleID = "+moduleID;
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			if (resultSet.next()) {
+				return resultSet.getInt(1)+1;
+			} else {
+				return 1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't detemine highest Version of module: "+moduleID);
+			return 1;
 		}
 	}
 	

@@ -72,6 +72,10 @@ public class SelfStudy {
 	this.time = time;
 	this.title = title;
     }
+    
+    public void setNewSelfStudyID() {
+    	selfstudyID = createSelfStudyID();
+    }
 
     /**
      * Returns a new ID.

@@ -174,7 +174,7 @@ public class ShowEditModuleForEditor extends HttpServlet {
 				}
 			}
 			// change entries of module
-			mAdmin.changeEntryListOfModule(moduleID, version);
+			mAdmin.changeEntryListOfModule(approveModule);
 
 			// insert into History "Module approved"
 			if (allEntriesApproved) {
