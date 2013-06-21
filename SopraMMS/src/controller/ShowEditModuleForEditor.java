@@ -46,7 +46,7 @@ public class ShowEditModuleForEditor extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		HttpSession session = request.getSession();
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		UserAdministration uAdmin = new UserAdministration();
@@ -82,14 +82,9 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		Module approveModule = mAdmin.getModuleByID(moduleID, version);
 		entryList = (LinkedList<Entry>) mAdmin
 				.sortModuleEntryListByOrder(approveModule);
-		
-		System.out.println("ShowEditModuleForEditor################################");
-		for (Entry entry : entryList) {
-			System.out.println(entry.getTitle()+" approved: "+entry.isApproved());
-		}
 
 		String instituteID = approveModule.getInstituteID();
-		
+
 		if (request.getParameter("approveModule") != null) {
 			// save module for this session
 			if (request.getParameter("approveModule").equals("saveModule")) {
@@ -101,17 +96,15 @@ public class ShowEditModuleForEditor extends HttpServlet {
 			// approve the whole module
 			else if (request.getParameter("approveModule").equals("sendModule")) {
 
-				LinkedList<Entry> entryListForNewModule = new LinkedList<>();
-				entryListForNewModule.addAll(entryList);
-
-				//set new approvalstatus
+				// set new approvalstatus
 				for (Entry entry : entryList) {
 					// if the value of the button is true, set the status of
 					// this entry as approved
-					if (request.getParameter("radioEffort" + entry.getTitle()) != null) {
+					if (request.getParameter("radioEntry" + entry.getTitle()) != null) {
 						if (request.getParameter(
-								"radioEffort" + entry.getTitle())
+								"radioEntry" + entry.getTitle())
 								.equals("true")) {
+							System.out.println("ShowEditModuleForEditor: entry.setApprovalstatus == true");
 							entry.setApprovalstatus(true);
 							entry.setRejectionstatus(false);
 						} else {
@@ -119,85 +112,46 @@ public class ShowEditModuleForEditor extends HttpServlet {
 							entry.setRejectionstatus(true);
 							allEntriesApproved = false;
 						}
-
-					}
-					if (request.getParameter("radioZeitaufwand") != null) {
-						if (request.getParameter("radioZeitaufwand").equals(
-								"true")) {
-							entry.setApprovalstatus(true);
-							entry.setRejectionstatus(false);
-						} else {
-							entry.setApprovalstatus(false);
-							entry.setRejectionstatus(true);
-							allEntriesApproved = false;
-						}
-
-					}
-					if (request.getParameter("radioInstitute") != null) {
-						if (request.getParameter("radioInstitute").equals(
-								"true")) {
-							entry.setApprovalstatus(true);
-							entry.setRejectionstatus(false);
-						} else {
-							entry.setApprovalstatus(false);
-							entry.setRejectionstatus(true);
-							allEntriesApproved = false;
-						}
-
-					}
-					if (request.getParameter("radioEntryB") != null) {
-						if (request.getParameter(
-								"radioEntryB" + entry.getTitle())
-								.equals("true")) {
-							entry.setApprovalstatus(true);
-							entry.setRejectionstatus(false);
-						} else {
-							entry.setApprovalstatus(false);
-							entry.setRejectionstatus(true);
-							allEntriesApproved = false;
-						}
-
-					}
-					if (request.getParameter("radioEntryC") != null) {
-						if (request.getParameter(
-								"radioEntryC" + entry.getTitle())
-								.equals("true")) {
-							entry.setApprovalstatus(true);
-							entry.setRejectionstatus(false);
-						} else {
-							entry.setApprovalstatus(false);
-							entry.setRejectionstatus(true);
-							allEntriesApproved = false;
-						}
-
+					} else {
+						entry.setApprovalstatus(false);
+						entry.setRejectionstatus(false);
 					}
 				}
-			}
-			// change entries of module
-			mAdmin.changeEntryListOfModule(moduleID, version);
 
-			// insert into History "Module approved"
-			if (allEntriesApproved) {
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-				Date currentTime = new Date();
-				String date = formatter.format(currentTime);
-				String title = null;
-				for (Entry entry : entryList) {
-					if (entry.getTitle().equals("Kürzel")) {
-						title = entry.getContent();
+				// change entries of module
+				mAdmin.changeEntryListOfModule(approveModule);
+
+				// insert into History "Module approved"
+				if (allEntriesApproved) {
+					SimpleDateFormat formatter = new SimpleDateFormat(
+							"yyyy-MM-dd");
+					Date currentTime = new Date();
+					String date = formatter.format(currentTime);
+					String title = null;
+					for (Entry entry : entryList) {
+						if (entry.getTitle().equals("Kürzel")) {
+							title = entry.getContent();
+						}
 					}
+					uAdmin.insertHistory(
+							((User) session.getAttribute("user")).getLogin(),
+							date, "Hat folgendes Modul freigegeben: " + title);
 				}
-				uAdmin.insertHistory(
-						((User) session.getAttribute("user")).getLogin(), date,
-						"Hat folgendes Modul freigegeben: " + title);
+				
+				session.setAttribute("content", "home");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
 		}
-		session.setAttribute("entryListForEditor", entryList);
-		session.setAttribute("instituteApproveModule",
-				mAdmin.getInstituteName(instituteID));
+		else{
 
-		session.setAttribute("content", "showEditModuleForEditor");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			session.setAttribute("entryListForEditor", entryList);
+			session.setAttribute("instituteApproveModule",
+					mAdmin.getInstituteName(instituteID));
+
+			session.setAttribute("content", "showEditModuleForEditor");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			
+		}
 
 	}
 
