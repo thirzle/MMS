@@ -17,8 +17,12 @@ import management.Entry;
 import management.Module;
 import management.SelfStudy;
 import management.TextualEntry;
-//TODO Bitte alle Kommentare prüfen und Autoren eintragen
+//TODO Bitte alle Kommentare prüfen und Autoren eintragen(degree?)
 /**
+ * The class ModuleDBController provides a connection to the database.
+ * <p>
+ * It also provides a number of methods which are used to retrieve, create, edit, and delete contents like modules, courses and their entries.
+ * 
  * @author Max
  *
  */
@@ -42,7 +46,7 @@ public class ModuleDBController {
 	/**
 	 * Establishes connection to database.
 	 * 
-	 * @return
+	 * @return		connection object.
 	 * @see Connection
 	 */
 	public Connection connect() {
@@ -65,7 +69,7 @@ public class ModuleDBController {
 	 * <p>
 	 * Gets all available modules from the database and stores them in a {@link List} of modules.
 	 * 
-	 * @return			List of modules
+	 * @return		List of modules.
 	 * @see Module
 	 */
 	public List<Module> getModules() {
@@ -222,7 +226,7 @@ public class ModuleDBController {
 	 * Gets a module and with the instituteID from the given institute.
 	 * 
 	 * @param institute		The institute of this Module.
-	 * @return				List of modules
+	 * @return				List of modules.
 	 * @see Module
 	 */
 	public List<Module> getModulesByInstitute(String institute) {
@@ -264,7 +268,7 @@ public class ModuleDBController {
 	 * 
 	 * @param course		Course which belongs to the inquired module
 	 * @param degree
-	 * @return List of modules
+	 * @return				List of modules.
 	 * @see Module
 	 * @see Course
 	 */
@@ -320,8 +324,8 @@ public class ModuleDBController {
 	 * Loads all available modules by a chosen faculty.
 	 * <p>
 	 * 
-	 * @param facultyID
-	 * @return List of modules
+	 * @param facultyID		The unique ID of a course.
+	 * @return 				List of modules.
 	 * @see Module
 	 */
 	public List<Module> getModulesByFaculty(String facultyID) {
@@ -360,8 +364,8 @@ public class ModuleDBController {
 	 * Loads all available modules by a chosen author.
 	 * <p>
 	 * 
-	 * @param author		The author of the modules content
-	 * @return List of modules
+	 * @param author		The author of the modules content.
+	 * @return 				List of modules.
 	 * @see Module
 	 */
 	public List<Module> getModulesOverviewByAuthor(String author) {
@@ -400,9 +404,9 @@ public class ModuleDBController {
 	/**
 	 * Loads modules by the loginname of an supervisor.
 	 * 
-	 * @param loginname		The loginname of the supervisor
+	 * @param loginname		The loginname of the supervisor.
 	 * @param connection	Connection to a database.
-	 * @return List of modules
+	 * @return				List of modules.
 	 * @see Module
 	 */
 	public List<Module> getModulesOverviewBySupervisor(String loginname, Connection connection){
@@ -447,7 +451,7 @@ public class ModuleDBController {
 	 * 
 	 * @param loginname		The loginname of the representative.
 	 * @param connection	Connection to a database.
-	 * @return List of modules
+	 * @return 				List of modules.
 	 * @see Module
 	 */
 	public List<Module> getModulesOverviewByRepresentative(String loginname, Connection connection){
@@ -493,7 +497,7 @@ public class ModuleDBController {
 	 * Gets all versions of specified module.
 	 * 
 	 * @param moduleID		The unique ID of a module.
-	 * @return List of modules
+	 * @return 				List of modules.
 	 * @see Module
 	 */
 	public List<Module> getAllVersionsOfModule(long moduleID) {
@@ -530,7 +534,7 @@ public class ModuleDBController {
 	 * 
 	 * @param moduleID		The unique ID of the module.
 	 * @param version		The modules version
-	 * @return A module object
+	 * @return 				A module object.
 	 * @see Module
 	 */
 	public Module getModule(long moduleID, int version) {
@@ -567,7 +571,7 @@ public class ModuleDBController {
 	 * Gets the latest version of an specified module.
 	 * 
 	 * @param moduleID		The unique ID of the module.
-	 * @return A module object
+	 * @return 				A module object.
 	 */
 	public Module getLatestModule(long moduleID) {
 		Connection connection = connect();
@@ -614,7 +618,7 @@ public class ModuleDBController {
 	/**
 	 * Loads all modules which are modified.
 	 * 
-	 * @return List of modules.
+	 * @return		List of modules.
 	 * @see Module
 	 */
 	public List<Module> getModifiedModules() {
@@ -660,7 +664,7 @@ public class ModuleDBController {
 	 * Loads all modified modules by a chosen institute.
 	 * 
 	 * @param instituteID		The unique ID of the institute.
-	 * @return List of modules.
+	 * @return 					List of modules.
 	 * @see Module
 	 */
 	public List<Module> getModifiedModulesByInstitute(String instituteID) {
@@ -708,7 +712,7 @@ public class ModuleDBController {
 	 * Loads all modified modules by a chosen author.
 	 * 
 	 * @param author		The author of the modules.
-	 * @return List of modules
+	 * @return 				List of modules.
 	 * @see Module
 	 */
 	public List<Module> getModifiedModulesByAuthor(String author) {
@@ -756,7 +760,7 @@ public class ModuleDBController {
 	/**
 	 * Loads all rejected modules.
 	 * 
-	 * @return List of modules
+	 * @return		List of modules.
 	 * @see Module
 	 */
 	public List<Module> getRejectedModules() {
@@ -802,7 +806,7 @@ public class ModuleDBController {
 	 * Loads all rejected modules by a chosen institute.
 	 * 
 	 * @param instituteID		The unique ID of the institute.
-	 * @return List of modules
+	 * @return 					List of modules.
 	 * @see Module
 	 */
 	public List<Module> getRejectedModulesByInstitute(String instituteID) {
@@ -851,7 +855,7 @@ public class ModuleDBController {
 	 * Loads all unapproved modules by a chosen author.
 	 * 
 	 * @param author		The author of the module
-	 * @return List of modules
+	 * @return 				List of modules.
 	 * @see Module
 	 */
 	public List<Module> getUnapprovedModulesOverviewByAuthor(String author) {
@@ -888,9 +892,9 @@ public class ModuleDBController {
 	/**
 	 * Loads unapproved modules by the loginname of an supervisor.
 	 * 
-	 * @param loginname		The loginname of the supervisor
+	 * @param loginname		The loginname of the supervisor.
 	 * @param connection	Connection to a database.
-	 * @return List of modules
+	 * @return		 		List of modules.
 	 * @see Module
 	 */
 	public List<Module> getUnapprovedModulesOverviewBySupervisor(String loginname, Connection connection){
@@ -934,7 +938,7 @@ public class ModuleDBController {
 	 * 
 	 * @param loginname		The loginname of the representative.
 	 * @param connection	Connection to a database.
-	 * @return List of modules
+	 * @return 				List of modules.
 	 * @see Module
 	 */
 	public List<Module> getUnapprovedModulesOverviewByRepresentative(String loginname, Connection connection){
@@ -976,7 +980,7 @@ public class ModuleDBController {
 	/**
 	 * Gets the overview of unfinished modules for the coordinator.
 	 * 
-	 * @return List of modules
+	 * @return		List of modules.
 	 * @see Module
 	 */
 	public List<Module> getUnfinishedModulesOverview() {
@@ -1010,7 +1014,7 @@ public class ModuleDBController {
 	 * Gets an overview of modules for the editor.
 	 * 
 	 * @param instituteID		The unique ID of the institute.
-	 * @return List of modules
+	 * @return 					List of modules.
 	 * @see Module
 	 */
 	public List<Module> getModuleOverviewForEditor(String instituteID) {
@@ -1049,8 +1053,8 @@ public class ModuleDBController {
 	 * Furthermore, it consists of courses and their content.
 	 * A study is made up of several modules.
 	 * 
-	 * @param module		the module which should be created
-	 * @return <code>true</code> If a new module was created, <code>false</code> otherwise.
+	 * @param module		the module which should be created.
+	 * @return 				<code>true</code> If a new module was created, <code>false</code> otherwise.
 	 * @see Module
 	 */
 	public boolean createModule(Module module) {
@@ -1166,8 +1170,8 @@ public class ModuleDBController {
 	/**
 	 * Changes a rejected module.
 	 * 
-	 * @param module		the module that has to be changed
-	 * @return <code>true</code> if the module has been changed, <code>false</code> otherwise.
+	 * @param module		the module that has to be changed.
+	 * @return 				<code>true</code> if the module has been changed, <code>false</code> otherwise.
 	 * @see Module
 	 */
 	public boolean editRejectedModule(Module module) {
@@ -1276,7 +1280,7 @@ public class ModuleDBController {
 	 * Gets the courses which belong to a given faculty.
 	 * 
 	 * @param facultyID		The unique ID of a faculty.
-	 * @return List of courses
+	 * @return 				List of courses.
 	 * @see Course
 	 */
 	public List<String> getCoursesByFaculty(String facultyID) {
@@ -1304,7 +1308,7 @@ public class ModuleDBController {
 	 * Completes a new module.
 	 * 
 	 * @param module		The module which should be completed.
-	 * @return <code>true</code> If a new module was completed, <code>false</code> otherwise.
+	 * @return 				<code>true</code> If a new module was completed, <code>false</code> otherwise.
 	 * @see Module
 	 */
 	public boolean finishNewModule(Module module) {
@@ -1371,8 +1375,8 @@ public class ModuleDBController {
 	/**
 	 * Deletes an existing module.
 	 * 
-	 * @param module		The module which should be deleted
-	 * @return <code>true</code> If the module has been deleted, <code>false</code> otherwise.
+	 * @param module		The module which should be deleted.
+	 * @return 				<code>true</code> If the module has been deleted, <code>false</code> otherwise.
 	 * @see Module
 	 */
 	public boolean deleteModule(Module module) {
@@ -1392,10 +1396,14 @@ public class ModuleDBController {
 			close(connection);
 		}
 	}
-
+	
+	//TODO Vervollständigen
 	/**
+	 * Gets a list of PDFs which belong to a course.
+	 * 
 	 * @param description
-	 * @return List of PDFs
+	 * @return					List of PDFs.
+	 * @see Course
 	 */
 	public List<String[]> getPDFListByCourse(String description) {
 		List<String[]> pdfList = new LinkedList<String[]>();
@@ -1424,11 +1432,15 @@ public class ModuleDBController {
 
 	// TODO
 	/**
-	 * Gets the URL of a specified modulemanual
+	 * Gets the URL of a specified module manual.
+	 * 
 	 * @param courseID		The unique ID of a course.
-	 * @param degree
-	 * @param version
-	 * @return
+	 * @param degree		The degree the manual refers to.
+	 * @param version		The version number of this Module.
+	 * @return				The URL leading to the module manual.
+	 * @see Module
+	 * @see Course
+	 * @see ModuleAdministration
 	 */
 	public String getModuleManualURL(String courseID, String degree,
 			String version) {
@@ -1458,10 +1470,15 @@ public class ModuleDBController {
 	}
 
 	/**
-	 * @param courseID
-	 * @param degree
-	 * @param versionnumber
-	 * @return
+	 * Gets a List of Module Manuals selected by a specified course.
+	 * 
+	 * @param courseID		The unique ID of a course.
+	 * @param degree		The degree the manual refers to.
+	 * @param versionnumber	The version number of this Module.
+	 * @return 				List of modules.
+	 * @see Course
+	 * @see Module
+	 * @see ModuleAdministration
 	 */
 	public List<Module> getModuleManualbyCourse(String courseID, String degree,
 			String versionnumber) {
@@ -1497,10 +1514,14 @@ public class ModuleDBController {
 		}
 		return modulemanual;
 	}
-
+	
+	//TODO
 	/**
+	 * Gets the course ID belonging to a specified course.
+	 * 
 	 * @param course
-	 * @return
+	 * @return				The courseID.
+	 * @see Course
 	 */
 	public String getCourseID(String course) {
 		Connection connection = connect();
@@ -1520,7 +1541,16 @@ public class ModuleDBController {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Gets the date a module was last modified.
+	 * 
+	 * @param courseID		The unique ID of a course.
+	 * @param degree		The degree the module refers to.
+	 * @return 				The date of modification.
+	 * @see Course
+	 * @see Module
+	 */
 	public String getLastModificationDate(String courseID, String degree) {
 		Connection connection = connect();
 		query = "SELECT MAX(module.modificationdate) FROM module "
@@ -1544,9 +1574,13 @@ public class ModuleDBController {
 	}
 
 	/**
-	 * @param courseID
+	 * Gets the author who did the last modification.
+	 * 
+	 * @param courseID		The unique ID of a course.
 	 * @param degree
-	 * @return
+	 * @return The author
+	 * @see Course
+	 * @see Module
 	 */
 	public String getLastModificationAuthor(String courseID, String degree) {
 		Connection connection = connect();
@@ -1571,11 +1605,18 @@ public class ModuleDBController {
 		}
 		return null;
 	}
-
+	
+	
+	//TODO
 	/**
-	 * @param courseID
+	 * Gets the latest version of modulemanual of a course.
+	 * 
+	 * @param courseID		The unique ID of a course.
 	 * @param degree
 	 * @return
+	 * @see Course
+	 * @see Module
+	 * @see ModuleAdministration
 	 */
 	public String generateLatestVersionOfModuleManual(String courseID,
 			String degree) {
@@ -1651,9 +1692,13 @@ public class ModuleDBController {
 	}
 
 	/**
-	 * @param courseID
+	 * Gets a list of institutes selected by a course.
+	 * 
+	 * @param courseID		The unique ID of a course.
 	 * @param degree
-	 * @return
+	 * @return				List of instituteIDs.
+	 * @see Course
+	 * @see Module
 	 */
 	public LinkedList<String> getInstituteList(String courseID, String degree) {
 		Connection connection = connect();
@@ -1682,8 +1727,10 @@ public class ModuleDBController {
 	}
 
 	/**
-	 * @param instituteID
-	 * @return
+	 * Gets the name of an institute refering to an unique ID.
+	 * @param instituteID		The unique ID of a institute.
+	 * @return					The name of the institute.
+	 * @see Module
 	 */
 	public String getInstituteName(String instituteID) {
 		Connection connection = connect();
@@ -1706,7 +1753,10 @@ public class ModuleDBController {
 	}
 
 	/**
-	 * @return
+	 * Gets all available subjects.
+	 * 
+	 * @return		List of subjects.
+	 * @see Module
 	 */
 	public List<String> getSubjects() {
 		List<String> subjects = new LinkedList<String>();
@@ -1728,8 +1778,11 @@ public class ModuleDBController {
 	}
 
 	/**
-	 * @param subject
-	 * @return
+	 * Creates a new subject.
+	 * 
+	 * @param subject		The subject a module is grouped by.
+	 * @return				<code>true</code> if a new subject was created <code>false</code> otherwise.
+	 * @see Module
 	 */
 	public boolean createSubject(String subject) {
 		Connection connection = connect();
@@ -1749,8 +1802,11 @@ public class ModuleDBController {
 	}
 
 	/**
-	 * @param subject
-	 * @return
+	 * Deletes a subject.
+	 * 
+	 * @param subject		The subject a module is grouped by.
+	 * @return				<code>true</code> if the subject was deleted <code>false</code> otherwise.
+	 * @see Module
 	 */
 	public boolean deleteSubject(String subject) {
 		Connection connection = connect();
@@ -1770,6 +1826,13 @@ public class ModuleDBController {
 	}
 	
 	
+	/**
+	 * Creates a new course.
+	 * 
+	 * @param course
+	 * @return				<code>true</code> if a new course was created <code>false</code> otherwise.
+	 * @see Course
+	 */
 	public boolean createCourse(Course course) {
 		Connection connection = connect();
 		query = "INSERT INTO course VALUES(?,?,?,?)";
@@ -1791,6 +1854,13 @@ public class ModuleDBController {
 	}
 	
 	
+	/**
+	 * Deletes a course.
+	 * 
+	 * @param course
+	 * @return				<code>true</code> if the course was deleted <code>false</code> otherwise.
+	 * @see Course
+	 */
 	public boolean deleteCourse(Course course) {
 		Connection connection = connect();
 		query = "DELETE FROM course WHERE courseID = ? AND degree = ?";
@@ -1810,14 +1880,19 @@ public class ModuleDBController {
 	
 
 	/**
-	 * @param version
-	 * @param courseID
-	 * @param degree
-	 * @param creationdate
-	 * @param modificationdate
-	 * @param approvalstatus
-	 * @param examregulation
-	 * @return
+	 * Creates a new ModuleManual.
+	 * 
+	 * @param version			The module manuals version.
+	 * @param courseID			The unique ID of a course.
+	 * @param degree			The degree the module manual refers to.
+	 * @param creationdate		The date the module manual was created.
+	 * @param modificationdate	The date the module manual was changed.
+	 * @param approvalstatus	The status of approval.
+	 * @param examregulation	The exam regulation the module manual belongs to.
+	 * @return					<code>true</code> if a new module manual is created <code>false</code> otherwise.
+	 * @see Course
+	 * @see Module
+	 * @see ModuleAdministration
 	 */
 	public boolean createModuleMaunal(String version, String courseID,
 			String degree, String creationdate, String modificationdate,
@@ -1845,8 +1920,12 @@ public class ModuleDBController {
 	}
 
 	/**
-	 * @param moduleID
-	 * @return
+	 * Gets the module manual which refers to the specified moduleID.
+	 * 
+	 * @param moduleID		The unique ID of a module.
+	 * @return				The module manual.
+	 * @see Module
+	 * @see ModuleAdministration
 	 */
 	public String getModuleManualByModule(long moduleID) {
 		Connection connection = connect();
@@ -1866,12 +1945,14 @@ public class ModuleDBController {
 	}
 
 	
-	// Setzt das Fach in einem Modul
 	/**
-	 * @param moduleID
-	 * @param version
-	 * @param subject
-	 * @return
+	 * Sets the subject in a module.
+	 * 
+	 * @param moduleID		The unique ID of a module.
+	 * @param version		The version number of this Module.
+	 * @param subject		The subject a module is grouped by.
+	 * @return				<code>true</code> if the subject was set <code>false</code> otherwise.
+	 * @see Module
 	 */
 	public boolean setSubjectToModule(long moduleID,int version, String subject) {
 		Connection connection = connect();
@@ -1892,9 +1973,11 @@ public class ModuleDBController {
 		}
 	}
 	
-	//get all courses listed in database
 	/**
-	 * @return
+	 * Gets all available courses in the database.
+	 * 
+	 * @return		List of courses.
+	 * @see Course
 	 */
 	public List<Course> getCourses() {
 		Connection connection = connect();
@@ -1920,16 +2003,27 @@ public class ModuleDBController {
 		return courses;
 	}
 
-	//Setzt Studiengaenge in einem Modul
 	// String Array wie oben
+	/**
+	 * Sets the courses in a module.
+	 * 
+	 * @param moduleID		The unique ID of a module.
+	 * @param version		The version number of this Module.
+	 * @param courses
+	 * @return
+	 * @see Course
+	 */
 	public boolean setCoursesToModule(long moduleID, int version, List<String[]> courses) {
 		return false;
 	}
 	
 	
 	/**
+	 * Approves the module entries.
+	 * 
 	 * @param module
-	 * @return
+	 * @return				<code>true</code> if the entries were approved <code>false</code> otherwise.
+	 * @see Module
 	 */
 	public boolean approveModuleEntries(Module module){
 		Connection connection = connect();
@@ -1974,6 +2068,13 @@ public class ModuleDBController {
 	}
 	
 	
+	/**
+	 * Deactivates a module.
+	 * 
+	 * @param module
+	 * @return				<code>true</code> if the entries were deactivated <code>false</code> otherwise.
+	 * @see Module
+	 */
 	public boolean deactivateModule(Module module) {
 		Connection connection = connect();
 		query = "UPDATE module SET approvalstatus = FALSE WHERE moduleID = ? AND version = ?";
@@ -1994,7 +2095,9 @@ public class ModuleDBController {
 	
 
 	/**
-	 * @return
+	 * Clears the content of the database.
+	 * 
+	 * @return		<code>true</code> if the content was cleared <code>false</code> otherwise.
 	 */
 	public boolean clearDatabase() {
 		java.util.Date today = new java.util.Date();
@@ -2030,8 +2133,15 @@ public class ModuleDBController {
 		}
 	}
 	
-	
-	//get new Version of module
+	//TODO
+	/**
+	 * Gets the newest module version
+	 * 
+	 * @param moduleID		The unique ID of a module.
+	 * @param connection
+	 * @return
+	 * @see Module
+	 */
 	private int getHighestVersionOfModule(long moduleID, Connection connection){
 		query = "SELECT MAX(version) FROM module WHERE moduleID = "+moduleID;
 		try {
@@ -2050,8 +2160,9 @@ public class ModuleDBController {
 	}
 	
 
-	// roll back changes made in database if something went wrong
 	/**
+	 * Cancels changes made in database if something went wrong.
+	 * 
 	 * @param connection
 	 */
 	private void rollback(Connection connection) {
@@ -2064,6 +2175,8 @@ public class ModuleDBController {
 	}
 
 	/**
+	 * Closes the database connection.
+	 * 
 	 * @param connection
 	 */
 	public void close(Connection connection) {
