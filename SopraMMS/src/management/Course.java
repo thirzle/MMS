@@ -188,7 +188,7 @@ public class Course {
     /**
      * Sets this course's {@link #obligatory} status.
      * 
-     * @param obligatory	Is this course {@link #obligatory}.
+     * @param type	Is this course {@link #obligatory}.
      */
     public void setObligatory(boolean type) {
 	this.obligatory = type;
