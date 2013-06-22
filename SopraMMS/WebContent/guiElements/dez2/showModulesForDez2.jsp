@@ -1,15 +1,15 @@
 <link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
-<script type="text/javascript" src="/SopraMMS/js/jquery.showModulesForModulmanager.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/jquery.showModulesForDez.js"></script>
 <%@page import="management.Module" import="management.Entry" import="java.util.LinkedList"%>
 <%
 	LinkedList<Module> moduleList = (LinkedList) session
-			.getAttribute("moduleListForModulemanager");
+			.getAttribute("moduleListForDez2");
 %>
 
-<h1>Modul bearbeiten</h1>
-<form action="/SopraMMS/EditModule" method="get">
-	<table class="tablesorter informationAboutModule" id="modulesForModulmanager">
+<h1>Module</h1>
+<form action="/SopraMMS/ShowModulesOverviewForDez2" method="get">
+	<table class="tablesorter informationAboutModule" id="modulesForDez2">
 		<thead>
 			<tr>
 				<th></th>
@@ -81,8 +81,8 @@
 	<button type="submit" name="showButton" value="showButton">Modul
 		betrachten</button>
 	<%} else { %>
-	<button type="submit" name="editButton" value="editButton">Modul
-		bearbeiten</button>
+	<button type="submit" name="showButton" value="showButton">Modul
+		betrachten</button>
 	<button type="submit" name="showVersionsButton" value="showVersionsButton">Alle
 		Versionen anzeigen</button>
 	<%} %>

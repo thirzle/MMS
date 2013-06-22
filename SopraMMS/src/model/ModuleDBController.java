@@ -848,7 +848,7 @@ public class ModuleDBController {
 
 	// tested: check
 	/**
-	 * Loads all rejected modules by a chosen author.
+	 * Loads all unapproved modules by a chosen author.
 	 * 
 	 * @param author		The author of the module
 	 * @return List of modules
@@ -858,7 +858,7 @@ public class ModuleDBController {
 			Connection connection = connect();
 			LinkedList<Module> moduleList = new LinkedList<Module>();
 			query = "SELECT m.* FROM module AS m WHERE modificationauthor = ? " +
-					"AND m.approvalstatus = FALSE;";
+					"AND m.approvalstatus = FALSE";
 			try {
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, author);
@@ -874,6 +874,8 @@ public class ModuleDBController {
 							resultSet.getString("subject"),
 							resultSet.getString("modificationauthor")));
 				}
+				moduleList.addAll(getUnapprovedModulesOverviewBySupervisor(author, connection));
+				moduleList.addAll(getUnapprovedModulesOverviewByRepresentative(author, connection));
 			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("Couldn't get unapproved modules by author: " + author);
@@ -882,6 +884,94 @@ public class ModuleDBController {
 			}
 			return moduleList;
 	}
+	
+	/**
+	 * Loads unapproved modules by the loginname of an supervisor.
+	 * 
+	 * @param loginname		The loginname of the supervisor
+	 * @param connection	Connection to a database.
+	 * @return List of modules
+	 * @see Module
+	 */
+	public List<Module> getUnapprovedModulesOverviewBySupervisor(String loginname, Connection connection){
+		query = "SELECT supervisor FROM supervisor WHERE username = ?";
+		String supervisor = "no supervisor found";
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				supervisor = resultSet.getString("supervisor");
+				query = "SELECT m.* FROM module AS m WHERE modificationauthor = ? " +
+						"AND m.approvalstatus = FALSE";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, supervisor);
+				resultSet = pStatement.executeQuery();
+				while (resultSet.next()) {
+					moduleList.add(new Module(resultSet.getLong("moduleID"),
+							resultSet.getInt("version"),
+							resultSet.getString("name"),
+							resultSet.getDate("creationdate"),
+							resultSet.getDate("modificationdate"),
+							resultSet.getBoolean("approvalstatus"),
+							resultSet.getString("instituteID"),
+							resultSet.getString("subject"),
+							resultSet.getString("modificationauthor")));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();	
+			System.out.println("Couldn't get unapproved modules by supervisor: " + supervisor);
+		}
+			return moduleList;
+	}
+	
+	
+	/**
+	 * Loads unapproved modules by the loginname of an representative.
+	 * 
+	 * @param loginname		The loginname of the representative.
+	 * @param connection	Connection to a database.
+	 * @return List of modules
+	 * @see Module
+	 */
+	public List<Module> getUnapprovedModulesOverviewByRepresentative(String loginname, Connection connection){
+		query = "SELECT representative FROM user WHERE loginname = ?";
+		String representative = "no representative found";
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				representative = resultSet.getString("representative");
+				query = "SELECT m.* FROM module AS m WHERE modificationauthor = ? " +
+						"AND m.approvalstatus = FALSE";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, representative);
+				resultSet = pStatement.executeQuery();
+				while (resultSet.next()) {
+					moduleList.add(new Module(resultSet.getLong("moduleID"),
+							resultSet.getInt("version"),
+							resultSet.getString("name"),
+							resultSet.getDate("creationdate"),
+							resultSet.getDate("modificationdate"),
+							resultSet.getBoolean("approvalstatus"),
+							resultSet.getString("instituteID"),
+							resultSet.getString("subject"),
+							resultSet.getString("modificationauthor")));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();	
+			System.out.println("Couldn't get unapproved modules by representative: " + representative);
+		}
+			return moduleList;
+	}
+	
 
 	/**
 	 * Gets the overview of unfinished modules for the coordinator.
@@ -1086,7 +1176,7 @@ public class ModuleDBController {
 		CourseEntry courseEntry = null;
 		TextualEntry textualEntry = null;
 		EffortEntry effortEntry = null;
-		query = "UPDATE module SET name = ?, modificationdate = ?, instituteID = ? WHERE moduleID = ? AND version = ?;";
+		query = "UPDATE module SET name = ?, modificationdate = ?, instituteID = ? WHERE moduleID = ? AND version = ?";
 		try {
 			// update basic module
 			connection.setAutoCommit(false);
@@ -1118,15 +1208,20 @@ public class ModuleDBController {
 				}
 			}
 			if (courseEntry != null) {
-				// update courses
-				query = "UPDATE courseentry SET courseID = ?, degree = ?, obligatory = ? WHERE entryID = ?";
+				//delete old courses
+				query = "DELETE FROM courseentry WHERE entryID = ?";
 				pStatement = connection.prepareStatement(query);
-				pStatement.setLong(4, courseEntry.getEntryID());
+				pStatement.setLong(1, courseEntry.getEntryID());
+				pStatement.execute();
+				// insert new courses
+				query = "INSERT INTO courseentry VALUES(?, ?, ?, ?)";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(1, courseEntry.getEntryID());
 				for (Course course : courseEntry.getCourses()) {
-					pStatement.setString(1, course.getCourseID());
-					pStatement.setString(2, course.getDegree());
-					pStatement.setBoolean(3, course.isObligatory());
-					pStatement.executeUpdate();
+					pStatement.setString(2, course.getCourseID());
+					pStatement.setString(3, course.getDegree());
+					pStatement.setBoolean(4, course.isObligatory());
+					pStatement.execute();
 				}
 			}
 
@@ -1844,7 +1939,7 @@ public class ModuleDBController {
 				pStatement.setBoolean(1, entry.isApproved());
 				pStatement.setBoolean(2, entry.isRejected());
 				pStatement.setLong(5, entry.getEntryID());
-				int k = pStatement.executeUpdate();
+				pStatement.executeUpdate();
 			}
 			
 			for (Entry entry : entryList) {
@@ -1866,6 +1961,25 @@ public class ModuleDBController {
 			e.printStackTrace();
 			rollback(connection);
 			System.out.println("Couldn't approve entris of module "+module.getName());
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
+	
+	public boolean deactivateModule(Module module) {
+		Connection connection = connect();
+		query = "UPDATE module SET approvalstatus = FALSE WHERE moduleID = ? AND version = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, module.getModuleID());
+			pStatement.setInt(2, module.getVersion());
+			pStatement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't deactivate module "+module.getName()+"-"+module.getVersion());
 			return false;
 		} finally {
 			close(connection);

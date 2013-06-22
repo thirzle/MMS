@@ -166,5 +166,10 @@
 %>
 <jsp:include page="/guiElements/coordinator/createNewSubject.jsp"></jsp:include>
 <%
+	} else if (contentPage.equals("showModulesForDez2")) {
+	%>
+	<jsp:include page="/guiElements/dez2/showModulesForDez2.jsp"></jsp:include>
+	<%
 }
 %>
+

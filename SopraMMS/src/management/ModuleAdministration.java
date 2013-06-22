@@ -128,9 +128,9 @@ public class ModuleAdministration {
 		String name = list.get(1).getContent();
 		Date d = new Date();
 		java.sql.Date creationDate = new java.sql.Date(d.getYear(),
-				d.getMonth(), d.getDay());
+				d.getMonth(), d.getDate());
 		java.sql.Date modificationDate = new java.sql.Date(d.getYear(),
-				d.getMonth(), d.getDay());
+				d.getMonth(), d.getDate());
 		boolean approved = false;
 		String insituteID = institut;
 		List<Entry> entryList = list;
@@ -149,7 +149,7 @@ public class ModuleAdministration {
 		String name = module.getEntryList().get(1).getContent();
 		Date d = new Date();
 		java.sql.Date modificationDate = new java.sql.Date(d.getYear(),
-				d.getMonth(), d.getDay());
+				d.getMonth(), d.getDate());
 		boolean approved = false;
 		String insituteID = module.getInstituteID();
 		List<Entry> entryList = module.getEntryList();

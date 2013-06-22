@@ -176,7 +176,7 @@ public class DBtest {
 //		System.out.println("done");+
 
 		//System.out.println(mController.clearDatabase());
-				
+
 	}
 
 }

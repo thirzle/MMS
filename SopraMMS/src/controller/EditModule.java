@@ -113,12 +113,12 @@ public class EditModule extends HttpServlet {
 						.println("(EditModule.java): Initialisierung abgeschlossen");
 
 			} else {
-				moduleID = (long) session
+					moduleID = (long) session
 						.getAttribute("selectedModuleIDToEdit");
-				moduleVersion = (int) session
+					moduleVersion = (int) session
 						.getAttribute("selectedVersionToEdit");
-				firstRun = false;
-			}
+					firstRun = false;
+				}
 
 			institute = module.getInstituteID();
 
