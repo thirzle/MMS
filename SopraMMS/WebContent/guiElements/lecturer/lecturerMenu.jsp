@@ -1,17 +1,3 @@
-<script>
-$(document).ready(function() {
-	$(".newcurriculumvitae").click(function(e) {
-	$(".contentBox").load("/SopraMMS/guiElements/lecturer/curriculumvitae.jsp");
-	});
-});
-
-$(document).ready(function() {
-	$(".seecurriculumvitae").click(function(e) {
-	$(".contentBox").load("/SopraMMS/guiElements/lecturer/seecurriculumvitae.jsp");
-	});
-});
-</script>
-
 <div class="menuBox">
 	<h1>Dozent</h1>
 
@@ -21,9 +7,8 @@ $(document).ready(function() {
 		</div>
 		<div class="expandResume">
 			<ul class="subNav">
-				<li class="newcurriculumvitae"><a>Lebenslauf
-						anlegen</a></li>
-				<li class="seecurriculumvitae">Lebenslauf ansehen</li>
+				<li><a href="/SopraMMS/CurrVitae?first=true">Lebenslauf</a></li>
+
 				<!--<li id="seecurriculumvitae"><a href="/SopraMMS/GetAllUsers?task=curr">Lebenslauf ansehen</a></li>-->
 			</ul>
 		</div>

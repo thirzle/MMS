@@ -31,15 +31,7 @@ public class CurrVitae extends SessionCheck implements Servlet {
      */
     public CurrVitae() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
 
 	/**
 	 * Stores the URL for the curriculum vitae and insert the event in the history.
@@ -49,25 +41,41 @@ public class CurrVitae extends SessionCheck implements Servlet {
 	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		UserAdministration uAdmin = new UserAdministration();
 		User user = (User) session.getAttribute("user");
-		if ( user != null ){
-			String loginname = user.getLogin();
-			String currurl = request.getParameter("currurl");
-
-			uAdmin.setCurriculum(loginname, currurl);
-
-			//session.setAttribute("currurl", currurl);
-
-			// insert into History "New CurricullumVitae"
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			Date currentTime = new Date();
-			String date = formatter.format(currentTime);
-			uAdmin.insertHistory(loginname, date, "Lebenslauf angelegt");
+		
+		if(request.getParameter("first")!=null)
+		{
+			String url=uAdmin.getCurriculum(user.getLogin());
+			if(url==null){
+				url="";
+			}
+			session.setAttribute("currVitae", url);
+			session.setAttribute("content", "currVitae");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		else{
+			if(request.getParameter("action")!=null){
+				if(request.getParameter("action").equals("delete")){
+					uAdmin.setCurriculum(user.getLogin(), null);
+					String infotext = "Ihr Lebenslauf wurde von Ihrem Benutzerprofil gelöscht.";
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+				}else if(request.getParameter("action").equals("add")){
+					uAdmin.setCurriculum(user.getLogin(), request.getParameter("currurl"));
+					String infotext = "Ihr Lebenslauf wurde in Ihrem Benutzerprofil geändert.";
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+				}
+			}
+		}
+		
+	
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 	}
 
 }

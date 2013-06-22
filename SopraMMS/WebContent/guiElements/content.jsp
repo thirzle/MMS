@@ -144,9 +144,9 @@
 %>
 <jsp:include page="/guiElements/modulemanager/editModule.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("CurrVitae")) {
+	} else if (contentPage.equals("currVitae")) {
 %>
-<jsp:include page="/guiElements/lecturer/seecurriculumvitae.jsp"></jsp:include>
+<jsp:include page="/guiElements/lecturer/curriculumvitae.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("showEditModulesOverviewForEditor")) {
 %>
