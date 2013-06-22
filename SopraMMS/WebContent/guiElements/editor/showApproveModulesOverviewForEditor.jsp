@@ -9,8 +9,6 @@
 	LinkedList<Module> moduleList = (LinkedList) session
 			.getAttribute("moduleListForEditor");
 	session.removeAttribute("moduleListForEditor");
-	System.out.println("showModulesForEditor:");
-	System.out.println("moduleList is null: "+(moduleList==null)+" moduleList is empty: "+moduleList.isEmpty());
 	for(Module module : moduleList){
 		System.out.println(module.getName());
 	}
@@ -20,7 +18,7 @@
 <%
 	//TODO
 %>
-<form action="/SopraMMS/ShowEditModuleForEditor" method="get">
+<form action="/SopraMMS/ShowApproveModuleForEditor" method="get">
 	<table class="tablesorter informationAboutModule" id="modulesForEditor">
 		<thead>
 			<tr>

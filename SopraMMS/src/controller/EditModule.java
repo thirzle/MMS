@@ -380,19 +380,10 @@ public class EditModule extends HttpServlet {
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				Date currentTime = new Date();
 				String date = formatter.format(currentTime);
-				String title = null;
-				for (Entry entry : entryListForNewModule) {
-					if (entry.getTitle().equals("Kürzel")) {
-						title = entry.getContent();
-					}
-				}
-				
 				uAdmin.insertHistory(
 						((User) session.getAttribute("user")).getLogin(), date,
-						"Hat folgendes Modul ge&auml;ndert: " + title);
+						"Hat folgendes Modul ge&auml;ndert: " + module.getName());
 
-				// session.setAttribute("content", "didEditModule");
-				// System.out.println("did edit module");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
 

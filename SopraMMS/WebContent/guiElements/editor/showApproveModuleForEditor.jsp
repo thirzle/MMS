@@ -11,7 +11,7 @@
 
 <h1>Freizugebende Module</h1>
 
-<form action="/SopraMMS/ShowEditModuleForEditor" method="get">
+<form action="/SopraMMS/ShowApproveModuleForEditor" method="get">
 	<%
 		LinkedList<Entry> entryListForEditor = (LinkedList<Entry>) session.getAttribute("entryListForEditor");
 		session.removeAttribute("entryListForEditor");
