@@ -76,7 +76,6 @@ public class TextualEntry extends Entry {
      * Difference: used to create an Entry from already loaded data.
      * <p>
      * useful
-     * @param version		The version of this {@link Entry}-extension. (Used to initialize the super class)
      * @param date		The modification date. (Used to initialize the super class)
      * @param classification	Should this entry go to Dezernat 2 ? (Used to initialize the super class)
      * @param approvalstatus	Is this entry already approved ? (Used to initialize the super class)

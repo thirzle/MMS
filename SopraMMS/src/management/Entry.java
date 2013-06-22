@@ -130,7 +130,6 @@ public abstract class Entry {
 	 * @see CourseEntry	
 	 * @see EffortEntry
 	 * @see TextualEntry
-         * @param version		The version of this Entry. (Used by extensions to initialize this super class)
          * @param date			The modification date. (Used by extensions to initialize this super class)
          * @param classification	Should this entry go to Dezernat 2 ? (Used by extensions to initialize this super class)
          * @param approvalstatus	Is this entry already approved ? (Used by extensions to initialize this super class)
