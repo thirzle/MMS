@@ -383,8 +383,9 @@ public class EditModule extends HttpServlet {
 				uAdmin.insertHistory(
 						((User) session.getAttribute("user")).getLogin(), date,
 						"Hat folgendes Modul ge&auml;ndert: " + module.getName());
-
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				
+				String infotext = "Das Modul '"+module.getName()+"' wurde erfolgreich bearbeitet und zur Freigabe weitergeleitet.";
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 			}
 
 		} else if (request.getParameter("deleteRow") != null) {

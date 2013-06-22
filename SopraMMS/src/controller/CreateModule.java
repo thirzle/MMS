@@ -236,7 +236,8 @@ public class CreateModule extends HttpServlet {
 					}
 				}
 				
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true");
+				String infotext = "Das Modul '"+title+"' wurde erfolgreich erstellt und zur Freigabe weitergeleitet.";
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 			}
 		}
 		// Bei Klick entsprechende Zeile loeschen
