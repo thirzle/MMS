@@ -16,6 +16,15 @@ import management.Deadline;
 
 import user.User;
 
+//TODO Bitte alle Kommentare prüfen und Autoren eintragen
+/**
+ * The class UserDBController provides a connection to the database.
+ * <p>
+ * It also provides a number of methods which are used to retrieve, create, edit, and delete contents.
+ * 
+ * @author Max
+ *
+ */
 public class UserDBController {
 
 	private static Statement statement;
@@ -39,9 +48,18 @@ public class UserDBController {
 	// private static final String PASSWORD = "sopra13";
 	// private static final String DRIVER = "com.mysql.jdbc.Driver";
 	
+	/**
+	 * Number of possible rights a user can own.
+	 */
 	static final int NUMBEROFRIGHTS = 7;
 
 	// establish connection
+	/**
+	 * Establishes connection to database.
+	 * 
+	 * @return		connection object.
+	 * @see Connection
+	 */
 	public Connection connect() {
 		Connection connection = null;
 		try {
@@ -57,7 +75,12 @@ public class UserDBController {
 		return connection;
 	}
 
-	// get all user listed in database
+	/**
+	 * Gets all users listed in the database.
+	 * 
+	 * @return		List of all users.
+	 * @see User
+	 */
 	public List<User> getAllUsers() {
 		Connection connection = connect();
 		List<User> userList = new LinkedList<User>();
@@ -87,7 +110,14 @@ public class UserDBController {
 		return userList;
 	}
 
-	// find specified user by loginname
+
+	/**
+	 * Gets specified user by loginname.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @return				User object.
+	 * @see User
+	 */
 	public User getUser(String loginname) {
 		Connection connection = connect();
 		String firstname, lastname, representative, mail, password, session, faculty, supervisor;
@@ -155,6 +185,13 @@ public class UserDBController {
 	// return null;
 	// }
 	// find user by email
+	/**
+	 * Gets specified user by his email address.
+	 * 
+	 * @param mail		The user´s email address.
+	 * @return			User object.
+	 * @see User
+	 */
 	public User getUserByEmail(String mail) {
 		Connection connection = connect();
 		query = "SELECT loginname FROM user WHERE mail = ?";
@@ -175,6 +212,13 @@ public class UserDBController {
 	}
 
 	// create new user in database
+	/**
+	 * Creates a new user.
+	 * 
+	 * @param user		User object.
+	 * @return			<code>true</code> if a new user was created <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean createUser(User user) {
 		Connection connection = connect();
 		query = "INSERT INTO user (loginname, lastname, firstname, mail, password, session) VALUES(?,?,?,?,?,?)";
@@ -219,7 +263,14 @@ public class UserDBController {
 
 	}
 
-	// change existing user in database
+	/**
+	 * Changes existing user in the database.
+	 * 
+	 * @param oldUser		User object of the old user.
+	 * @param newUser		User object of the new user.
+	 * @return				<code>true</code> if the change was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean changeUser(User oldUser, User newUser) {
 		Connection connection = connect();
 		query = "UPDATE user SET loginname=?, lastname=?, firstname=?, mail=?  WHERE loginname=?";
@@ -250,7 +301,13 @@ public class UserDBController {
 		}
 	}
 
-	// deletes User
+	/**
+	 * Deletes a user.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @return				<code>true</code> if deleting the user was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean deleteUser(String loginname) {
 		Connection connection = connect();
 		query = "DELETE FROM user WHERE loginname=?";
@@ -268,7 +325,13 @@ public class UserDBController {
 		return false;
 	}
 
-	// get rights of specified user
+	/**
+	 * Gets the rights of a specified user.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system. 
+	 * @return				An array set with true and false values ​​for the corresponding rights.
+	 * @see User
+	 */
 	public boolean[] getRights(String loginname) {
 		Connection connection = connect();
 		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
@@ -307,7 +370,14 @@ public class UserDBController {
 		return rightsArray;
 	}
 
-	// get rights of specified user with established connection
+	/**
+	 * Gets the rights of a specified user with established connection.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @param connection	Connection object.
+	 * @return				An array set with true and false values ​​for the corresponding rights.
+	 * @see User
+	 */
 	public boolean[] getRights(String loginname, Connection connection) {
 		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
 		query = "SELECT rightsID FROM rightsaffiliation WHERE loginname = ?";
@@ -341,7 +411,14 @@ public class UserDBController {
 		return rightsArray;
 	}
 
-	// change rights of specified user
+	/**
+	 * Changes the rights of a specified user.
+	 * 
+	 * @param user			User object
+	 * @param newRights		Array set with true and false values ​​for the new rights.
+	 * @return				<code>true</code> if changing the rights was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean changeRights(User user, boolean[] newRights) {
 		Connection connection = connect();
 		// delete old rights
@@ -376,7 +453,16 @@ public class UserDBController {
 		}
 	}
 
-	// change rights of specified user
+	/**
+	 * Changes the rights of a specified user.
+	 * 
+	 * @param oldLogin		Old loginname.
+	 * @param newLogin		New loginname.
+	 * @param newRights		Array set with true and false values ​​for the new rights.	
+	 * @param connection	Connection object.
+	 * @return				<code>true</code> if changing the rights was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean changeRights(String oldLogin, String newLogin,
 			boolean[] newRights, Connection connection) {
 		// delete old rights
@@ -408,7 +494,14 @@ public class UserDBController {
 		}
 	}
 
-	// change institutes of specified user
+	/**
+	 * Changes the institute of a specified user.
+	 * 
+	 * @param user			User object.
+	 * @param institutes	List of institutes.
+	 * @return				<code>true</code> if changing the institute was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean changeInstitutes(User user, List<String> institutes) {
 		Connection connection = connect();
 		// delete old institutes
@@ -440,7 +533,16 @@ public class UserDBController {
 		}
 	}
 
-	// change institutes of specified user
+	/**
+	 * Changes the institute of a specified user.
+	 * 
+	 * @param oldLogin		Old loginname.
+	 * @param newLogin		New loginname.
+	 * @param institutes	List of institutes.
+	 * @param connection	Connection object.
+	 * @return				<code>true</code> if changing the institute was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean changeInstitutes(String oldLogin, String newLogin,
 			List<String> institutes, Connection connection) {
 		// delete old institutes
@@ -470,7 +572,13 @@ public class UserDBController {
 		}
 	}
 
-	// get all user of specified institute
+	/**
+	 * Gets all users of a specified institute.
+	 * 
+	 * @param institute		ID of the institute.
+	 * @return				List of users.
+	 * @see User
+	 */
 	public List<User> getAllUsersFromInstitute(String institute) {
 		Connection connection = connect();
 		List<User> userList = new LinkedList<User>();
@@ -511,7 +619,13 @@ public class UserDBController {
 		return userList;
 	}
 
-	// get institute of existing user
+	/**
+	 * Gets instituteID of existing user.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @return				List of institutes.
+	 * @see User
+	 */
 	public List<String> getInstitutesByName(String loginname) {
 		Connection connection = connect();
 		LinkedList<String> instituteList = new LinkedList<String>();
@@ -533,7 +647,14 @@ public class UserDBController {
 		return instituteList;
 	}
 
-	// get institute of existing user with established connection
+	/**
+	 * Gets institute of existing user with established connection
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @param connection	Connection object.
+	 * @return				List of institutes.
+	 * @see User
+	 */
 	public List<String> getInstitutesByName(String loginname,
 			Connection connection) {
 		LinkedList<String> instituteList = new LinkedList<String>();
@@ -553,7 +674,13 @@ public class UserDBController {
 		return instituteList;
 	}
 
-	// get institutenames of user
+	/**
+	 * Gets the institutenames a user belongs to.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @return				List of institutes.
+	 * @see User
+	 */
 	public List<String[]> getInstituteNames(String loginname) {
 		Connection connection = connect();
 		LinkedList<String[]> instituteList = new LinkedList<String[]>();
@@ -578,8 +705,14 @@ public class UserDBController {
 		return instituteList;
 	}
 
-	// compare hashed password typed in with password in database of specified
-	// user
+	/**
+	 * Compares password typed in with the password stored in the database of a specified user.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @param password		The typed in password.
+	 * @return				<code>true</code> if the typed password is correct <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean checkPassword(String loginname, String password) {
 		Connection connection = connect();
 		String correctPassword;
@@ -606,7 +739,14 @@ public class UserDBController {
 		}
 	}
 
-	// change password of specified user
+	/**
+	 * Sets the password of a specified user.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @param password		The new password.
+	 * @return				<code>true</code> if setting the password was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean setPassword(String loginname, String password) {
 		Connection connection = connect();
 		query = "UPDATE user SET password = ? WHERE loginname = ?";
@@ -626,7 +766,13 @@ public class UserDBController {
 		return false;
 	}
 
-	// check if session of user is still valid
+	/**
+	 * Checks if the session of the user is still valid.
+	 * 
+	 * @param session		Session object.
+	 * @return				User object.
+	 * @see User
+	 */
 	public User checkSession(String session) {
 		Connection connection = connect();
 		User user = null;
@@ -653,7 +799,12 @@ public class UserDBController {
 		return user;
 	}
 
-	// get all institutes listed in databse
+	/**
+	 * Gets all institutes listed in the database.
+	 * 
+	 * @return		List of institutes.
+	 * @see Module
+	 */
 	public List<String> getInstitutes() {
 		Connection connection = connect();
 		List<String> instituteList = new LinkedList<String>();
@@ -673,7 +824,12 @@ public class UserDBController {
 		return instituteList;
 	}
 
-	// get all institutes listed in databse
+	/**
+	 * Gets all institutes listed in the database.
+	 * 
+	 * @return		List of institutes.
+	 * @see Module
+	 */
 	public List<String> getInstituteID() {
 		Connection connection = connect();
 		List<String> instituteList = new LinkedList<String>();
@@ -694,7 +850,14 @@ public class UserDBController {
 	}
 
 
-	// get facultyname of user
+	/**
+	 * Gets the user´s facultyname.
+	 * 
+	 * @param user		User object.
+	 * @return			The instituteID.
+	 * @see User
+	 * @see Course
+	 */
 	public String getFacultyName(User user) {
 		Connection connection = connect();
 		query = "SELECT f.name FROM faculty AS f JOIN institute AS i ON f.facultyID = i.facultyID "
@@ -716,7 +879,13 @@ public class UserDBController {
 		return null;
 	}
 
-	// remove representative of user
+	/**
+	 * Removes the representative of an user.
+	 * 
+	 * @param user		User object.
+	 * @return			<code>true</code> if removing the representative was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean removeRepresentative(User user) {
 		Connection connection = connect();
 		query = "UPDATE user SET representative = null WHERE loginname = ?";
@@ -735,6 +904,14 @@ public class UserDBController {
 		return false;
 	}
 
+	/**
+	 * Sets the password if the user forgets it.
+	 * 
+	 * @param mail			The user´s email address.
+	 * @param forgotPwd		The forgotten password.
+	 * @return				<code>true</code> if setting the password was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public Boolean setForgotPwdByMail(String mail, String forgotPwd) {
 		Connection connection = connect();
 		query = "UPDATE user SET forgotpwd = ? WHERE mail = ?";
@@ -754,6 +931,13 @@ public class UserDBController {
 		}
 	}
 
+	/**
+	 * Removes the forgotten password.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @return				<code>true</code> if removing the password was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public Boolean removeForgotPwdByLoginname(String loginname) {
 		Connection connection = connect();
 		query = "UPDATE user SET forgotpwd = null WHERE loginname = ?";
@@ -771,6 +955,13 @@ public class UserDBController {
 		}
 	}
 
+	/**
+	 * Gets the user by his forgotten password.
+	 * 
+	 * @param forgotPwd		The user´s forgotten password.
+	 * @return				User object.
+	 * @see User
+	 */
 	public User getUserByForgotPwd(String forgotPwd) {
 		Connection connection = connect();
 		User user = null;
@@ -796,6 +987,12 @@ public class UserDBController {
 		return user;
 	}
 
+	/**
+	 * Gets all faculties.
+	 * 
+	 * @return		List of faculties.
+	 * @see Course
+	 */
 	public List<String> getFacultiesByName() {
 		Connection connection = connect();
 		LinkedList<String> facList = new LinkedList<String>();
@@ -816,6 +1013,12 @@ public class UserDBController {
 		return facList;
 	}
 
+	/**
+	 * Gets all FacultieIDs.
+	 * 
+	 * @return		List of facultieIDs.
+	 * @see Course
+	 */
 	public List<String> getFacultiesID() {
 		Connection connection = connect();
 		LinkedList<String> facList = new LinkedList<String>();
@@ -836,7 +1039,11 @@ public class UserDBController {
 		return facList;
 	}
 
-	// roll back changes made in database if something went wrong
+	/**
+	 * Cancels changes made in database if something went wrong.
+	 * 
+	 * @param connection		Connection object.
+	 */
 	private void rollback(Connection connection) {
 		try {
 			connection.rollback();
@@ -846,6 +1053,13 @@ public class UserDBController {
 		}
 	}
 
+	/**
+	 * Gets the faculty dependent deadline.
+	 * 
+	 * @param facultyID		The unique ID of a faculty.
+	 * @return				Deadline object.
+	 * @see Course
+	 */
 	public Deadline getDeadlineByFaculty(String facultyID) {
 		Connection connection = connect();
 		query = "SELECT * FROM deadline where facultyID = ?";
@@ -867,6 +1081,13 @@ public class UserDBController {
 		return null;
 	}
 
+	/**
+	 * Sets the faculty dependent deadline.
+	 * 
+	 * @param deadline		The point where all changes must be finished.
+	 * @return				<code>true</code> if setting the deadline was successful <code>false</code> otherwise.
+	 * @see Course
+	 */
 	public boolean setDeadlineByFaculty(Deadline deadline) {
 		Connection connection = connect();
 		query = "INSERT INTO deadline VALUES(?,?,?)";
@@ -886,6 +1107,13 @@ public class UserDBController {
 		}
 	}
 
+	/**
+	 * Updates the faculty dependent deadline.
+	 * 
+	 * @param deadline		The point where all changes must be finished.
+	 * @return				<code>true</code> if changing the deadline was successful <code>false</code> otherwise.
+	 * @see Course
+	 */
 	public boolean updateDeadlineByFaculty(Deadline deadline) {
 		Connection connection = connect();
 		query = "UPDATE deadline SET deadline = ?, beginremember = ? WHERE facultyID = ?";
@@ -905,6 +1133,13 @@ public class UserDBController {
 		}
 	}
 	
+	/**
+	 * Deletes the faculty dependent deadline.
+	 * 
+	 * @param facutyID		The unique ID of a faculty.
+	 * @return				<code>true</code> if deleting the deadline was successful <code>false</code> otherwise.
+	 * @see Course
+	 */
 	public boolean deleteDeadlineByFaculty(String facutyID) {
 		Connection connection = connect();
 		query = "DELETE FROM deadline WHERE facultyID = ?";
@@ -921,7 +1156,14 @@ public class UserDBController {
 			close(connection);
 		}
 	}
-
+	
+	//TODO
+	/**
+	 * Gets the latest news.
+	 * 
+	 * @param type
+	 * @return			List of news.
+	 */
 	public List<String[]> getNews(int type) {
 		List<String[]> news = new LinkedList<String[]>();
 		Connection connection = connect();
@@ -954,6 +1196,14 @@ public class UserDBController {
 		return news;
 	}
 
+	/**
+	 * Adds new news.
+	 * 
+	 * @param title		The news heading.
+	 * @param content	The news content.
+	 * @param type
+	 * @return			<code>true</code> if adding news was successful <code>false</code> otherwise.
+	 */
 	public boolean addNews(String title, String content, int type) {
 		Connection connection = connect();
 		query = "INSERT INTO news (title,content,visibility) VALUES (?,?,?)";
@@ -974,6 +1224,12 @@ public class UserDBController {
 		}
 	}
 
+	/**
+	 * Deletes news by their title.
+	 * 
+	 * @param title		The news heading.
+	 * @return			<code>true</code> if deleting news was successful <code>false</code> otherwise.
+	 */
 	public boolean deleteNews(String title) {
 		Connection connection = connect();
 		query = "DELETE FROM news WHERE title = ?";
@@ -992,6 +1248,11 @@ public class UserDBController {
 		}
 	}
 
+	/**
+	 * Gets the number of available news.
+	 * 
+	 * @return		Number of news.
+	 */
 	public int numberOfNews() {
 		Connection connection = connect();
 		query = "SELECT COUNT(title) AS number FROM news";
@@ -1009,7 +1270,12 @@ public class UserDBController {
 			close(connection);
 		}
 	}
-
+	
+	//TODO
+	/**
+	 * @param instituteName		Name of the institute.
+	 * @return					List of instituteIDs.
+	 */
 	public List<String> convertInstituteToID(List<String> instituteName) {
 		Connection connection = connect();
 		List<String> instituteID = new LinkedList<String>();
@@ -1033,6 +1299,12 @@ public class UserDBController {
 		return instituteID;
 	}
 
+	/**
+	 * Gets all email addresses from the users which are available in the database.
+	 * 
+	 * @param rights		Array set with true and false values ​​for the rights.
+	 * @return				List of email addresses.
+	 */
 	public List<String[]> getEmails(boolean[] rights) {
 		Connection connection = connect();
 		LinkedList<String[]> mailList = new LinkedList<String[]>();
@@ -1066,6 +1338,13 @@ public class UserDBController {
 		return mailList;
 	}
 
+	/**
+	 * Inserts events in the history.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @param date			Date the event took place.
+	 * @param content		Conntent of the event.
+	 */
 	public void insertHistory(String loginname, String date, String content) {
 		Connection connection = connect();
 		query = "INSERT INTO history (loginname, date, content) VALUES (?,?,?)";
@@ -1087,6 +1366,11 @@ public class UserDBController {
 
 	// TODO checkLoginName
 
+	/**
+	 * Shows history.
+	 * 
+	 * @return		List of history.
+	 */
 	public List<String[]> showHistory() {
 		Connection connection = connect();
 		LinkedList<String[]> userList = new LinkedList<String[]>();
@@ -1112,6 +1396,11 @@ public class UserDBController {
 		return userList;
 	}
 	
+	/**
+	 * Clears the history.
+	 * 
+	 * @return		<code>true</code> if deleting the history was successful <code>false</code> otherwise.
+	 */
 	public boolean clearHistory() {
 		java.util.Date today = new java.util.Date();
 		Date limit = new Date(today.getYear(), today.getMonth()-2,
@@ -1132,6 +1421,14 @@ public class UserDBController {
 		}
 	}
 
+	/**
+	 * Deletes the forgotten password.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @param connection	Connection object.
+	 * @return				<code>true</code> if deleting the forgotten password was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean deleteForgotPwd(String loginname, Connection connection) {
 		query = "UPDATE user SET forgotpwd = null WHERE loginname = ?";
 		try {
@@ -1148,6 +1445,14 @@ public class UserDBController {
 		}
 	}
 
+	/**
+	 * Sets the curriculum vitae in form of an url from a specified user.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @param url			The URL which leads to the user´s curriculum vitae.
+	 * @return				<code>true</code> if inserting of the URL was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean setCurriculum(String loginname, String url) {
 		Connection connection = connect();
 		query = "UPDATE user SET curriculum = ? WHERE loginname = ?";
@@ -1167,6 +1472,13 @@ public class UserDBController {
 		}
 	}
 
+	/**
+	 * Gets the curriculum vitae of a specified user.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @return				The URL which leads to the user´s curriculum vitae.
+	 * @see User
+	 */
 	public String getCurriculum(String loginname) {
 		Connection connection = connect();
 		String url = null;
@@ -1189,7 +1501,11 @@ public class UserDBController {
 		return url;
 	}
 
-	// close connection
+	/**
+	 * Closes the connection
+	 * 
+	 * @param connection		Connection object
+	 */
 	private void close(Connection connection) {
 		try {
 			connection.close();

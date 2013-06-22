@@ -1519,7 +1519,7 @@ public class ModuleDBController {
 	/**
 	 * Gets the course ID belonging to a specified course.
 	 * 
-	 * @param course
+	 * @param course		The name of the course.
 	 * @return				The courseID.
 	 * @see Course
 	 */
@@ -1829,7 +1829,7 @@ public class ModuleDBController {
 	/**
 	 * Creates a new course.
 	 * 
-	 * @param course
+	 * @param course		Course object.
 	 * @return				<code>true</code> if a new course was created <code>false</code> otherwise.
 	 * @see Course
 	 */
@@ -1857,7 +1857,7 @@ public class ModuleDBController {
 	/**
 	 * Deletes a course.
 	 * 
-	 * @param course
+	 * @param course		Course object.
 	 * @return				<code>true</code> if the course was deleted <code>false</code> otherwise.
 	 * @see Course
 	 */
@@ -1889,7 +1889,7 @@ public class ModuleDBController {
 	 * @param modificationdate	The date the module manual was changed.
 	 * @param approvalstatus	The status of approval.
 	 * @param examregulation	The exam regulation the module manual belongs to.
-	 * @return					<code>true</code> if a new module manual is created <code>false</code> otherwise.
+	 * @return					<code>true</code> if a new module manual was created <code>false</code> otherwise.
 	 * @see Course
 	 * @see Module
 	 * @see ModuleAdministration
@@ -2009,7 +2009,7 @@ public class ModuleDBController {
 	 * 
 	 * @param moduleID		The unique ID of a module.
 	 * @param version		The version number of this Module.
-	 * @param courses
+	 * @param courses		List of course names.
 	 * @return
 	 * @see Course
 	 */
@@ -2021,7 +2021,7 @@ public class ModuleDBController {
 	/**
 	 * Approves the module entries.
 	 * 
-	 * @param module
+	 * @param module		Module object.
 	 * @return				<code>true</code> if the entries were approved <code>false</code> otherwise.
 	 * @see Module
 	 */
@@ -2071,7 +2071,7 @@ public class ModuleDBController {
 	/**
 	 * Deactivates a module.
 	 * 
-	 * @param module
+	 * @param module		Module object.
 	 * @return				<code>true</code> if the entries were deactivated <code>false</code> otherwise.
 	 * @see Module
 	 */
@@ -2138,7 +2138,7 @@ public class ModuleDBController {
 	 * Gets the newest module version
 	 * 
 	 * @param moduleID		The unique ID of a module.
-	 * @param connection
+	 * @param connection	Connection object.
 	 * @return
 	 * @see Module
 	 */
@@ -2163,7 +2163,7 @@ public class ModuleDBController {
 	/**
 	 * Cancels changes made in database if something went wrong.
 	 * 
-	 * @param connection
+	 * @param connection		Connection object.
 	 */
 	private void rollback(Connection connection) {
 		try {
@@ -2177,7 +2177,7 @@ public class ModuleDBController {
 	/**
 	 * Closes the database connection.
 	 * 
-	 * @param connection
+	 * @param connection		Connection object.
 	 */
 	public void close(Connection connection) {
 		try {
