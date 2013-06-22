@@ -266,6 +266,10 @@ public class UserAdministration {
 	public void updateDeadlinebyFaculty(Deadline deadline){
 		userDBController.updateDeadlineByFaculty(deadline);
 	}
+	
+	public void deleteDeadlinebyFaculty(String facultyID) {
+		userDBController.deleteDeadlineByFaculty(facultyID);
+	}
 
 	public boolean checkPassword(String loginname, String password) {
 		return userDBController.checkPassword(loginname, password);

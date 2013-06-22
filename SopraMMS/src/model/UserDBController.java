@@ -904,6 +904,23 @@ public class UserDBController {
 			close(connection);
 		}
 	}
+	
+	public boolean deleteDeadlineByFaculty(String facutyID) {
+		Connection connection = connect();
+		query = "DELETE FROM deadline WHERE facultyID = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, facutyID);
+			pStatement.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't delete deadline of faculty "+facutyID);
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
 
 	public List<String[]> getNews(int type) {
 		List<String[]> news = new LinkedList<String[]>();

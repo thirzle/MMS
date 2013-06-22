@@ -1016,7 +1016,7 @@ public class ModuleDBController {
 	public List<Module> getModuleOverviewForEditor(String instituteID) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT * FROM module WHERE approvalstatus = 0 AND instituteID = ?";
+		query = "SELECT * FROM module WHERE approvalstatus = 0 AND subject IS NOT NULL AND instituteID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, instituteID);
@@ -1589,10 +1589,16 @@ public class ModuleDBController {
 			pStatement.setString(1, courseID);
 			pStatement.setString(2, degree);
 			ResultSet resultSet = pStatement.executeQuery();
+			
+			
 			// get all versionnumbers of module
 			while (resultSet.next()) {
 				versionnumbers.add(resultSet.getString(1));
 			}
+			if(versionnumbers.isEmpty()){
+				return null;
+			}
+			
 			System.out.println("(ModuleDBController) versionnumbers is empty: "
 					+ versionnumbers.isEmpty());
 			// separate sSemester and wSemester
