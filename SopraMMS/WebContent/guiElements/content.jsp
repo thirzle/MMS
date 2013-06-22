@@ -134,9 +134,9 @@
 <jsp:include
 	page="/guiElements/coordinator/showModulesForCoordinator.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("showModulesForEditor")) {
+	} else if (contentPage.equals("showApproveModulesOverviewForEditor")) {
 %>
-<jsp:include page="/guiElements/editor/showModulesForEditor.jsp"></jsp:include>
+<jsp:include page="/guiElements/editor/showApproveModulesOverviewForEditor.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("didEditModule")) {
 %>
@@ -150,13 +150,14 @@
 %>
 <jsp:include page="/guiElements/lecturer/seecurriculumvitae.jsp"></jsp:include>
 <%
-	}  else if (contentPage.equals("showModulesForEditor")) {
+	} else if (contentPage.equals("showEditModulesOverviewForEditor")) {
 %>
-<jsp:include page="/guiElements/editor/showModulesForEditor.jsp"></jsp:include>
+<jsp:include
+	page="/guiElements/editor/showEditModulesOverviewForEditor.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("showEditModuleForEditor")) {
+	} else if (contentPage.equals("showApproveModuleForEditor")) {
 %>
-<jsp:include page="/guiElements/editor/showEditModuleForEditor.jsp"></jsp:include>
+<jsp:include page="/guiElements/editor/showApproveModuleForEditor.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("createNewCourse")) {
 %>
@@ -166,5 +167,5 @@
 %>
 <jsp:include page="/guiElements/coordinator/createNewSubject.jsp"></jsp:include>
 <%
-}
+	}
 %>

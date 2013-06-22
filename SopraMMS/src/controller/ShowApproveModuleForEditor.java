@@ -25,17 +25,17 @@ import user.User;
 import user.UserAdministration;
 
 /**
- * Servlet implementation class ShowEditModuleForEditor
+ * Servlet implementation class ShowApproveModuleForEditor
  */
-@WebServlet("/ShowEditModuleForEditor")
-public class ShowEditModuleForEditor extends HttpServlet {
+@WebServlet("/ShowApproveModuleForEditor")
+public class ShowApproveModuleForEditor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 
-	public ShowEditModuleForEditor() {
+	public ShowApproveModuleForEditor() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -71,8 +71,6 @@ public class ShowEditModuleForEditor extends HttpServlet {
 			selectedModuleArray = selectedModule.split(" ");
 			moduleID = Long.parseLong(selectedModuleArray[0]);
 			version = Integer.parseInt(selectedModuleArray[1]);
-			System.out
-					.println("ModuleID: " + moduleID + " version: " + version);
 			session.setAttribute("selectedModuleIDToApprove", moduleID);
 			session.setAttribute("selectedVersionToApprove", version);
 		}
@@ -86,8 +84,6 @@ public class ShowEditModuleForEditor extends HttpServlet {
 		if (request.getParameter("approveModule") != null) {
 			// save module for this session
 			if (request.getParameter("approveModule").equals("saveModule")) {
-				System.out
-						.println("(ShowEditModuleForEditor.java): Modul für Sitzung gespeichert");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
 
@@ -144,7 +140,7 @@ public class ShowEditModuleForEditor extends HttpServlet {
 			session.setAttribute("instituteApproveModule",
 					mAdmin.getInstituteName(instituteID));
 
-			session.setAttribute("content", "showEditModuleForEditor");
+			session.setAttribute("content", "showApproveModuleForEditor");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			
 		}
