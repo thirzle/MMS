@@ -342,6 +342,9 @@ public class UserAdministration {
 		return userDBController.showHistory();
 	}
 	
+	public void clearHistory() {
+		userDBController.clearHistory();
+	}
 	
 	public void setCurriculum(String loginname, String url){
 		userDBController.setCurriculum(loginname, url);

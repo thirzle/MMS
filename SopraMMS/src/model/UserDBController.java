@@ -1111,6 +1111,26 @@ public class UserDBController {
 		}
 		return userList;
 	}
+	
+	public boolean clearHistory() {
+		java.util.Date today = new java.util.Date();
+		Date limit = new Date(today.getYear(), today.getMonth()-2,
+				today.getDate());
+		Connection connection = connect();
+		query = "DELETE FROM history WHERE date < ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setDate(1, limit);
+			pStatement.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't clear history");
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
 
 	public boolean deleteForgotPwd(String loginname, Connection connection) {
 		query = "UPDATE user SET forgotpwd = null WHERE loginname = ?";

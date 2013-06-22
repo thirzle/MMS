@@ -7,6 +7,8 @@ import java.util.List;
 
 import com.ibm.icu.text.SimpleDateFormat;
 
+import management.Deadline;
+
 import management.Entry;
 import management.Module;
 import model.ModuleDBController;
@@ -23,7 +25,7 @@ public class DBtest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		UserDBController uController = new UserDBController();
-		//ModuleDBController mController = new ModuleDBController();
+		ModuleDBController mController = new ModuleDBController();
 		uController.connect();
 		for (User user : uController.getAllUsers()) {
 			System.out.println(user);
@@ -176,6 +178,10 @@ public class DBtest {
 //		System.out.println("done");+
 
 		//System.out.println(mController.clearDatabase());
+		Deadline deadline = uController.getDeadlineByFaculty("in");
+		String date = new SimpleDateFormat("dd.MM.yyyy").format(deadline.getDeadline());
+		System.out.println(date);
+		
 
 	}
 

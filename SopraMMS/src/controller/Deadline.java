@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import backend.TaskManager;
+
 import user.User;
 import user.UserAdministration;
 
@@ -71,6 +73,8 @@ public class Deadline extends HttpServlet {
 					userAdmin.setDeadlinebyFaculty(new management.Deadline(deadline, 
 							beginremember, user.getFaculty()));
 				}
+				TaskManager taskMananer = new TaskManager(new management.Deadline(deadline, 
+						beginremember, user.getFaculty()));
 				session.removeAttribute("existingDeadline");
 				session.setAttribute("content", "showDeadline");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=done");
