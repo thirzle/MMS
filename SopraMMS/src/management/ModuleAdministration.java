@@ -225,4 +225,9 @@ public class ModuleAdministration {
 	public void changeEntryListOfModule(Module module){
 		moduleDBController.approveModuleEntries(module);
 	}
+	
+	public void deactivateModule (Module module)
+	{
+		moduleDBController.deactivateModule(module);
+	}
 }
