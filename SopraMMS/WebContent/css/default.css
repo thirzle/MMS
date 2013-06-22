@@ -116,6 +116,12 @@ body {
 	color: #888899;
 }
 
+.infoBox{
+	margin-top: 20px;
+	font-weight: bold;
+	color: #666666;
+}
+
 .importantBox {
 	text-align: center;
 	width: 490px;
@@ -336,7 +342,7 @@ body {
 
 /*--------------------------*/
 /*---- Table - ShowNews ----*/
-.showNewsTable h2, .showNewsTable  h3, .showNewsTable a, .showNewsTable p {
+.showNewsTable h2,.showNewsTable  h3,.showNewsTable a,.showNewsTable p {
 	display: inline;
 	font-style: normal;
 	font-weight: normal;

@@ -1,8 +1,9 @@
+<%@page import="management.Course"%>
 <%@page import="java.util.LinkedList"%>
 <%@page import="user.UserAdministration,java.util.List"%>
 <%
 	String faculty = (String) session.getAttribute("faculty");
-	LinkedList<String> courses = (LinkedList) session
+	LinkedList<String> courses = (LinkedList<String>) session
 	.getAttribute("courses");
 %>
 

@@ -144,9 +144,9 @@
 %>
 <jsp:include page="/guiElements/modulemanager/editModule.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("CurrVitae")) {
+	} else if (contentPage.equals("currVitae")) {
 %>
-<jsp:include page="/guiElements/lecturer/seecurriculumvitae.jsp"></jsp:include>
+<jsp:include page="/guiElements/lecturer/curriculumvitae.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("showEditModulesOverviewForEditor")) {
 %>
@@ -166,9 +166,13 @@
 <jsp:include page="/guiElements/coordinator/createNewSubject.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("showModulesForDez2")) {
-	%>
-	<jsp:include page="/guiElements/dez2/showModulesForDez2.jsp"></jsp:include>
-	<%
-}
+%>
+<jsp:include page="/guiElements/dez2/showModulesForDez2.jsp"></jsp:include>
+<%
+	} else if(contentPage.equals("viewModule")){
+%>
+<jsp:include page="/guiElements/viewModule.jsp"></jsp:include>		
+<%	
+	}
 %>
 
