@@ -40,7 +40,14 @@ session.removeAttribute("instituteForViewModule");
 					}
 					else{
 						%>
-						<td class='entryModule'><%=entry.getContent().trim()%></td>
+						<td class='entryModule'>
+						<%
+						String list[]=entry.getContent().split("\n");
+							for(String s:list){
+								out.println(""+s+"<br>");
+							}
+						%>
+						</td>
 						<%
 					}
 								
