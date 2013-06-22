@@ -1589,10 +1589,16 @@ public class ModuleDBController {
 			pStatement.setString(1, courseID);
 			pStatement.setString(2, degree);
 			ResultSet resultSet = pStatement.executeQuery();
+			
+			
 			// get all versionnumbers of module
 			while (resultSet.next()) {
 				versionnumbers.add(resultSet.getString(1));
 			}
+			if(versionnumbers.isEmpty()){
+				return null;
+			}
+			
 			System.out.println("(ModuleDBController) versionnumbers is empty: "
 					+ versionnumbers.isEmpty());
 			// separate sSemester and wSemester
