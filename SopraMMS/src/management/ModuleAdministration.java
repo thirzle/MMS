@@ -225,4 +225,8 @@ public class ModuleAdministration {
 	public void changeEntryListOfModule(Module module){
 		moduleDBController.approveModuleEntries(module);
 	}
+	
+	public void clearDatabase() {
+		moduleDBController.clearDatabase();
+	}
 }
