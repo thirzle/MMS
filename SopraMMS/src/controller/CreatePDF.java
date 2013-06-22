@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import management.Course;
 import management.ModuleAdministration;
 
 import user.UserAdministration;
@@ -40,10 +41,14 @@ public class CreatePDF extends HttpServlet {
 		
 		LinkedList<String> facListNames = (LinkedList) uAdmin.getAllFacultiesByName();
 		LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
-		LinkedList<String> courses = (LinkedList) mAdmin.getCourses();
+		LinkedList<Course> courses = (LinkedList<Course>) mAdmin.getCourses();
+		LinkedList<String> courseNames = new LinkedList<String>();
+		for(Course course : courses){
+			courseNames.add(course.getDescription());
+		}
 		 
 		session.setAttribute("faculty", facListNames.getFirst());
-		session.setAttribute("courses", courses);
+		session.setAttribute("courses", courseNames);
 		
 
 		session.setAttribute("content", "generatePDF");

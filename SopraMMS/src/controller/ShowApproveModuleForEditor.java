@@ -37,7 +37,6 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 
 	public ShowApproveModuleForEditor() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -130,8 +129,9 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 							date, "Hat folgendes Modul freigegeben: " + title);
 				}
 				
+				String infotext = "Die ausgewählten Einträge des Moduls wurden freigegeben.";
 				session.setAttribute("content", "home");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 			}
 		}
 		else{
@@ -153,7 +153,6 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

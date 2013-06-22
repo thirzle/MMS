@@ -9,29 +9,29 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/moduleView.css">
 
-<h1>Freizugebende Module</h1>
+<h1>Freizugebendes Modul</h1>
 
 <form action="/SopraMMS/ShowApproveModuleForEditor" method="get">
 	<%
 		LinkedList<Entry> entryListForEditor = (LinkedList<Entry>) session.getAttribute("entryListForEditor");
-		session.removeAttribute("entryListForEditor");
-		User user = (User) session.getAttribute("user");	
-		String institute = (String) session.getAttribute("instituteApproveModule");
-		session.removeAttribute("instituteApproveModule");
+			session.removeAttribute("entryListForEditor");
+			User user = (User) session.getAttribute("user");	
+			String institute = (String) session.getAttribute("instituteApproveModule");
+			session.removeAttribute("instituteApproveModule");
 	%>
 	<div>
-		<table style="border : none;">
+		<table style="border: none;">
 			<tr>
 				<td style="width: 625px;"></td>
-				<td><img src="/SopraMMS/images/Haken.jpg" style="margin-right: 4px;"> 
-					<img src="/SopraMMS/images/Kreuz.jpg">
-				</td>
+				<td><img src="/SopraMMS/images/Haken.jpg"
+					style="margin-right: 4px;"> <img
+					src="/SopraMMS/images/Kreuz.jpg"></td>
 			</tr>
 		</table>
 	</div>
 	<%
 		for (int i = 0; i < entryListForEditor.size(); i++) {
-			Entry entry = entryListForEditor.get(i);
+		Entry entry = entryListForEditor.get(i);
 	%>
 	<div class='moduleEntry'>
 		<table>
@@ -43,22 +43,30 @@
 				<td class='entryModule'>
 					<%
 						EffortEntry effortEntry = (EffortEntry) entry;
-												for(SelfStudy selfstudy : effortEntry.getSelfStudyList()){
-													out.println(selfstudy.getTitle()+" "+selfstudy.getTime()+" Stunden");
-					%> <br> <%
- 	}
- %>
+									for(SelfStudy selfstudy : effortEntry.getSelfStudyList()){
+										out.println(selfstudy.getTitle()+" "+selfstudy.getTime()+" Stunden");
+										%> <br> <%
+ 									}
+ 						%>
 				</td>
 				<%
 					}
-									else{
+											else{
 				%>
-				<td class='entryModule'><%=entry.getContent().trim()%></td>
+				<td class='entryModule'>
+				<%
+					String list[]=entry.getContent().split("\n");
+						for(String s:list){
+							out.println(""+s+"<br>");
+						}
+				%>
+				</td>
+				
 				<%
 					}
-								String trueChecked = "empty";
-								String falseChecked = "empty";
-								if(entry.isApproved()){
+						String trueChecked = "empty";
+						String falseChecked = "empty";
+						if(entry.isApproved()){
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					checked="checked" value="true"></td>
@@ -66,7 +74,7 @@
 					value="false"></td>
 				<%
 					}
-								else if(entry.isRejected()){
+										else if(entry.isRejected()){
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					value="true"></td>
@@ -74,7 +82,7 @@
 					checked="checked" value="false"></td>
 				<%
 					}
-								else{
+										else{
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					value="true"></td>
@@ -95,7 +103,7 @@
 		<table>
 			<tr>
 				<td class='descriptionModule'>Institut</td>
-				<td class='entryModule' style="width : 500px;"><%=institute%></td>
+				<td class='entryModule' style="width: 500px;"><%=institute%></td>
 			</tr>
 		</table>
 
