@@ -41,16 +41,16 @@ public class ShowModulesOverviewForEditor extends HttpServlet {
 		LinkedList<Module> moduleListForEditor = new LinkedList();
 						
 		if(request.getParameter("editorMenu").equals("checkModule")){
-				moduleListForEditor = (LinkedList) mAdmin.getModules();
+			for (String instituteID : instituteIDListOfUser) {
+				moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteID));
 				session.setAttribute("moduleListForEditor", moduleListForEditor);
 				session.setAttribute("content", "showApproveModulesOverviewForEditor");
+			}
 		}			
 		else if(request.getParameter("editorMenu").equals("editModule")){
-				for (String instituteID : instituteIDListOfUser) {
-					moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteID));
-					session.setAttribute("moduleListForEditor", moduleListForEditor);
-					session.setAttribute("content", "showEditModulesOverviewForEditor");
-				}
+			moduleListForEditor = (LinkedList) mAdmin.getModules();
+			session.setAttribute("moduleListForEditor", moduleListForEditor);
+			session.setAttribute("content", "showEditModulesOverviewForEditor");
 		}	
 		
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");

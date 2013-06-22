@@ -76,7 +76,12 @@ public class EditModule extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/ShowVersionsOfModule");
 			dispatcher.forward(request, response);
-		} else {
+		} 
+		else if(request.getParameter("showButton") != null){
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ViewModule");
+			dispatcher.forward(request, response);
+		}	
+			else {
 
 			if (request.getParameter("selectedModuleToEdit") != null) {
 
