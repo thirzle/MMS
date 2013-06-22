@@ -13,7 +13,6 @@ import java.util.List;
  * Several Constructors are given, but only a few are useful.
  * Use only Constructors that are marked as "useful". All other Constructors
  * are used for test purposes.
- * 
  * @see Module
  * @see Entry
  * @author AJ, Teresa, add names here...
@@ -21,12 +20,9 @@ import java.util.List;
  */
 public class CourseEntry extends Entry {
 
-    	/* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+
     @Override
     public String toString() {
-
 	return "CourseEntry [courses=" + courses + "]";
     }
 
@@ -121,7 +117,7 @@ public class CourseEntry extends Entry {
 	/**
 	 * Creates a CourseEntry with given parameters. (Overloaded)
 	 * <p>
-	 * Difference: No course parameter, no degree parameter. Add courses with {@link #addCourse(String course, String degree) addCourse}.
+	 * Difference: No course parameter, no degree parameter. Add courses with {@link #addCourse(String courseID, String  description,String degree, boolean obligatory) addCourse}.
 	 * Used to create an Entry from already loaded data.
 	 * <p>
 	 * useful
