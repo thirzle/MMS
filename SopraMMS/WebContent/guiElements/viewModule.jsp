@@ -10,67 +10,47 @@
 <h1>Module betrachten</h1>
 
 <%
-Module module = (Module) session.getAttribute("moduleForViewModule");
-session.removeAttribute("moduleForViewModule");
+	Module module = (Module) session.getAttribute("moduleForViewModule");
+
 LinkedList<Entry> entryList = (LinkedList) module.getEntryList();
 String institute = (String) session.getAttribute("instituteForViewModule");
-session.removeAttribute("instituteForViewModule");
+
 
 
 	for (int i = 0; i < entryList.size(); i++) {
 		Entry entry = entryList.get(i);
 %>
-	<div class='moduleEntry'>
-		<table>
-			<tr>
-				<td class='descriptionModule'><%=entry.getTitle()%></td>
+<div class='moduleEntry'>
+	<table>
+		<tr>
+			<td class='descriptionModule'><%=entry.getTitle()%></td>
+
+			<td class='entryModule'>
 				<%
-					if(entry.getClass().equals(EffortEntry.class)){
-						%>
-						<td class='entryModule'>
-						<%
-						EffortEntry effortEntry = (EffortEntry) entry;
-							for(SelfStudy selfstudy : effortEntry.getSelfStudyList()){
-								out.println(selfstudy.getTitle()+" "+selfstudy.getTime()+" Stunden");
-								%> <br> <%
- 							}
- 						%>
-						</td>
-				<%
-					}
-					else{
-						%>
-						<td class='entryModule'>
-						<%
-						String list[]=entry.getContent().split("\n");
+					String list[]=entry.getContent().split("\n");
 							for(String s:list){
 								out.println(""+s+"<br>");
 							}
-						%>
-						</td>
-						<%
-					}
-								
-								
-								
 				%>
-			</tr>
-		</table>
-	</div>
-	<%
-		}
-	%>
+			</td>
+		
+		</tr>
+	</table>
+</div>
+<%
+	}
+%>
 
 
-	<div class='moduleEntry'>
-		<table>
-			<tr>
-				<td class='descriptionModule'>Institut</td>
-				<td class='entryModule'><%=institute%></td>
-			</tr>
-		</table>
+<div class='moduleEntry'>
+	<table>
+		<tr>
+			<td class='descriptionModule'>Institut</td>
+			<td class='entryModule'><%=institute%></td>
+		</tr>
+	</table>
 
-	</div>
+</div>
 
 <script type="text/javascript"
 	src="/SopraMMS/js/jquery.createnewmodule.js"></script>
