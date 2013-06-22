@@ -42,13 +42,10 @@ public class CreatePDF extends HttpServlet {
 		LinkedList<String> facListNames = (LinkedList) uAdmin.getAllFacultiesByName();
 		LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
 		LinkedList<Course> courses = (LinkedList<Course>) mAdmin.getCourses();
-		LinkedList<String> courseNames = new LinkedList<String>();
-		for(Course course : courses){
-			courseNames.add(course.getDescription());
-		}
+		
 		 
 		session.setAttribute("faculty", facListNames.getFirst());
-		session.setAttribute("courses", courseNames);
+		session.setAttribute("courses", courses);
 		
 
 		session.setAttribute("content", "generatePDF");

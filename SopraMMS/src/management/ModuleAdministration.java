@@ -71,15 +71,15 @@ public class ModuleAdministration {
 	public String getCourseID(String course) {
 		return moduleDBController.getCourseID(course);
 	}
-	
+
 	public List<String> getCoursNamesByFacultyID(String id) {
-	    return moduleDBController.getCoursesByFaculty(id);
+		return moduleDBController.getCoursesByFaculty(id);
 	}
 
-	public List<Module> getModules(){
+	public List<Module> getModules() {
 		return moduleDBController.getModules();
 	}
-	
+
 	public List<Module> getModulesByCourse(String course, String degree) {
 		return moduleDBController.getModulesByCourse(course, degree);
 	}
@@ -142,10 +142,10 @@ public class ModuleAdministration {
 		moduleDBController.createModule(module);
 	}
 
-	public void createModuleByModuleManager(Module module,
-			String author,
-		Date creationdate, int version) {
-		System.out.println("(ModulAdministration.java): Subject 3: "+module.getSubject());
+	public void createModuleByModuleManager(Module module, String author,
+			Date creationdate, int version) {
+		System.out.println("(ModulAdministration.java): Subject 3: "
+				+ module.getSubject());
 		String name = module.getEntryList().get(1).getContent();
 		Date d = new Date();
 		java.sql.Date modificationDate = new java.sql.Date(d.getYear(),
@@ -155,11 +155,12 @@ public class ModuleAdministration {
 		List<Entry> entryList = module.getEntryList();
 		String subject = module.getSubject();
 		String modificationauthor = author;
-		Module moduleFinished = new Module(module.getModuleID(), version, name, creationdate,
-				modificationDate, approved, insituteID, entryList, subject,
-				modificationauthor);
+		Module moduleFinished = new Module(module.getModuleID(), version, name,
+				creationdate, modificationDate, approved, insituteID,
+				entryList, subject, modificationauthor);
 		moduleFinished.print();
-		System.out.println("(ModulAdministration.java): Subject 4: "+moduleFinished.getSubject());
+		System.out.println("(ModulAdministration.java): Subject 4: "
+				+ moduleFinished.getSubject());
 		moduleDBController.createModule(moduleFinished);
 	}
 
@@ -176,11 +177,12 @@ public class ModuleAdministration {
 	public List<Module> getModulesByAuthor(String loginname) {
 		return moduleDBController.getModulesOverviewByAuthor(loginname);
 	}
-	
+
 	public List<Module> getUnapprovedModulesByAuthor(String loginname) {
-		return moduleDBController.getUnapprovedModulesOverviewByAuthor(loginname);
+		return moduleDBController
+				.getUnapprovedModulesOverviewByAuthor(loginname);
 	}
-	
+
 	public List<Module> getVersionsOfModule(long moduleID) {
 		return moduleDBController.getAllVersionsOfModule(moduleID);
 	}
@@ -188,7 +190,7 @@ public class ModuleAdministration {
 	public List<Module> getUnfinishedModulesOverview() {
 		return moduleDBController.getUnfinishedModulesOverview();
 	}
-	
+
 	public List<Module> getLatestModulesOverview() {
 		return moduleDBController.getModules();
 	}
@@ -204,7 +206,7 @@ public class ModuleAdministration {
 	public void addSubject(String subject) {
 		moduleDBController.createSubject(subject);
 	}
-	
+
 	public void addCourse(Course course) {
 		moduleDBController.createCourse(course);
 	}
@@ -221,11 +223,15 @@ public class ModuleAdministration {
 	public void setCoursesToModule(Module module) {
 		moduleDBController.finishNewModule(module);
 	}
-	
-	public void changeEntryListOfModule(Module module){
+
+	public void changeEntryListOfModule(Module module) {
 		moduleDBController.approveModuleEntries(module);
 	}
-	
+
+	public void deactivateModule(Module module) {
+		moduleDBController.deactivateModule(module);
+	}
+
 	public void clearDatabase() {
 		moduleDBController.clearDatabase();
 	}

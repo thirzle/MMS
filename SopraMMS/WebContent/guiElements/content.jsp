@@ -173,6 +173,10 @@
 %>
 <jsp:include page="/guiElements/viewModule.jsp"></jsp:include>		
 <%	
-	}
+	}else if(contentPage.equals("disableModule")){
+		%>
+		<jsp:include page="/guiElements/dez2/disableModule.jsp"></jsp:include>		
+		<%	
+			}
 %>
 

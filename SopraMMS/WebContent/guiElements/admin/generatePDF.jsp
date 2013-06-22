@@ -3,7 +3,7 @@
 <%@page import="user.UserAdministration,java.util.List"%>
 <%
 	String faculty = (String) session.getAttribute("faculty");
-	LinkedList<String> courses = (LinkedList<String>) session
+	LinkedList<Course> courses = (LinkedList<Course>) session
 	.getAttribute("courses");
 %>
 
@@ -20,8 +20,8 @@
 		<%
 			for (int i = 0; i < courses.size(); i++) {
 		%>
-		<option value=<%=i%>><%="Bachelor-"+courses.get(i)%></option>
-		<option value=<%=courses.size()+i%>><%="Master-"+courses.get(i)%></option>
+		<option value=<%=i%>><%="Bachelor-"+courses.get(i).getDescription()%></option>
+		<option value=<%=courses.size()+i%>><%="Master-"+courses.get(i).getDescription()%></option>
 		<%
 			}
 		%>

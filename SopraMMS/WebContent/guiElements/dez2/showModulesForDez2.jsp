@@ -8,7 +8,7 @@
 %>
 
 <h1>Module</h1>
-<form action="/SopraMMS/ShowModulesOverviewForDez2" method="get">
+<form action="/SopraMMS/DisableModule" method="get">
 	<table class="tablesorter informationAboutModule" id="modulesForDez2">
 		<thead>
 			<tr>
@@ -79,11 +79,10 @@
 		session.removeAttribute("showVersions");
 	%>
 	<button type="submit" name="showButton" value="showButton">Modul
-		betrachten</button>
+		kontrollieren</button>
 	<%} else { %>
 	<button type="submit" name="showButton" value="showButton">Modul
-		betrachten</button>
-	<button type="submit" name="showVersionsButton" value="showVersionsButton">Alle
-		Versionen anzeigen</button>
+		kontrollieren</button>
+	
 	<%} %>
 </form>

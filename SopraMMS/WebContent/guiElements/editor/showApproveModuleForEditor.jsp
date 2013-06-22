@@ -14,10 +14,8 @@
 <form action="/SopraMMS/ShowApproveModuleForEditor" method="get">
 	<%
 		LinkedList<Entry> entryListForEditor = (LinkedList<Entry>) session.getAttribute("entryListForEditor");
-			session.removeAttribute("entryListForEditor");
 			User user = (User) session.getAttribute("user");	
 			String institute = (String) session.getAttribute("instituteApproveModule");
-			session.removeAttribute("instituteApproveModule");
 	%>
 	<div>
 		<table style="border: none;">
