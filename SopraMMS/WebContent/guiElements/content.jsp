@@ -134,13 +134,11 @@
 <jsp:include
 	page="/guiElements/coordinator/showModulesForCoordinator.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("showApproveModulesOverviewForEditor")) {
+	} else if (contentPage
+			.equals("showApproveModulesOverviewForEditor")) {
 %>
-<jsp:include page="/guiElements/editor/showApproveModulesOverviewForEditor.jsp"></jsp:include>
-<%
-	} else if (contentPage.equals("didEditModule")) {
-%>
-<jsp:include page="/guiElements/modulemanager/didEditModule.jsp"></jsp:include>
+<jsp:include
+	page="/guiElements/editor/showApproveModulesOverviewForEditor.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("editModule")) {
 %>

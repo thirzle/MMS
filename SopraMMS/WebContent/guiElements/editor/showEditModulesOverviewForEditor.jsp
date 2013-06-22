@@ -16,7 +16,7 @@
 	}
 %>
 
-<h1>Freizugebende Module</h1>
+<h1>Modul bearbeiten</h1>
 <%
 	//TODO
 %>
