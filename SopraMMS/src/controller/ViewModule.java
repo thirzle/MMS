@@ -32,8 +32,7 @@ public class ViewModule extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			HttpSession session = request.getSession();
 			ModuleAdministration mAdmin = new ModuleAdministration();
-			String selectedModule = request.getParameter("selectedmoduleToEdit");
-			System.out.println("selectedModuleToEdit: "+selectedModule);
+			String selectedModule = request.getParameter("selectedModuleToEdit");
 			long moduleID;
 			int version;
 			String instituteID;

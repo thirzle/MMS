@@ -171,7 +171,7 @@
 <%
 	} else if(contentPage.equals("viewModule")){
 %>
-<jsp:include page="/guiElements/modulemanager/viewModule.jsp"></jsp:include>		
+<jsp:include page="/guiElements/viewModule.jsp"></jsp:include>		
 <%	
 	}
 %>

@@ -36,13 +36,16 @@ session.removeAttribute("instituteForViewModule");
  							}
  						%>
 						</td>
-						<%
+				<%
 					}
 					else{
 						%>
 						<td class='entryModule'><%=entry.getContent().trim()%></td>
 						<%
-					}		
+					}
+								
+								
+								
 				%>
 			</tr>
 		</table>
