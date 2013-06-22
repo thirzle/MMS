@@ -72,14 +72,21 @@ public class EditModule extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		session = request.getSession();
-		if (request.getParameter("showVersionsButton") != null) {
-			RequestDispatcher dispatcher = getServletContext()
-					.getRequestDispatcher("/ShowVersionsOfModule");
-			dispatcher.forward(request, response);
-		} else {
+			if (request.getParameter("showVersionsButton") != null) {
+				RequestDispatcher dispatcher = getServletContext()
+						.getRequestDispatcher("/ShowVersionsOfModule");
+				dispatcher.forward(request, response);
+			} 
+			else if(request.getParameter("showButton") != null){
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ViewModule");
+				dispatcher.forward(request, response);
+			}	
+		
+			else {
 
 			if (request.getParameter("selectedModuleToEdit") != null) {
 
+				
 				String selectedModule = request
 						.getParameter("selectedModuleToEdit");
 				String[] selectedModuleArray = selectedModule.split(" ");
@@ -383,9 +390,8 @@ public class EditModule extends HttpServlet {
 				uAdmin.insertHistory(
 						((User) session.getAttribute("user")).getLogin(), date,
 						"Hat folgendes Modul ge&auml;ndert: " + module.getName());
-				
-				String infotext = "Das Modul '"+module.getName()+"' wurde erfolgreich bearbeitet und zur Freigabe weitergeleitet.";
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
 
 		} else if (request.getParameter("deleteRow") != null) {
