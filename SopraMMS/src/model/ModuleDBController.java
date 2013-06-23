@@ -396,10 +396,11 @@ public class ModuleDBController {
 	public List<Module> getModulesByCourse(String course, String degree) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT m.* FROM entry AS e JOIN module AS m "
-				+ "ON e.moduleID = m.moduleID AND e.moduleversion = m.version JOIN " +
-				"courseentry AS ce ON e.entryID = ce.entryID WHERE " +
-				"ce.courseID = ? AND ce.degree = ?";
+		query = "SELECT m.* FROM latestmodule AS l JOIN module AS m "
+				+ "ON l.moduleID = m.moduleID AND l.version = m.version " +
+				"JOIN entry AS e ON m.moduleID = e.moduleID " +
+				"AND m.version = e.moduleversion courseentry AS ce " +
+				"ON e.entryID = ce.entryID WHERE ce.courseID = ? AND ce.degree = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, course);
