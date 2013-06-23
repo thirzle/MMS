@@ -9,6 +9,13 @@ import java.util.List;
 import model.ModuleDBController;
 import user.User;
 
+/**
+ * The ModuleAdministration class provides easy access to the data that is gathered
+ * from the database.
+ * 
+ * @author name here...
+ *
+ */
 public class ModuleAdministration {
 	List<Module> moduleList;
 	ModuleDBController moduleDBController = new ModuleDBController();
