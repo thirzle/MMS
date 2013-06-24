@@ -361,4 +361,8 @@ public class UserAdministration {
 	public int numberOfNews() {
 		return userDBController.numberOfNews();
 	}
+	
+	public String getEmailOfUser(String loginname){
+		return userDBController.getEmailOfUser(loginname);
+	}
 }

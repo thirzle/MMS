@@ -37,35 +37,33 @@
 			<tr>
 				<td class='descriptionModule'><%=entry.getTitle()%></td>
 				<%
-				
 					// TODO If Teil kann entfernt werden
-					if(false){
+									if(false){
 				%>
 				<td class='entryModule'><notEditable> <%
  	EffortEntry effortEntry = (EffortEntry) entry;
- 							for(SelfStudy selfstudy : effortEntry.getSelfStudyList()){
- 								out.println(selfstudy.getTitle()+" "+selfstudy.getTime()+" Stunden");
+   							for(SelfStudy selfstudy : effortEntry.getSelfStudyList()){
+   								out.println(selfstudy.getTitle()+" "+selfstudy.getTime()+" Stunden");
  %> <br>
 					<%
 						}
 					%> </notEditable></td>
 				<%
 					}
-													else{
+																	else{
 				%>
 				<td class='entryModule'><notEditable> <%
  	String list[]=entry.getContent().split("\n");
- 				for(String s:list){
- 					out.println(""+s+"<br>");
- 				}
- %>
-					</notEditable></td>
+   				for(String s:list){
+   					out.println(""+s+"<br>");
+   				}
+ %> </notEditable></td>
 
 				<%
 					}
-								String trueChecked = "empty";
-								String falseChecked = "empty";
-								if(entry.isApproved()){
+												String trueChecked = "empty";
+												String falseChecked = "empty";
+												if(entry.isApproved()){
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					checked="checked" value="true"></td>
@@ -73,7 +71,7 @@
 					value="false"></td>
 				<%
 					}
-												else if(entry.isRejected()){
+																else if(entry.isRejected()){
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					value="true"></td>
@@ -81,7 +79,7 @@
 					checked="checked" value="false"></td>
 				<%
 					}
-												else{
+																else{
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					value="true"></td>
@@ -96,7 +94,7 @@
 	<%
 		}
 	%>
-
+	<br>
 
 	<div class='moduleEntry'>
 		<table>
@@ -114,7 +112,7 @@
 			</tr>
 		</table>
 	</div>
-
+	<br>
 	<button type="submit" value="sendModule" name="approveModule">Einträge
 		freigeben</button>
 
