@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.ibm.icu.text.SimpleDateFormat;
 
+import mail.EmailTelnet;
 import management.EffortEntry;
 import management.Entry;
 import management.Module;
@@ -50,6 +51,10 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		UserAdministration uAdmin = new UserAdministration();
 		LinkedList<Entry> entryList = new LinkedList<Entry>();
+		String infotext = "";
+		String moduleTitle = null;
+		String author = null;
+		String mailContent = "";
 		boolean allEntriesApproved = true;
 		// speichert das ausgeählte Modul + Version
 		String selectedModule = null;
@@ -111,24 +116,41 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 				// change entries of module
 				mAdmin.changeEntryListOfModule(approveModule);
 
-				// insert into History "Module approved"
+				// get title of module
+				for (Entry entry : entryList) {
+					if (entry.getTitle().equals("Kürzel")) {
+						moduleTitle = entry.getContent();
+					}
+				}
+				//get author and mail
+				author = approveModule.getModificationauthor();
+				String mailAuthor = new UserAdministration().getEmailOfUser(author);
+				
 				if (allEntriesApproved) {
+					// insert into History "Module approved"
 					SimpleDateFormat formatter = new SimpleDateFormat(
 							"yyyy-MM-dd");
 					Date currentTime = new Date();
 					String date = formatter.format(currentTime);
-					String title = null;
-					for (Entry entry : entryList) {
-						if (entry.getTitle().equals("Kürzel")) {
-							title = entry.getContent();
-						}
-					}
+					
 					uAdmin.insertHistory(
 							((User) session.getAttribute("user")).getLogin(),
-							date, "Hat folgendes Modul freigegeben: " + title);
+							date, "Hat folgendes Modul freigegeben: " + moduleTitle);
+					//
+					infotext = "Das Modul "+moduleTitle+" wurde freigegeben!";
+					
+					// send mail to modulemanager
+					mailContent = "Ihr Modul "+approveModule.getName()+" wurde komplett freigegeben.";
+					EmailTelnet mail = new EmailTelnet();
+					mail.send_mail("Ihr Modul wurde freigegeben", mailAuthor, mailContent);
+				}
+				else{
+					infotext = "Die Freigabestatus der Einträge des Moduls "+moduleTitle+" wurden gespeichert.";
+					//send mail to modulemanager
+					mailContent = "";
+					//TODO send mail
 				}
 
-				String infotext = "Die ausgewählten Einträge des Moduls wurden freigegeben.";
 				session.setAttribute("content", "home");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
 						+ infotext);

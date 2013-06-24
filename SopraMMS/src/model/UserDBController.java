@@ -1217,7 +1217,6 @@ public class UserDBController {
 			pStatement.execute();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't add news");
 			return false;
@@ -1439,7 +1438,6 @@ public class UserDBController {
 			pStatement.execute();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("ForgotPassword variable of user " + loginname
 					+ " could't be set null.");
@@ -1465,7 +1463,6 @@ public class UserDBController {
 			pStatement.execute();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't set curriculum for user " + loginname);
 			return false;
@@ -1493,7 +1490,6 @@ public class UserDBController {
 				url = resultSet.getString("curriculum");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't get curriculum for user " + loginname);
 			return null;
@@ -1501,6 +1497,26 @@ public class UserDBController {
 			close(connection);
 		}
 		return url;
+	}
+	
+	public String getEmailOfUser(String loginname){
+		Connection connection = connect();
+		query = "SELECT mail FROM user WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				return resultSet.getString(1);
+			}
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get email of user: "+loginname);
+		}finally {
+			close(connection);
+		}
+		return null;
 	}
 
 	/**
