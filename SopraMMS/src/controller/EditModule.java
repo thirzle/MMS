@@ -100,11 +100,17 @@ public class EditModule extends HttpServlet {
 				System.out.println("(EditModule.java): Subject 1: "+module.getSubject());
 				entryList = mAdmin.sortModuleEntryListByOrder(module);
 
+				if(fieldsTypeA!=null)
 				fieldsTypeA.clear();
+				if(fieldsTypeB!=null)
 				fieldsTypeB.clear();
+				if(fieldsTypeC!=null)
 				fieldsTypeC.clear();
+				if(fieldsTypeD!=null)
 				fieldsTypeD.clear();
+				if(fieldsTypeE!=null)
 				fieldsTypeE.clear();
+				if(textualEntrys!=null)
 				textualEntrys.clear();
 
 				for (Entry entry : entryList) {
@@ -392,7 +398,8 @@ public class EditModule extends HttpServlet {
 						((User) session.getAttribute("user")).getLogin(), date,
 						"Hat folgendes Modul ge&auml;ndert: " + module.getName());
 
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				String infotext = "Das Modul '"+module.getName()+"' wurde zur Freigabe weitergeleitet.";
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 			}
 
 		} else if (request.getParameter("deleteRow") != null) {

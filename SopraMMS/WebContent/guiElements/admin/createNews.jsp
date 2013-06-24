@@ -42,6 +42,8 @@
 				Back-End
 		</tr>
 	</table>
-	<input type="submit" value="Veröffentlichen">
+	<br>
+	<button value="Veröffentlichen">Veröffentlichen</button>
+	
 
 </form>
