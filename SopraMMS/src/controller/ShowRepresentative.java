@@ -26,7 +26,6 @@ public class ShowRepresentative extends HttpServlet {
 	 */
 	public ShowRepresentative() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -34,7 +33,6 @@ public class ShowRepresentative extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		User user = (User) request.getSession().getAttribute("user");
 		HttpSession session = request.getSession();
 		
@@ -71,7 +69,6 @@ public class ShowRepresentative extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }
