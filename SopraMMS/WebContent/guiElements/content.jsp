@@ -169,14 +169,18 @@
 %>
 <jsp:include page="/guiElements/dez2/showModulesForDez2.jsp"></jsp:include>
 <%
-	} else if(contentPage.equals("viewModule")){
+	} else if (contentPage.equals("viewModule")) {
 %>
-<jsp:include page="/guiElements/viewModule.jsp"></jsp:include>		
-<%	
-	}else if(contentPage.equals("disableModule")){
-		%>
-		<jsp:include page="/guiElements/dez2/disableModule.jsp"></jsp:include>		
-		<%	
-			}
+<jsp:include page="/guiElements/viewModule.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("disableModule")) {
+%>
+<jsp:include page="/guiElements/dez2/disableModule.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("showEditModulesForCoordinator")) {
+%>
+<jsp:include page="/guiElements/coordinator/showEditModulesForCoordinator.jsp"></jsp:include>
+<%
+	}
 %>
 

@@ -74,6 +74,5 @@
 			%>
 		</tbody>
 	</table>
-	<button type="submit" name="editButton" value="editButton">Modul
-		anschauen</button>
+	<button type="submit" name="editButton" value="editButton">Modulansicht zum freigeben</button>
 </form>

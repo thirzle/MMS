@@ -14,8 +14,9 @@
 <form action="/SopraMMS/ShowApproveModuleForEditor" method="get">
 	<%
 		LinkedList<Entry> entryListForEditor = (LinkedList<Entry>) session.getAttribute("entryListForEditor");
-			User user = (User) session.getAttribute("user");	
-			String institute = (String) session.getAttribute("instituteApproveModule");
+		User user = (User) session.getAttribute("user");	
+		String institute = (String) session.getAttribute("instituteApproveModule");
+		String subject = (String) session.getAttribute("subjectApproveModule");
 	%>
 	<div>
 		<table style="border: none;">
@@ -29,42 +30,42 @@
 	</div>
 	<%
 		for (int i = 0; i < entryListForEditor.size(); i++) {
-		Entry entry = entryListForEditor.get(i);
+			Entry entry = entryListForEditor.get(i);
 	%>
 	<div class='moduleEntry'>
 		<table>
 			<tr>
 				<td class='descriptionModule'><%=entry.getTitle()%></td>
 				<%
-					if(entry.getClass().equals(EffortEntry.class)){
-				%>
-				<td class='entryModule'>
-					<%
-						EffortEntry effortEntry = (EffortEntry) entry;
-									for(SelfStudy selfstudy : effortEntry.getSelfStudyList()){
-										out.println(selfstudy.getTitle()+" "+selfstudy.getTime()+" Stunden");
-										%> <br> <%
- 									}
- 						%>
-				</td>
-				<%
-					}
-											else{
-				%>
-				<td class='entryModule'>
-				<%
-					String list[]=entry.getContent().split("\n");
-						for(String s:list){
-							out.println(""+s+"<br>");
-						}
-				%>
-				</td>
 				
+					// TODO If Teil kann entfernt werden
+					if(false){
+				%>
+				<td class='entryModule'><notEditable> <%
+ 	EffortEntry effortEntry = (EffortEntry) entry;
+ 							for(SelfStudy selfstudy : effortEntry.getSelfStudyList()){
+ 								out.println(selfstudy.getTitle()+" "+selfstudy.getTime()+" Stunden");
+ %> <br>
+					<%
+						}
+					%> </notEditable></td>
 				<%
 					}
-						String trueChecked = "empty";
-						String falseChecked = "empty";
-						if(entry.isApproved()){
+													else{
+				%>
+				<td class='entryModule'><notEditable> <%
+ 	String list[]=entry.getContent().split("\n");
+ 				for(String s:list){
+ 					out.println(""+s+"<br>");
+ 				}
+ %>
+					</notEditable></td>
+
+				<%
+					}
+								String trueChecked = "empty";
+								String falseChecked = "empty";
+								if(entry.isApproved()){
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					checked="checked" value="true"></td>
@@ -72,7 +73,7 @@
 					value="false"></td>
 				<%
 					}
-										else if(entry.isRejected()){
+												else if(entry.isRejected()){
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					value="true"></td>
@@ -80,7 +81,7 @@
 					checked="checked" value="false"></td>
 				<%
 					}
-										else{
+												else{
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					value="true"></td>
@@ -101,10 +102,17 @@
 		<table>
 			<tr>
 				<td class='descriptionModule'>Institut</td>
-				<td class='entryModule' style="width: 500px;"><%=institute%></td>
+				<td class='entryModule' style="width: 500px;"><notEditable><%=institute%></notEditable></td>
 			</tr>
 		</table>
-
+	</div>
+	<div class='moduleEntry'>
+		<table>
+			<tr>
+				<td class='descriptionModule'>Fach</td>
+				<td class='entryModule' style="width: 500px;"><notEditable><%=subject%></notEditable></td>
+			</tr>
+		</table>
 	</div>
 
 	<button type="submit" value="sendModule" name="approveModule">Einträge

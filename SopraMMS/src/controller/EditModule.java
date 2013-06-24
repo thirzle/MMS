@@ -32,8 +32,8 @@ import user.UserAdministration;
 public class EditModule extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	// TODO Subject mit eintragen
-	// TODO Liste doppelt, Order setzten
+
+
 	// TODO Institut mit Aktuallisieren
 
 	HttpSession session = null;
@@ -355,6 +355,7 @@ public class EditModule extends HttpServlet {
 				}
 				effort.setSelfStudyList(selfStudyList);
 				entryListForNewModule.add(effort);
+				entryListForNewModule.add(courseEntry);
 
 				// save textfields
 				for (String[] strings : fieldsTypeB) {

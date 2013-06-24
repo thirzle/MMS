@@ -1,4 +1,8 @@
+<%@page import="com.sun.org.apache.xalan.internal.xsltc.runtime.Parameter"%>
 <h1>Neues Passwort beantragen</h1>
+<%if(request.getParameter("errortext")!=null) {%>
+<error>Die eingegebene E-Mail Addresse ist im System nicht hinterlegt</error>
+<%} %>
 <p>
 	Bitte geben Sie in das Feld Ihre im System hinterlegte E-Mail-Adresse
 	ein.<br />Anschließend wird Ihnen eine E-Mail mit einem Link

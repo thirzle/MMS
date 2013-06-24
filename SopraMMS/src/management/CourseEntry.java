@@ -259,4 +259,19 @@ public class CourseEntry extends Entry {
 		}
 		return sb.toString();
 	}
+	
+	
+	public String getContent(){
+		StringBuilder sb1 = new StringBuilder();
+		StringBuilder sb2 = new StringBuilder();
+		for (Course c : courses) {
+			if(c.isObligatory()){
+				sb1.append("- "+c.getDescription()+"\n");
+			}
+			else{
+				sb2.append("- "+c.getDescription()+"\n");
+			}
+		}
+		return "Plichtmodul\n"+sb2.toString()+"\nWahlpflichtmodul"+sb1.toString();
+	}
 }

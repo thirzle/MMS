@@ -87,14 +87,14 @@ try {
 		<table>
 			<tr>
 				<td class='descriptionModule'><%=entryText[0]%></td>
-				<td class='entryModule'>
+				<td class='entryModule'><notEditable>
 					<%
 						String[] text = entryText[1].split("\n");
 								for (String row : text) {
 									out.println(row + "<br/>");
 								}
 					%>
-				</td>
+				</td></notEditable>
 			</tr>
 		</table>
 	</div>

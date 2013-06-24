@@ -95,8 +95,7 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 					// this entry as approved
 					if (request.getParameter("radioEntry" + entry.getTitle()) != null) {
 						if (request.getParameter(
-								"radioEntry" + entry.getTitle())
-								.equals("true")) {
+								"radioEntry" + entry.getTitle()).equals("true")) {
 							entry.setApprovalstatus(true);
 							entry.setRejectionstatus(false);
 						} else {
@@ -111,7 +110,7 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 				}
 				// change entries of module
 				mAdmin.changeEntryListOfModule(approveModule);
-				
+
 				// insert into History "Module approved"
 				if (allEntriesApproved) {
 					SimpleDateFormat formatter = new SimpleDateFormat(
@@ -128,21 +127,23 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 							((User) session.getAttribute("user")).getLogin(),
 							date, "Hat folgendes Modul freigegeben: " + title);
 				}
-				
+
 				String infotext = "Die ausgewählten Einträge des Moduls wurden freigegeben.";
 				session.setAttribute("content", "home");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
+						+ infotext);
 			}
-		}
-		else{
+		} else {
 
 			session.setAttribute("entryListForEditor", entryList);
+			session.setAttribute("subjectApproveModule",
+					approveModule.getSubject());
 			session.setAttribute("instituteApproveModule",
 					mAdmin.getInstituteName(instituteID));
 
 			session.setAttribute("content", "showApproveModuleForEditor");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-			
+
 		}
 
 	}

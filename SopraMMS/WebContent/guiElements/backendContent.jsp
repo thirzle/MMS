@@ -4,13 +4,23 @@
 <%@page import="user.UserAdministration"%>
 
 <%
-	String info = request.getParameter("infotext");
-	if (info != null) {
+	String infoText = request.getParameter("infotext");
+	if (infoText != null) {
 %>
-<div class="infoBox"><%=info%></div>
+<div class="infoBox"><%=infoText%></div>
 <%
 	}
 %>
+
+<%
+	String infoError = request.getParameter("errortext");
+	if (infoError != null) {
+%>
+<div class="errorBox"><%=infoError%></div>
+<%
+	}
+%>
+
 <%
 	Date deadline = (java.sql.Date) session.getAttribute("deadline");
 	Date beginremember = (java.sql.Date) session
