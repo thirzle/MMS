@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,14 +31,13 @@ public class ShowUserData extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		UserAdministration uAdmin = new UserAdministration();
 		String[] userArray = new String[6];
 		boolean[] rights = user.getRights();
-		LinkedList<String> userRights = new LinkedList<String>();
-		LinkedList<String> instituteList = new LinkedList<String>();
+		ArrayList<String> userRights = new ArrayList<String>();
+		ArrayList<String> instituteList = new ArrayList<String>();
 		
 		userArray[0] = user.getLogin();
 		userArray[1] = user.getFirstName()+" "+user.getLastName();
@@ -46,14 +45,14 @@ public class ShowUserData extends HttpServlet {
 		if(user.getRepresentative() != null)
 			userArray[3] = uAdmin.getUser(user.getRepresentative()).getFirstName() +" "+ uAdmin.getUser(user.getRepresentative()).getLastName();
 		else
-			userArray[3] = "Kein Stellvertreter vorhanden";
+			userArray[3] = "-Kein Stellvertreter vorhanden-";
 		if(user.getSupervisor() != null)
 			userArray[4] = uAdmin.getUser(user.getSupervisor()).getFirstName()+" "+uAdmin.getUser(user.getSupervisor()).getLastName();
 		else
-			userArray[4] = "Nicht in der Position eines Stellvertreters";
-		userArray[5] = user.getFaculty();
+			userArray[4] = "-Nicht in der Position eines Stellvertreters-";
+		userArray[5] = uAdmin.getFacultyName(user);
 		
-		instituteList = (LinkedList<String>) user.getInstitute();
+		instituteList = (ArrayList<String>) uAdmin.getInstituteNames(user);		
 		
 		if (rights[1]) userRights.add("Dozent");
 		if (rights[2]) userRights.add("Modulverantwortlicher");
