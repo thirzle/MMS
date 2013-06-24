@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -350,6 +352,7 @@ public class ModuleDBController {
 	 * @return				List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getModulesByInstitute(String institute) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
@@ -639,6 +642,42 @@ public class ModuleDBController {
 		}
 		return versions;
 	}
+	
+	/**
+	 * Loads all available modules.
+	 * <p>
+	 * Gets all modules from the database and stores them in a {@link List} of modules.
+	 * 
+	 * @return		List of modules.
+	 * @see Module
+	 */
+	public List<Module> getAllModules() {
+		List<Module> moduleList = new LinkedList<Module>();
+		Connection connection = connect();
+		query = "SELECT * FROM module";
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				moduleList.add(new Module(resultSet.getLong("moduleID"),
+						resultSet.getInt("version"), resultSet
+								.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
+								.getDate("modificationdate"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID"), resultSet
+								.getString("subject"), resultSet
+								.getString("modificationauthor")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get modules.");
+		} finally {
+			close(connection);
+		}
+		return moduleList;
+	}
+	
 
 	// tested: check
 	/**
@@ -685,6 +724,7 @@ public class ModuleDBController {
 	 * @param moduleID		The unique ID of the module.
 	 * @return 				A module object.
 	 */
+	@Deprecated
 	public Module getLatestModule(long moduleID) {
 		Connection connection = connect();
 		Module module = null;
@@ -733,6 +773,7 @@ public class ModuleDBController {
 	 * @return		List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getModifiedModules() {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
@@ -779,6 +820,7 @@ public class ModuleDBController {
 	 * @return 					List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getModifiedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
@@ -827,6 +869,7 @@ public class ModuleDBController {
 	 * @return 				List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getModifiedModulesByAuthor(String author) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
@@ -875,6 +918,7 @@ public class ModuleDBController {
 	 * @return		List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getRejectedModules() {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
@@ -921,6 +965,7 @@ public class ModuleDBController {
 	 * @return 					List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getRejectedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
@@ -1491,23 +1536,6 @@ public class ModuleDBController {
 	 * @return 				<code>true</code> If the module has been deleted, <code>false</code> otherwise.
 	 * @see Module
 	 */
-	public boolean deleteModule(Module module) {
-		Connection connection = connect();
-		query = "DELETE FROM module WHERE moduleID = ?";
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setLong(1, module.getModuleID());
-			pStatement.execute();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Couldn't delete module: "
-					+ module.getModuleID());
-			return false;
-		} finally {
-			close(connection);
-		}
-	}
 	
 	//TODO Vervollst�ndigen
 	/**
@@ -1592,6 +1620,7 @@ public class ModuleDBController {
 	 * @see Module
 	 * @see ModuleAdministration
 	 */
+	@Deprecated
 	public List<Module> getModuleManualbyCourse(String courseID, String degree,
 			String versionnumber) {
 		Connection connection = connect();
@@ -1663,6 +1692,7 @@ public class ModuleDBController {
 	 * @see Course
 	 * @see Module
 	 */
+	@Deprecated
 	public String getLastModificationDate(String courseID, String degree) {
 		Connection connection = connect();
 		query = "SELECT MAX(module.modificationdate) FROM module "
@@ -1694,6 +1724,7 @@ public class ModuleDBController {
 	 * @see Course
 	 * @see Module
 	 */
+	@Deprecated
 	public String getLastModificationAuthor(String courseID, String degree) {
 		Connection connection = connect();
 		query = "SELECT m.modificationauthor, MAX(m.modificationdate) FROM module AS m "
@@ -1730,6 +1761,7 @@ public class ModuleDBController {
 	 * @see Module
 	 * @see ModuleAdministration
 	 */
+	@Deprecated
 	public String generateLatestVersionOfModuleManual(String courseID,
 			String degree) {
 		Connection connection = connect();
@@ -2006,6 +2038,7 @@ public class ModuleDBController {
 	 * @see Module
 	 * @see ModuleAdministration
 	 */
+	@Deprecated
 	public boolean createModuleMaunal(String version, String courseID,
 			String degree, String creationdate, String modificationdate,
 			boolean approvalstatus, int examregulation) {
@@ -2039,6 +2072,7 @@ public class ModuleDBController {
 	 * @see Module
 	 * @see ModuleAdministration
 	 */
+	@Deprecated
 	public String getModuleManualByModule(long moduleID) {
 		Connection connection = connect();
 		query = "SELECT modulemanual FROM module WHERE moduleID = ?";
@@ -2181,10 +2215,10 @@ public class ModuleDBController {
 	
 	
 	/**
-	 * Deactivates a module.
+	 * Unapproves a module.
 	 * 
 	 * @param module		Module object.
-	 * @return				<code>true</code> if the entries were deactivated <code>false</code> otherwise.
+	 * @return				<code>true</code> if the module was deactivated <code>false</code> otherwise.
 	 * @see Module
 	 */
 	public boolean deactivateModule(Module module) {
@@ -2205,6 +2239,42 @@ public class ModuleDBController {
 		}
 	}
 	
+	/**
+	 * Deletes an existing module.
+	 * 
+	 * @param moduleID		The unique ID of the module.
+	 * @param version		The modules version
+	 * @return 				<code>true</code> If the module has been deleted, <code>false</code> otherwise.
+	 * @see Module
+	 */
+	public boolean deleteModule(long moduleID, int version) {
+		Connection connection = connect();
+		query = "DELETE FROM module WHERE moduleID = ? AND version = ?";
+		try {
+			connection.setAutoCommit(false);
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, moduleID);
+			pStatement.setInt(2, version);
+			pStatement.execute();
+			
+			
+			query = "DELETE FROM entry WHERE moduleID = ? AND moduleversion = ?";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, moduleID);
+			pStatement.setInt(2, version);
+			pStatement.execute();
+			connection.commit();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't deletet module "+moduleID+"-"+version);
+			rollback(connection);
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
 
 	/**
 	 * Clears the content of the database.
@@ -2212,11 +2282,12 @@ public class ModuleDBController {
 	 * @return		<code>true</code> if the content was cleared <code>false</code> otherwise.
 	 */
 	public boolean clearDatabase() {
-		java.util.Date today = new java.util.Date();
-		Date limit = new Date(today.getYear() - 2, today.getMonth(),
-				today.getDate());
+		Calendar cal = new GregorianCalendar();
+		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR)-2);
+		Date limit = new Date(cal.getTime().getTime());
 		Connection connection = connect();
-		query = "SELECT moduleID, version FROM module WHERE modificationdate < ? AND (moduleID, version) NOT IN (SELECT * FROM latestmodule)";
+		query = "SELECT moduleID, version FROM module WHERE modificationdate < ? AND " +
+				"(moduleID, version) NOT IN (SELECT * FROM latestmodule)";
 		try {
 			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);

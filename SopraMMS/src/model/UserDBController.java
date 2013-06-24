@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -1402,9 +1404,9 @@ public class UserDBController {
 	 * @return		<code>true</code> if deleting the history was successful <code>false</code> otherwise.
 	 */
 	public boolean clearHistory() {
-		java.util.Date today = new java.util.Date();
-		Date limit = new Date(today.getYear(), today.getMonth()-2,
-				today.getDate());
+		Calendar cal = new GregorianCalendar();
+		cal.set(Calendar.MONTH, cal.get(Calendar.MONTH)-2);
+		Date limit = new Date(cal.getTime().getTime());
 		Connection connection = connect();
 		query = "DELETE FROM history WHERE date < ?";
 		try {
