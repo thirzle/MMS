@@ -61,6 +61,7 @@
 	</table>
 	<p>
 	<%
+	session.setAttribute("mailRep", userArray[2]);
 	session.removeAttribute("repUserArray");
 	session.removeAttribute("instituteListRep");
 	%>

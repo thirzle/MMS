@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import mail.EmailTelnet;
 
 import com.ibm.icu.text.SimpleDateFormat;
 
@@ -35,20 +38,29 @@ public class RemoveRepresentative extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// remove representative of user
-		User user = (User) request.getSession().getAttribute("user");
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
 		UserAdministration uAdmin = new UserAdministration();
-		
 		String repLoginname = user.getRepresentative();
 		User rep = uAdmin.getUser(repLoginname);
 		String firstNameRep = rep.getFirstName();
 		String lastNameRep = rep.getLastName();
+		String infotext = " ";
 		
+		// remove representative of user
 		if (uAdmin.removeRepresentative(user)) {
 			user.setRepresentative(null);
-			request.getSession()
-					.setAttribute("content", "removeRepresentative");
-
+			String mailRep = (String) session.getAttribute("mailRep");
+			session.setAttribute("content", "home");
+			
+			//send mail to deleted representative
+			String content = user.getFirstName() + " " + user.getLastName()
+					+ " hat Sie" + " als Stellvertreter entfernt";
+			EmailTelnet mail = new EmailTelnet();
+			mail.send_mail("Stellvertreter", mailRep, content);
+			
+			infotext = "Ihr Stellvertreter wurde entfernt. Erneuern Sie diesen bitte demnächst!";
+			
 			// insert into History "Representative removed"
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date currentTime = new Date();
@@ -57,8 +69,8 @@ public class RemoveRepresentative extends HttpServlet {
 					+ " " + lastNameRep + " als Stellvertreter gel&ouml;scht.");
 
 		}
-		request.getSession().setAttribute("generallyMenu", "open");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		session.setAttribute("generallyMenu", "open");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 	}
 
 	/**

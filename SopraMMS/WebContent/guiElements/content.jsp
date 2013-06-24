@@ -44,17 +44,9 @@
 %>
 <jsp:include page="/guiElements/generally/changePassword.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("applyRepresentative")) {
-%>
-<jsp:include page="/guiElements/generally/applyRepresentative.jsp"></jsp:include>
-<%
 	} else if (contentPage.equals("appointRepresentative")) {
 %>
 <jsp:include page="/guiElements/generally/appointRepresentative.jsp"></jsp:include>
-<%
-	} else if (contentPage.equals("removeRepresentative")) {
-%>
-<jsp:include page="/guiElements/generally/removeRepresentative.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("showRepresentative")) {
 %>
