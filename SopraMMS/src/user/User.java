@@ -3,6 +3,23 @@ package user;
 import java.util.Arrays;
 import java.util.List;
 
+import management.CourseEntry;
+import management.EffortEntry;
+import management.Entry;
+import management.TextualEntry;
+
+//TODO Kommentare überprüfen und Autoren eintragen
+/**
+ * The User class contains all informations which belong to a user of the system.
+ * <p>
+ * There are several constructors available.
+ * <p>
+ * There are different kind of users which is shown by the rights they own.
+ * The different rights give them the possibility to insert, change and confirm content in the system.
+ * 
+ * @author David
+ *
+ */
 public class User {
 
 	/* (non-Javadoc)
@@ -21,23 +38,77 @@ public class User {
 
 
 	//
+	/**
+	 * The name with which the user uses to log into the system.
+	 */
 	private String loginname;
+	/**
+	 * The user´s first name.
+	 */
 	private String firstName;
+	/**
+	 * The user´s last name.
+	 */
 	private String lastName;
+	/**
+	 * The user´s email address which he needs to exchange messages with other users of the system,
+	 * and to get notified by the system.
+	 */
 	private String mail;
+	/**
+	 * A Array of rights.
+	 * "True" is set if the user owns the right.
+	 */
 	private boolean[] rights;
+	/**
+	 * The session is a temporary data type which contains information about the logged in user.
+	 */
 	private String session;
+	/**
+	 * The faculty a user belongs to.
+	 */
 	private String faculty;
+	/**
+	 * The password a user needs to log into the system.
+	 */
 	private String password;
+	/**
+	 * A list filled with all institutes a user belongs to.
+	 */
 	private List<String> institute;
+	/**
+	 * A user's representative is another user of the systems who owns the same rights and represents the user if he is not available.
+	 */
 	private String representative;
+	/**
+	 * The supervisor is a user who is hierarchically above the logged in user.
+	 * The user is the supervisor´s representative.
+	 */
 	private String supervisor;
 
 
+	/**
+	 * Default constructor.
+	 */
 	public User() {
 	}
 
 
+	/**
+	 * Constructor for the User object with all available parameters.
+	 * 
+	 * @param loginname			{@link #loginname}	
+	 * @param firstName			{@link #firstName}
+	 * @param lastName			{@link #lastName}
+	 * @param mail				{@link #mail}
+	 * @param rights			{@link #rights}	
+	 * @param session			{@link #session}
+	 * @param faculty			{@link #faculty}
+	 * @param institute			{@link #institute}
+	 * @param representative	{@link #representative}	
+	 * @param supervisor		{@link #supervisor}
+	 * @param password			{@link #password}
+	 */
 	public User(String loginname, String firstName, String lastName,
 			String mail, boolean[] rights, String session, String faculty,
 			List<String> institute, String representative, String supervisor,
@@ -59,6 +130,15 @@ public class User {
 
 
 	// alternative constructor for User object
+	/**
+	 * Constructor for the User object with not all available parameters.
+	 * 
+	 * @param loginname		{@link #loginname}
+	 * @param firstName		{@link #firstName}
+	 * @param lastName		{@link #lastName}
+	 * @param mail			{@link #mail}
+	 * @param password		{@link #password}
+	 */
 	public User(String loginname, String firstName, String lastName,
 			String mail, String password) {
 
@@ -75,6 +155,17 @@ public class User {
 		this.supervisor = null;
 	}
 	
+	/**
+	 * Constructor for the User object with not all available parameters.
+	 * 
+	 * @param loginname			{@link #loginname}
+	 * @param firstName			{@link #firstName}
+	 * @param lastName			{@link #lastName}
+	 * @param mail				{@link #mail}
+	 * @param rights			{@link #rights}
+	 * @param institute			{@link #institute}
+	 * @param representative	{@link #representative}
+	 */
 	public User(String loginname, String firstName, String lastName,
 			String mail, boolean[] rights, List<String> institute, String representative) {
 
@@ -92,8 +183,11 @@ public class User {
 	}
 
 
+
 	/**
-	 * @return the login
+	 * Gets the user´s {@link #loginname}.
+	 * 
+	 * @return {@link #loginname}
 	 */
 	public String getLogin() {
 
@@ -102,8 +196,9 @@ public class User {
 
 
 	/**
-	 * @param loginname
-	 *            the login to set
+	 * Sets the user´s {@link #loginname}.
+	 * 
+	 * @param {@link #loginname}
 	 */
 	public void setLogin(String loginname) {
 
@@ -112,7 +207,9 @@ public class User {
 
 
 	/**
-	 * @return the firstName
+	 * Gets the user´s {@link #firstName}.
+	 * 
+	 * @return {@link #firstName}
 	 */
 	public String getFirstName() {
 
@@ -121,8 +218,9 @@ public class User {
 
 
 	/**
-	 * @param firstName
-	 *            the firstName to set
+	 * Sets the user´s {@link #firstName}.
+	 * 
+	 * @param firstName {@link #firstName}
 	 */
 	public void setFirstName(String firstName) {
 
@@ -131,7 +229,9 @@ public class User {
 
 
 	/**
-	 * @return the lastName
+	 * Gets the user´s {@link #lastName}.
+	 * 
+	 * @return {@link #lastName}
 	 */
 	public String getLastName() {
 
@@ -140,8 +240,9 @@ public class User {
 
 
 	/**
-	 * @param lastName
-	 *            the lastName to set
+	 * Sets the user´s {@link #lastName}.
+	 * 
+	 * @param {@link #lastName}
 	 */
 	public void setLastName(String lastName) {
 
@@ -150,7 +251,9 @@ public class User {
 
 
 	/**
-	 * @return the mail
+	 * Gets the user´s {@link #mail}.
+	 * 
+	 * @return {@link #mail}
 	 */
 	public String getMail() {
 
@@ -159,8 +262,9 @@ public class User {
 
 
 	/**
-	 * @param mail
-	 *            the mail to set
+	 * Sets the user´s {@link #mail}.
+	 * 
+	 * @param {@link #mail}
 	 */
 	public void setMail(String mail) {
 
@@ -169,7 +273,9 @@ public class User {
 
 
 	/**
-	 * @return the rights
+	 * Gets the user´s {@link #rights}.
+	 * 
+	 * @return {@link #rights}
 	 */
 	public boolean[] getRights() {
 
@@ -178,8 +284,9 @@ public class User {
 
 
 	/**
-	 * @param rights
-	 *            the rights to set
+	 * Sets the user´s {@link #rights}.
+	 * 
+	 * @param {@link #rights}
 	 */
 	public void setRights(boolean[] rights) {
 
@@ -188,7 +295,9 @@ public class User {
 
 
 	/**
-	 * @return the session
+	 * Gets the user´s {@link #session}.
+	 * 
+	 * @return {@link #session}
 	 */
 	public String getSession() {
 
@@ -197,8 +306,9 @@ public class User {
 
 
 	/**
-	 * @param session
-	 *            the session to set
+	 * Sets the user´s {@link #session}.
+	 * 
+	 * @param {@link #session}
 	 */
 	public void setSession(String session) {
 
@@ -207,7 +317,9 @@ public class User {
 
 
 	/**
-	 * @return the faculty
+	 * Gets the user´s {@link #faculty}.
+	 * 
+	 * @return {@link #faculty}
 	 */
 	public String getFaculty() {
 
@@ -216,8 +328,9 @@ public class User {
 
 
 	/**
-	 * @param faculty
-	 *            the faculty to set
+	 * Sets the user´s {@link #faculty}
+	 * 
+	 * @param {@link #faculty}
 	 */
 	public void setFaculty(String faculty) {
 
@@ -226,7 +339,9 @@ public class User {
 
 
 	/**
-	 * @return the institute
+	 * Gets the user´s {@link #institute}.
+	 * 
+	 * @return {@link #institute}
 	 */
 	public List<String> getInstitute() {
 
@@ -235,8 +350,9 @@ public class User {
 
 
 	/**
-	 * @param institute
-	 *            the institute to set
+	 * Sets the user´s {@link #institute}.
+	 * 
+	 * @param {@link #institute}
 	 */
 	public void setInstitute(List<String> institute) {
 
@@ -245,7 +361,9 @@ public class User {
 
 
 	/**
-	 * @return the representative
+	 * Gets the user´s {@link #representative}.
+	 * 
+	 * @return {@link #representative}
 	 */
 	public String getRepresentative() {
 
@@ -254,8 +372,9 @@ public class User {
 
 
 	/**
-	 * @param representative
-	 *            the representative to set
+	 * Sets the user´s {@link #representative}.
+	 * 
+	 * @param {@link #representative}
 	 */
 	public void setRepresentative(String representative) {
 
@@ -264,7 +383,9 @@ public class User {
 
 
 	/**
-	 * @return the supervisor
+	 * Gets the user´s {@link #representative}.
+	 * 
+	 * @return {@link #representative}
 	 */
 	public String getSupervisor() {
 
@@ -273,8 +394,9 @@ public class User {
 
 
 	/**
-	 * @param supervisor
-	 *            the supervisor to set
+	 * Sets the user´s {@link #supervisor}.
+	 * 
+	 * @param {@link #supervisor}
 	 */
 	public void setSupervisor(String supervisor) {
 
@@ -282,12 +404,22 @@ public class User {
 	}
 
 
+	/**
+	 * Gets the user´s {@link #password}.
+	 * 
+	 * @return {@link #password}
+	 */
 	public String getPassword() {
 
 		return password;
 	}
 
 
+	/**
+	 * Sets the user´s {@link #password}.
+	 * 
+	 * @param {@link #password}
+	 */
 	public void setPassword(String password) {
 
 		this.password = password;
