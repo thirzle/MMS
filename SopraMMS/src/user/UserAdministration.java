@@ -94,10 +94,9 @@ public class UserAdministration {
 	}
 
 	public User changeRepresentative(User user, String representative) {
-		User newUser = user;
-		newUser.setRepresentative(representative);
-		userDBController.changeUser(user, newUser);
-		return newUser;
+		user.setRepresentative(representative);
+		userDBController.setRepresentative(user, representative);
+		return user;
 	}
 
 	public User changeSupervisor(User user, String supervisor) {

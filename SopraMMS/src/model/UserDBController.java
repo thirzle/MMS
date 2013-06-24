@@ -334,6 +334,7 @@ public class UserDBController {
 	 * @return				An array set with true and false values ​​for the corresponding rights.
 	 * @see User
 	 */
+	@Deprecated
 	public boolean[] getRights(String loginname) {
 		Connection connection = connect();
 		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
@@ -628,6 +629,7 @@ public class UserDBController {
 	 * @return				List of institutes.
 	 * @see User
 	 */
+	@Deprecated
 	public List<String> getInstitutesByName(String loginname) {
 		Connection connection = connect();
 		LinkedList<String> instituteList = new LinkedList<String>();
@@ -639,6 +641,22 @@ public class UserDBController {
 			while (resultSet.next()) {
 				instituteList.add(resultSet.getString("instituteID"));
 			}
+			pStatement = connection
+					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
+			pStatement.setString(1, loginname);
+			resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				loginname = resultSet.getString("supervisor");
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, loginname);
+				resultSet = pStatement.executeQuery();
+				// get all institutes of supervisor
+				while (resultSet.next()) {
+					if(!instituteList.contains(resultSet.getString("insituteID"))){
+						instituteList.add(resultSet.getString("insituteID"));
+					}
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get list of institutes from user: "
@@ -648,6 +666,7 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
+	
 
 	/**
 	 * Gets institute of existing user with established connection
@@ -667,6 +686,22 @@ public class UserDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				instituteList.add(resultSet.getString("instituteID"));
+			}
+			pStatement = connection
+					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
+			pStatement.setString(1, loginname);
+			resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				loginname = resultSet.getString("supervisor");
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, loginname);
+				resultSet = pStatement.executeQuery();
+				// get all institutes of supervisor
+				while (resultSet.next()) {
+					if(!instituteList.contains(resultSet.getString("insituteID"))){
+						instituteList.add(resultSet.getString("insituteID"));
+					}
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -898,13 +933,33 @@ public class UserDBController {
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("couldn't remove representative of user: "
+			System.out.println("Couldn't remove representative of user: "
 					+ user.getLogin());
+			return false;
 		} finally {
 			close(connection);
 		}
-		return false;
 	}
+	
+	
+	public boolean setRepresentative(User user, String representative) {
+		Connection connection = connect();
+		query = "UPDATE user SET representative = ? WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, representative);
+			pStatement.setString(2, user.getLogin());
+			pStatement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't set representative of user "+user.getLogin());
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
 
 	/**
 	 * Sets the password if the user forgets it.

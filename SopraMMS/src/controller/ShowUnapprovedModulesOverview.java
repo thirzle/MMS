@@ -36,10 +36,8 @@ public class ShowUnapprovedModulesOverview extends HttpServlet {
 		System.out.println("ShowUnapprovedModulesOverview");
 		HttpSession session = request.getSession();
 		ModuleAdministration mAdmin = new ModuleAdministration();
-		User user = (User) session.getAttribute("user");
 
-		// TODO getModulesOverview
-		List<Module> moduleList = mAdmin.getUnapprovedModulesByAuthor(user.getLogin());
+		List<Module> moduleList = mAdmin.getUnapprovedModules();
 
 		session.setAttribute("moduleListForModulemanager", moduleList);
 		session.setAttribute("content", "showModulesForModulemanager");

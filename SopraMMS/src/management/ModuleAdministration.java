@@ -160,6 +160,11 @@ public class ModuleAdministration {
 		boolean approved = false;
 		String insituteID = module.getInstituteID();
 		List<Entry> entryList = module.getEntryList();
+		for (Entry entry : entryList) {
+			if(entry.getClass().equals(CourseEntry.class)) {
+				entry.setNewEntryID();
+			}
+		}
 		String subject = module.getSubject();
 		String modificationauthor = author;
 		Module moduleFinished = new Module(module.getModuleID(), version, name,
@@ -185,9 +190,9 @@ public class ModuleAdministration {
 		return moduleDBController.getModulesOverviewByAuthor(loginname);
 	}
 
-	public List<Module> getUnapprovedModulesByAuthor(String loginname) {
+	public List<Module> getUnapprovedModules() {
 		return moduleDBController
-				.getUnapprovedModulesOverviewByAuthor(loginname);
+				.getUnapprovedModulesOverview();
 	}
 
 	public List<Module> getVersionsOfModule(long moduleID) {
@@ -202,8 +207,8 @@ public class ModuleAdministration {
 		return moduleDBController.getModules();
 	}
 
-	public List<Module> getModuleOverviewForEditor(String instituteID) {
-		return moduleDBController.getModuleOverviewForEditor(instituteID);
+	public List<Module> getModuleOverviewForEditor(List<String> instituteList) {
+		return moduleDBController.getModuleOverviewForEditor(instituteList);
 	}
 
 	public List<String> getSubjects() {
