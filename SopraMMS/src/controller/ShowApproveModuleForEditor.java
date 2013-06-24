@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import com.ibm.icu.text.SimpleDateFormat;
 
+import mail.EmailApache;
+import mail.EmailMercury;
 import mail.EmailTelnet;
 import management.EffortEntry;
 import management.Entry;
@@ -52,7 +54,7 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 		UserAdministration uAdmin = new UserAdministration();
 		LinkedList<Entry> entryList = new LinkedList<Entry>();
 		String infotext = "";
-		String moduleTitle = null;
+		String moduleName = null;
 		String author = null;
 		String mailContent = "";
 		boolean allEntriesApproved = true;
@@ -118,8 +120,8 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 
 				// get title of module
 				for (Entry entry : entryList) {
-					if (entry.getTitle().equals("Kürzel")) {
-						moduleTitle = entry.getContent();
+					if (entry.getTitle().equals("Titel")) {
+						moduleName = entry.getContent();
 					}
 				}
 				//get author and mail
@@ -135,20 +137,32 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 					
 					uAdmin.insertHistory(
 							((User) session.getAttribute("user")).getLogin(),
-							date, "Hat folgendes Modul freigegeben: " + moduleTitle);
+							date, "Hat folgendes Modul freigegeben: " + moduleName);
 					//
-					infotext = "Das Modul "+moduleTitle+" wurde freigegeben!";
+					infotext = "Das Modul "+moduleName+" wurde freigegeben!";
 					
 					// send mail to modulemanager
 					mailContent = "Ihr Modul "+approveModule.getName()+" wurde komplett freigegeben.";
 					EmailTelnet mail = new EmailTelnet();
-					mail.send_mail("Ihr Modul wurde freigegeben", mailAuthor, mailContent);
+					mail.send_mail("Freigabe Ihres Moduls", mailAuthor, mailContent);
 				}
 				else{
-					infotext = "Die Freigabestatus der Einträge des Moduls "+moduleTitle+" wurden gespeichert.";
+					String approvedEntries = "";
+					String refusedEntries = "";
+					for(Entry entry : approveModule.getEntryList()){
+						if(entry.isApproved()){
+							approvedEntries = approvedEntries + entry.getTitle()+"\n";							
+						}
+						else if(entry.isRejected()){
+							refusedEntries = refusedEntries + entry.getTitle()+"\n";
+						}
+					}
+					infotext = "Die Freigabestatus der Einträge des Moduls "+moduleName+" wurden gespeichert.";
 					//send mail to modulemanager
-					mailContent = "";
-					//TODO send mail
+					mailContent = "Der Administrator hat folgende Einträge des Moduls "+moduleName+" freigegeben: "+
+					approvedEntries+".\n Diese Einträge wurden abgelehnt: "+refusedEntries;
+					EmailTelnet mailT = new EmailTelnet();
+					mailT.send_mail("Freigabe Ihres Moduls", mailAuthor, mailContent);
 				}
 
 				session.setAttribute("content", "home");
