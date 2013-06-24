@@ -18,7 +18,7 @@ import management.Deadline;
 
 import user.User;
 
-//TODO Bitte alle Kommentare prüfen und Autoren eintragen
+//TODO Bitte alle Kommentare pr��fen und Autoren eintragen
 /**
  * The class UserDBController provides a connection to the database.
  * <p>
@@ -34,9 +34,9 @@ public class UserDBController {
 	private static PreparedStatement pStatement;
 
 	// local database
-	// private static final String URL = "jdbc:mysql://localhost:3306/mms";
-	// private static final String USER = "root";
-	// private static final String PASSWORD = "";
+//	 private static final String URL = "jdbc:mysql://localhost:3306/mms";
+//	 private static final String USER = "root";
+//	 private static final String PASSWORD = "";
 
 	// db4free.net database
 	private static final String URL = "jdbc:mysql://db4free.net:3306/sopramms";
@@ -190,7 +190,7 @@ public class UserDBController {
 	/**
 	 * Gets specified user by his email address.
 	 * 
-	 * @param mail		The user´s email address.
+	 * @param mail		The user��s email address.
 	 * @return			User object.
 	 * @see User
 	 */
@@ -331,7 +331,7 @@ public class UserDBController {
 	 * Gets the rights of a specified user.
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system. 
-	 * @return				An array set with true and false values ​​for the corresponding rights.
+	 * @return				An array set with true and false values ������for the corresponding rights.
 	 * @see User
 	 */
 	@Deprecated
@@ -378,7 +378,7 @@ public class UserDBController {
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system.
 	 * @param connection	Connection object.
-	 * @return				An array set with true and false values ​​for the corresponding rights.
+	 * @return				An array set with true and false values ������for the corresponding rights.
 	 * @see User
 	 */
 	public boolean[] getRights(String loginname, Connection connection) {
@@ -418,7 +418,7 @@ public class UserDBController {
 	 * Changes the rights of a specified user.
 	 * 
 	 * @param user			User object
-	 * @param newRights		Array set with true and false values ​​for the new rights.
+	 * @param newRights		Array set with true and false values ������for the new rights.
 	 * @return				<code>true</code> if changing the rights was successful <code>false</code> otherwise.
 	 * @see User
 	 */
@@ -461,7 +461,7 @@ public class UserDBController {
 	 * 
 	 * @param oldLogin		Old loginname.
 	 * @param newLogin		New loginname.
-	 * @param newRights		Array set with true and false values ​​for the new rights.	
+	 * @param newRights		Array set with true and false values ������for the new rights.	
 	 * @param connection	Connection object.
 	 * @return				<code>true</code> if changing the rights was successful <code>false</code> otherwise.
 	 * @see User
@@ -888,7 +888,7 @@ public class UserDBController {
 
 
 	/**
-	 * Gets the user´s facultyname.
+	 * Gets the user��s facultyname.
 	 * 
 	 * @param user		User object.
 	 * @return			The instituteID.
@@ -964,7 +964,7 @@ public class UserDBController {
 	/**
 	 * Sets the password if the user forgets it.
 	 * 
-	 * @param mail			The user´s email address.
+	 * @param mail			The user��s email address.
 	 * @param forgotPwd		The forgotten password.
 	 * @return				<code>true</code> if setting the password was successful <code>false</code> otherwise.
 	 * @see User
@@ -1015,7 +1015,7 @@ public class UserDBController {
 	/**
 	 * Gets the user by his forgotten password.
 	 * 
-	 * @param forgotPwd		The user´s forgotten password.
+	 * @param forgotPwd		The user��s forgotten password.
 	 * @return				User object.
 	 * @see User
 	 */
@@ -1358,7 +1358,7 @@ public class UserDBController {
 	/**
 	 * Gets all email addresses from the users which are available in the database.
 	 * 
-	 * @param rights		Array set with true and false values ​​for the rights.
+	 * @param rights		Array set with true and false values ������for the rights.
 	 * @return				List of email addresses.
 	 */
 	public List<String[]> getEmails(boolean[] rights) {
@@ -1504,7 +1504,7 @@ public class UserDBController {
 	 * Sets the curriculum vitae in form of an url from a specified user.
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system.
-	 * @param url			The URL which leads to the user´s curriculum vitae.
+	 * @param url			The URL which leads to the user��s curriculum vitae.
 	 * @return				<code>true</code> if inserting of the URL was successful <code>false</code> otherwise.
 	 * @see User
 	 */
@@ -1530,7 +1530,7 @@ public class UserDBController {
 	 * Gets the curriculum vitae of a specified user.
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system.
-	 * @return				The URL which leads to the user´s curriculum vitae.
+	 * @return				The URL which leads to the user��s curriculum vitae.
 	 * @see User
 	 */
 	public String getCurriculum(String loginname) {

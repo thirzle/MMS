@@ -30,10 +30,10 @@ import management.TextualEntry;
  */
 public class ModuleDBController {
 
-	// local database
-	// private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
-	// private static final String USER = "root";
-	// private static final String PASSWORD = "";
+	 //local database
+//	 private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
+//	 private static final String USER = "root";
+//	 private static final String PASSWORD = "";
 
 	// db4free.net database
 	private static final String URL = "jdbc:mysql://db4free.net:3306/sopramms";
