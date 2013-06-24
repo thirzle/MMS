@@ -2,7 +2,9 @@ package backend;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,8 +20,10 @@ public class TaskManager {
 		final ModuleAdministration mAdmin = new ModuleAdministration();
 		final UserAdministration uAdmin = new UserAdministration();
 		Date now = new Date();
-		Date delay = new Date(deadline.getDeadline().getYear(),
-				deadline.getDeadline().getMonth(), deadline.getDeadline().getDate()+14);
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(deadline.getDeadline());
+		cal.set(cal.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+14);
+		Date delay = cal.getTime();
 		Timer caretaker = new Timer();
 		TimerTask clearModules = new TimerTask() {
 			public void run() {
