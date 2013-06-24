@@ -173,6 +173,9 @@
 %>
 <jsp:include page="/guiElements/coordinator/showEditModulesForCoordinator.jsp"></jsp:include>
 <%
-	}
+	} else if(contentPage.equals("showUserData")) {
+%>
+<jsp:include page="/guiElements/generally/showUserData.jsp"></jsp:include>
+<% 	}
 %>
 
