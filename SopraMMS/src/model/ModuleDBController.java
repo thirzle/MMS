@@ -399,7 +399,7 @@ public class ModuleDBController {
 		query = "SELECT m.* FROM latestmodule AS l JOIN module AS m "
 				+ "ON l.moduleID = m.moduleID AND l.version = m.version " +
 				"JOIN entry AS e ON m.moduleID = e.moduleID " +
-				"AND m.version = e.moduleversion courseentry AS ce " +
+				"AND m.version = e.moduleversion JOIN courseentry AS ce " +
 				"ON e.entryID = ce.entryID WHERE ce.courseID = ? AND ce.degree = ?";
 		try {
 			pStatement = connection.prepareStatement(query);

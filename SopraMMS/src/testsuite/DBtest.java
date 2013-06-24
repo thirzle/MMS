@@ -178,9 +178,7 @@ public class DBtest {
 //		System.out.println("done");+
 
 		//System.out.println(mController.clearDatabase());
-		Deadline deadline = uController.getDeadlineByFaculty("in");
-		String date = new SimpleDateFormat("dd.MM.yyyy").format(deadline.getDeadline());
-		System.out.println(date);
+		List<Module> module = mController.getModulesByCourse("inf", "Master");
 		
 
 	}
