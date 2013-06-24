@@ -13,13 +13,15 @@ import pdfcreator.*;
 
 public class LogicTest {
 
-    private static ModuleDBController connection;
+    //private static ModuleDBController connection;
+    private static ModuleAdministration ma;
 
     public static void main(String[] args) {
 	System.out.println("Starting test...");
 
 	// creating a connection to the database
-	connection = new ModuleDBController();
+	//connection = new ModuleDBController();
+	ma = new ModuleAdministration();
 
 	// init test #1
 	module_load_test();
@@ -34,8 +36,8 @@ public class LogicTest {
     // connection.getModuleManualbyCourse("inf", "Bachelor", "sose2015");
     private static void module_load_test() {
 	String subject = "inf";
-	String degree = "Bachelor";
-	String semester = "sose2015";
+	String degree = "Master";
+	String semester = "sose2013";
 	System.out.println("###########################################");
 	System.out.println("# Logic Test # 1");
 	System.out.println("# 'Load module...' ");
@@ -45,15 +47,28 @@ public class LogicTest {
 	System.out.println("#------------------------------------------");
 	System.out.println("# waiting for ultra slow db...");
 
-	List<Module> module_list = connection.getModuleManualbyCourse(subject, degree, semester);
+	//List<Module> module_list = connection.getModuleManualbyCourse(subject, degree, semester);
+	//List<Module> module_list =  connection.getModulesByCourse(subject, degree);
+	List<Module> module_list = ma.getSortedModulesByCourse(subject,degree);
+	
 	System.out.println("# ultra slow db responded...");
+	System.out.println("# entries:");
+	
+	if(module_list.size() == 0){
+	    System.out.println("	Module liste ist leer..." );
+	}
+	
+	for(int i = 0; i < module_list.size(); i++){
+	    System.out.println("	" + module_list.get(i).getName());
+	}
+	
 	System.out.println("# creating pdf...");
 	
 	SimplePdfCreator pdfcreator = new SimplePdfCreator();
 	try {
-	    pdfcreator.createModulePdf("C:/PDFBox_test/module_2.pdf", module_list, "Informatik", "Eine Fakult\u00E4t", "Informatik", "FSPO 2012", "gestrigen Tage", "AJ", semester, "over 9000");
+	    pdfcreator.createModulePdf("C:/PDFBox_test/module_2.pdf", module_list, "Informatik", "Eine Fakult\u00E4t", degree, "FSPO 2012", "gestrigen Tage", "AJ", semester, "over 9000");
 	} catch (COSVisitorException | IOException e) {
-	    System.out.println("Error in PDF creation, check if the path exists and / or the file isn't open...");
+	    System.out.println(e);
 	    System.exit(-1);
 	}
 	System.out.println("# THE END");
@@ -61,6 +76,9 @@ public class LogicTest {
     }
 
     private static void module_creation_test() {
+	
+	/*
+	
 	System.out.println("###########################################");
 	System.out.println("# Logic Test # 2");
 	System.out.println("# 'Create a Module with several entries");
@@ -244,6 +262,8 @@ public class LogicTest {
 	System.out.println("# module should be created now...");
 
 	System.out.println("###########################################");
+	
+	*/
     }
 
 }

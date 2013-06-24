@@ -242,4 +242,17 @@ public class ModuleAdministration {
 	public void clearDatabase() {
 		moduleDBController.clearDatabase();
 	}
+		
+	public List<Module> getSortedModulesByCourse(String subject, String degree){   
+	    List<Module> module_list =  moduleDBController.getModulesByCourse(subject, degree);
+	    
+	    List<Module> module_list_final = new LinkedList<Module>();
+	    for(int i = 0; i < module_list.size(); i++){
+		Module m = module_list.get(i);
+		m.setEntryList(sortModuleEntryListByOrder(m));	
+		module_list_final.add(m);
+	    }
+	    
+	    return module_list_final;
+	}
 }
