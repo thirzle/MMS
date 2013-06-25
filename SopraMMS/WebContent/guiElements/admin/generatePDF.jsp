@@ -20,7 +20,7 @@
 		<%
 			for (Course course : courses) {
 		%>
-		<option value=<%=course.getDescription()+" "+course.getDegree()%>>
+		<option value=<%=course.getDescription()+":"+course.getDegree()%>>
 		<%=course.getDescription()+" "+course.getDegree()%></option>
 		<%
 			}

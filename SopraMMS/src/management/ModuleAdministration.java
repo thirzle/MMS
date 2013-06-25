@@ -111,7 +111,7 @@ public class ModuleAdministration {
 	}
 
 	public void createModuleManual(String version, String url, String courseID,
-			String degree, String creationdate, String modificationdate,
+			String degree, java.sql.Date creationdate, java.sql.Date modificationdate,
 			String semester, int examregulation) {
 		moduleDBController.createModuleMaunal(version, url, courseID, degree,
 				creationdate, modificationdate, semester, examregulation);
