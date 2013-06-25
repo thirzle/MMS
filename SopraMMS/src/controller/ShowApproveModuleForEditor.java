@@ -159,10 +159,10 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 					}
 					infotext = "Die Freigabestatus der Einträge des Moduls "+moduleName+" wurden gespeichert.";
 					//send mail to modulemanager
-					mailContent = "Der Administrator hat folgende Einträge des Moduls "+moduleName+" freigegeben: "+
-					approvedEntries+".\n Diese Einträge wurden abgelehnt: "+refusedEntries;
-					EmailTelnet mailT = new EmailTelnet();
-					mailT.send_mail("Freigabe Ihres Moduls", mailAuthor, mailContent);
+					mailContent = "Der Administrator hat folgende Einträge des Moduls "+moduleName+" freigegeben: \n"+
+					approvedEntries+".\n Diese Einträge wurden abgelehnt: \n"+refusedEntries;
+					EmailTelnet mail = new EmailTelnet();
+					mail.send_mail("Freigabe Ihres Moduls", mailAuthor, mailContent);
 				}
 
 				session.setAttribute("content", "home");

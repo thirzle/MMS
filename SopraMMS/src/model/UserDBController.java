@@ -652,8 +652,8 @@ public class UserDBController {
 				resultSet = pStatement.executeQuery();
 				// get all institutes of supervisor
 				while (resultSet.next()) {
-					if(!instituteList.contains(resultSet.getString("insituteID"))){
-						instituteList.add(resultSet.getString("insituteID"));
+					if(!instituteList.contains(resultSet.getString("instituteID"))){
+						instituteList.add(resultSet.getString("instituteID"));
 					}
 				}
 			}

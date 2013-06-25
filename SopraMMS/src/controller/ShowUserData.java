@@ -50,7 +50,7 @@ public class ShowUserData extends HttpServlet {
 			userArray[4] = uAdmin.getUser(user.getSupervisor()).getFirstName()+" "+uAdmin.getUser(user.getSupervisor()).getLastName();
 		else
 			userArray[4] = "-Nicht in der Position eines Stellvertreters-";
-		userArray[5] = uAdmin.getFacultyName(user);
+		userArray[5] = uAdmin.getFacultyName(user).substring(9);
 		
 		instituteList = (ArrayList<String>) uAdmin.getInstituteNames(user);		
 		
