@@ -269,4 +269,8 @@ public class ModuleAdministration {
 	public void editModule(Module module){
 		moduleDBController.editRejectedModule(module);
 	}
+	
+	public boolean createInstitute(String instituteID, String managerLoginname, String facultyID){
+		return moduleDBController.createInstitute(instituteID, managerLoginname, facultyID);
+	}
 }

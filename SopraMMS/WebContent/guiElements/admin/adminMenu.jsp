@@ -4,8 +4,11 @@ $(document).ready(function() {
 		$(".contentBox").load("/SopraMMS/guiElements/admin/createNews.jsp");
 		});
 		$("#showNews").click(function(e) {
-			$(".contentBox").load("/SopraMMS/guiElements/admin/showNews.jsp");
-			});
+		$(".contentBox").load("/SopraMMS/guiElements/admin/showNews.jsp");
+		});
+		$("#createInstitute").click(function(e) {
+		$(".contentBox").load("/SopraMMS/guiElements/admin/createNewInstitute.jsp");
+		});
 });
 </script>
 
@@ -47,6 +50,7 @@ $(document).ready(function() {
 				<li id="generatePDF"><a href="/SopraMMS/CreatePDF">Modulhandbuch erstellen</a></li>
 				<li id="deadline"><a href="/SopraMMS/Deadline">Stichtag festlegen</a></li>
 				<li id="deleteModule"><a href="/SopraMMS/DeleteModule">Modul löschen</a></li>
+				<li id="createInstitute">Institut erstellen</li>
 			</ul>
 		</div>
 	</ul>
