@@ -425,9 +425,9 @@ public class Module {
      * Returns the manual string of this Module.
      * @return	The Module's manual.
      */
-    public String getModuleManual() {
-	return new ModuleAdministration().getModuleManual(moduleID);
-    }
+//    public String getModuleManual() {
+//	return new ModuleAdministration().getModuleManual(moduleID);
+//    }
 
     /**
      * Sets the version number of this Module.

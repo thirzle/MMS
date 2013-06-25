@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css"
-	media="print, projection, screen" />
+
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
 <script type="text/javascript"
 	src="/SopraMMS/js/tablemanager.js"></script>

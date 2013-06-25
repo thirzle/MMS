@@ -80,7 +80,8 @@ public class GeneratePDF extends HttpServlet {
 		
 		// get course from gui
 		String fullCourse = request.getParameter("course");
-		String[] splitCourse = fullCourse.split(" ");
+		System.out.println("fullCourse: "+fullCourse);
+		String[] splitCourse = fullCourse.split(":");
 		String courseName = splitCourse[0];
 		String degree = splitCourse[1];
 		String courseID = mAdmin.getCourseID(courseName);
@@ -89,7 +90,6 @@ public class GeneratePDF extends HttpServlet {
 
 		// get current Date
 		Date currentTime = cal.getTime();
-		String date = formatter.format(currentTime);
 
 		// load all modules of course
 		LinkedList<Module> moduleList = (LinkedList) mAdmin.getModulesByCourse(
@@ -102,7 +102,7 @@ public class GeneratePDF extends HttpServlet {
 			semester = "wise";
 		}
 		version = courseID + "_" + degree + "_" + semester
-				+ date.substring(0, 4);
+				+ cal.get(cal.YEAR);
 		
 		//get latest modificatoinauthor and latest modificationdate
 		String latestAuthor = moduleList.getFirst().getModificationauthor();
@@ -120,8 +120,8 @@ public class GeneratePDF extends HttpServlet {
 		String fileName = version + ".pdf";
 
 		// TODO Create new ModuleManual in database
-		mAdmin.createModuleManual(version, courseID, degree, date, date,
-				false, Integer.parseInt(examRegulation));
+		mAdmin.createModuleManual(version, fileName, courseID, degree, new java.sql.Date(currentTime.getTime()), new java.sql.Date(latestModificationDate.getTime()),
+				semester, Integer.parseInt(examRegulation));
 
 		// Generate new PDF
 		try {

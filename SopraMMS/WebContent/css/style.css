@@ -19,7 +19,7 @@ table.tablesorter thead tr .header {
 	background-repeat: no-repeat;
 	background-position: center right;
 	cursor: pointer;
-	width: 10%;
+	width: 30%;
 	height: 10px;
 }
 table.tablesorter tbody td {
@@ -41,9 +41,26 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
 }
-table.tablesorter thead tr th.header:FIRST-CHILD{
+table.tablesorter thead tr th.header:FIRST-CHILD {
+	width: 1em;	
+}
+table.tablesorter thead tr th.xs {
 	width: 1em;
-		
+}
+table.tablesorter thead tr th.s {
+	width: 50px;
+}
+table.tablesorter thead tr th.m {
+	width: 60px;
+}
+table.tablesorter thead tr th.l {
+	width: 100px;
+}
+table.tablesorter thead tr th.xl {
+	width: 120px;
+}
+table.tablesorter thead tr th.xxl {
+	width: 150px;
 }
 
 

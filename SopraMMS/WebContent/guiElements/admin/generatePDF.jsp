@@ -20,7 +20,7 @@
 		<%
 			for (Course course : courses) {
 		%>
-		<option value=<%=course.getDescription()+" "+course.getDegree()%>>
+		<option value=<%=course.getDescription()+":"+course.getDegree()%>>
 		<%=course.getDescription()+" "+course.getDegree()%></option>
 		<%
 			}
@@ -31,8 +31,4 @@
 	<br> <input type="submit" name="Submit" id="showEntries" value="Modulhandbuch erstellen" />
 </form>
 
-<script>
-	$(".expandAdministration").toggleClass("expanded");
-	$(".expandAdministration").children("ul:first").slideToggle("fast");
-	e.stopPropagation();
-</script>
+

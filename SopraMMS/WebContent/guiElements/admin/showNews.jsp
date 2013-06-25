@@ -1,7 +1,6 @@
 
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.newstable.js"></script>
-<link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
 <%@page import="java.util.List"%>
 <%@page import="user.UserAdministration"%>
 <%

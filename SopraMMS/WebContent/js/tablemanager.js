@@ -28,6 +28,7 @@ function showButton() {
 
 function manageTable(table) {
 	if(table != null) {
+		setTHeads();
 		table.tablesorter({
 			sortList : [ [ 0, 0 ], [ 2, 1 ] ],
 			widgets : [ 'zebra' ]
@@ -48,4 +49,32 @@ function checkRadioButtons() {
 		}
 	}
 	return (needToBeChecked == areChecked);
+}
+
+function setTHeads() {
+	var theads = $("th");
+	var contentLength = 0;
+	for(var i=0;i<theads.length;i++){
+		contentLength = theads[i].textContent.length;
+		
+		if(contentLength == 0) {
+			
+			theads[i].setAttribute("class","xs header");
+		} else if(contentLength < 6) {
+			
+			theads[i].setAttribute("class","s header");
+		} else if(contentLength < 9) {
+			
+			theads[i].setAttribute("class","m header");
+		} else if(contentLength < 13) {
+			
+			theads[i].setAttribute("class","l header");
+		} else if(contentLength < 17) {
+			
+			theads[i].setAttribute("class","xl header");
+		} else {
+			
+			theads[i].setAttribute("class","xxl header");
+		}
+	}
 }
