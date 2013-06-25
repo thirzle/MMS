@@ -449,6 +449,22 @@ public class Module {
     this.subject = subject;	
     }
 
+    /**
+     * Sets the modification author of this Module.
+     * @param author The new modification author of this Module.
+     */
+    public void setAuthor(String author){
+    	this.modificationauthor=author;
+    }
+    
+    /**
+     * Sets the modification date of this Module.
+     * @param modificationDate The new modification date of this Module.
+     */
+    public void setModificationDate(Date modificationDate){
+    	this.modificationDate=modificationDate;
+    }
+    
     @SuppressWarnings("unused")
     /**
      * Returns the current date.

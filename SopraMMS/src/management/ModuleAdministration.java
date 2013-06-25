@@ -265,4 +265,8 @@ public class ModuleAdministration {
 	{
 		moduleDBController.deleteModule(moduleID, version);
 	}
+	
+	public void editModule(Module module){
+		moduleDBController.editRejectedModule(module);
+	}
 }

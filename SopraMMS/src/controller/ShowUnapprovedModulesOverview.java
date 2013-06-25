@@ -41,7 +41,7 @@ public class ShowUnapprovedModulesOverview extends HttpServlet {
 
 		session.setAttribute("moduleListForModulemanager", moduleList);
 		session.setAttribute("content", "showModulesForModulemanager");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp?edit=true");
 
 		session.removeAttribute("fieldsTypeAEdit");
 		session.removeAttribute("fieldsTypeBEdit");
