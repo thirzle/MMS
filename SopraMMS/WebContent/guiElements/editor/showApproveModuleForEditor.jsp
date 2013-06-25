@@ -36,22 +36,6 @@
 		<table>
 			<tr>
 				<td class='descriptionModule'><%=entry.getTitle()%></td>
-				<%
-					// TODO If Teil kann entfernt werden
-									if(false){
-				%>
-				<td class='entryModule'><notEditable> <%
- 	EffortEntry effortEntry = (EffortEntry) entry;
-   							for(SelfStudy selfstudy : effortEntry.getSelfStudyList()){
-   								out.println(selfstudy.getTitle()+" "+selfstudy.getTime()+" Stunden");
- %> <br>
-					<%
-						}
-					%> </notEditable></td>
-				<%
-					}
-																	else{
-				%>
 				<td class='entryModule'><notEditable> <%
  	String list[]=entry.getContent().split("\n");
    				for(String s:list){
@@ -60,7 +44,6 @@
  %> </notEditable></td>
 
 				<%
-					}
 												String trueChecked = "empty";
 												String falseChecked = "empty";
 												if(entry.isApproved()){
@@ -118,7 +101,7 @@
 
 </form>
 <script type="text/javascript"
-	src="/SopraMMS/js/jquery.createnewmodule.js"></script>
+	src="/SopraMMS/js/tablemanager.js"></script>
 <script>
-	fieldsEmpty();
+manageTable(null);
 </script>
