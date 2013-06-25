@@ -2,7 +2,7 @@
 	media="print, projection, screen" />
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
 <script type="text/javascript"
-	src="/SopraMMS/js/jquery.showModulForEditor.js"></script>
+	src="/SopraMMS/js/tablemanager.js"></script>
 
 <%@page import="management.Module" import="java.util.LinkedList"%>
 <%
@@ -76,3 +76,6 @@
 	</table>
 	<button type="submit" name="editButton" value="editButton">Modulansicht zum freigeben</button>
 </form>
+<script type="text/javascript">
+manageTable($('#modulesForEditor'));
+</script>

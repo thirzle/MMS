@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
+<script type="text/javascript" src="/SopraMMS/js/tablemanager.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
-<script type="text/javascript" src="/SopraMMS/js/jquery.usertable.js"></script>
 <%@ page import="model.UserDBController"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
@@ -73,10 +73,13 @@
 </table>
 <%
 if(task.equals("edit")) { %>
-	<input form="edit" type="submit" value="Bearbeiten"/>
+	<button form="edit" type="submit" value="Bearbeiten">Bearbeiten</button>
 <%} else if(task.equals("delete")) { %>
-	<input form="delete" type="submit" value="Löschen"/>
+	<button form="delete" type="submit" value="Löschen">Löschen</button>
 <%}
 if(session.getAttribute("errormessage") != null) { %>
 	<p style="color: #FF0000"><%= session.getAttribute("errormessage") %></p>
 <%} %>
+<script>
+manageTable($('#userTable'));
+</script>

@@ -68,8 +68,11 @@
 		%>
 		</tbody>
 	</table>
-	<button name="action" value="editModule">Modul überarbeiten</button>
+	<button type="submit" name="action" value="editModule">Modul überarbeiten</button>
 </form>
 
-<script type="text/javascript" src="/SopraMMS/js/jquery.showModulesForCoordinator.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/tablemanager.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
+<script>
+manageTable($('#modulesForCoordinator'));
+</script>
