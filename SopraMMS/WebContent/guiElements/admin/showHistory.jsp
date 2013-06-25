@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="/SopraMMS/css/jquery.tablescroll.css" type="text/css" media="print, projection, screen" />
-<link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
 
 <%@page import="java.util.LinkedList"%>
 <%

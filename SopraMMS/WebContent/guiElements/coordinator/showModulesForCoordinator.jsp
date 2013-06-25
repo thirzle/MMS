@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css"
-	media="print, projection, screen" />
+
 
 
 <%@page import="management.Module" import="java.util.LinkedList"%>

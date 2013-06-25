@@ -33,8 +33,4 @@
 		value="Modulhandbuch erstellen" />
 </form>
 
-<script>
-	$(".expandAdministration").toggleClass("expanded");
-	$(".expandAdministration").children("ul:first").slideToggle("fast");
-	e.stopPropagation();
-</script>
+
