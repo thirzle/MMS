@@ -1999,7 +1999,7 @@ public class ModuleDBController {
 	 * @see ModuleAdministration
 	 */
 	public boolean createModuleMaunal(String version, String url, String courseID,
-			String degree, String creationdate, String modificationdate, String semester, int examregulation) {
+			String degree, Date creationdate, Date modificationdate, String semester, int examregulation) {
 		Connection connection = connect();
 		query = "INSERT INTO modulemanual (versionnumber, url, courseID, degree, "
 				+ "creationdate, modificationdate, semester, examregulation) "
@@ -2010,8 +2010,8 @@ public class ModuleDBController {
 			pStatement.setString(2, url);
 			pStatement.setString(3, courseID);
 			pStatement.setString(4, degree);
-			pStatement.setString(5, creationdate);
-			pStatement.setString(6, modificationdate);
+			pStatement.setDate(5, creationdate);
+			pStatement.setDate(6, modificationdate);
 			pStatement.setString(7, semester);
 			pStatement.setInt(8, examregulation);
 			pStatement.execute();
