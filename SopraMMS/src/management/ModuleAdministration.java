@@ -260,4 +260,13 @@ public class ModuleAdministration {
 	    
 	    return module_list_final;
 	}
+	
+	public List<Module> getAllModules(){
+		return moduleDBController.getAllModules();
+	}
+	
+	public void deleteModule(long moduleID,int version)
+	{
+		moduleDBController.deleteModule(moduleID, version);
+	}
 }

@@ -40,12 +40,13 @@ $(document).ready(function() {
 		</div>
 		
 		<div class="headerNavAdminModule">
-			<li>Modulhandbuchverwaltung</li>
+			<li>Modulverwaltung</li>
 		</div>
 		<div class="expandAdminModule">
 			<ul class="subNav">
-				<li id="generatePDF"><a href="/SopraMMS/CreatePDF">PDF generieren</a></li>
-				<li id="deadline"><a href="/SopraMMS/Deadline">Stichtag</a></li>
+				<li id="generatePDF"><a href="/SopraMMS/CreatePDF">Modulhandbuch generieren</a></li>
+				<li id="deadline"><a href="/SopraMMS/Deadline">Stichtag festlegen</a></li>
+				<li id="deleteModule"><a href="/SopraMMS/DeleteModule">Modul löschen</a></li>
 			</ul>
 		</div>
 	</ul>

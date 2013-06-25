@@ -172,6 +172,9 @@
 	} else if(contentPage.equals("showUserData")) {
 %>
 <jsp:include page="/guiElements/generally/showUserData.jsp"></jsp:include>
+<% 	}else if(contentPage.equals("deleteModule")) {
+	%>
+<jsp:include page="/guiElements/admin/deleteModule.jsp"></jsp:include>
 <% 	}
 %>
 
