@@ -59,7 +59,7 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 		String approvedEntries = "";
 		String refusedEntries = "";
 		StringBuilder builder = new StringBuilder();
-		boolean allEntriesApproved = true;
+		boolean allEntriesApproved = false;
 		
 		// speichert das ausgeählte Modul + Version
 		String selectedModule = null;
@@ -167,8 +167,8 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 					builder.append("Der Administrator hat folgende Einträge des Moduls ");
 					builder.append(moduleName);
 					builder.append(" freigegeben: \n");
-					builder.append(approvedEntries);
-					builder.append(".\n Diese Einträge wurden abgelehnt: \n");
+					builder.append(approvedEntries+" \n");
+					builder.append("Diese Einträge wurden abgelehnt: \n");
 					builder.append(refusedEntries);
 					EmailTelnet mail = new EmailTelnet();
 					mail.send_mail("Freigabe Ihres Moduls", mailAuthor, builder.toString());
