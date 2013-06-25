@@ -2,7 +2,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="management.Module"%>
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
-<script type="text/javascript" src="/SopraMMS/js/jquery.newstable.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/tablemanager.js"></script>
 <link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css"
 	media="print, projection, screen" />
 <%@page import="java.util.List"%>
@@ -15,7 +15,7 @@
 <h3>Wählen sie die Module aus, die gelöscht werden sollen</h3>
 
 <form action="/SopraMMS/DeleteModule">
-	<table id="showNewsTable" class='tablesorter'>
+	<table id="deleteModuleTable" class='tablesorter'>
 		<thead>
 			<tr>
 				<th style="width: 1%;"></th>
@@ -67,5 +67,6 @@
 		endgültig aus dem Module Management System gelöscht und können nicht
 		wieder hergestellt werden.</div>
 </form>
-
-
+<script>
+manageTable($("#deleteModuleTable"));
+</script>

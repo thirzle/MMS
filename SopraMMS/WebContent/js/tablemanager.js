@@ -30,7 +30,7 @@ function manageTable(table) {
 	if(table != null) {
 		setTHeads();
 		table.tablesorter({
-			sortList : [ [ 0, 0 ], [ 2, 1 ] ],
+			sortList : [ [ 1, 0 ], [ 2, 0 ] ],
 			widgets : [ 'zebra' ]
 		});
 	}
