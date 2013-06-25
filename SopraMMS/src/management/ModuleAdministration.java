@@ -96,10 +96,6 @@ public class ModuleAdministration {
 		return moduleDBController.getLastModificationDate(courseID, degree);
 	}
 
-	public String getLastModificationAuthor(String courseID, String degree) {
-		return moduleDBController.getLastModificationAuthor(courseID, degree);
-	}
-
 	public String getLatestVersionOfModuleManual(String courseID, String degree) {
 		return moduleDBController.generateLatestVersionOfModuleManual(courseID,
 				degree);
