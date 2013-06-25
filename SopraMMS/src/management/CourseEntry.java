@@ -266,12 +266,12 @@ public class CourseEntry extends Entry {
 		StringBuilder sb2 = new StringBuilder();
 		for (Course c : courses) {
 			if(c.isObligatory()){
-				sb1.append("- "+c.getDescription()+"\n");
+				sb1.append("- "+c.toString()+"\n");
 			}
 			else{
-				sb2.append("- "+c.getDescription()+"\n");
+				sb2.append("- "+c.toString()+"\n");
 			}
 		}
-		return "Plichtmodul\n"+sb2.toString()+"\nWahlpflichtmodul"+sb1.toString();
+		return "Plichtmodul\n"+sb2.toString()+"\nWahlpflichtmodul\n"+sb1.toString();
 	}
 }

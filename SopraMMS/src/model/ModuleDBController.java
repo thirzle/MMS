@@ -1713,42 +1713,7 @@ public class ModuleDBController {
 			close(connection);
 		}
 		return null;
-	}
-
-	/**
-	 * Gets the author who did the last modification.
-	 * 
-	 * @param courseID		The unique ID of a course.
-	 * @param degree
-	 * @return The author
-	 * @see Course
-	 * @see Module
-	 */
-	@Deprecated
-	public String getLastModificationAuthor(String courseID, String degree) {
-		Connection connection = connect();
-		query = "SELECT m.modificationauthor, MAX(m.modificationdate) FROM module AS m "
-				+ "JOIN modulecourseaffiliation AS ma ON m.moduleID = ma.moduleID "
-				+ "WHERE ma.courseID = ? AND ma.degree = ?";
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, courseID);
-			pStatement.setString(2, degree);
-			ResultSet resultSet = pStatement.executeQuery();
-			if (resultSet.next()) {
-				return resultSet.getString(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out
-					.println("couldn't get last modification author of course: "
-							+ courseID);
-		} finally {
-			close(connection);
-		}
-		return null;
-	}
-	
+	}	
 	
 	//TODO
 	/**

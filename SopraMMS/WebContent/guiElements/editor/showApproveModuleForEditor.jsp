@@ -36,57 +36,39 @@
 		<table>
 			<tr>
 				<td class='descriptionModule'><%=entry.getTitle()%></td>
-				<%
-					// TODO If Teil kann entfernt werden
-									if(false){
-				%>
 				<td class='entryModule'><notEditable> <%
- 	EffortEntry effortEntry = (EffortEntry) entry;
-   							for(SelfStudy selfstudy : effortEntry.getSelfStudyList()){
-   								out.println(selfstudy.getTitle()+" "+selfstudy.getTime()+" Stunden");
- %> <br>
-					<%
-						}
-					%> </notEditable></td>
-				<%
-					}
-																	else{
-				%>
-				<td class='entryModule'><notEditable> <%
- 	String list[]=entry.getContent().split("\n");
+ 				String list[]=entry.getContent().split("\n");
    				for(String s:list){
    					out.println(""+s+"<br>");
    				}
- %> </notEditable></td>
-
+ 				%> </notEditable></td>
 				<%
-					}
-												String trueChecked = "empty";
-												String falseChecked = "empty";
-												if(entry.isApproved()){
+				String trueChecked = "empty";
+				String falseChecked = "empty";
+				if(entry.isApproved()){
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					checked="checked" value="true"></td>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					value="false"></td>
 				<%
-					}
-																else if(entry.isRejected()){
+				}
+				else if(entry.isRejected()){
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					value="true"></td>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					checked="checked" value="false"></td>
 				<%
-					}
-																else{
+				}
+				else{
 				%>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					value="true"></td>
 				<td><input type="radio" name="radioEntry<%=entry.getTitle()%>"
 					value="false"></td>
 				<%
-					}
+				}
 				%>
 			</tr>
 		</table>
