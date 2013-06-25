@@ -11,13 +11,12 @@
 
 <%
 	Module module = (Module) session.getAttribute("moduleForViewModule");
-
 LinkedList<Entry> entryList = (LinkedList) module.getEntryList();
 String institute = (String) session.getAttribute("instituteForViewModule");
 
 
 
-	for (int i = 0; i < entryList.size(); i++) {
+	for (int i = 0; i < 6&&i<entryList.size(); i++) {
 		Entry entry = entryList.get(i);
 %>
 <div class='moduleEntry'>
@@ -27,9 +26,9 @@ String institute = (String) session.getAttribute("instituteForViewModule");
 
 			<td class='entryModule'><notEditable> <%
  	String list[]=entry.getContent().split("\n");
- 									for(String s:list){
- 										out.println(""+s+"<br>");
- 									}
+    									for(String s:list){
+    										out.println(""+s+"<br>");
+    									}
  %> </notEditable></td>
 
 		</tr>
@@ -49,8 +48,41 @@ String institute = (String) session.getAttribute("instituteForViewModule");
 
 		</tr>
 	</table>
-
 </div>
+<div class='moduleEntry'>
+	<table>
+		<tr>
+			<td class='descriptionModule'>Fach</td>
+
+			<td class='entryModule'><notEditable><%=module.getSubject()%></notEditable></td>
+
+		</tr>
+	</table>
+</div>
+
+<%
+	for (int i = 6; i < entryList.size(); i++) {
+	Entry entry = entryList.get(i);
+%>
+<div class='moduleEntry'>
+	<table>
+		<tr>
+			<td class='descriptionModule'><%=entry.getTitle()%></td>
+
+			<td class='entryModule'><notEditable> <%
+ 	String list[]=entry.getContent().split("\n");
+   							for(String s:list){
+   								out.println(""+s+"<br>");
+   							}
+ %> </notEditable></td>
+
+		</tr>
+	</table>
+</div>
+<%
+	}
+%>
+
 
 <script type="text/javascript"
 	src="/SopraMMS/js/jquery.createnewmodule.js"></script>

@@ -7,12 +7,15 @@
 <%
 	LinkedList<Module> moduleList = (LinkedList) session
 	.getAttribute("moduleListForModulemanager");
+
+	if(request.getParameter("edit")!=null){
+		session.setAttribute("editUnapprovedModule", true);
+	}
 %>
 
 <h1>Modul bearbeiten</h1>
-<form
-	action="/SopraMMS/EditModule<%if(request.getParameter("edit")!=null){out.println("?edit=true");}%>"
-	method="get">
+<form action="/SopraMMS/EditModule" method="get">
+
 	<table class="tablesorter informationAboutModule"
 		id="modulesForModulmanager">
 		<thead>
@@ -40,8 +43,8 @@
 				<td>
 					<%
 						if (module.getSubject() != null) {
-											out.println(module.getSubject());
-										}
+																	out.println(module.getSubject());
+																}
 					%>
 				</td>
 				<td><%=module.getCreationDate()%></td>
@@ -49,21 +52,21 @@
 				<td>
 					<%
 						boolean rejected = false;
-									if (module.isApproved()) {
-											out.println("Freigegeben");
-										} else {
-											for(Entry entry: module.getEntryList()){
-												if(entry.isRejected()){
-													rejected = true;
-													break;
-												}
-											}
-											if(rejected){
-												out.println("Abgelehnt");
-											} else {
-												out.println("Offen");
-											}
-										}
+															if (module.isApproved()) {
+																	out.println("Freigegeben");
+																} else {
+																	for(Entry entry: module.getEntryList()){
+																		if(entry.isRejected()){
+																			rejected = true;
+																			break;
+																		}
+																	}
+																	if(rejected){
+																		out.println("Abgelehnt");
+																	} else {
+																		out.println("Offen");
+																	}
+																}
 					%>
 				</td>
 			</tr>

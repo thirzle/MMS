@@ -51,7 +51,7 @@ public class EditModule extends HttpServlet {
 	String institute = null;
 	Module module = null;
 	List<Entry> entryList = null;
-
+	private boolean editUnapprovedModule = false;
 	private boolean firstRun = false;
 
 	// TypeA --> predefined mandatory fields Feld
@@ -73,6 +73,10 @@ public class EditModule extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		session = request.getSession();
+		if (session.getAttribute("editUnapprovedModule") != null) {
+			editUnapprovedModule = true;
+			session.removeAttribute("editUnapprovedModule");
+		}
 		if (request.getParameter("showVersionsButton") != null) {
 			RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/ShowVersionsOfModule");
@@ -113,6 +117,7 @@ public class EditModule extends HttpServlet {
 					fieldsTypeE.clear();
 				if (textualEntrys != null)
 					textualEntrys.clear();
+			
 
 				for (Entry entry : entryList) {
 					if (entry.getClass().equals(EffortEntry.class)) {
@@ -125,6 +130,7 @@ public class EditModule extends HttpServlet {
 				}
 				System.out
 						.println("(EditModule.java): Initialisierung abgeschlossen");
+				firstRun=true;
 
 			} else {
 				moduleID = (long) session
@@ -152,7 +158,7 @@ public class EditModule extends HttpServlet {
 			session.removeAttribute("fieldsTypeCEdit");
 			session.removeAttribute("fieldsTypeDEdit");
 			session.removeAttribute("fieldsTypeEEdit");
-			// session.removeAttribute("selectedInstitute");
+			// session.removeAttribute("selectedInstitute");		
 			loadFieldsA();
 			loadFieldsB();
 			loadFieldsC();
@@ -187,6 +193,7 @@ public class EditModule extends HttpServlet {
 	}
 
 	private void loadFieldsA() {
+		fieldsTypeA = new ArrayList<>();	
 		for (TextualEntry entry : textualEntrys) {
 			if (entry.getTitle().equals("Kürzel")) {
 				fieldsTypeA.add(new String[] { "Kürzel", entry.getContent() });
@@ -214,6 +221,7 @@ public class EditModule extends HttpServlet {
 	}
 
 	private void loadFieldsB() {
+		fieldsTypeB = new ArrayList<>();	
 		for (TextualEntry entry : textualEntrys) {
 			if (entry.getTitle().equals("Inhalt")) {
 				fieldsTypeB.add(new String[] { "Inhalt", entry.getContent() });
@@ -237,6 +245,7 @@ public class EditModule extends HttpServlet {
 	}
 
 	private void loadFieldsC() {
+		fieldsTypeC = new ArrayList<>();	
 		for (TextualEntry entry : textualEntrys) {
 			if (!entry.isPredefinedField()) {
 				fieldsTypeC.add(new String[] { entry.getTitle(),
@@ -247,6 +256,7 @@ public class EditModule extends HttpServlet {
 	}
 
 	private void loadFieldsD() {
+		fieldsTypeD = new ArrayList<>();	
 		LinkedList<SelfStudy> selfStudyList = (LinkedList<SelfStudy>) effortEntry
 				.getSelfStudyList();
 
@@ -267,6 +277,7 @@ public class EditModule extends HttpServlet {
 	}
 
 	private void loadFieldsE() {
+		fieldsTypeE = new ArrayList<>();	
 		if (module.getSubject() != null) {
 			fieldsTypeE.add(new String[] { "Fach", module.getSubject() });
 		}
@@ -388,18 +399,24 @@ public class EditModule extends HttpServlet {
 						+ module.getSubject());
 
 				module.setEntryList(entryListForNewModule);
-				if (request.getParameter("edit") == null) {
+				if (!editUnapprovedModule) {
 					mAdmin.createModuleByModuleManager(module,
 							((User) session.getAttribute("user")).getLogin(),
 							module.getCreationDate(), newVersion);
 				} else {
-					module.setAuthor(((User) session.getAttribute("user")).getLogin());
+					for (Entry entry : module.getEntryList()) {
+						System.out.println(entry.getTitle()+"");
+					}
+					module.setAuthor(((User) session.getAttribute("user"))
+							.getLogin());
 					java.util.Calendar cal = new GregorianCalendar();
-					module.setModificationDate(new java.sql.Date(cal.getTime().getTime()));
+					module.setModificationDate(new java.sql.Date(cal.getTime()
+							.getTime()));
 					mAdmin.editModule(module);
+					editUnapprovedModule = false;
 				}
-				// TODO pruefen ob Pflichfelder befuellt sind
-
+			
+				
 				// insert into History "Module changed"
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				Date currentTime = new Date();
@@ -422,9 +439,11 @@ public class EditModule extends HttpServlet {
 			fieldsTypeC.remove(deleteEntry);
 			System.out.println("(EditModule.java): Reihe gelöscht");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+
 		} else {
 			session.setAttribute("content", "editModule");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+
 		}
 	}
 

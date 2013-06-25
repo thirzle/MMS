@@ -1349,19 +1349,33 @@ public class ModuleDBController {
 			pStatement.setInt(5, module.getVersion());
 			pStatement.executeUpdate();
 
-			// update basic entries
-			query = "UPDATE entry SET author = ?, title = ? rejected = FALSE WHERE entryID = ? AND moduleID = ? AND moduleversion = ?";
+			//delete old entries
+			query = "DELETE FROM entry WHERE moduleID = ? AND moduleversion = ?";
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, module.getModificationauthor());
-			pStatement.setLong(4, module.getModuleID());
-			pStatement.setInt(5, module.getVersion());
+			pStatement.setLong(1, module.getModuleID());
+			pStatement.setInt(2, module.getVersion());
+			pStatement.execute();
+			
+			//insert new entries
+			// insert basic entries
+			query = "INSERT INTO entry(entryID, moduleID, moduleversion,"
+						+ " author, classification, approvalstatus, declined,"
+						+ " title, `order`) VALUES (?,?,?,?,?,?,?,?,?)";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(2, module.getModuleID());
+			pStatement.setInt(3, module.getVersion());
+			pStatement.setString(4, module.getModificationauthor());
+			pStatement.setBoolean(5, false);
+			pStatement.setBoolean(6, false);
+			pStatement.setBoolean(7, false);
 			for (Entry entry : entryList) {
-				pStatement.setString(2, entry.getTitle());
-				pStatement.setLong(3, entry.getEntryID());
-				pStatement.executeUpdate();
+				pStatement.setLong(1, entry.getEntryID());
+				pStatement.setString(8, entry.getTitle());
+				pStatement.setInt(9, entry.getOrder());
+				pStatement.execute();
 			}
 
-			// update course entry
+			// insert course entry
 			// find the course entry
 			for (Entry entry : module.getEntryList()) {
 				if (entry.getClass() == CourseEntry.class) {
@@ -1369,13 +1383,8 @@ public class ModuleDBController {
 				}
 			}
 			if (courseEntry != null) {
-				//delete old courses
-				query = "DELETE FROM courseentry WHERE entryID = ?";
-				pStatement = connection.prepareStatement(query);
-				pStatement.setLong(1, courseEntry.getEntryID());
-				pStatement.execute();
-				// insert new courses
-				query = "INSERT INTO courseentry VALUES(?, ?, ?, ?)";
+				// insert courses
+				query = "INSERT INTO courseentry VALUES (?,?,?,?)";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, courseEntry.getEntryID());
 				for (Course course : courseEntry.getCourses()) {
@@ -1386,38 +1395,38 @@ public class ModuleDBController {
 				}
 			}
 
-			// update textual entries
-			query = "UPDATE textualentry SET text = ? WHERE entryID = ?";
+			// insert textual entries
+			query = "INSERT INTO textualentry VALUES(?,?)";
 			pStatement = connection.prepareStatement(query);
 			for (Entry entry : entryList) {
 				if (entry.getClass() == TextualEntry.class) {
 					textualEntry = (TextualEntry) entry;
-					pStatement.setString(1, textualEntry.getContent());
-					pStatement.setLong(2, textualEntry.getEntryID());
-					pStatement.executeUpdate();
+					pStatement.setLong(1, textualEntry.getEntryID());
+					pStatement.setString(2, textualEntry.getContent());
+					pStatement.execute();
 				}
 			}
 
-			// update effort entry
-			query = "UPDATE effortentry SET presencetime = ? WHERE entryID = ?";
+			// insert effort entry
+			query = "INSERT INTO effortentry VALUES(?,?)";
 			pStatement = connection.prepareStatement(query);
 			for (Entry entry : entryList) {
 				if (entry.getClass() == EffortEntry.class) {
 					effortEntry = (EffortEntry) entry;
-					pStatement.setInt(1, effortEntry.getTime());
-					pStatement.setLong(2, effortEntry.getEntryID());
-					pStatement.executeUpdate();
+					pStatement.setLong(1, effortEntry.getEntryID());
+					pStatement.setInt(2, effortEntry.getTime());
+					pStatement.execute();
 				}
 			}
 			if (effortEntry != null) {
-				query = "UPDATE selfstudy SET title = ?, time = ? WHERE entryID = ? AND selfstudyID = ?";
+				query = "INSERT INTO selfstudy VALUES(?,?,?,?)";
 				pStatement = connection.prepareStatement(query);
-				pStatement.setLong(3, effortEntry.getEntryID());
+				pStatement.setLong(2, effortEntry.getEntryID());
 				for (SelfStudy study : effortEntry.getSelfStudyList()) {
-					pStatement.setString(1, study.getTitle());
-					pStatement.setInt(2, study.getTime());
-					pStatement.setLong(4, study.getSelfstudyID());
-					pStatement.executeUpdate();
+					pStatement.setLong(1, study.getSelfstudyID());
+					pStatement.setString(3, study.getTitle());
+					pStatement.setInt(4, study.getTime());
+					pStatement.execute();
 				}
 			}
 			connection.commit();
