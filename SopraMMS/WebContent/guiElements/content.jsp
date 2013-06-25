@@ -167,14 +167,21 @@
 <%
 	} else if (contentPage.equals("showEditModulesForCoordinator")) {
 %>
-<jsp:include page="/guiElements/coordinator/showEditModulesForCoordinator.jsp"></jsp:include>
+<jsp:include
+	page="/guiElements/coordinator/showEditModulesForCoordinator.jsp"></jsp:include>
 <%
-	} else if(contentPage.equals("showUserData")) {
+	} else if (contentPage.equals("showUserData")) {
 %>
 <jsp:include page="/guiElements/generally/showUserData.jsp"></jsp:include>
-<% 	}else if(contentPage.equals("deleteModule")) {
-	%>
+<%
+	} else if (contentPage.equals("deleteModule")) {
+%>
 <jsp:include page="/guiElements/admin/deleteModule.jsp"></jsp:include>
-<% 	}
+<%
+	} else if (contentPage.equals("createNewInstitute")) {
+%>
+<jsp:include page="/guiElements/admin/createNewInstitute.jsp"></jsp:include>
+<%
+	}
 %>
 
