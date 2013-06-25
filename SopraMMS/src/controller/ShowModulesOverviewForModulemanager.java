@@ -28,7 +28,6 @@ public class ShowModulesOverviewForModulemanager extends HttpServlet {
 
 		super();
 		System.out.println("ShowModulesOverviewForModulemanager");
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -43,7 +42,6 @@ public class ShowModulesOverviewForModulemanager extends HttpServlet {
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		User user = (User) session.getAttribute("user");
 
-		// TODO getModulesOverview
 		List<Module> moduleList = mAdmin.getModulesByAuthor(user.getLogin());
 
 		session.setAttribute("moduleListForModulemanager", moduleList);
@@ -63,7 +61,6 @@ public class ShowModulesOverviewForModulemanager extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

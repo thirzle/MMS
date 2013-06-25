@@ -56,8 +56,11 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 		String infotext = "";
 		String moduleName = null;
 		String author = null;
-		String mailContent = "";
+		String approvedEntries = "";
+		String refusedEntries = "";
+		StringBuilder builder = new StringBuilder();
 		boolean allEntriesApproved = true;
+		
 		// speichert das ausgeählte Modul + Version
 		String selectedModule = null;
 		// ModulID steht an Stelle 0, Versionsnummer an Stelle 1
@@ -127,8 +130,19 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 				//get author and mail
 				author = approveModule.getModificationauthor();
 				String mailAuthor = new UserAdministration().getEmailOfUser(author);
+				System.out.println("allEntriesApproved: "+allEntriesApproved);
+				
 				
 				if (allEntriesApproved) {
+					infotext = "Das Modul "+moduleName+" wurde freigegeben!";
+					
+					// send mail to modulemanager
+					builder.append("Ihr Modul ");
+					builder.append(approveModule.getName());
+					builder.append(" wurde komplett freigegeben.");
+					EmailTelnet mail = new EmailTelnet();
+					mail.send_mail("Freigabe Ihres Moduls", mailAuthor, builder.toString());
+					
 					// insert into History "Module approved"
 					SimpleDateFormat formatter = new SimpleDateFormat(
 							"yyyy-MM-dd");
@@ -138,17 +152,8 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 					uAdmin.insertHistory(
 							((User) session.getAttribute("user")).getLogin(),
 							date, "Hat folgendes Modul freigegeben: " + moduleName);
-					//
-					infotext = "Das Modul "+moduleName+" wurde freigegeben!";
-					
-					// send mail to modulemanager
-					mailContent = "Ihr Modul "+approveModule.getName()+" wurde komplett freigegeben.";
-					EmailTelnet mail = new EmailTelnet();
-					mail.send_mail("Freigabe Ihres Moduls", mailAuthor, mailContent);
 				}
 				else{
-					String approvedEntries = "";
-					String refusedEntries = "";
 					for(Entry entry : approveModule.getEntryList()){
 						if(entry.isApproved()){
 							approvedEntries = approvedEntries + entry.getTitle()+"\n";							
@@ -159,10 +164,14 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 					}
 					infotext = "Die Freigabestatus der Einträge des Moduls "+moduleName+" wurden gespeichert.";
 					//send mail to modulemanager
-					mailContent = "Der Administrator hat folgende Einträge des Moduls "+moduleName+" freigegeben: \n"+
-					approvedEntries+".\n Diese Einträge wurden abgelehnt: \n"+refusedEntries;
+					builder.append("Der Administrator hat folgende Einträge des Moduls ");
+					builder.append(moduleName);
+					builder.append(" freigegeben: \n");
+					builder.append(approvedEntries);
+					builder.append(".\n Diese Einträge wurden abgelehnt: \n");
+					builder.append(refusedEntries);
 					EmailTelnet mail = new EmailTelnet();
-					mail.send_mail("Freigabe Ihres Moduls", mailAuthor, mailContent);
+					mail.send_mail("Freigabe Ihres Moduls", mailAuthor, builder.toString());
 				}
 
 				session.setAttribute("content", "home");

@@ -46,7 +46,7 @@ public class ChangeName extends HttpServlet {
 		
 		UserAdministration uAdmin = new UserAdministration();
 		uAdmin.changeName(user, newFirstname, newLastname);
-		String loginname = newLastname.toLowerCase() + newFirstname.toUpperCase().charAt(0);
+		String loginname = newLastname.toLowerCase() + newFirstname.toLowerCase().charAt(0);
 		uAdmin.changeLoginname(user, loginname);
 		
 		//send mail 
