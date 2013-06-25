@@ -91,30 +91,30 @@ public class ModuleAdministration {
 		return moduleDBController.getModulesByCourse(course, degree);
 	}
 
-	public String getLastModificationDateOfModuleManual(String courseID,
-			String degree) {
-		return moduleDBController.getLastModificationDate(courseID, degree);
-	}
+//	public String getLastModificationDateOfModuleManual(String courseID,
+//			String degree) {
+//		return moduleDBController.getLastModificationDate(courseID, degree);
+//	}
 
-	public String getLatestVersionOfModuleManual(String courseID, String degree) {
-		return moduleDBController.generateLatestVersionOfModuleManual(courseID,
-				degree);
-	}
+//	public String getLatestVersionOfModuleManual(String courseID, String degree) {
+//		return moduleDBController.generateLatestVersionOfModuleManual(courseID,
+//				degree);
+//	}
 
-	public LinkedList<String> getInstituteListOfModuleManual(String courseID,
-			String degree) {
-		return moduleDBController.getInstituteList(courseID, degree);
-	}
+//	public LinkedList<String> getInstituteListOfModuleManual(String courseID,
+//			String degree) {
+//		return moduleDBController.getInstituteList(courseID, degree);
+//	}
 
 	public String getInstituteName(String instituteID) {
 		return moduleDBController.getInstituteName(instituteID);
 	}
 
-	public void createModuleManual(String version, String courseID,
+	public void createModuleManual(String version, String url, String courseID,
 			String degree, String creationdate, String modificationdate,
-			boolean approvalstatus, int examregulation) {
-		moduleDBController.createModuleMaunal(version, courseID, degree,
-				creationdate, modificationdate, approvalstatus, examregulation);
+			String semester, int examregulation) {
+		moduleDBController.createModuleMaunal(version, url, courseID, degree,
+				creationdate, modificationdate, semester, examregulation);
 	}
 
 	// TODO
@@ -178,18 +178,18 @@ public class ModuleAdministration {
 		return module;
 	}
 
-	public String getModuleManual(long moduleID) {
-		return moduleDBController.getModuleManualByModule(moduleID);
-	}
+//	public String getModuleManual(long moduleID) {
+//		return moduleDBController.getModuleManualByModule(moduleID);
+//	}
 
 	public List<Module> getModulesByAuthor(String loginname) {
 		return moduleDBController.getModulesOverviewByAuthor(loginname);
 	}
 
-	public List<Module> getUnapprovedModules() {
-		return moduleDBController
-				.getUnapprovedModulesOverview();
-	}
+//	public List<Module> getUnapprovedModules() {
+//		return moduleDBController
+//				.getUnapprovedModulesOverview();
+//	}
 
 	public List<Module> getVersionsOfModule(long moduleID) {
 		return moduleDBController.getAllVersionsOfModule(moduleID);

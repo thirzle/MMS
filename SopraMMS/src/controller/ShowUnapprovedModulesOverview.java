@@ -32,23 +32,23 @@ public class ShowUnapprovedModulesOverview extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("ShowUnapprovedModulesOverview");
-		HttpSession session = request.getSession();
-		ModuleAdministration mAdmin = new ModuleAdministration();
-
-		List<Module> moduleList = mAdmin.getUnapprovedModules();
-
-		session.setAttribute("moduleListForModulemanager", moduleList);
-		session.setAttribute("content", "showModulesForModulemanager");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-
-		session.removeAttribute("fieldsTypeAEdit");
-		session.removeAttribute("fieldsTypeBEdit");
-		session.removeAttribute("fieldsTypeCEdit");
-		session.removeAttribute("fieldsTypeDEdit");
-		session.removeAttribute("fieldsTypeEEdit");
-	}
+//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		System.out.println("ShowUnapprovedModulesOverview");
+//		HttpSession session = request.getSession();
+//		ModuleAdministration mAdmin = new ModuleAdministration();
+//
+//		List<Module> moduleList = mAdmin.getUnapprovedModules();
+//
+//		session.setAttribute("moduleListForModulemanager", moduleList);
+//		session.setAttribute("content", "showModulesForModulemanager");
+//		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+//
+//		session.removeAttribute("fieldsTypeAEdit");
+//		session.removeAttribute("fieldsTypeBEdit");
+//		session.removeAttribute("fieldsTypeCEdit");
+//		session.removeAttribute("fieldsTypeDEdit");
+//		session.removeAttribute("fieldsTypeEEdit");
+//	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
