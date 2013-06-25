@@ -223,21 +223,23 @@ body {
 
 .nav li:hover {
 	cursor: pointer;
-	font-weight: normal;
+	color: #1E6289;
+	
 }
 
 .subNav li {
+	color: black;
 	list-style-image: url(../images/bullet2.bmp);
 }
 
 .subNav a:hover {
 	cursor: pointer;
-	font-weight: bold;
+	color: #1E6289;
 }
 
 .subNav li:hover {
 	cursor: pointer;
-	font-weight: bold;
+	color: #1E6289;
 }
 
 .nav ul {

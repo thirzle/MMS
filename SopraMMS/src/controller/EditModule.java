@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.ibm.icu.util.Calendar;
 
 import management.CourseEntry;
 import management.EffortEntry;
@@ -31,8 +34,6 @@ import user.UserAdministration;
 @WebServlet("/EditModule")
 public class EditModule extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-
 
 	// TODO Institut mit Aktuallisieren
 
@@ -72,21 +73,20 @@ public class EditModule extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		session = request.getSession();
-			if (request.getParameter("showVersionsButton") != null) {
-				RequestDispatcher dispatcher = getServletContext()
-						.getRequestDispatcher("/ShowVersionsOfModule");
-				dispatcher.forward(request, response);
-			} 
-			else if(request.getParameter("showButton") != null){
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ViewModule");
-				dispatcher.forward(request, response);
-			}	
-		
-			else {
+		if (request.getParameter("showVersionsButton") != null) {
+			RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/ShowVersionsOfModule");
+			dispatcher.forward(request, response);
+		} else if (request.getParameter("showButton") != null) {
+			RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/ViewModule");
+			dispatcher.forward(request, response);
+		}
+
+		else {
 
 			if (request.getParameter("selectedModuleToEdit") != null) {
 
-				
 				String selectedModule = request
 						.getParameter("selectedModuleToEdit");
 				String[] selectedModuleArray = selectedModule.split(" ");
@@ -97,21 +97,22 @@ public class EditModule extends HttpServlet {
 				firstRun = true;
 
 				module = mAdmin.getModuleByID(moduleID, moduleVersion);
-				System.out.println("(EditModule.java): Subject 1: "+module.getSubject());
+				System.out.println("(EditModule.java): Subject 1: "
+						+ module.getSubject());
 				entryList = mAdmin.sortModuleEntryListByOrder(module);
 
-				if(fieldsTypeA!=null)
-				fieldsTypeA.clear();
-				if(fieldsTypeB!=null)
-				fieldsTypeB.clear();
-				if(fieldsTypeC!=null)
-				fieldsTypeC.clear();
-				if(fieldsTypeD!=null)
-				fieldsTypeD.clear();
-				if(fieldsTypeE!=null)
-				fieldsTypeE.clear();
-				if(textualEntrys!=null)
-				textualEntrys.clear();
+				if (fieldsTypeA != null)
+					fieldsTypeA.clear();
+				if (fieldsTypeB != null)
+					fieldsTypeB.clear();
+				if (fieldsTypeC != null)
+					fieldsTypeC.clear();
+				if (fieldsTypeD != null)
+					fieldsTypeD.clear();
+				if (fieldsTypeE != null)
+					fieldsTypeE.clear();
+				if (textualEntrys != null)
+					textualEntrys.clear();
 
 				for (Entry entry : entryList) {
 					if (entry.getClass().equals(EffortEntry.class)) {
@@ -126,12 +127,12 @@ public class EditModule extends HttpServlet {
 						.println("(EditModule.java): Initialisierung abgeschlossen");
 
 			} else {
-					moduleID = (long) session
+				moduleID = (long) session
 						.getAttribute("selectedModuleIDToEdit");
-					moduleVersion = (int) session
+				moduleVersion = (int) session
 						.getAttribute("selectedVersionToEdit");
-					firstRun = false;
-				}
+				firstRun = false;
+			}
 
 			institute = module.getInstituteID();
 
@@ -383,12 +384,20 @@ public class EditModule extends HttpServlet {
 				java.sql.Date creationdate = (java.sql.Date) module
 						.getCreationDate();
 				int newVersion = module.getVersion() + 1;
-				System.out.println("(EditModule.java): Subject 2: "+module.getSubject());
-				
+				System.out.println("(EditModule.java): Subject 2: "
+						+ module.getSubject());
+
 				module.setEntryList(entryListForNewModule);
-				mAdmin.createModuleByModuleManager(module,
-						((User) session.getAttribute("user")).getLogin(),
-						module.getCreationDate(), newVersion);
+				if (request.getParameter("edit") == null) {
+					mAdmin.createModuleByModuleManager(module,
+							((User) session.getAttribute("user")).getLogin(),
+							module.getCreationDate(), newVersion);
+				} else {
+					module.setAuthor(((User) session.getAttribute("user")).getLogin());
+					java.util.Calendar cal = new GregorianCalendar();
+					module.setModificationDate(new java.sql.Date(cal.getTime().getTime()));
+					mAdmin.editModule(module);
+				}
 				// TODO pruefen ob Pflichfelder befuellt sind
 
 				// insert into History "Module changed"
@@ -396,11 +405,15 @@ public class EditModule extends HttpServlet {
 				Date currentTime = new Date();
 				String date = formatter.format(currentTime);
 				uAdmin.insertHistory(
-						((User) session.getAttribute("user")).getLogin(), date,
-						"Hat folgendes Modul ge&auml;ndert: " + module.getName());
+						((User) session.getAttribute("user")).getLogin(),
+						date,
+						"Hat folgendes Modul ge&auml;ndert: "
+								+ module.getName());
 
-				String infotext = "Das Modul '"+module.getName()+"' wurde zur Freigabe weitergeleitet.";
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+				String infotext = "Das Modul '" + module.getName()
+						+ "' wurde zur Freigabe weitergeleitet.";
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
+						+ infotext);
 			}
 
 		} else if (request.getParameter("deleteRow") != null) {
