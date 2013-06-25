@@ -383,9 +383,9 @@ public class User {
 
 
 	/**
-	 * Gets the user´s {@link #representative}.
+	 * Gets the user´s {@link #supervisor}.
 	 * 
-	 * @return {@link #representative}
+	 * @return {@link #supervisor}
 	 */
 	public String getSupervisor() {
 

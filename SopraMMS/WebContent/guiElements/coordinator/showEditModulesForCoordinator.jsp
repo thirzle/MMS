@@ -26,7 +26,6 @@
 			<th>Version</th>
 			<th>Autor</th>
 			<th>Fach</th>
-
 			<th>Erstellungsdatum</th>
 			<th>&Auml;nderungsdatum</th>
 			<th>Freigabestatus</th>

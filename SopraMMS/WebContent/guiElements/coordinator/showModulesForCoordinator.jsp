@@ -26,7 +26,6 @@
 			<th>Version</th>
 			<th>Autor</th>
 			<th>Fach</th>
-			<th>Modulhandbuch</th>
 			<th>Erstellungsdatum</th>
 			<th>&Auml;nderungsdatum</th>
 			<th>Freigabestatus</th>
@@ -49,7 +48,6 @@
 						}
 				%>
 			</td>
-			<td><%=module.getModuleManual()%></td>
 			<td><%=module.getCreationDate()%></td>
 			<td><%=module.getModificationDate()%></td>
 			<td>

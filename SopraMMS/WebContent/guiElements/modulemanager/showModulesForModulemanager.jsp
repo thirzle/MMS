@@ -1,15 +1,20 @@
-<link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
+<link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css"
+	media="print, projection, screen" />
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/tablemanager.js"></script>
-<%@page import="management.Module" import="management.Entry" import="java.util.LinkedList"%>
+<%@page import="management.Module" import="management.Entry"
+	import="java.util.LinkedList"%>
 <%
 	LinkedList<Module> moduleList = (LinkedList) session
-			.getAttribute("moduleListForModulemanager");
+	.getAttribute("moduleListForModulemanager");
 %>
 
 <h1>Modul bearbeiten</h1>
-<form action="/SopraMMS/EditModule" method="get">
-	<table class="tablesorter informationAboutModule" id="modulesForModulmanager">
+<form
+	action="/SopraMMS/EditModule<%if(request.getParameter("edit")!=null){out.println("?edit=true");}%>"
+	method="get">
+	<table class="tablesorter informationAboutModule"
+		id="modulesForModulmanager">
 		<thead>
 			<tr>
 				<th></th>
@@ -17,7 +22,6 @@
 				<th>Version</th>
 				<th>Autor</th>
 				<th>Fach</th>
-				<th>Modulhandbuch</th>
 				<th>Erstellungsdatum</th>
 				<th>&Auml;nderungsdatum</th>
 				<th>Freigabestatus</th>
@@ -36,15 +40,8 @@
 				<td>
 					<%
 						if (module.getSubject() != null) {
-								out.println(module.getSubject());
-							}
-					%>
-				</td>
-				<td>
-					<%
-						if (module.getModuleManual() != null) {
-								out.println(module.getModuleManual());
-							}
+											out.println(module.getSubject());
+										}
 					%>
 				</td>
 				<td><%=module.getCreationDate()%></td>
@@ -52,21 +49,21 @@
 				<td>
 					<%
 						boolean rejected = false;
-						if (module.isApproved()) {
-								out.println("Freigegeben");
-							} else {
-								for(Entry entry: module.getEntryList()){
-									if(entry.isRejected()){
-										rejected = true;
-										break;
-									}
-								}
-								if(rejected){
-									out.println("Abgelehnt");
-								} else {
-									out.println("Offen");
-								}
-							}
+									if (module.isApproved()) {
+											out.println("Freigegeben");
+										} else {
+											for(Entry entry: module.getEntryList()){
+												if(entry.isRejected()){
+													rejected = true;
+													break;
+												}
+											}
+											if(rejected){
+												out.println("Abgelehnt");
+											} else {
+												out.println("Offen");
+											}
+										}
 					%>
 				</td>
 			</tr>
@@ -75,18 +72,23 @@
 			%>
 		</tbody>
 	</table>
-	<%if(session.getAttribute("showVersions")!=null){
-		session.removeAttribute("showVersions");
+	<%
+		if(session.getAttribute("showVersions")!=null){
+			session.removeAttribute("showVersions");
 	%>
 	<button type="submit" name="showButton" value="showButton">Modul
 		betrachten</button>
-	<%} else { %>
+	<%
+		} else {
+	%>
 	<button type="submit" name="editButton" value="editButton">Modul
 		bearbeiten</button>
-	<button type="submit" name="showVersionsButton" value="showVersionsButton">Alle
-		Versionen anzeigen</button>
-	<%} %>
+	<button type="submit" name="showVersionsButton"
+		value="showVersionsButton">Alle Versionen anzeigen</button>
+	<%
+		}
+	%>
 </form>
 <script>
-manageTable($('#modulesForModulmanager'));
+	manageTable($('#modulesForModulmanager'));
 </script>

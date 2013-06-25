@@ -7,7 +7,6 @@
 <%
 	LinkedList<Module> moduleList = (LinkedList) session
 			.getAttribute("moduleListForEditor");
-	session.removeAttribute("moduleListForEditor");
 	//System.out.println("showModulesForEditor:");
 	//System.out.println("moduleList is null: "+(moduleList==null)+" moduleList is empty: "+moduleList.isEmpty());
 	for(Module module : moduleList){
@@ -27,7 +26,6 @@
 				<th>Titel</th>
 				<th>Autor</th>
 				<th>Fach</th>
-				<th>Modulhandbuch</th>
 				<th>Erstellungsdatum</th>
 				<th>&Auml;nderungsdatum</th>
 				<th>Freigabestatus</th>
@@ -46,13 +44,6 @@
 					<%
 						if (module.getSubject() != null) {
 								out.println(module.getSubject());
-							}
-					%>
-				</td>
-				<td>
-					<%
-						if (module.getModuleManual() != null) {
-								out.println(module.getModuleManual());
 							}
 					%>
 				</td>

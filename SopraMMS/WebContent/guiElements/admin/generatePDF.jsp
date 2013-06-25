@@ -18,19 +18,17 @@
 	<p>W&auml;hlen Sie einen Studiengang aus:</p>
 	<select name="course" id="course" style="width: 270px">
 		<%
-			for (int i = 0; i < courses.size(); i++) {
+			for (Course course : courses) {
 		%>
-		<option value=<%=i%>><%="Bachelor-"+courses.get(i).getDescription()%></option>
-		<option value=<%=courses.size()+i%>><%="Master-"+courses.get(i).getDescription()%></option>
+		<option value=<%=course.getDescription()+":"+course.getDegree()%>>
+		<%=course.getDescription()+" "+course.getDegree()%></option>
 		<%
 			}
 		%>
 	</select><br>
 	<p>Geben Sie die aktuelle Pr&uuml;fungsordnung ein:</p>
 	<input name="examRegulation" type="text" size="30" maxlength="30"/>
-	<br> <input type="submit" name="Submit" id="showEntries"
-	<%//TODO PDF automatisieren %>
-		value="Modulhandbuch erstellen" />
+	<br> <input type="submit" name="Submit" id="showEntries" value="Modulhandbuch erstellen" />
 </form>
 
 

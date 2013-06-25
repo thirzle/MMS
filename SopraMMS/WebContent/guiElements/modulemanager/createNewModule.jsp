@@ -19,6 +19,7 @@
 	.getAttribute("fieldsTypeD"));
 %>
 <h1>Neues Modul erstellen</h1>
+<p>Alle Felder die mit einem * markiert sind m&uuml;ssen ausgef&uuml;llt werden.</p>
 
 <form action="/SopraMMS/CreateModule" method="get">
 	<%
@@ -28,7 +29,7 @@
 	<div class='moduleEntry'>
 		<table>
 			<tr>
-				<td class='descriptionModule'><%=description[0]%></td>
+				<td class='descriptionModule'><%=description[0]+"*"%></td>
 				<td class='entryModule'><input class="mustNotBeEmpty" name='<%=i%>ContentA'
 					type="text" value="<%=description[1].trim()%>"></td>
 			</tr>
@@ -40,7 +41,7 @@
 	<div class='moduleEntry'>
 		<table>
 			<tr>
-				<td class='descriptionModule'>Zeitaufwand</td>
+				<td class='descriptionModule'>Zeitaufwand*</td>
 				<td class='entryModule'><div class='effortEntry'>
 						<table>
 							<tr>
@@ -77,7 +78,7 @@
 	<div class='moduleEntry'>
 		<table>
 			<tr>
-				<td class='descriptionModule'>Institut</td>
+				<td class='descriptionModule'>Institut*</td>
 				<td class='entryModule'>
 					<%
 						List<String[]> institutes = (List<String[]>) session
@@ -105,7 +106,7 @@
 	<div class='moduleEntry'>
 		<table>
 			<tr>
-				<td class='descriptionModule'><%=description[0]%></td>
+				<td class='descriptionModule'><%=description[0]+"*"%></td>
 				<td class='entryModule'><textarea class="mustNotBeEmpty" name='<%=i%>ContentB'><%=description[1].trim()%></textarea></td>
 			</tr>
 		</table>

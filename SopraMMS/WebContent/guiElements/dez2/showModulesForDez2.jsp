@@ -16,7 +16,6 @@
 				<th>Version</th>
 				<th>Autor</th>
 				<th>Fach</th>
-				<th>Modulhandbuch</th>
 				<th>Erstellungsdatum</th>
 				<th>&Auml;nderungsdatum</th>
 				<th>Freigabestatus</th>
@@ -36,13 +35,6 @@
 					<%
 						if (module.getSubject() != null) {
 								out.println(module.getSubject());
-							}
-					%>
-				</td>
-				<td>
-					<%
-						if (module.getModuleManual() != null) {
-								out.println(module.getModuleManual());
 							}
 					%>
 				</td>
