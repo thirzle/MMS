@@ -178,6 +178,7 @@ public class EditModule extends HttpServlet {
 		session.setAttribute("fieldsTypeCEdit", fieldsTypeC);
 		session.setAttribute("fieldsTypeDEdit", fieldsTypeD);
 		session.setAttribute("fieldsTypeEEdit", fieldsTypeE);
+		session.setAttribute("moduleEdit", module);
 		// session.setAttribute("selectedInstitute",
 		// mAdmin.getInstituteName(module.getInstituteID()));
 

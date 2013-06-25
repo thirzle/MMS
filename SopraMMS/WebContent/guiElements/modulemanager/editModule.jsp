@@ -1,3 +1,4 @@
+<%@page import="management.Module"%>
 <%@page import="management.ModuleAdministration"%>
 <%@page import="user.User"%>
 <%@page import="java.util.LinkedList"%>
@@ -8,6 +9,21 @@
 
 
 <h1>Modul bearbeiten</h1>
+
+
+<%
+	Module module = (Module)session.getAttribute("moduleEdit");
+	if(module!= null){
+%>
+<table class="informationAboutModule">
+	<tr>
+		<td>&Auml;nderungsdatum: <%=module.getModificationDate()%></td>
+		<td>Erstellungsdatum: <%=module.getCreationDate()%></td>
+		<td>Autor: <%=module.getModificationauthor()%>
+	</tr>
+</table>
+<%} %>
+
 
 <form action="/SopraMMS/EditModule" method="get">
 	<%

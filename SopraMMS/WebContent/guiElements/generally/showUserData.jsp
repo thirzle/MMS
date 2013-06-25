@@ -8,7 +8,7 @@ ArrayList<String> instituteList = (ArrayList<String>) session.getAttribute("inst
 <div>
 	<table>
 		<tr>
-			<td>Benutzername: </td>
+			<td style="width : 140px">Benutzername: </td>
 			<td><%=userArray[0]%></td>
 		</tr>
 		<tr>
