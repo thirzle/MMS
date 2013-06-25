@@ -87,20 +87,21 @@ try {
 		<table>
 			<tr>
 				<td class='descriptionModule'><%=entryText[0]%></td>
-				<td class='entryModule'>
+				<td class='entryModule'><notEditable>
 					<%
 						String[] text = entryText[1].split("\n");
 								for (String row : text) {
 									out.println(row + "<br/>");
 								}
 					%>
-				</td>
+				</td></notEditable>
 			</tr>
 		</table>
 	</div>
 	<%
 		}
 	%>
+	<br>
 	<button type="submit" value="addRow" name="createModule">Zeile
 		hinzuf&uuml;gen</button>
 	<button type="submit" value="saveModule" name="createModule">Modul

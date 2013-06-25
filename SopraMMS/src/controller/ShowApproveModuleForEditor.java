@@ -15,6 +15,9 @@ import javax.servlet.http.HttpSession;
 
 import com.ibm.icu.text.SimpleDateFormat;
 
+import mail.EmailApache;
+import mail.EmailMercury;
+import mail.EmailTelnet;
 import management.EffortEntry;
 import management.Entry;
 import management.Module;
@@ -50,7 +53,14 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 		ModuleAdministration mAdmin = new ModuleAdministration();
 		UserAdministration uAdmin = new UserAdministration();
 		LinkedList<Entry> entryList = new LinkedList<Entry>();
+		String infotext = "";
+		String moduleName = null;
+		String author = null;
+		String approvedEntries = "";
+		String refusedEntries = "";
+		StringBuilder builder = new StringBuilder();
 		boolean allEntriesApproved = true;
+		
 		// speichert das ausgeählte Modul + Version
 		String selectedModule = null;
 		// ModulID steht an Stelle 0, Versionsnummer an Stelle 1
@@ -95,8 +105,7 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 					// this entry as approved
 					if (request.getParameter("radioEntry" + entry.getTitle()) != null) {
 						if (request.getParameter(
-								"radioEntry" + entry.getTitle())
-								.equals("true")) {
+								"radioEntry" + entry.getTitle()).equals("true")) {
 							entry.setApprovalstatus(true);
 							entry.setRejectionstatus(false);
 						} else {
@@ -111,38 +120,75 @@ public class ShowApproveModuleForEditor extends HttpServlet {
 				}
 				// change entries of module
 				mAdmin.changeEntryListOfModule(approveModule);
+
+				// get title of module
+				for (Entry entry : entryList) {
+					if (entry.getTitle().equals("Titel")) {
+						moduleName = entry.getContent();
+					}
+				}
+				//get author and mail
+				author = approveModule.getModificationauthor();
+				String mailAuthor = new UserAdministration().getEmailOfUser(author);
+				System.out.println("allEntriesApproved: "+allEntriesApproved);
 				
-				// insert into History "Module approved"
+				
 				if (allEntriesApproved) {
+					infotext = "Das Modul "+moduleName+" wurde freigegeben!";
+					
+					// send mail to modulemanager
+					builder.append("Ihr Modul ");
+					builder.append(approveModule.getName());
+					builder.append(" wurde komplett freigegeben.");
+					EmailTelnet mail = new EmailTelnet();
+					mail.send_mail("Freigabe Ihres Moduls", mailAuthor, builder.toString());
+					
+					// insert into History "Module approved"
 					SimpleDateFormat formatter = new SimpleDateFormat(
 							"yyyy-MM-dd");
 					Date currentTime = new Date();
 					String date = formatter.format(currentTime);
-					String title = null;
-					for (Entry entry : entryList) {
-						if (entry.getTitle().equals("Kürzel")) {
-							title = entry.getContent();
-						}
-					}
+					
 					uAdmin.insertHistory(
 							((User) session.getAttribute("user")).getLogin(),
-							date, "Hat folgendes Modul freigegeben: " + title);
+							date, "Hat folgendes Modul freigegeben: " + moduleName);
 				}
-				
-				String infotext = "Die ausgewählten Einträge des Moduls wurden freigegeben.";
+				else{
+					for(Entry entry : approveModule.getEntryList()){
+						if(entry.isApproved()){
+							approvedEntries = approvedEntries + entry.getTitle()+"\n";							
+						}
+						else if(entry.isRejected()){
+							refusedEntries = refusedEntries + entry.getTitle()+"\n";
+						}
+					}
+					infotext = "Die Freigabestatus der Einträge des Moduls "+moduleName+" wurden gespeichert.";
+					//send mail to modulemanager
+					builder.append("Der Administrator hat folgende Einträge des Moduls ");
+					builder.append(moduleName);
+					builder.append(" freigegeben: \n");
+					builder.append(approvedEntries);
+					builder.append(".\n Diese Einträge wurden abgelehnt: \n");
+					builder.append(refusedEntries);
+					EmailTelnet mail = new EmailTelnet();
+					mail.send_mail("Freigabe Ihres Moduls", mailAuthor, builder.toString());
+				}
+
 				session.setAttribute("content", "home");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
+						+ infotext);
 			}
-		}
-		else{
+		} else {
 
 			session.setAttribute("entryListForEditor", entryList);
+			session.setAttribute("subjectApproveModule",
+					approveModule.getSubject());
 			session.setAttribute("instituteApproveModule",
 					mAdmin.getInstituteName(instituteID));
 
 			session.setAttribute("content", "showApproveModuleForEditor");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-			
+
 		}
 
 	}

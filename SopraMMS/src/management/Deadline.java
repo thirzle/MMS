@@ -137,11 +137,11 @@ public class Deadline {
 
 	int yearcurrent = calcurrent.get(Calendar.YEAR);
 	int monthcurrent = calcurrent.get(Calendar.MONTH);
-	int daycurrent = calcurrent.get(Calendar.DAY_OF_YEAR);
+	int daycurrent = calcurrent.get(Calendar.DAY_OF_MONTH);
 
 	int yearbeginremember = calbeginremember.get(Calendar.YEAR);
 	int monthbeginremember = calbeginremember.get(Calendar.MONTH);
-	int daybeginremember = calbeginremember.get(Calendar.DAY_OF_YEAR);
+	int daybeginremember = calbeginremember.get(Calendar.DAY_OF_MONTH);
 
 	return yearcurrent >= yearbeginremember && monthcurrent >= monthbeginremember && daycurrent >= daybeginremember;
     }

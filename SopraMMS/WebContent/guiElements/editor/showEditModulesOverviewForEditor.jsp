@@ -9,8 +9,8 @@
 	LinkedList<Module> moduleList = (LinkedList) session
 			.getAttribute("moduleListForEditor");
 	session.removeAttribute("moduleListForEditor");
-	System.out.println("showModulesForEditor:");
-	System.out.println("moduleList is null: "+(moduleList==null)+" moduleList is empty: "+moduleList.isEmpty());
+	//System.out.println("showModulesForEditor:");
+	//System.out.println("moduleList is null: "+(moduleList==null)+" moduleList is empty: "+moduleList.isEmpty());
 	for(Module module : moduleList){
 		System.out.println(module.getName());
 	}

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ibm.icu.text.SimpleDateFormat;
 
@@ -30,7 +31,6 @@ public class AppointRepresentative extends HttpServlet {
 	 */
 	public AppointRepresentative() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -39,22 +39,24 @@ public class AppointRepresentative extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		UserAdministration uAdmin = new UserAdministration();
 		String firstNameRep = request.getParameter("firstNameRep");
 		String lastNameRep = request.getParameter("lastNameRep");
 		String mailRep = request.getParameter("mailRep");
+		String infotext = " ";
 
 		if (firstNameRep.equals(null) || lastNameRep.equals(null)
 				|| mailRep.equals(null) || firstNameRep.equals("")
 				|| lastNameRep.equals("") || mailRep.equals("")) {
-			request.getSession().setAttribute("lessData", true);
-			request.getSession().setAttribute("content",
+			session.setAttribute("lessData", true);
+			session.setAttribute("content",
 					"appointRepresentative");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			return;
 		}
 
-		User user = (User) request.getSession().getAttribute("user");
+		User user = (User) session.getAttribute("user");
 		User userR = uAdmin.getUserByMail(mailRep);
 
 		// if representative doesn't exist
@@ -72,7 +74,8 @@ public class AppointRepresentative extends HttpServlet {
 			for (String[] strings : adminMails) {
 				mail.send_mail("Neuer Stellvertreter", strings[2], content);
 			}
-			request.getSession().setAttribute("content", "applyRepresentative");
+			session.setAttribute("content", "home");
+			infotext = "Ihr Stellvertreter wurde beantragt. Sie bekommen eine Nachricht sobald der Administrator diesen im System registriert hat.";
 			
 			// insert into History "Representative appointed"
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -84,19 +87,29 @@ public class AppointRepresentative extends HttpServlet {
 		else {
 			if (!userR.getFirstName().equals(firstNameRep)
 					|| !userR.getLastName().equals(lastNameRep)) {
-				request.getSession().setAttribute("wrongData", true);
-				request.getSession().setAttribute("content",
+				session.setAttribute("wrongData", "wrongName");
+				session.setAttribute("content",
 						"appointRepresentative");
 			}
 //			you can't appoint yourself as representative
-			else if(userR.getFirstName().equals(user.getFirstName()) && userR.getFirstName().equals(user.getLastName())){
-				
+			else if(userR.getFirstName().equals(user.getFirstName()) && userR.getLastName().equals(user.getLastName())){
+				session.setAttribute("wrongData", "yourselfRep");
+				session.setAttribute("content", "appointRepresentative");
 			}
 			
 			else {
 				uAdmin.changeRepresentative(user, userR.getLogin());
 				request.getSession().setAttribute("content",
-						"createdRepresentative");
+						"home");
+				infotext = "Ihr Stellvertreter wurde aktualisiert!"; 
+				
+				//send e-mail to representative
+				String content = user.getFirstName() + " " + user.getLastName()
+						+ " hat Sie" + " zu ihrem/seinem Stellvertreter ernannt";
+				EmailTelnet mail = new EmailTelnet();
+				mail.send_mail("Neuer Stellvertreter", mailRep, content);
+				
+				
 				// insert into History "Representative created"
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				Date currentTime = new Date();
@@ -105,7 +118,7 @@ public class AppointRepresentative extends HttpServlet {
 			}
 		}
 		request.getSession().setAttribute("generallyMenu", "open");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 	}
 
 	/**
@@ -114,6 +127,5 @@ public class AppointRepresentative extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 }

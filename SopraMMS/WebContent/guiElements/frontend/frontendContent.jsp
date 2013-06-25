@@ -1,5 +1,24 @@
 <%@page import="java.util.List"%>
 <%@page import="user.UserAdministration"%>
+
+<%
+	String infoText = request.getParameter("infotext");
+	if (infoText != null) {
+%>
+<div class="infoBox"><%=infoText%></div>
+<%
+	}
+%>
+
+<%
+	String infoError = request.getParameter("errortext");
+	if (infoError != null) {
+%>
+<div class="errorBox"><%=infoError%></div>
+<%
+	}
+%>
+
 <h1>Home Content</h1>
 
 <h2>Modul Management System</h2>

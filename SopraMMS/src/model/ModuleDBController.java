@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +19,7 @@ import management.Entry;
 import management.Module;
 import management.SelfStudy;
 import management.TextualEntry;
-//TODO Bitte alle Kommentare prüfen und Autoren eintragen(degree?)
+//TODO Bitte alle Kommentare prï¿½fen und Autoren eintragen(degree?)
 /**
  * The class ModuleDBController provides a connection to the database.
  * <p>
@@ -28,10 +30,10 @@ import management.TextualEntry;
  */
 public class ModuleDBController {
 
-	// local database
-	// private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
-	// private static final String USER = "root";
-	// private static final String PASSWORD = "";
+	 //local database
+//	 private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
+//	 private static final String USER = "root";
+//	 private static final String PASSWORD = "";
 
 	// db4free.net database
 	private static final String URL = "jdbc:mysql://db4free.net:3306/sopramms";
@@ -208,6 +210,8 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't get entries of module: "
 					+ module.getName());
+		} finally {
+			close(connection);
 		}
 		if (courses != null)
 			module.addCourseEntry(courses);
@@ -219,6 +223,125 @@ public class ModuleDBController {
 	}
 
 	
+	/**
+	 * Loads all entries of a specified module.
+	 * <p>
+	 * Gets a module and with his "moduleID" and his "module version"
+	 * it gets the appropriate entries the module consists of.
+	 * These are returned in the form of a {@link Module#entryList}.
+	 * 
+	 * @param module		The name of the Module.
+	 * @param connection	An established Connection.
+	 * @return				The entryList of the Module.
+	 * @see Module
+	 * @see Entry
+	 * @see Course
+	 * @see CourseEntry
+	 * @see SelfStudy
+	 * @see TextualEntry
+	 */
+	public List<Entry> getEntryListOfModule(Module module, Connection connection) {
+		CourseEntry courses = null;
+		List<TextualEntry> textual = new LinkedList<TextualEntry>();
+		EffortEntry effort = null;
+		List<SelfStudy> selfstudy = new LinkedList<SelfStudy>();
+		query = "SELECT ce.courseID, ce.degree, ce.obligatory, c.description, e.* FROM courseentry AS ce JOIN entry "
+				+ "AS e on ce.entryID = e.entryID JOIN course AS c ON " +
+				"ce.courseID = c.courseID AND ce.degree = c.degree"
+				+ " WHERE e.moduleID = ? AND e.moduleversion = ?";
+		try {
+			// load courses of module
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, module.getModuleID());
+			pStatement.setInt(2, module.getVersion());
+			ResultSet resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				courses = new CourseEntry(resultSet.getDate("date")
+						.toString(), resultSet.getBoolean("classification"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getBoolean("declined"),
+						resultSet.getLong("entryID"),
+						resultSet.getString("title"),
+						resultSet.getInt("order"),
+						resultSet.getString("courseID"),
+						resultSet.getString("description"),
+						resultSet.getString("degree"),
+						resultSet.getBoolean("obligatory"));
+			}
+			while (resultSet.next()) {
+				courses.addCourse(resultSet.getString("courseID"),
+						resultSet.getString("description"), 
+						resultSet.getString("degree"),
+						resultSet.getBoolean("obligatory"));
+			}
+			// load textual entries of module
+			query = "SELECT e.*, t.text " + "FROM entry AS e "
+					+ "JOIN textualentry AS t ON " + "e.entryID = t.entryID "
+					+ "WHERE e.moduleID = ? AND e.moduleversion = ?";
+
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, module.getModuleID());
+			pStatement.setInt(2, module.getVersion());
+			resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				textual.add(new TextualEntry(resultSet.getDate("date")
+						.toString(), resultSet.getBoolean("classification"),
+						resultSet.getBoolean("approvalstatus"), resultSet
+								.getBoolean("declined"), resultSet
+								.getLong("entryID"), resultSet
+								.getString("title"), resultSet.getInt("order"),
+						resultSet.getString("text")));
+			}
+
+			query = "SELECT e.*,  ef.presencetime "
+					+ "FROM entry AS e JOIN effortentry AS ef ON e.entryID = ef.entryID "
+					+ "WHERE e.moduleID = ? AND e.moduleversion = ?";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, module.getModuleID());
+			pStatement.setInt(2, module.getVersion());
+			resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				effort = new EffortEntry(resultSet.getDate("date").toString(),
+						resultSet.getBoolean("classification"),
+						resultSet.getBoolean("approvalstatus"),
+						resultSet.getBoolean("declined"),
+						resultSet.getLong("entryID"),
+						resultSet.getString("title"),
+						resultSet.getInt("order"),
+						resultSet.getInt("presencetime"));
+
+				// get selfstudies of effort entry
+				query = "SELECT s.selfstudyID, s.time, s.title "
+						+ "FROM entry AS e JOIN selfstudy AS s ON e.entryID = s.entryID "
+						+ "WHERE e.moduleID = ? AND e.moduleversion = ?";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(1, module.getModuleID());
+				pStatement.setInt(2, module.getVersion());
+				resultSet = pStatement.executeQuery();
+				while (resultSet.next()) {
+					selfstudy.add(new SelfStudy(resultSet
+							.getLong("selfstudyID"), resultSet.getInt("time"),
+							resultSet.getString("title")));
+				}
+				effort.setSelfStudyList(selfstudy);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get entries of module: "
+					+ module.getName());
+		}
+		if (courses != null)
+			module.addCourseEntry(courses);
+		if (!textual.isEmpty())
+			module.addTextualEntryList(textual);
+		if (effort != null)
+			module.addEffortEntry(effort);
+		return module.getEntryList();
+	}
+
+	
+	
 	// tested: check
 	/**
 	 * Loads all available modules by a chosen institute.
@@ -229,6 +352,7 @@ public class ModuleDBController {
 	 * @return				List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getModulesByInstitute(String institute) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
@@ -249,7 +373,7 @@ public class ModuleDBController {
 								.getString("modificationauthor")));
 			}
 			for (Module module : moduleList) {
-				module.setEntryList(getEntryListOfModule(module));
+				module.setEntryList(getEntryListOfModule(module, connection));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -275,17 +399,18 @@ public class ModuleDBController {
 	public List<Module> getModulesByCourse(String course, String degree) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
-		LinkedList<Long> temp = new LinkedList<Long>();
-		Module module = null;
-		query = "SELECT m.* FROM modulecourseaffiliation AS ma JOIN module AS m "
-				+ "ON ma.moduleID = m.moduleID WHERE ma.courseID = ? AND ma.degree = ?";
+		query = "SELECT m.* FROM latestmodule AS l JOIN module AS m "
+				+ "ON l.moduleID = m.moduleID AND l.version = m.version " +
+				"JOIN entry AS e ON m.moduleID = e.moduleID " +
+				"AND m.version = e.moduleversion JOIN courseentry AS ce " +
+				"ON e.entryID = ce.entryID WHERE ce.courseID = ? AND ce.degree = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, course);
 			pStatement.setString(2, degree);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
-				module = new Module(resultSet.getLong("moduleID"),
+				moduleList.add(new Module(resultSet.getLong("moduleID"),
 						resultSet.getInt("version"),
 						resultSet.getString("name"),
 						resultSet.getDate("creationdate"),
@@ -293,21 +418,11 @@ public class ModuleDBController {
 						resultSet.getBoolean("approvalstatus"),
 						resultSet.getString("instituteID"),
 						resultSet.getString("subject"),
-						resultSet.getString("modificationauthor"));
-				// check for duplicate
-				if (moduleList.isEmpty()) {
-					moduleList.add(module);
-					temp.add(module.getModuleID());
-				} else {
-					if (!temp.contains(module.getModuleID())) {
-						moduleList.add(module);
-						temp.add(module.getModuleID());
-					}
-				}
+						resultSet.getString("modificationauthor")));
 			}
 
-			for (Module module1 : moduleList) {
-				module1.setEntryList(getEntryListOfModule(module1));
+			for (Module module : moduleList) {
+				module.setEntryList(getEntryListOfModule(module, connection));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -527,6 +642,42 @@ public class ModuleDBController {
 		}
 		return versions;
 	}
+	
+	/**
+	 * Loads all available modules.
+	 * <p>
+	 * Gets all modules from the database and stores them in a {@link List} of modules.
+	 * 
+	 * @return		List of modules.
+	 * @see Module
+	 */
+	public List<Module> getAllModules() {
+		List<Module> moduleList = new LinkedList<Module>();
+		Connection connection = connect();
+		query = "SELECT * FROM module";
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				moduleList.add(new Module(resultSet.getLong("moduleID"),
+						resultSet.getInt("version"), resultSet
+								.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
+								.getDate("modificationdate"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID"), resultSet
+								.getString("subject"), resultSet
+								.getString("modificationauthor")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get modules.");
+		} finally {
+			close(connection);
+		}
+		return moduleList;
+	}
+	
 
 	// tested: check
 	/**
@@ -557,7 +708,7 @@ public class ModuleDBController {
 						resultSet.getString("subject"),
 						resultSet.getString("modificationauthor"));
 			}
-			module.setEntryList(getEntryListOfModule(module));
+			module.setEntryList(getEntryListOfModule(module, connection));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get module: " + moduleID);
@@ -573,6 +724,7 @@ public class ModuleDBController {
 	 * @param moduleID		The unique ID of the module.
 	 * @return 				A module object.
 	 */
+	@Deprecated
 	public Module getLatestModule(long moduleID) {
 		Connection connection = connect();
 		Module module = null;
@@ -603,7 +755,7 @@ public class ModuleDBController {
 							resultSet.getString("modificationauthor"));
 				}
 			}
-			module.setEntryList(getEntryListOfModule(module));
+			module.setEntryList(getEntryListOfModule(module, connection));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get module: " + moduleID);
@@ -621,6 +773,7 @@ public class ModuleDBController {
 	 * @return		List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getModifiedModules() {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
@@ -648,7 +801,7 @@ public class ModuleDBController {
 				}
 			}
 			for (Module modules : moduleList) {
-				modules.setEntryList(getEntryListOfModule(modules));
+				modules.setEntryList(getEntryListOfModule(modules, connection));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -667,6 +820,7 @@ public class ModuleDBController {
 	 * @return 					List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getModifiedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
@@ -695,7 +849,7 @@ public class ModuleDBController {
 				}
 			}
 			for (Module modules : moduleList) {
-				modules.setEntryList(getEntryListOfModule(modules));
+				modules.setEntryList(getEntryListOfModule(modules, connection));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -715,6 +869,7 @@ public class ModuleDBController {
 	 * @return 				List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getModifiedModulesByAuthor(String author) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
@@ -743,7 +898,7 @@ public class ModuleDBController {
 				}
 			}
 			for (Module modules : moduleList) {
-				modules.setEntryList(getEntryListOfModule(modules));
+				modules.setEntryList(getEntryListOfModule(modules, connection));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -763,6 +918,7 @@ public class ModuleDBController {
 	 * @return		List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getRejectedModules() {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
@@ -790,7 +946,7 @@ public class ModuleDBController {
 				}
 			}
 			for (Module modules : moduleList) {
-				modules.setEntryList(getEntryListOfModule(modules));
+				modules.setEntryList(getEntryListOfModule(modules, connection));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -809,6 +965,7 @@ public class ModuleDBController {
 	 * @return 					List of modules.
 	 * @see Module
 	 */
+	@Deprecated
 	public List<Module> getRejectedModulesByInstitute(String instituteID) {
 		Connection connection = connect();
 		LinkedList<Module> moduleList = new LinkedList<Module>();
@@ -838,7 +995,7 @@ public class ModuleDBController {
 				}
 			}
 			for (Module modules : moduleList) {
-				modules.setEntryList(getEntryListOfModule(modules));
+				modules.setEntryList(getEntryListOfModule(modules, connection));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -858,15 +1015,14 @@ public class ModuleDBController {
 	 * @return 				List of modules.
 	 * @see Module
 	 */
-	public List<Module> getUnapprovedModulesOverviewByAuthor(String author) {
+	@Deprecated
+	public List<Module> getUnapprovedModulesOverview() {
 			Connection connection = connect();
 			LinkedList<Module> moduleList = new LinkedList<Module>();
-			query = "SELECT m.* FROM module AS m WHERE modificationauthor = ? " +
-					"AND m.approvalstatus = FALSE";
+			query = "SELECT m.* FROM module AS m WHERE m.approvalstatus = FALSE";
 			try {
-				pStatement = connection.prepareStatement(query);
-				pStatement.setString(1, author);
-				ResultSet resultSet = pStatement.executeQuery();
+				statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(query);
 				while (resultSet.next()) {
 					moduleList.add(new Module(resultSet.getLong("moduleID"),
 							resultSet.getInt("version"),
@@ -878,104 +1034,104 @@ public class ModuleDBController {
 							resultSet.getString("subject"),
 							resultSet.getString("modificationauthor")));
 				}
-				moduleList.addAll(getUnapprovedModulesOverviewBySupervisor(author, connection));
-				moduleList.addAll(getUnapprovedModulesOverviewByRepresentative(author, connection));
+//				moduleList.addAll(getUnapprovedModulesOverviewBySupervisor(author, connection));
+//				moduleList.addAll(getUnapprovedModulesOverviewByRepresentative(author, connection));
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("Couldn't get unapproved modules by author: " + author);
+				System.out.println("Couldn't get unapproved modules");
 			} finally {
 				close(connection);
 			}
 			return moduleList;
 	}
 	
-	/**
-	 * Loads unapproved modules by the loginname of an supervisor.
-	 * 
-	 * @param loginname		The loginname of the supervisor.
-	 * @param connection	Connection to a database.
-	 * @return		 		List of modules.
-	 * @see Module
-	 */
-	public List<Module> getUnapprovedModulesOverviewBySupervisor(String loginname, Connection connection){
-		query = "SELECT supervisor FROM supervisor WHERE username = ?";
-		String supervisor = "no supervisor found";
-		LinkedList<Module> moduleList = new LinkedList<Module>();
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, loginname);
-			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
-				supervisor = resultSet.getString("supervisor");
-				query = "SELECT m.* FROM module AS m WHERE modificationauthor = ? " +
-						"AND m.approvalstatus = FALSE";
-				pStatement = connection.prepareStatement(query);
-				pStatement.setString(1, supervisor);
-				resultSet = pStatement.executeQuery();
-				while (resultSet.next()) {
-					moduleList.add(new Module(resultSet.getLong("moduleID"),
-							resultSet.getInt("version"),
-							resultSet.getString("name"),
-							resultSet.getDate("creationdate"),
-							resultSet.getDate("modificationdate"),
-							resultSet.getBoolean("approvalstatus"),
-							resultSet.getString("instituteID"),
-							resultSet.getString("subject"),
-							resultSet.getString("modificationauthor")));
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();	
-			System.out.println("Couldn't get unapproved modules by supervisor: " + supervisor);
-		}
-			return moduleList;
-	}
-	
-	
-	/**
-	 * Loads unapproved modules by the loginname of an representative.
-	 * 
-	 * @param loginname		The loginname of the representative.
-	 * @param connection	Connection to a database.
-	 * @return 				List of modules.
-	 * @see Module
-	 */
-	public List<Module> getUnapprovedModulesOverviewByRepresentative(String loginname, Connection connection){
-		query = "SELECT representative FROM user WHERE loginname = ?";
-		String representative = "no representative found";
-		LinkedList<Module> moduleList = new LinkedList<Module>();
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, loginname);
-			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
-				representative = resultSet.getString("representative");
-				query = "SELECT m.* FROM module AS m WHERE modificationauthor = ? " +
-						"AND m.approvalstatus = FALSE";
-				pStatement = connection.prepareStatement(query);
-				pStatement.setString(1, representative);
-				resultSet = pStatement.executeQuery();
-				while (resultSet.next()) {
-					moduleList.add(new Module(resultSet.getLong("moduleID"),
-							resultSet.getInt("version"),
-							resultSet.getString("name"),
-							resultSet.getDate("creationdate"),
-							resultSet.getDate("modificationdate"),
-							resultSet.getBoolean("approvalstatus"),
-							resultSet.getString("instituteID"),
-							resultSet.getString("subject"),
-							resultSet.getString("modificationauthor")));
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();	
-			System.out.println("Couldn't get unapproved modules by representative: " + representative);
-		}
-			return moduleList;
-	}
-	
+//	/**
+//	 * Loads unapproved modules by the loginname of an supervisor.
+//	 * 
+//	 * @param loginname		The loginname of the supervisor.
+//	 * @param connection	Connection to a database.
+//	 * @return		 		List of modules.
+//	 * @see Module
+//	 */
+//	public List<Module> getUnapprovedModulesOverviewBySupervisor(String loginname, Connection connection){
+//		query = "SELECT supervisor FROM supervisor WHERE username = ?";
+//		String supervisor = "no supervisor found";
+//		LinkedList<Module> moduleList = new LinkedList<Module>();
+//		try {
+//			pStatement = connection.prepareStatement(query);
+//			pStatement.setString(1, loginname);
+//			ResultSet resultSet = pStatement.executeQuery();
+//			if(resultSet.next()){
+//				supervisor = resultSet.getString("supervisor");
+//				query = "SELECT m.* FROM module AS m WHERE modificationauthor = ? " +
+//						"AND m.approvalstatus = FALSE";
+//				pStatement = connection.prepareStatement(query);
+//				pStatement.setString(1, supervisor);
+//				resultSet = pStatement.executeQuery();
+//				while (resultSet.next()) {
+//					moduleList.add(new Module(resultSet.getLong("moduleID"),
+//							resultSet.getInt("version"),
+//							resultSet.getString("name"),
+//							resultSet.getDate("creationdate"),
+//							resultSet.getDate("modificationdate"),
+//							resultSet.getBoolean("approvalstatus"),
+//							resultSet.getString("instituteID"),
+//							resultSet.getString("subject"),
+//							resultSet.getString("modificationauthor")));
+//				}
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();	
+//			System.out.println("Couldn't get unapproved modules by supervisor: " + supervisor);
+//		}
+//			return moduleList;
+//	}
+//	
+//	
+//	/**
+//	 * Loads unapproved modules by the loginname of an representative.
+//	 * 
+//	 * @param loginname		The loginname of the representative.
+//	 * @param connection	Connection to a database.
+//	 * @return 				List of modules.
+//	 * @see Module
+//	 */
+//	public List<Module> getUnapprovedModulesOverviewByRepresentative(String loginname, Connection connection){
+//		query = "SELECT representative FROM user WHERE loginname = ?";
+//		String representative = "no representative found";
+//		LinkedList<Module> moduleList = new LinkedList<Module>();
+//		try {
+//			pStatement = connection.prepareStatement(query);
+//			pStatement.setString(1, loginname);
+//			ResultSet resultSet = pStatement.executeQuery();
+//			if(resultSet.next()){
+//				representative = resultSet.getString("representative");
+//				query = "SELECT m.* FROM module AS m WHERE modificationauthor = ? " +
+//						"AND m.approvalstatus = FALSE";
+//				pStatement = connection.prepareStatement(query);
+//				pStatement.setString(1, representative);
+//				resultSet = pStatement.executeQuery();
+//				while (resultSet.next()) {
+//					moduleList.add(new Module(resultSet.getLong("moduleID"),
+//							resultSet.getInt("version"),
+//							resultSet.getString("name"),
+//							resultSet.getDate("creationdate"),
+//							resultSet.getDate("modificationdate"),
+//							resultSet.getBoolean("approvalstatus"),
+//							resultSet.getString("instituteID"),
+//							resultSet.getString("subject"),
+//							resultSet.getString("modificationauthor")));
+//				}
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();	
+//			System.out.println("Couldn't get unapproved modules by representative: " + representative);
+//		}
+//			return moduleList;
+//	}
+//	
 
 	/**
 	 * Gets the overview of unfinished modules for the coordinator.
@@ -1017,25 +1173,26 @@ public class ModuleDBController {
 	 * @return 					List of modules.
 	 * @see Module
 	 */
-	public List<Module> getModuleOverviewForEditor(String instituteID) {
+	public List<Module> getModuleOverviewForEditor(List<String> instituteList) {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT * FROM module WHERE approvalstatus = 0 AND subject IS NOT NULL AND instituteID = ?";
+		query = "SELECT * FROM module WHERE approvalstatus = FALSE AND subject IS NOT NULL AND instituteID = ?";
 		try {
 			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, instituteID);
-			ResultSet resultSet = pStatement.executeQuery();
-			while (resultSet.next()) {
-				moduleList.add(new Module(resultSet.getLong("moduleID"),
-						resultSet.getInt("version"), resultSet
-								.getString("name"), resultSet
-								.getDate("creationDate"), resultSet
-								.getDate("modificationDate"), resultSet
-								.getBoolean("approvalstatus"), resultSet
-								.getString("instituteID"), resultSet
-								.getString("subject"), resultSet
-								.getString("modificationauthor")));
-			}
+			for (String instituteID : instituteList) {
+				pStatement.setString(1, instituteID);
+				ResultSet resultSet = pStatement.executeQuery();
+				while (resultSet.next()) {
+					moduleList.add(new Module(resultSet.getLong("moduleID"),
+							resultSet.getInt("version"), resultSet
+									.getString("name"), resultSet
+									.getDate("creationDate"), resultSet
+									.getDate("modificationDate"), resultSet
+									.getBoolean("approvalstatus"), resultSet
+									.getString("instituteID"), resultSet
+									.getString("subject"), resultSet
+									.getString("modificationauthor")));
+				}}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("couldn't get modulesoverview for editor");
@@ -1379,25 +1536,8 @@ public class ModuleDBController {
 	 * @return 				<code>true</code> If the module has been deleted, <code>false</code> otherwise.
 	 * @see Module
 	 */
-	public boolean deleteModule(Module module) {
-		Connection connection = connect();
-		query = "DELETE FROM module WHERE moduleID = ?";
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setLong(1, module.getModuleID());
-			pStatement.execute();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Couldn't delete module: "
-					+ module.getModuleID());
-			return false;
-		} finally {
-			close(connection);
-		}
-	}
 	
-	//TODO Vervollständigen
+	//TODO Vervollstï¿½ndigen
 	/**
 	 * Gets a list of PDFs which belong to a course.
 	 * 
@@ -1480,6 +1620,7 @@ public class ModuleDBController {
 	 * @see Module
 	 * @see ModuleAdministration
 	 */
+	@Deprecated
 	public List<Module> getModuleManualbyCourse(String courseID, String degree,
 			String versionnumber) {
 		Connection connection = connect();
@@ -1504,7 +1645,7 @@ public class ModuleDBController {
 								.getString("modificationauthor")));
 			}
 			for (Module module : modulemanual) {
-				module.setEntryList(getEntryListOfModule(module));
+				module.setEntryList(getEntryListOfModule(module, connection));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1551,6 +1692,7 @@ public class ModuleDBController {
 	 * @see Course
 	 * @see Module
 	 */
+	@Deprecated
 	public String getLastModificationDate(String courseID, String degree) {
 		Connection connection = connect();
 		query = "SELECT MAX(module.modificationdate) FROM module "
@@ -1582,6 +1724,7 @@ public class ModuleDBController {
 	 * @see Course
 	 * @see Module
 	 */
+	@Deprecated
 	public String getLastModificationAuthor(String courseID, String degree) {
 		Connection connection = connect();
 		query = "SELECT m.modificationauthor, MAX(m.modificationdate) FROM module AS m "
@@ -1618,6 +1761,7 @@ public class ModuleDBController {
 	 * @see Module
 	 * @see ModuleAdministration
 	 */
+	@Deprecated
 	public String generateLatestVersionOfModuleManual(String courseID,
 			String degree) {
 		Connection connection = connect();
@@ -1894,6 +2038,7 @@ public class ModuleDBController {
 	 * @see Module
 	 * @see ModuleAdministration
 	 */
+	@Deprecated
 	public boolean createModuleMaunal(String version, String courseID,
 			String degree, String creationdate, String modificationdate,
 			boolean approvalstatus, int examregulation) {
@@ -1927,6 +2072,7 @@ public class ModuleDBController {
 	 * @see Module
 	 * @see ModuleAdministration
 	 */
+	@Deprecated
 	public String getModuleManualByModule(long moduleID) {
 		Connection connection = connect();
 		query = "SELECT modulemanual FROM module WHERE moduleID = ?";
@@ -2069,10 +2215,10 @@ public class ModuleDBController {
 	
 	
 	/**
-	 * Deactivates a module.
+	 * Unapproves a module.
 	 * 
 	 * @param module		Module object.
-	 * @return				<code>true</code> if the entries were deactivated <code>false</code> otherwise.
+	 * @return				<code>true</code> if the module was deactivated <code>false</code> otherwise.
 	 * @see Module
 	 */
 	public boolean deactivateModule(Module module) {
@@ -2093,6 +2239,42 @@ public class ModuleDBController {
 		}
 	}
 	
+	/**
+	 * Deletes an existing module.
+	 * 
+	 * @param moduleID		The unique ID of the module.
+	 * @param version		The modules version
+	 * @return 				<code>true</code> If the module has been deleted, <code>false</code> otherwise.
+	 * @see Module
+	 */
+	public boolean deleteModule(long moduleID, int version) {
+		Connection connection = connect();
+		query = "DELETE FROM module WHERE moduleID = ? AND version = ?";
+		try {
+			connection.setAutoCommit(false);
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, moduleID);
+			pStatement.setInt(2, version);
+			pStatement.execute();
+			
+			
+			query = "DELETE FROM entry WHERE moduleID = ? AND moduleversion = ?";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, moduleID);
+			pStatement.setInt(2, version);
+			pStatement.execute();
+			connection.commit();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't deletet module "+moduleID+"-"+version);
+			rollback(connection);
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
 
 	/**
 	 * Clears the content of the database.
@@ -2100,11 +2282,12 @@ public class ModuleDBController {
 	 * @return		<code>true</code> if the content was cleared <code>false</code> otherwise.
 	 */
 	public boolean clearDatabase() {
-		java.util.Date today = new java.util.Date();
-		Date limit = new Date(today.getYear() - 2, today.getMonth(),
-				today.getDate());
+		Calendar cal = new GregorianCalendar();
+		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR)-2);
+		Date limit = new Date(cal.getTime().getTime());
 		Connection connection = connect();
-		query = "SELECT moduleID, version FROM module WHERE modificationdate < ? AND (moduleID, version) NOT IN (SELECT * FROM latestmodule)";
+		query = "SELECT moduleID, version FROM module WHERE modificationdate < ? AND " +
+				"(moduleID, version) NOT IN (SELECT * FROM latestmodule)";
 		try {
 			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);

@@ -1,7 +1,9 @@
 package testsuite;
 
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -178,10 +180,11 @@ public class DBtest {
 //		System.out.println("done");+
 
 		//System.out.println(mController.clearDatabase());
-		Deadline deadline = uController.getDeadlineByFaculty("in");
-		String date = new SimpleDateFormat("dd.MM.yyyy").format(deadline.getDeadline());
-		System.out.println(date);
-		
+		List<Module> module = mController.getModulesByCourse("inf", "Master");
+		Calendar cal = new GregorianCalendar();
+		cal.set(2013, 6, 24);
+		System.out.println(cal.getTime());
+
 
 	}
 

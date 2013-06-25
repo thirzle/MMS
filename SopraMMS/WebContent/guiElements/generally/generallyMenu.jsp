@@ -41,6 +41,9 @@
 				<form id="showR" action="/SopraMMS/ShowRepresentative" method="get">
 					<li class=showRepresentative onclick="showR.submit()">Stellvertreter</li>
 				</form>
+				<form id="showUserData" action="/SopraMMS/ShowUserData" method="get">
+					<li class=showData onclick="showUserData.submit()">Benutzerdaten einsehen</li>				
+				</form>
 			</ul>
 		</div>
 <div class="headerNavMessages">

@@ -36,11 +36,14 @@ public class SendNewPassword extends HttpServlet {
 		UserAdministration ua = new UserAdministration();
 		try {
 			ua.sendNewPasswordLink(email);
+			String infotext= "Es wurde eine Mail an Ihre E-Mail Adresse versand.";
 			session.setAttribute("content", "start");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?infotext="+infotext);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("SopraMMS/guiElements/error.jsp");
+			String errortext= "Die angegebene E-Mail Adresse ist im System nicht hinterlegt.";
+			session.setAttribute("content", "start");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?errortext="+errortext);
 		}
 	}
 

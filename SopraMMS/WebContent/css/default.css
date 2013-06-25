@@ -122,6 +122,12 @@ body {
 	color: #666666;
 }
 
+.errorBox{
+	margin-top: 20px;
+	font-weight: bold;
+	color: #a52a2a;
+}
+
 .importantBox {
 	text-align: center;
 	width: 490px;

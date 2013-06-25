@@ -5,7 +5,7 @@
 <%@page import="management.Module" import="java.util.LinkedList"%>
 <%
 	LinkedList<Module> moduleList = (LinkedList) session
-			.getAttribute("unfinishedModuleListForCoordinator");
+			.getAttribute("editModuleListForCoordinator");
 %>
 
 <h1>Studieng&auml;nge und F&auml;cher hinzuf&uuml;gen</h1>
@@ -18,7 +18,7 @@
 	}
 %>
 
-<form action="/SopraMMS/ShowModuleOverviewForCoordinator" method="get">
+<form action="/SopraMMS/ShowEditModuleOverviewForCoordinator" method="get">
 	<table class='tablesorter' id="modulesForCoordinator">
 	<thead>
 		<tr>
@@ -27,7 +27,7 @@
 			<th>Version</th>
 			<th>Autor</th>
 			<th>Fach</th>
-			<th>Modulhandbuch</th>
+
 			<th>Erstellungsdatum</th>
 			<th>&Auml;nderungsdatum</th>
 			<th>Freigabestatus</th>
@@ -50,7 +50,7 @@
 						}
 				%>
 			</td>
-			<td><%=module.getModuleManual()%></td>
+
 			<td><%=module.getCreationDate()%></td>
 			<td><%=module.getModificationDate()%></td>
 			<td>
@@ -68,8 +68,7 @@
 		%>
 		</tbody>
 	</table>
-	<button name="action" value="enterCourse">Stundiengang und
-		Fach eintragen</button>
+	<button name="action" value="editModule">Modul überarbeiten</button>
 </form>
 
 <script type="text/javascript" src="/SopraMMS/js/jquery.showModulesForCoordinator.js"></script>

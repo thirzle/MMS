@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ import management.Deadline;
 
 import user.User;
 
-//TODO Bitte alle Kommentare prüfen und Autoren eintragen
+//TODO Bitte alle Kommentare pr��fen und Autoren eintragen
 /**
  * The class UserDBController provides a connection to the database.
  * <p>
@@ -32,9 +34,9 @@ public class UserDBController {
 	private static PreparedStatement pStatement;
 
 	// local database
-	// private static final String URL = "jdbc:mysql://localhost:3306/mms";
-	// private static final String USER = "root";
-	// private static final String PASSWORD = "";
+//	 private static final String URL = "jdbc:mysql://localhost:3306/mms";
+//	 private static final String USER = "root";
+//	 private static final String PASSWORD = "";
 
 	// db4free.net database
 	private static final String URL = "jdbc:mysql://db4free.net:3306/sopramms";
@@ -188,7 +190,7 @@ public class UserDBController {
 	/**
 	 * Gets specified user by his email address.
 	 * 
-	 * @param mail		The user´s email address.
+	 * @param mail		The user��s email address.
 	 * @return			User object.
 	 * @see User
 	 */
@@ -329,9 +331,10 @@ public class UserDBController {
 	 * Gets the rights of a specified user.
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system. 
-	 * @return				An array set with true and false values ​​for the corresponding rights.
+	 * @return				An array set with true and false values ������for the corresponding rights.
 	 * @see User
 	 */
+	@Deprecated
 	public boolean[] getRights(String loginname) {
 		Connection connection = connect();
 		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
@@ -375,7 +378,7 @@ public class UserDBController {
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system.
 	 * @param connection	Connection object.
-	 * @return				An array set with true and false values ​​for the corresponding rights.
+	 * @return				An array set with true and false values ������for the corresponding rights.
 	 * @see User
 	 */
 	public boolean[] getRights(String loginname, Connection connection) {
@@ -415,7 +418,7 @@ public class UserDBController {
 	 * Changes the rights of a specified user.
 	 * 
 	 * @param user			User object
-	 * @param newRights		Array set with true and false values ​​for the new rights.
+	 * @param newRights		Array set with true and false values ������for the new rights.
 	 * @return				<code>true</code> if changing the rights was successful <code>false</code> otherwise.
 	 * @see User
 	 */
@@ -458,7 +461,7 @@ public class UserDBController {
 	 * 
 	 * @param oldLogin		Old loginname.
 	 * @param newLogin		New loginname.
-	 * @param newRights		Array set with true and false values ​​for the new rights.	
+	 * @param newRights		Array set with true and false values ������for the new rights.	
 	 * @param connection	Connection object.
 	 * @return				<code>true</code> if changing the rights was successful <code>false</code> otherwise.
 	 * @see User
@@ -626,6 +629,7 @@ public class UserDBController {
 	 * @return				List of institutes.
 	 * @see User
 	 */
+	@Deprecated
 	public List<String> getInstitutesByName(String loginname) {
 		Connection connection = connect();
 		LinkedList<String> instituteList = new LinkedList<String>();
@@ -637,6 +641,22 @@ public class UserDBController {
 			while (resultSet.next()) {
 				instituteList.add(resultSet.getString("instituteID"));
 			}
+			pStatement = connection
+					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
+			pStatement.setString(1, loginname);
+			resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				loginname = resultSet.getString("supervisor");
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, loginname);
+				resultSet = pStatement.executeQuery();
+				// get all institutes of supervisor
+				while (resultSet.next()) {
+					if(!instituteList.contains(resultSet.getString("instituteID"))){
+						instituteList.add(resultSet.getString("instituteID"));
+					}
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't get list of institutes from user: "
@@ -646,6 +666,7 @@ public class UserDBController {
 		}
 		return instituteList;
 	}
+	
 
 	/**
 	 * Gets institute of existing user with established connection
@@ -665,6 +686,22 @@ public class UserDBController {
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				instituteList.add(resultSet.getString("instituteID"));
+			}
+			pStatement = connection
+					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
+			pStatement.setString(1, loginname);
+			resultSet = pStatement.executeQuery();
+			if (resultSet.next()) {
+				loginname = resultSet.getString("supervisor");
+				pStatement = connection.prepareStatement(query);
+				pStatement.setString(1, loginname);
+				resultSet = pStatement.executeQuery();
+				// get all institutes of supervisor
+				while (resultSet.next()) {
+					if(!instituteList.contains(resultSet.getString("insituteID"))){
+						instituteList.add(resultSet.getString("insituteID"));
+					}
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -851,7 +888,7 @@ public class UserDBController {
 
 
 	/**
-	 * Gets the user´s facultyname.
+	 * Gets the user��s facultyname.
 	 * 
 	 * @param user		User object.
 	 * @return			The instituteID.
@@ -896,18 +933,38 @@ public class UserDBController {
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("couldn't remove representative of user: "
+			System.out.println("Couldn't remove representative of user: "
 					+ user.getLogin());
+			return false;
 		} finally {
 			close(connection);
 		}
-		return false;
 	}
+	
+	
+	public boolean setRepresentative(User user, String representative) {
+		Connection connection = connect();
+		query = "UPDATE user SET representative = ? WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, representative);
+			pStatement.setString(2, user.getLogin());
+			pStatement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't set representative of user "+user.getLogin());
+			return false;
+		} finally {
+			close(connection);
+		}
+	}
+	
 
 	/**
 	 * Sets the password if the user forgets it.
 	 * 
-	 * @param mail			The user´s email address.
+	 * @param mail			The user��s email address.
 	 * @param forgotPwd		The forgotten password.
 	 * @return				<code>true</code> if setting the password was successful <code>false</code> otherwise.
 	 * @see User
@@ -958,7 +1015,7 @@ public class UserDBController {
 	/**
 	 * Gets the user by his forgotten password.
 	 * 
-	 * @param forgotPwd		The user´s forgotten password.
+	 * @param forgotPwd		The user��s forgotten password.
 	 * @return				User object.
 	 * @see User
 	 */
@@ -1215,7 +1272,6 @@ public class UserDBController {
 			pStatement.execute();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't add news");
 			return false;
@@ -1302,7 +1358,7 @@ public class UserDBController {
 	/**
 	 * Gets all email addresses from the users which are available in the database.
 	 * 
-	 * @param rights		Array set with true and false values ​​for the rights.
+	 * @param rights		Array set with true and false values ������for the rights.
 	 * @return				List of email addresses.
 	 */
 	public List<String[]> getEmails(boolean[] rights) {
@@ -1402,9 +1458,9 @@ public class UserDBController {
 	 * @return		<code>true</code> if deleting the history was successful <code>false</code> otherwise.
 	 */
 	public boolean clearHistory() {
-		java.util.Date today = new java.util.Date();
-		Date limit = new Date(today.getYear(), today.getMonth()-2,
-				today.getDate());
+		Calendar cal = new GregorianCalendar();
+		cal.set(Calendar.MONTH, cal.get(Calendar.MONTH)-2);
+		Date limit = new Date(cal.getTime().getTime());
 		Connection connection = connect();
 		query = "DELETE FROM history WHERE date < ?";
 		try {
@@ -1437,7 +1493,6 @@ public class UserDBController {
 			pStatement.execute();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("ForgotPassword variable of user " + loginname
 					+ " could't be set null.");
@@ -1449,7 +1504,7 @@ public class UserDBController {
 	 * Sets the curriculum vitae in form of an url from a specified user.
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system.
-	 * @param url			The URL which leads to the user´s curriculum vitae.
+	 * @param url			The URL which leads to the user��s curriculum vitae.
 	 * @return				<code>true</code> if inserting of the URL was successful <code>false</code> otherwise.
 	 * @see User
 	 */
@@ -1463,7 +1518,6 @@ public class UserDBController {
 			pStatement.execute();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't set curriculum for user " + loginname);
 			return false;
@@ -1476,7 +1530,7 @@ public class UserDBController {
 	 * Gets the curriculum vitae of a specified user.
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system.
-	 * @return				The URL which leads to the user´s curriculum vitae.
+	 * @return				The URL which leads to the user��s curriculum vitae.
 	 * @see User
 	 */
 	public String getCurriculum(String loginname) {
@@ -1491,7 +1545,6 @@ public class UserDBController {
 				url = resultSet.getString("curriculum");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't get curriculum for user " + loginname);
 			return null;
@@ -1499,6 +1552,26 @@ public class UserDBController {
 			close(connection);
 		}
 		return url;
+	}
+	
+	public String getEmailOfUser(String loginname){
+		Connection connection = connect();
+		query = "SELECT mail FROM user WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			if(resultSet.next()){
+				return resultSet.getString(1);
+			}
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't get email of user: "+loginname);
+		}finally {
+			close(connection);
+		}
+		return null;
 	}
 
 	/**

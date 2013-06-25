@@ -44,17 +44,9 @@
 %>
 <jsp:include page="/guiElements/generally/changePassword.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("applyRepresentative")) {
-%>
-<jsp:include page="/guiElements/generally/applyRepresentative.jsp"></jsp:include>
-<%
 	} else if (contentPage.equals("appointRepresentative")) {
 %>
 <jsp:include page="/guiElements/generally/appointRepresentative.jsp"></jsp:include>
-<%
-	} else if (contentPage.equals("removeRepresentative")) {
-%>
-<jsp:include page="/guiElements/generally/removeRepresentative.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("showRepresentative")) {
 %>
@@ -120,10 +112,6 @@
 %>
 <jsp:include page="/guiElements/coordinator/enterCourseToModule.jsp"></jsp:include>
 <%
-	} else if (contentPage.equals("changedName")) {
-%>
-<jsp:include page="/guiElements/generally/changedName.jsp"></jsp:include>
-<%
 	} else if (contentPage.equals("showModulesForModulemanager")) {
 %>
 <jsp:include
@@ -169,14 +157,21 @@
 %>
 <jsp:include page="/guiElements/dez2/showModulesForDez2.jsp"></jsp:include>
 <%
-	} else if(contentPage.equals("viewModule")){
+	} else if (contentPage.equals("viewModule")) {
 %>
-<jsp:include page="/guiElements/viewModule.jsp"></jsp:include>		
-<%	
-	}else if(contentPage.equals("disableModule")){
-		%>
-		<jsp:include page="/guiElements/dez2/disableModule.jsp"></jsp:include>		
-		<%	
-			}
+<jsp:include page="/guiElements/viewModule.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("disableModule")) {
+%>
+<jsp:include page="/guiElements/dez2/disableModule.jsp"></jsp:include>
+<%
+	} else if (contentPage.equals("showEditModulesForCoordinator")) {
+%>
+<jsp:include page="/guiElements/coordinator/showEditModulesForCoordinator.jsp"></jsp:include>
+<%
+	} else if(contentPage.equals("showUserData")) {
+%>
+<jsp:include page="/guiElements/generally/showUserData.jsp"></jsp:include>
+<% 	}
 %>
 

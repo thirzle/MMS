@@ -24,6 +24,7 @@
 			<tr>
 				<th></th>
 				<th>Titel</th>
+				<th>Version</th>
 				<th>Autor</th>
 				<th>Fach</th>
 				<th>Modulhandbuch</th>
@@ -40,6 +41,7 @@
 				<td><input type="radio" name="selectedModuleToApprove"
 					value='<%=module.getModuleID() + " " + module.getVersion()%>' /></td>
 				<td><%=module.getName()%></td>
+				<td><%=module.getVersion() %></td>
 				<td><%=module.getModificationauthor()%></td>
 				<td>
 					<%
@@ -72,6 +74,5 @@
 			%>
 		</tbody>
 	</table>
-	<button type="submit" name="editButton" value="editButton">Modul
-		anschauen</button>
+	<button type="submit" name="editButton" value="editButton">Modulansicht zum freigeben</button>
 </form>

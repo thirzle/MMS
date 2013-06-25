@@ -27,7 +27,6 @@ public class ShowModulesOverviewForEditor extends HttpServlet {
      */
     public ShowModulesOverviewForEditor() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -41,11 +40,9 @@ public class ShowModulesOverviewForEditor extends HttpServlet {
 		LinkedList<Module> moduleListForEditor = new LinkedList();
 						
 		if(request.getParameter("editorMenu").equals("checkModule")){
-			for (String instituteID : instituteIDListOfUser) {
-				moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteID));
+				moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteIDListOfUser));
 				session.setAttribute("moduleListForEditor", moduleListForEditor);
 				session.setAttribute("content", "showApproveModulesOverviewForEditor");
-			}
 		}			
 		else if(request.getParameter("editorMenu").equals("editModule")){
 			moduleListForEditor = (LinkedList) mAdmin.getModules();
@@ -60,7 +57,6 @@ public class ShowModulesOverviewForEditor extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }
