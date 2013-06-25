@@ -61,7 +61,7 @@
 			%>
 		</tbody>
 	</table>
-	<button value="true" name="delete">L&ouml;schen</button>
+	<button type="submit" value="true" name="delete">L&ouml;schen</button>
 	<br><br>
 	<div class="importantBox">Die ausgewählten Module werden
 		endgültig aus dem Module Management System gelöscht und können nicht

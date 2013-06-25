@@ -1,8 +1,9 @@
 
 function checkRadioButton() {
 	var checked = false;
-	for(var i=0; i < $('input[type=radio]').length; i++) {
-		if($('input[type=radio]')[i].checked) {
+	var radios = $('input[type=radio]');
+	for(var i=0; i < radios.length; i++) {
+		if(radios[i].checked) {
 			checked = true;
 		}
 	}
@@ -10,8 +11,9 @@ function checkRadioButton() {
 }
 
 function showButton() {
-	var radiocount = $('input[type=radio]').length;
-	if ((checkRadioButton() && radiocount < 20) || checkRadioButtons()) {
+	var radios = $('input[type=radio]');
+	var radiocount = radios.length;
+	if ((checkRadioButton() && radiocount < 20) || checkRadioButtons() || checkCheckBox()) {
 		$('button[type=submit]').each(function() {
 			if ($(this).attr('disabled')) {
 				$(this).removeAttr('disabled');
@@ -27,6 +29,8 @@ function showButton() {
 }
 
 function manageTable(table) {
+	var radios = $('input[type=radio]');
+	var checkboxes = $('input[type=checkbox]');
 	if(table != null) {
 		setTHeads();
 		table.tablesorter({
@@ -34,10 +38,23 @@ function manageTable(table) {
 			widgets : [ 'zebra' ]
 		});
 	}
-	$('input[type=radio]').change(function() {
+	radios.change(function() {
+		showButton();
+	});
+	checkboxes.change(function() {
 		showButton();
 	});
 	showButton();
+}
+
+function checkCheckBox() {
+	var checked = false;
+	for(var i=0; i < $('input[type=checkbox]').length; i++) {
+		if($('input[type=checkbox]')[i].checked) {
+			checked = true;
+		}
+	}
+	return checked;
 }
 
 function checkRadioButtons() {
@@ -48,7 +65,7 @@ function checkRadioButtons() {
 			areChecked++;
 		}
 	}
-	return (needToBeChecked == areChecked);
+	return (needToBeChecked == areChecked && needToBeChecked != 0);
 }
 
 function setTHeads() {
