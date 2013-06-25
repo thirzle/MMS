@@ -2305,9 +2305,36 @@ public class ModuleDBController {
 			e.printStackTrace();
 			System.out.println("Couldn't detemine highest Version of module: "+moduleID);
 			return 1;
+		} finally {
+			close(connection);
 		}
 	}
 	
+	/**
+	 * Creates a new institute
+	 * 
+	 * @param instituteID	The unique ID of a institute
+	 * @param instituteName	Name of the institute 
+	 * @param facultyID		The unique ID of a faculty
+	 */
+	 public boolean createInstitute(String instituteID, String instituteName, String facultyID){
+		 Connection connection = connect();
+		 query = "INSERT INTO institute (instituteID, name, facultyID) VALUES (?,?,?)";
+		 try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, instituteID);
+			pStatement.setString(2, instituteName);
+			pStatement.setString(3, facultyID);
+			pStatement.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("couldn't create institute: "+instituteID);
+			return false;
+		} finally {
+			close(connection);
+		}
+	 }
 
 	/**
 	 * Cancels changes made in database if something went wrong.
@@ -2322,6 +2349,7 @@ public class ModuleDBController {
 			System.out.println("Couldn't rollback");
 		}
 	}
+	
 
 	/**
 	 * Closes the database connection.
