@@ -238,7 +238,12 @@ public class UserAdministration {
 	
 	
 	/**
-	 * @param email
+	 * Sends an email if the user has forgotten his password.
+	 * <p>
+	 * By getting an email address, it searches for the user who belongs to it
+	 * and sends him an email with an link he can click on to change the password.
+	 * 
+	 * @param email				{@link User#getMail()}
 	 * @throws IOException
 	 */
 	public void sendNewPasswordLink(String email) throws IOException {
@@ -276,7 +281,9 @@ public class UserAdministration {
 	}
 	
 	/**
-	 * @param user
+	 * Sends a new registered user an email with an link allowing him to change his password.
+	 * 
+	 * @param user				User object.
 	 * @throws IOException
 	 */
 	public void sendNewPasswordLinkForNewUser(User user) throws IOException {
@@ -312,7 +319,8 @@ public class UserAdministration {
 
 		mail.send_mail("MMS - Neues Passwort", email, text.toString());
 	}
-
+	
+	//TODO
 	/**
 	 * @param link
 	 * @return
@@ -320,7 +328,8 @@ public class UserAdministration {
 	public User checkNewPasswordLink(String link) {
 		return userDBController.getUserByForgotPwd(link);
 	}
-
+	
+	//TODO
 	/**
 	 * @param loginname			{@link User#getLogin()}
 	 */
@@ -329,8 +338,10 @@ public class UserAdministration {
 	}
 
 	/**
-	 * @param session
-	 * @return
+	 * Checks if the session of the user is still valid.
+	 * 
+	 * @param session		{@link User#getSession()}
+	 * @return				User object.
 	 */
 	public User checkLogin(String session) {
 		// TODO Methode existiert in DB noch nicht
@@ -342,10 +353,12 @@ public class UserAdministration {
 	}
 
 	/**
+	 * Performs the login by comparing the password typed in with the password stored in the database of a specified user.
+	 * 
 	 * @param loginname			{@link User#getLogin()}
-	 * @param password
-	 * @param session
-	 * @return
+	 * @param password			{@link User#getPassword()}
+	 * @param session			{@link User#getSession()}
+	 * @return					User object or <code>null</code> if the login wasn´t successful.
 	 */
 	public User login(String loginname, String password, String session) {
 
@@ -373,14 +386,18 @@ public class UserAdministration {
 	}
 
 	/**
-	 * @param user
-	 * @return
+	 * Removes the representative of an user.
+	 * 
+	 * @param user		User object.
+	 * @return			<code>true</code> if removing the representative was successful <code>false</code> otherwise.
 	 */
 	public boolean removeRepresentative(User user) {
 		return userDBController.removeRepresentative(user);
 	}
 
 	/**
+	 * Performs the logout.
+	 * 
 	 * @param loginname			{@link User#getLogin()}
 	 */
 	public void logout(String loginname) {
@@ -392,89 +409,113 @@ public class UserAdministration {
 	}
 
 	/**
-	 * @param facultyID
-	 * @return
+	 * Gets the faculty dependent deadline.
+	 * 
+	 * @param facultyID		The unique ID of a faculty.
+	 * @return				Deadline object.
 	 */
 	public Deadline getDeadlinebyFaculty(String facultyID) {
 		return userDBController.getDeadlineByFaculty(facultyID);
 	}
 	
 	/**
-	 * @param deadline
+	 * Sets the faculty dependent deadline.
+	 * 
+	 * @param deadline		The point where all changes must be finished.
 	 */
 	public void setDeadlinebyFaculty(Deadline deadline){
 		userDBController.setDeadlineByFaculty(deadline);
 	}
 	
 	/**
-	 * @param deadline
+	 * Updates the faculty dependent deadline.
+	 * 
+	 * @param deadline		The point where all changes must be finished.
 	 */
 	public void updateDeadlinebyFaculty(Deadline deadline){
 		userDBController.updateDeadlineByFaculty(deadline);
 	}
 	
 	/**
-	 * @param facultyID
+	 * Deletes the faculty dependent deadline.
+	 * 
+	 * @param facultyID		The unique ID of a faculty.
 	 */
 	public void deleteDeadlinebyFaculty(String facultyID) {
 		userDBController.deleteDeadlineByFaculty(facultyID);
 	}
 
 	/**
+	 * Compares password typed in with the password stored in the database of a specified user.
+	 * 
 	 * @param loginname			{@link User#getLogin()}
-	 * @param password
-	 * @return
+	 * @param password			{@link User#getPassword()}
+	 * @return					<code>true</code> if the typed password is correct <code>false</code> otherwise.
 	 */
 	public boolean checkPassword(String loginname, String password) {
 		return userDBController.checkPassword(loginname, password);
 	}
 
 	/**
-	 * @param user
-	 * @return
+	 * Gets the faculty the user belongs to.
+	 * 
+	 * @param user		User object.
+	 * @return			The faculty name.
 	 */
 	public String getFacultyName(User user) {
 		return userDBController.getFacultyName(user);
 	}
 
 	/**
-	 * @return
+	 * Gets all available faculties.
+	 * 
+	 * @return			List of faculties.
 	 */
 	public List<String> getAllFacultiesByName() {
 		return userDBController.getFacultiesByName();
 	}
 
 	/**
-	 * @return
+	 * Gets all FacultieIDs.
+	 * 
+	 * @return			List of facultieIDs.
 	 */
 	public List<String> getAllFacultiesID() {
 		return userDBController.getFacultiesID();
 	}
 
 	/**
+	 * Gets all institutes by their name.
+	 * 
 	 * @param loginname			{@link User#getLogin()}
-	 * @return
+	 * @return					List of institutes.
 	 */
 	public List<String[]> getAllInstitutesByName(String loginname) {
 		return userDBController.getInstituteNames(loginname);
 	}
 
 	/**
-	 * @return
+	 * Gets all instituteIDs listed in the database.
+	 * 
+	 * @return				List of institutesIDs.
 	 */
 	public List<String> getAllInstituteID() {
 		return userDBController.getInstituteID();
 	}
 	
 	/**
-	 * @return
+	 * Gets all institutes listed in the database.
+	 * 
+	 * @return				List of institutes.
 	 */
 	public List<String> getAllInstitute() {
 		return userDBController.getInstitutes();
 	}
 
 	/**
-	 * @return
+	 * Gets all Users listed in the database.
+	 * 
+	 * @return				List of all users.
 	 */
 	public List<User> getAllUsers() {
 		return userDBController.getAllUsers();
@@ -482,16 +523,20 @@ public class UserAdministration {
 
 //	get Mail: übergeben: Liste von Rechten, gibt zurück: Liste mit String Array -->Name, Vorname, Email-Adresse
 	/**
-	 * @param rights
-	 * @return
+	 * Gets all emails from the users which are available in the database.
+	 * 
+	 * @param rights		{@link User#getRights()}
+	 * @return				String array containing firstname, lastname and mail address.
 	 */
 	public List<String[]> getEmails(boolean[] rights){
 		return userDBController.getEmails(rights);
 	}
 	
 	/**
-	 * @param user
-	 * @return
+	 * Gets the institutenames a user belongs to.
+	 * 
+	 * @param user			User object.
+	 * @return				List of institutes.
 	 */
 	public List<String> getInstituteNames(User user) {
 		List<String[]> listA = userDBController.getInstituteNames(user.getLogin());
@@ -508,9 +553,10 @@ public class UserAdministration {
 
 	// true -> public
 	// false -> private
+	//TODO
 	/**
 	 * @param type
-	 * @return
+	 * @return				List of news.
 	 */
 	public List<String[]> getNewsByType(int type) {
 		return userDBController.getNews(type);
@@ -519,8 +565,10 @@ public class UserAdministration {
 	
 	
 	/**
+	 * Gets the curriculum vitae of a user.
+	 * 
 	 * @param loginname			{@link User#getLogin()}
-	 * @return
+	 * @return					The URL which leads to the user´s curriculum vitae.
 	 */
 	public String getCurriculum(String loginname){
 		return userDBController.getCurriculum(loginname);
@@ -528,31 +576,37 @@ public class UserAdministration {
 	
 	
 	/**
+	 * Inserts events into the history.
+	 * 
 	 * @param loginname			{@link User#getLogin()}
-	 * @param date
-	 * @param content
+	 * @param date				Date the event took place.
+	 * @param content			Content of the event.
 	 */
 	public void insertHistory(String loginname, String date, String content){
 		userDBController.insertHistory(loginname, date, content);
 	}
 	
 	/**
-	 * @return
+	 * Shows the history.
+	 * 
+	 * @return					List containing loginname, date and content.
 	 */
 	public List<String[]> showHistory(){
 		return userDBController.showHistory();
 	}
 	
 	/**
-	 * 
+	 * Clears the history.
 	 */
 	public void clearHistory() {
 		userDBController.clearHistory();
 	}
 	
 	/**
+	 * Sets the curriculum vitae in form of an url from a specified user.
+	 * 
 	 * @param loginname			{@link User#getLogin()}
-	 * @param url
+	 * @param url				The URL which leads to the user´s curriculum vitae.
 	 */
 	public void setCurriculum(String loginname, String url){
 		userDBController.setCurriculum(loginname, url);
@@ -560,13 +614,18 @@ public class UserAdministration {
 	
 
 	/**
-	 * @param title
+	 * Deletes news by their title.
+	 * 
+	 * @param title				The news heading.
 	 */
 	public void deleteNews(String title) {
 		userDBController.deleteNews(title);
 	}
-
+	
+	//TODO
 	/**
+	 * Adds new News.
+	 * 
 	 * @param data
 	 * @param type
 	 */
@@ -575,12 +634,20 @@ public class UserAdministration {
 	}
 
 	/**
-	 * @return
+	 * Gets the number of available news.
+	 * 
+	 * @return				Number of news.
 	 */
 	public int numberOfNews() {
 		return userDBController.numberOfNews();
 	}
 	
+	/**
+	 * Gets the email address by the loginname of the user.
+	 * 
+	 * @param loginname		{@link User#getLogin()}
+	 * @return				The email address.
+	 */
 	public String getEmailOfUser(String loginname){
 		return userDBController.getEmailOfUser(loginname);
 	}

@@ -862,9 +862,9 @@ public class UserDBController {
 	}
 
 	/**
-	 * Gets all institutes listed in the database.
+	 * Gets all instituteIDs listed in the database.
 	 * 
-	 * @return		List of institutes.
+	 * @return		List of instituteIDs.
 	 * @see Module
 	 */
 	public List<String> getInstituteID() {
@@ -891,7 +891,7 @@ public class UserDBController {
 	 * Gets the user��s facultyname.
 	 * 
 	 * @param user		User object.
-	 * @return			The instituteID.
+	 * @return			The faculty name.
 	 * @see User
 	 * @see Course
 	 */
@@ -960,7 +960,7 @@ public class UserDBController {
 		}
 	}
 	
-
+	//TODO ?
 	/**
 	 * Sets the password if the user forgets it.
 	 * 
@@ -1015,7 +1015,7 @@ public class UserDBController {
 	/**
 	 * Gets the user by his forgotten password.
 	 * 
-	 * @param forgotPwd		The user��s forgotten password.
+	 * @param forgotPwd		The user´s forgotten password.
 	 * @return				User object.
 	 * @see User
 	 */
@@ -1354,12 +1354,13 @@ public class UserDBController {
 		}
 		return instituteID;
 	}
-
+	
+	//TODO Wo verwendung?
 	/**
-	 * Gets all email addresses from the users which are available in the database.
+	 * Gets all emails from the users which are available in the database.
 	 * 
-	 * @param rights		Array set with true and false values ������for the rights.
-	 * @return				List of email addresses.
+	 * @param rights		Array set with true and false values for the rights.
+	 * @return				String array containing firstname, lastname and mail address.
 	 */
 	public List<String[]> getEmails(boolean[] rights) {
 		Connection connection = connect();
@@ -1395,11 +1396,11 @@ public class UserDBController {
 	}
 
 	/**
-	 * Inserts events in the history.
+	 * Inserts events into the history.
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system.
 	 * @param date			Date the event took place.
-	 * @param content		Conntent of the event.
+	 * @param content		Content of the event.
 	 */
 	public void insertHistory(String loginname, String date, String content) {
 		Connection connection = connect();
@@ -1425,7 +1426,7 @@ public class UserDBController {
 	/**
 	 * Shows history.
 	 * 
-	 * @return		List of history.
+	 * @return		List containing loginname, date and content.
 	 */
 	public List<String[]> showHistory() {
 		Connection connection = connect();
@@ -1554,6 +1555,12 @@ public class UserDBController {
 		return url;
 	}
 	
+	/**
+	 * Gets the email address by the loginname of the user.
+	 * 
+	 * @param loginname				The name with which the user uses to log into the system.
+	 * @return						The email address.
+	 */
 	public String getEmailOfUser(String loginname){
 		Connection connection = connect();
 		query = "SELECT mail FROM user WHERE loginname = ?";
