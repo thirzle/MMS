@@ -66,7 +66,7 @@
 		%>
 		</tbody>
 	</table>
-	<button type="submit" name="action" value="editModule">Modul überarbeiten</button>
+	<button type="submit" name="action" value="editModule">Modul bearbeiten</button>
 </form>
 
 <script type="text/javascript" src="/SopraMMS/js/tablemanager.js"></script>

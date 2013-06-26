@@ -29,7 +29,6 @@ public class ChangeName extends HttpServlet {
      */
     public ChangeName() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -46,15 +45,6 @@ public class ChangeName extends HttpServlet {
 		
 		UserAdministration uAdmin = new UserAdministration();
 		uAdmin.changeName(user, newFirstname, newLastname);
-		String loginname = newLastname.toLowerCase() + newFirstname.toLowerCase().charAt(0);
-		uAdmin.changeLoginname(user, loginname);
-		
-		//send mail 
-		EmailTelnet mail = new EmailTelnet();
-		content = "Sie haben Ihren Namen im MMS zu "+newFirstname+" "+newLastname+" geändert.\n"+
-		"Ihr neuer Loginname ist: "+loginname;
-		address = uAdmin.getEmailOfUser(loginname);
-		mail.send_mail("Name geändert im MMS", address, content);
 		
 		// Insert into History "Name changed"
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -62,8 +52,7 @@ public class ChangeName extends HttpServlet {
 		String date = formatter.format(currentTime);
 		uAdmin.insertHistory(user.getLogin(), date, "Name ge&auml;ndert");
 		
-		infotext = "Ihr Name wurde erfolgreich zu "+newFirstname+" "+newLastname+" geändert. "+
-		"Ihr neuer Loginname ist: "+loginname;
+		infotext = "Ihr Name wurde erfolgreich zu "+newFirstname+" "+newLastname+" geändert. ";
 		session.setAttribute("content", "home");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 	}
@@ -72,7 +61,6 @@ public class ChangeName extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

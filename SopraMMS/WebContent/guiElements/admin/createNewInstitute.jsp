@@ -23,11 +23,11 @@ if(session.getAttribute("wrongDataNewInst") != null){
 	<table>
 		<tr>
 			<td>K&uuml;rzel:</td>
-			<td><input type="text" name="instituteID"></td>
+			<td><input class="inputField" type="text" name="instituteID"></td>
 		</tr>
 		<tr>
 			<td>Institutsname:</td>
-			<td><input type="text" name="instituteName"></td>
+			<td><input class="inputField" type="text" name="instituteName"></td>
 		</tr>
 	</table>
 	<input type="submit" value="Neues Institut anlegen">
