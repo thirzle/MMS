@@ -52,11 +52,12 @@ public class ShowUnapprovedModulesOverview extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("ShowUnapprovedModulesOverview");
 		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
 		ModuleAdministration mAdmin = new ModuleAdministration();
 
-//		List<Module> moduleList = mAdmin.getUnapprovedModules();
-
-//		session.setAttribute("moduleListForModulemanager", moduleList);
+		List<Module> moduleList = mAdmin.getUnapprovedModules(user.getLogin());
+		session.setAttribute("moduleListForModulemanager", moduleList);
+		
 		session.setAttribute("content", "showModulesForModulemanager");
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp?edit=true");
 

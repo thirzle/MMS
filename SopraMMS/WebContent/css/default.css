@@ -116,13 +116,13 @@ body {
 	color: #888899;
 }
 
-.infoBox{
+.infoBox {
 	margin-top: 20px;
 	font-weight: bold;
 	color: #666666;
 }
 
-.errorBox{
+.errorBox {
 	margin-top: 20px;
 	font-weight: bold;
 	color: #a52a2a;
@@ -224,7 +224,6 @@ body {
 .nav li:hover {
 	cursor: pointer;
 	color: #1E6289;
-	
 }
 
 .subNav li {
@@ -387,4 +386,14 @@ body {
 	color: #FFFFFF;
 	background: #91ACBC;
 	padding: 5px 0px 5px 10px;
+}
+
+/*---- Userdata ----*/
+.userdata table {
+	border-style:solid;
+border-width:5px;
+}
+
+.userdata li {
+	list-style: disc;
 }
