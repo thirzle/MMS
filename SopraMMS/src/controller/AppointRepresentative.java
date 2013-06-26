@@ -103,7 +103,8 @@ public class AppointRepresentative extends HttpServlet {
 			else {
 				uAdmin.changeRepresentative(user, userR.getLogin());
 				request.getSession().setAttribute("content", "home");
-				infotext = "Ihr Stellvertreter wurde aktualisiert: "+userR.getFirstName()+" "+userR.getLastName();
+				infotext = "Ihr Stellvertreter wurde aktualisiert: "
+						+ userR.getFirstName() + " " + userR.getLastName();
 
 				// send e-mail to representative
 				String content = user.getFirstName() + " " + user.getLastName()
@@ -122,12 +123,16 @@ public class AppointRepresentative extends HttpServlet {
 			}
 		}
 		request.getSession().setAttribute("generallyMenu", "open");
-		if(!wrongData){
+		if (!wrongData) {
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
 					+ infotext);
-		}
-		else{
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		} else {
+			// Direct Link to Home
+			if (session.getAttribute("content").equals("home")) {
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true");
+			} else {
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			}
 		}
 	}
 
