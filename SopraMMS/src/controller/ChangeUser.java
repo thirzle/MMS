@@ -52,24 +52,24 @@ public class ChangeUser extends SessionCheck implements Servlet {
 	    System.out.println("(ChangeUser.java):tmpUser=" + tmpUser);
 
 	    if (origUser.getFirstName() != tmpUser.getFirstName() || origUser.getLastName() != tmpUser.getLastName()) {
-		ua.changeName(origUser, tmpUser.getFirstName(), tmpUser.getLastName());
+		uAdmin.changeName(origUser, tmpUser.getFirstName(), tmpUser.getLastName());
 	    }
 	    if (tmpUser.getMail() != origUser.getMail()) {
-		ua.changeMail(origUser, tmpUser.getMail());
+		uAdmin.changeMail(origUser, tmpUser.getMail());
 	    }
 	    if (tmpUser.getInstitute() != origUser.getInstitute()) {
-		ua.changeInstitute(origUser, tmpUser.getInstitute());
+		uAdmin.changeInstitute(origUser, tmpUser.getInstitute());
 	    }
 	    System.out.println(tmpUser.getRights() != origUser.getRights());
 	    if (tmpUser.getRights() != origUser.getRights()) {
-		ua.changeRights(origUser, tmpUser.getRights());
+		uAdmin.changeRights(origUser, tmpUser.getRights());
 	    }
 
 	    // insert into History "User changed"
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	    Date currentTime = new Date();
 	    String date = formatter.format(currentTime);
-	    ua.insertHistory(loginname, date, "Wurde ge&auml;ndert");
+	    uAdmin.insertHistory(loginname, date, "Wurde ge&auml;ndert");
 
 	    session.removeAttribute("errormessage");
 	    response.sendRedirect("/SopraMMS/LoadTable");
@@ -83,7 +83,7 @@ public class ChangeUser extends SessionCheck implements Servlet {
     } // end doGet()
 
     protected User createUser(HttpServletRequest request) {
-	List<String> rootInstitutes = ua.getAllInstituteID();
+	List<String> rootInstitutes = uAdmin.getAllInstituteID();
 	// Die Liste wird ggf. mit den Feldnamen leeren Feldern gefuellt
 	String[] names = new String[6];
 	String[] paras = { "loginCellText", "firstnameCellText", "lastnameCellText", "emailCellText", "rightsSelect", "instituteSelect" };

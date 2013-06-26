@@ -41,11 +41,11 @@ public class SaveUser extends SessionCheck {
 		if (isLoggedIn(request, response) && actionGranted(request, right)) {
 			HttpSession session = request.getSession();
 			User user = createUser(request);
-			String loginname = ua.checkLoginname(user.getLogin());
+			String loginname = uAdmin.checkLoginname(user.getLogin());
 			user.setLogin(loginname);
-			ua.createUser(user);
+			uAdmin.createUser(user);
 			try {
-				ua.sendNewPasswordLinkForNewUser(user);
+				uAdmin.sendNewPasswordLinkForNewUser(user);
 				session.removeAttribute("emptyInputs");
 				System.out
 						.println("User successfully transmitted to UserAdministration!");
@@ -54,7 +54,7 @@ public class SaveUser extends SessionCheck {
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				Date currentTime = new Date();
 				String date = formatter.format(currentTime);
-				ua.insertHistory(user.getLogin(), date, user.getFirstName() + " "
+				uAdmin.insertHistory(user.getLogin(), date, user.getFirstName() + " "
 						+ user.getLastName() + " wurde erstellt");
 				
 			} catch (Exception e) {
@@ -77,7 +77,7 @@ public class SaveUser extends SessionCheck {
 	}
 
 	protected User createUser(HttpServletRequest request) {
-		List<String> rootInstitutes = ua.getAllInstitute();
+		List<String> rootInstitutes = uAdmin.getAllInstitute();
 		// Die Liste wird ggf. mit den Feldnamen leeren Feldern gefuellt
 		String[] names = new String[6];
 		String[] paras = { "loginCellText", "firstnameCellText",

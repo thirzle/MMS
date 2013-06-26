@@ -34,7 +34,7 @@ public class GetAllUsers extends SessionCheck implements Servlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();	
-		List<User> users = ua.getAllUsers();
+		List<User> users = uAdmin.getAllUsers();
 		
 		
 		session.setAttribute("users", users);

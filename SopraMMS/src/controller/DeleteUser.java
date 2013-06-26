@@ -43,9 +43,9 @@ public class DeleteUser extends SessionCheck implements Servlet {
 		    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		    Date currentTime = new Date();
 		    String date = formatter.format(currentTime);
-		    ua.insertHistory(loginname, date, "Wurde geloescht");
+		    uAdmin.insertHistory(loginname, date, "Wurde geloescht");
 	
-		    ua.deleteUser(loginname);
+		    uAdmin.deleteUser(loginname);
 		    session.setAttribute("task", "edit");
 		    response.sendRedirect("/SopraMMS/LoadTable");
 	    } else {

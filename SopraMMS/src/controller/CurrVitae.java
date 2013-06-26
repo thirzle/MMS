@@ -23,7 +23,7 @@ import user.UserAdministration;
  * @author Lisa
  */
 @WebServlet("/CurrVitae")
-public class CurrVitae extends SessionCheck implements SessionCheck {
+public class CurrVitae extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
