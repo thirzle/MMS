@@ -26,7 +26,7 @@ if(user != null) {
 	<table>
 		<tr>
 			<td>Benutzername:</td>
-			<td><input form="newUserForm" type='text' id="loginCellText" style="cursor: default;" name="loginCellText" readonly/></td>
+			<td><input form="newUserForm" type='text' id="loginCellText" style="cursor: default; border: none;" name="loginCellText" readonly/></td>
 		</tr>
 		<tr>
 			<td>Vorname:</td>
