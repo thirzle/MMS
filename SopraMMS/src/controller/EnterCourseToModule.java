@@ -68,7 +68,7 @@ public class EnterCourseToModule extends SessionCheck {
 						    }
 					    }
 					    entryList.add(new TextualEntry("Fach",5,subjects.get(Character.getNumericValue(subject.charAt(0)))));
-					    entryList.add(new CourseEntry("Studiengï¿½nge",6, courses));
+					    entryList.add(new CourseEntry("Studiengänge",6, courses));
 						
 					    long moduleID = Long.parseLong(session.getAttribute("moduleID").toString());
 					    int version = Integer.parseInt(session.getAttribute("version").toString());
@@ -90,7 +90,7 @@ public class EnterCourseToModule extends SessionCheck {
 					session.setAttribute("version", version);
 					
 					Module module = mAdmin.getModuleByID(moduleID, version);
-					System.out.println("########### Eintrï¿½ge ###########");
+					System.out.println("########### Einträge ###########");
 					if (module != null) {
 					    for (Entry entry : module.getEntryList()) {
 						System.out.println(entry.toString());

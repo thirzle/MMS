@@ -66,13 +66,13 @@ public class DisableModule extends SessionCheck {
 					mAdmin.deactivateModule(module);
 					String infotext = "Das Modul '"
 							+ module.getName()
-							+ "' wurde zurï¿½ckgesetzt und muss erst wieder feigegeben werden um in einem neuen Modulhandbuch aufzutauchen.";
+							+ "' wurde zurückgesetzt und muss erst wieder feigegeben werden um in einem neuen Modulhandbuch aufzutauchen.";
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
 							+ infotext);
 				} else if (request.getParameter("action").equals("ok")) {
 					String infotext = "Das Modul '"
 							+ module.getName()
-							+ "' wurde akzeptieren und wird im neuen Modulhandbuch verï¿½ffentlicht.";
+							+ "' wurde akzeptieren und wird im neuen Modulhandbuch veröffentlicht.";
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
 							+ infotext);
 				}

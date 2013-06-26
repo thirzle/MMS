@@ -60,11 +60,11 @@ public class CurrVitae extends SessionCheck {
 				if(request.getParameter("action")!=null){
 					if(request.getParameter("action").equals("delete")){
 						uAdmin.setCurriculum(user.getLogin(), null);
-						String infotext = "Ihr Lebenslauf wurde von Ihrem Benutzerprofil gelï¿½scht.";
+						String infotext = "Ihr Lebenslauf wurde von Ihrem Benutzerprofil gelöscht.";
 						response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 					}else if(request.getParameter("action").equals("add")){
 						uAdmin.setCurriculum(user.getLogin(), request.getParameter("currurl"));
-						String infotext = "Ihr Lebenslauf wurde in Ihrem Benutzerprofil geï¿½ndert.";
+						String infotext = "Ihr Lebenslauf wurde in Ihrem Benutzerprofil geändert.";
 						response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 					}
 				}

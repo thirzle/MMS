@@ -59,7 +59,7 @@ public class RemoveRepresentative extends SessionCheck {
 				EmailTelnet mail = new EmailTelnet();
 				mail.send_mail("Stellvertreter", mailRep, content);
 				
-				infotext = "Ihr Stellvertreter wurde entfernt. Erneuern Sie diesen bitte demnï¿½chst!";
+				infotext = "Ihr Stellvertreter wurde entfernt. Erneuern Sie diesen bitte demnächst!";
 				
 				// insert into History "Representative removed"
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

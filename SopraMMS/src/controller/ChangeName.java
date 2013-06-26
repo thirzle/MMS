@@ -52,7 +52,7 @@ public class ChangeName extends SessionCheck {
 			String date = formatter.format(currentTime);
 			uAdmin.insertHistory(user.getLogin(), date, "Name ge&auml;ndert");
 			
-			infotext = "Ihr Name wurde erfolgreich zu "+newFirstname+" "+newLastname+" geï¿½ndert. ";
+			infotext = "Ihr Name wurde erfolgreich zu "+newFirstname+" "+newLastname+" geändert. ";
 			session.setAttribute("content", "home");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 		}

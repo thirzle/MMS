@@ -46,11 +46,11 @@ public class DeleteModule extends SessionCheck {
 						mAdmin.deleteModule(moduleID, moduleVersion);
 						System.out.println("(DeleteModule.java): Das Modul '"
 								+ moduleID + " - " + moduleVersion
-								+ "' wurde gelï¿½scht");
+								+ "' wurde gelöscht");
 					}
 	
 				}
-				String infoText = "Die ausgewï¿½hlten Module wurden entgï¿½ltig aus dem Modul Management System gelï¿½scht.";
+				String infoText = "Die ausgewählten Module wurden entgültig aus dem Modul Management System gelöscht.";
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
 						+ infoText);
 			}

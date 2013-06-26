@@ -77,12 +77,12 @@ public class CreateModule extends SessionCheck {
 	
 			if (session.getAttribute("fieldsTypeA") == null) {
 	
-				fieldsTypeA.add(new String[] { "Kï¿½rzel", "" });
+				fieldsTypeA.add(new String[] { "Kürzel", "" });
 				fieldsTypeA.add(new String[] { "Titel", "" });
 				fieldsTypeA.add(new String[] { "Verantwortlicher", "" });
 				fieldsTypeA.add(new String[] { "Turnus", "" });
 				fieldsTypeA.add(new String[] { "Sprache", "" });
-				fieldsTypeA.add(new String[] { "Prï¿½fungsform", "" });
+				fieldsTypeA.add(new String[] { "Präungsform", "" });
 				
 				
 				
@@ -96,10 +96,10 @@ public class CreateModule extends SessionCheck {
 	
 			// Fuer TypD
 			if (session.getAttribute("fieldsTypeD") == null) {
-				fieldsTypeD.add(new String[] { "Prï¿½senzzeit", "" });
+				fieldsTypeD.add(new String[] { "Präsenzzeit", "" });
 				fieldsTypeD.add(new String[] { "Nacharbeitung", "" });
-				fieldsTypeD.add(new String[] { "ï¿½bungsaufgaben", "" });
-				fieldsTypeD.add(new String[] { "Prï¿½fung", "" });
+				fieldsTypeD.add(new String[] { "Übungsaufgaben", "" });
+				fieldsTypeD.add(new String[] { "Prüfung", "" });
 				fieldsTypeD.add(new String[] { "", "" });
 	
 			} else {
@@ -174,7 +174,7 @@ public class CreateModule extends SessionCheck {
 				// Modul fï¿½r Sitzung Speichern
 				else if (request.getParameter("createModule").equals("saveModule")) {
 					System.out
-							.println("(CreateModule.java): Modul fï¿½r Sitzung gespeichert");
+							.println("(CreateModule.java): Modul für Sitzung gespeichert");
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 				}
 				// Bei Klick Module Speichern

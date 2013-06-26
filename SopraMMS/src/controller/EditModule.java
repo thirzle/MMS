@@ -81,7 +81,7 @@ public class EditModule extends SessionCheck {
 						"editUnapprovedModule")) {
 					editUnapprovedModule = true;
 					editUnapprovedModuleUrl="?editButton=editUnapprovedModule";
-					System.out.println("(EditModule.java): Unbestï¿½tigtes Modul wird bearbeitet");
+					System.out.println("(EditModule.java): Unbestätigtes Modul wird bearbeitet");
 				}
 			}
 			
@@ -205,8 +205,8 @@ public class EditModule extends SessionCheck {
 	private void loadFieldsA() {
 		fieldsTypeA = new ArrayList<>();
 		for (TextualEntry entry : textualEntrys) {
-			if (entry.getTitle().equals("Kï¿½rzel")) {
-				fieldsTypeA.add(new String[] { "Kï¿½rzel", entry.getContent() });
+			if (entry.getTitle().equals("Kürzel")) {
+				fieldsTypeA.add(new String[] { "Kürzel", entry.getContent() });
 				entry.setPredefined(true);
 			} else if (entry.getTitle().equals("Titel")) {
 				fieldsTypeA.add(new String[] { "Titel", entry.getContent() });
@@ -221,8 +221,8 @@ public class EditModule extends SessionCheck {
 			} else if (entry.getTitle().equals("Sprache")) {
 				fieldsTypeA.add(new String[] { "Sprache", entry.getContent() });
 				entry.setPredefined(true);
-			} else if (entry.getTitle().equals("Prï¿½fungsform")) {
-				fieldsTypeA.add(new String[] { "Prï¿½fungsform",
+			} else if (entry.getTitle().equals("Prüfungsform")) {
+				fieldsTypeA.add(new String[] { "Prüfungsform",
 						entry.getContent() });
 				entry.setPredefined(true);
 			}
@@ -271,7 +271,7 @@ public class EditModule extends SessionCheck {
 				.getSelfStudyList();
 
 		int selfStudySize = selfStudyList.size();
-		fieldsTypeD.add(new String[] { "Prï¿½senzzeit",
+		fieldsTypeD.add(new String[] { "Präsenzzeit",
 				effortEntry.getPresenceTime() + "" });
 		for (int i = 0; i < selfStudySize; i++) {
 			SelfStudy selfStudy = selfStudyList.get(i);
@@ -355,7 +355,7 @@ public class EditModule extends SessionCheck {
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp"+editUnapprovedModuleUrl);
 
 				System.out
-						.println("(EditModule.java): Reihe zum Modul hinzugefï¿½gt");
+						.println("(EditModule.java): Reihe zum Modul hinzugefügt");
 			} else if (request.getParameter("editModule").equals("saveModule")) {
 				System.out
 						.println("(EditModule.java): Modul fï¿½r Sitzung gespeichert");
@@ -373,7 +373,7 @@ public class EditModule extends SessionCheck {
 
 				// save effort
 				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
-				EffortEntry effort = new EffortEntry("Prï¿½senzzeit", order++, pt);
+				EffortEntry effort = new EffortEntry("Präsenzzeit", order++, pt);
 				List<SelfStudy> selfStudyList = new ArrayList<>();
 
 				for (int i = 1; i < fieldsTypeD.size(); i++) {
@@ -420,7 +420,7 @@ public class EditModule extends SessionCheck {
 							module.getCreationDate(), newVersion);
 				} else {
 					System.out.println("+++++++++");
-					System.out.println("(EditModule.java): Bearbeitetes Modul --> ï¿½berschreibt Modul");
+					System.out.println("(EditModule.java): Bearbeitetes Modul --> überschreibt Modul");
 					System.out.println(editUnapprovedModule+"  url: "+editUnapprovedModuleUrl);
 					System.out.println("+++++++++");
 					for (Entry entry : module.getEntryList()) {
@@ -455,7 +455,7 @@ public class EditModule extends SessionCheck {
 			int deleteEntry = Integer.parseInt(request
 					.getParameter("deleteRow").replace("Delete", ""));
 			fieldsTypeC.remove(deleteEntry);
-			System.out.println("(EditModule.java): Reihe gelï¿½scht");
+			System.out.println("(EditModule.java): Reihe gelöscht");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp"+editUnapprovedModuleUrl);
 
 		} else {

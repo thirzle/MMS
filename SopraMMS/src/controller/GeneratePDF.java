@@ -110,7 +110,7 @@ public class GeneratePDF extends SessionCheck {
 			try {
 				SimplePdfCreator pdfCreator = new SimplePdfCreator();
 				pdfCreator.createModulePdf("P:/Team7_12/TestPDF/" + fileName,
-						moduleList, "institut kommt noch raus", "Fakultï¿½t Ingenieurwissenschaften und Informatik", degree,
+						moduleList, "institut kommt noch raus", "Fakultät Ingenieurwissenschaften und Informatik", degree,
 						examRegulation, latestModificationDate.toString(), latestAuthor, semester,
 						version);
 			} catch (Exception e) {
