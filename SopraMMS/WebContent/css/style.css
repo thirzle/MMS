@@ -41,11 +41,8 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
 }
-table.tablesorter thead tr th.header:FIRST-CHILD {
-	width: 1em;	
-}
 table.tablesorter thead tr th.xs {
-	width: 1em;
+	width: 15px;
 }
 table.tablesorter thead tr th.s {
 	width: 50px;

@@ -18,7 +18,7 @@
 	<table id="deleteModuleTable" class='tablesorter'>
 		<thead>
 			<tr>
-				<th style="width: 1%;"></th>
+				<th></th>
 				<th>Titel</th>
 				<th>Version</th>
 				<th>Autor</th>
