@@ -13,7 +13,7 @@
 	<table>
 		<tr>
 			<td>E-Mail Adresse:</td>
-			<td><input name="email" type="email" size="40" maxlength="50"></td>
+			<td><input class="inputField" name="email" type="email" size="40" maxlength="50"></td>
 		</tr>
 	</table>
 	<br /> <input type="submit" value="Neues Passwort beantragen">

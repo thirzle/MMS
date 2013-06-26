@@ -26,13 +26,12 @@
 		<h3>Benutzername:</h3>
 		<br>
 		<p class="menuContent">
-			<input name="loginname" type="text" size="32" />
+			<input class="inputField" name="loginname" type="text" size="29" />
 		</p>
-
-		<h3>Passwort:</h3>
+			<h3>Passwort:</h3>
 		<br>
 		<p class="menuContent">
-			<input name="password" type="password" size="32" />
+			<input class="inputField" name="password" type="password" size="29" />
 
 		</p>
 		<p class="menuContent">

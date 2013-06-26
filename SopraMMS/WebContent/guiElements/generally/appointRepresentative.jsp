@@ -8,17 +8,17 @@
 	method="get">
 	<h1>Stellvertreter beantragen</h1>
 	<%
-		if ((session.getAttribute("lessData") != null)) {
+		if ((session.getAttribute("lessDataRep") != null)) {
 	%>
 	<error>Alle Felder m&uuml;ssen ausgef&uuml;llt werden!</error>
 	<%
-		} else if (session.getAttribute("wrongData") != null) {
-			if(session.getAttribute("wrongData").equals("wrongName")){
+		} else if (session.getAttribute("wrongDataRep") != null) {
+			if(session.getAttribute("wrongDataRep").equals("wrongName")){
 				%>
 				<error>Name oder E-Mail ist falsch!</error>
 				<%				
 			}
-			else if(session.getAttribute("wrongData").equals("yourselfRep")){
+			else if(session.getAttribute("wrongDataRep").equals("yourselfRep")){
 				%>
 				<error>Sie k&ouml;nnen sich nicht selbst zum Stellvertreter ernennen!</error>
 				<%				

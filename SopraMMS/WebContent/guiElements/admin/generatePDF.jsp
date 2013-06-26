@@ -28,7 +28,7 @@
 	</select><br>
 	<p>Geben Sie die aktuelle Pr&uuml;fungsordnung ein:</p>
 	<input name="examRegulation" type="text" size="30" maxlength="30"/>
-	<br> <input type="submit" name="Submit" id="showEntries" value="Modulhandbuch erstellen" />
+	<br> <button type="submit" name="Submit" id="showEntries" value="Modulhandbuch erstellen" >Modulhandbuch erstellen</button>
 </form>
 <script>
 $(document).ready(function() {
@@ -38,13 +38,13 @@ $(document).ready(function() {
 	});
 	function enableButton() {
 		if (!($("input[type=text]")[0].value == "")) {
-			$('input[type=submit]').each(function() {
+			$('button[type=submit]').each(function() {
 				if ($(this).attr('disabled')) {
 					$(this).removeAttr('disabled');
 				}
 			});
 		} else {
-			$('input[type=submit]').each(function() {
+			$('button[type=submit]').each(function() {
 				$(this).attr({
 					'disabled' : 'disabled'
 				});
