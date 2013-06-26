@@ -651,4 +651,9 @@ public class UserAdministration {
 	public String getEmailOfUser(String loginname){
 		return userDBController.getEmailOfUser(loginname);
 	}
+	
+	
+	public String checkLoginname(String loginname){
+		return userDBController.checkLoginname(loginname);
+	}
 }

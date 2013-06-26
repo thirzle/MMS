@@ -235,7 +235,7 @@ public class SimplePdfCreator {
 	//IMAGE
 	
 	PDXObjectImage ximage = null;
-	ximage = new PDJpeg(doc, new FileInputStream( "P:/Team7_12/TestPDF/uulm_logo.jpg" ) );
+	ximage = new PDJpeg(doc, new FileInputStream( "./WebContent/pdf/uulm_logo.jpg" ) );
 
 	PDPageContentStream contentStream = new PDPageContentStream(doc, title_page);
 	
