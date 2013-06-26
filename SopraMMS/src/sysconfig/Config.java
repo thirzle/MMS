@@ -52,8 +52,10 @@ public class Config {
 			String type = val[0];
 			String value = "";
 			for(int i = 1; i < val.length; i++){
-			    value = value.concat("=");
 			    value = value.concat(val[i]);
+			    if(i != val.length-1){
+				value = value.concat("=");
+			    }
 			}
 			
 			if (type.compareTo("system_pdf_path") == 0) {
