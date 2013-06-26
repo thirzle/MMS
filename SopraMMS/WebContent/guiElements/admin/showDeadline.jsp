@@ -3,6 +3,7 @@
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   	<script src="/SopraMMS/js/jquery.datepicker.translate.js"></script>
+  	<script src="/SopraMMS/js/jquery.deadline.js"></script>
 <h1>Stichtag</h1>
 <% 
 	String content = request.getParameter("submitDeadline")+"";
@@ -33,21 +34,6 @@
   });
   $(function() {
 	$( "#datepicker2" ).datepicker();
-	$("input[type=text]").change(function() {
-		if (!($("input[type=text]")[0].textContent == "" || $("input[type=text]")[1].textContent == "")) {
-			$('input[type=submit]').each(function() {
-				if ($(this).attr('disabled')) {
-					$(this).removeAttr('disabled');
-				}
-			});
-		} else {
-			$('input[type=submit]').each(function() {
-				$(this).attr({
-					'disabled' : 'disabled'
-				});
-			});
-		}
-	});
   });
   </script>
  <form name="change" action="/SopraMMS/Deadline" method="get">
@@ -55,17 +41,17 @@
 	<tr>
 			<td>Stichtag:</td>
 			<td>
-				<input name="deadline" type="text" id="datepicker1" 
+				<input class="inputField" name="deadline" type="text" id="datepicker1" 
 				value="<%=new SimpleDateFormat("dd.MM.yyyy").format(session.getAttribute("deadline"))%>"/>
 			</td>
 	</tr>
 	<tr>		
 			<td>Erinnerungsbeginn:</td>
 			<td>
-				<input name="beginremember" type="text" id="datepicker2" 
+				<input class="inputField" name="beginremember" type="text" id="datepicker2" 
 				value="<%=new SimpleDateFormat("dd.MM.yyyy").format(session.getAttribute("beginremember"))%>"/>
 			</td>
 	</tr>
 </table>
-<input type="submit" value="Stichtag ändern">
+<button type="submit" value="Stichtag ändern">Stichtag ändern</button>
 </form>
