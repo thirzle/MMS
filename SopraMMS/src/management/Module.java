@@ -465,6 +465,14 @@ public class Module {
     	this.modificationDate=modificationDate;
     }
     
+    /**
+     * Sets the InstituteID of this Module.
+     * @param instituteID The new InstituteID of this Module.
+     */
+    public void setInstituteID(String instituteID){
+    	this.instituteID=instituteID;
+    }
+    
     @SuppressWarnings("unused")
     /**
      * Returns the current date.

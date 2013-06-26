@@ -58,7 +58,8 @@ try {
 						<%int i = 0;
 						  for(Course course : courses) { %>
 							<option value=<%=i %>><%=course %></option>
-						<%i++;} %>
+						<%i++;}%>
+						<option value="empty">Keins</option>
 					</select>
 				</td>
 			</tr>
@@ -69,7 +70,8 @@ try {
 						<%int j=0;
 						  for(Course course : courses) { %>
 							<option value=<%=j %>><%=course %></option>
-						<%j++;} %>
+						<%j++;}%>
+						<option value="empty">Keins</option>
 					</select>
 				</td>
 			</tr>

@@ -8,6 +8,7 @@
 <title>MMS</title>
 <link rel="stylesheet" href="/SopraMMS/css/style.css" type="text/css" media="print, projection, screen" />
 <link rel="stylesheet" type="text/css" href="/SopraMMS/css/default.css">
+<link rel="icon" href="/SopraMMS/images/favicon.ico" type="image/x-icon" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/SopraMMS/js/menuManager.js"></script>
 </head>

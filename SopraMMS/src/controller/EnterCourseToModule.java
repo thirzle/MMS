@@ -53,17 +53,19 @@ public class EnterCourseToModule extends SessionCheck {
 				    List<String> subjects = ma.getSubjects();
 				    List<Course> courses = ma.getCourses();
 				    List<Entry> entryList = (List<Entry>) session.getAttribute("showEntryListFromModule");
-				    String obligatoryModulSelect = request.getParameter("obligatoryModulSelect");
-				    String voteModuleSelect = request.getParameter("voteModuleSelect");
+				    String obligatoryModulSelect = (request.getParameter("obligatoryModulSelect")).replace("empty", "");
+				    String voteModuleSelect = (request.getParameter("voteModuleSelect")).replace("empty", "");
 				    String subject = request.getParameter("subjectSelect");
-	
-				    for (int i = 0; i < obligatoryModulSelect.length(); i++) {
-					courses.get(Character.getNumericValue(obligatoryModulSelect.charAt(i))).setObligatory(true);
+				    if(!obligatoryModulSelect.isEmpty()) {
+					    for (int i = 0; i < obligatoryModulSelect.length(); i++) {
+					    	courses.get(Character.getNumericValue(obligatoryModulSelect.charAt(i))).setObligatory(true);
+					    }
 				    }
-				    for (int i = 0; i < voteModuleSelect.length(); i++) {
-					courses.get(Character.getNumericValue(voteModuleSelect.charAt(i))).setObligatory(false);
+				    if(!voteModuleSelect.isEmpty()) {
+					    for (int i = 0; i < voteModuleSelect.length(); i++) {
+					    	courses.get(Character.getNumericValue(voteModuleSelect.charAt(i))).setObligatory(false);
+					    }
 				    }
-				    
 				    entryList.add(new TextualEntry("Fach",5,subjects.get(Character.getNumericValue(subject.charAt(0)))));
 				    entryList.add(new CourseEntry("Studiengänge",6, courses));
 					

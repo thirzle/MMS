@@ -52,6 +52,7 @@ public class EditModule extends HttpServlet {
 	Module module = null;
 	List<Entry> entryList = null;
 	private boolean editUnapprovedModule = false;
+	private String editUnapprovedModuleUrl ="";
 	private boolean firstRun = false;
 
 	// TypeA --> predefined mandatory fields Feld
@@ -73,10 +74,18 @@ public class EditModule extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		session = request.getSession();
-		if (session.getAttribute("editUnapprovedModule") != null) {
-			editUnapprovedModule = true;
-			session.removeAttribute("editUnapprovedModule");
+		editUnapprovedModule = false;
+		editUnapprovedModuleUrl="";
+		System.out.println("+++++ "+request.getParameter("editButton"));
+		if (request.getParameter("editButton") != null) {
+			if (request.getParameter("editButton").equals(
+					"editUnapprovedModule")) {
+				editUnapprovedModule = true;
+				editUnapprovedModuleUrl="?editButton=editUnapprovedModule";
+				System.out.println("(EditModule.java): Unbestätigtes Modul wird bearbeitet");
+			}
 		}
+		
 		if (request.getParameter("showVersionsButton") != null) {
 			RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/ShowVersionsOfModule");
@@ -117,7 +126,6 @@ public class EditModule extends HttpServlet {
 					fieldsTypeE.clear();
 				if (textualEntrys != null)
 					textualEntrys.clear();
-			
 
 				for (Entry entry : entryList) {
 					if (entry.getClass().equals(EffortEntry.class)) {
@@ -130,7 +138,7 @@ public class EditModule extends HttpServlet {
 				}
 				System.out
 						.println("(EditModule.java): Initialisierung abgeschlossen");
-				firstRun=true;
+				firstRun = true;
 
 			} else {
 				moduleID = (long) session
@@ -140,7 +148,7 @@ public class EditModule extends HttpServlet {
 				firstRun = false;
 			}
 
-			institute = module.getInstituteID();
+			
 
 			setContentToFields(request);
 
@@ -158,12 +166,13 @@ public class EditModule extends HttpServlet {
 			session.removeAttribute("fieldsTypeCEdit");
 			session.removeAttribute("fieldsTypeDEdit");
 			session.removeAttribute("fieldsTypeEEdit");
-			// session.removeAttribute("selectedInstitute");		
+			// session.removeAttribute("selectedInstitute");
 			loadFieldsA();
 			loadFieldsB();
 			loadFieldsC();
 			loadFieldsD();
 			loadFieldsE();
+			institute = module.getInstituteID();
 			System.out
 					.println("(EditModule.java): Setze Inhalt - Erster Aufruf");
 		} else {
@@ -171,7 +180,8 @@ public class EditModule extends HttpServlet {
 			reloadFieldsB(request);
 			reloadFieldsC(request);
 			reloadFieldsD(request);
-
+			module.setInstituteID(request.getParameter("selectedInstitute"));
+			
 			System.out.println("(EditModule.java): Setze Inhalt");
 		}
 
@@ -193,7 +203,7 @@ public class EditModule extends HttpServlet {
 	}
 
 	private void loadFieldsA() {
-		fieldsTypeA = new ArrayList<>();	
+		fieldsTypeA = new ArrayList<>();
 		for (TextualEntry entry : textualEntrys) {
 			if (entry.getTitle().equals("Kürzel")) {
 				fieldsTypeA.add(new String[] { "Kürzel", entry.getContent() });
@@ -221,7 +231,7 @@ public class EditModule extends HttpServlet {
 	}
 
 	private void loadFieldsB() {
-		fieldsTypeB = new ArrayList<>();	
+		fieldsTypeB = new ArrayList<>();
 		for (TextualEntry entry : textualEntrys) {
 			if (entry.getTitle().equals("Inhalt")) {
 				fieldsTypeB.add(new String[] { "Inhalt", entry.getContent() });
@@ -245,7 +255,7 @@ public class EditModule extends HttpServlet {
 	}
 
 	private void loadFieldsC() {
-		fieldsTypeC = new ArrayList<>();	
+		fieldsTypeC = new ArrayList<>();
 		for (TextualEntry entry : textualEntrys) {
 			if (!entry.isPredefinedField()) {
 				fieldsTypeC.add(new String[] { entry.getTitle(),
@@ -256,7 +266,7 @@ public class EditModule extends HttpServlet {
 	}
 
 	private void loadFieldsD() {
-		fieldsTypeD = new ArrayList<>();	
+		fieldsTypeD = new ArrayList<>();
 		LinkedList<SelfStudy> selfStudyList = (LinkedList<SelfStudy>) effortEntry
 				.getSelfStudyList();
 
@@ -277,7 +287,7 @@ public class EditModule extends HttpServlet {
 	}
 
 	private void loadFieldsE() {
-		fieldsTypeE = new ArrayList<>();	
+		fieldsTypeE = new ArrayList<>();
 		if (module.getSubject() != null) {
 			fieldsTypeE.add(new String[] { "Fach", module.getSubject() });
 		}
@@ -342,13 +352,14 @@ public class EditModule extends HttpServlet {
 			if (request.getParameter("editModule").equals("addRow")) {
 				fieldsTypeC.add(new String[] { "", "" });
 				session.setAttribute("content", "editModule");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp"+editUnapprovedModuleUrl);
+
 				System.out
 						.println("(EditModule.java): Reihe zum Modul hinzugefügt");
 			} else if (request.getParameter("editModule").equals("saveModule")) {
 				System.out
 						.println("(EditModule.java): Modul für Sitzung gespeichert");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp"+editUnapprovedModuleUrl);
 			} else if (request.getParameter("editModule").equals("sendModule")) {
 
 				LinkedList<Entry> entryListForNewModule = new LinkedList<>();
@@ -400,12 +411,20 @@ public class EditModule extends HttpServlet {
 
 				module.setEntryList(entryListForNewModule);
 				if (!editUnapprovedModule) {
+					System.out.println("+++++++++");
+					System.out.println("(EditModule.java): Bearbeitetes Modul --> Neues Modul");
+					System.out.println(editUnapprovedModule+"  url: "+editUnapprovedModuleUrl);
+					System.out.println("+++++++++");
 					mAdmin.createModuleByModuleManager(module,
 							((User) session.getAttribute("user")).getLogin(),
 							module.getCreationDate(), newVersion);
 				} else {
+					System.out.println("+++++++++");
+					System.out.println("(EditModule.java): Bearbeitetes Modul --> Überschreibt Modul");
+					System.out.println(editUnapprovedModule+"  url: "+editUnapprovedModuleUrl);
+					System.out.println("+++++++++");
 					for (Entry entry : module.getEntryList()) {
-						System.out.println(entry.getTitle()+"");
+						System.out.println(entry.getTitle() + "");
 					}
 					module.setAuthor(((User) session.getAttribute("user"))
 							.getLogin());
@@ -415,8 +434,7 @@ public class EditModule extends HttpServlet {
 					mAdmin.editModule(module);
 					editUnapprovedModule = false;
 				}
-			
-				
+
 				// insert into History "Module changed"
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				Date currentTime = new Date();
@@ -438,11 +456,11 @@ public class EditModule extends HttpServlet {
 					.getParameter("deleteRow").replace("Delete", ""));
 			fieldsTypeC.remove(deleteEntry);
 			System.out.println("(EditModule.java): Reihe gelöscht");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp"+editUnapprovedModuleUrl);
 
 		} else {
 			session.setAttribute("content", "editModule");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp"+editUnapprovedModuleUrl);
 
 		}
 	}

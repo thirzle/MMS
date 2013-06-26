@@ -6,7 +6,7 @@ ArrayList<String> instituteList = (ArrayList<String>) session.getAttribute("inst
 %>
 <h1>Benutzerdaten</h1>
 <div>
-	<table>
+	<table class="userdata">
 		<tr>
 			<td style="width : 140px">Benutzername: </td>
 			<td><%=userArray[0]%></td>
@@ -19,6 +19,12 @@ ArrayList<String> instituteList = (ArrayList<String>) session.getAttribute("inst
 			<td>E-Mail: </td>
 			<td><%=userArray[2]%></td>
 		</tr>
+			<%if(!userArray[6].equals("")){ %>
+		<tr>
+			<td>Lebenslauf: </td>
+			<td><a href="<%=userArray[6]%>" target="_blank"><%=userArray[6]%></a></td>
+		</tr>
+		<% }%>
 		<tr>
 			<td>Stellvertreter: </td>
 			<td><%=userArray[3]%></td>

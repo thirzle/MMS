@@ -1,6 +1,6 @@
 
 <script type="text/javascript" src="/SopraMMS/js/jquery.tablesorter.js"></script>
-<script type="text/javascript" src="/SopraMMS/js/jquery.newstable.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/tablemanager.js"></script>
 <%@page import="java.util.List"%>
 <%@page import="user.UserAdministration"%>
 <%
@@ -13,7 +13,7 @@
 	<table id="showNewsTable" class='tablesorter'>
 		<thead>
 			<tr>
-				<th style="width: 1%;"></th>
+				<th></th>
 				<th>Titel</th>
 				<th>Text</th>
 				<th>Sichtbarkeit</th>
@@ -65,7 +65,10 @@
 		%>
 		</tbody>
 	</table>
-	<input type="submit" value="L&ouml;schen">
+	<button type="submit" value="L&ouml;schen">Löschen</button>
 </form>
-
-
+<script type="text/javascript">
+<!--
+manageTable($("#showNewsTable"));
+//-->
+</script>
