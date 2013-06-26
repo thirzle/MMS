@@ -19,7 +19,7 @@ import model.UserDBController;
 public class UserAdministration {
 
 	/**
-	 * 
+	 * UserDBController object.
 	 */
 	static UserDBController userDBController = new UserDBController();
 

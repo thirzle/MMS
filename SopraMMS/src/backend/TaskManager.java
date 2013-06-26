@@ -15,7 +15,15 @@ import mail.EmailTelnet;
 import management.Deadline;
 import management.ModuleAdministration;
 
+/**
+ * @author ...
+ *
+ */
 public class TaskManager {
+	
+	/**
+	 * @param deadline
+	 */
 	public TaskManager (final Deadline deadline) {
 		final ModuleAdministration mAdmin = new ModuleAdministration();
 		final UserAdministration uAdmin = new UserAdministration();
