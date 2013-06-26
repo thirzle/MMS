@@ -28,19 +28,9 @@ $(document).ready(function() {
 						bearbeiten</a></li>
 				<li id="deleteUser"><a href="/SopraMMS/LoadTable?task=delete">Benutzer
 						löschen</a></li>
-				<li id="showHistory"><a href="/SopraMMS/ShowHistory">Historie</a></li>
 			</ul>
 		</div>
 		
-		<div class="headerNavAdminNews">
-			<li>Neuigkeiten</li>
-		</div>
-		<div class="expandAdminNews">
-			<ul class="subNav">
-				<li id="showNews">&Uuml;bersicht Neuigkeiten</li>
-				<li id="addNews">Neuigkeit verfassen</li>
-			</ul>
-		</div>
 		
 		<div class="headerNavAdminModule">
 			<li>Modulverwaltung</li>
@@ -51,6 +41,18 @@ $(document).ready(function() {
 				<li id="deadline"><a href="/SopraMMS/Deadline">Stichtag festlegen</a></li>
 				<li id="deleteModule"><a href="/SopraMMS/DeleteModule">Modul löschen</a></li>
 				<li id="createInstitute">Institut erstellen</li>
+			</ul>
+		</div>
+		
+		
+		<div class="headerNavAdminNews">
+			<li>Sonstiges</li>
+		</div>
+		<div class="expandAdminNews">
+			<ul class="subNav">
+				<li id="showNews">&Uuml;bersicht Neuigkeiten</li>
+				<li id="addNews">Neuigkeit verfassen</li>
+				<li id="showHistory"><a href="/SopraMMS/ShowHistory">Historie</a></li>
 			</ul>
 		</div>
 	</ul>

@@ -19,6 +19,12 @@ ArrayList<String> instituteList = (ArrayList<String>) session.getAttribute("inst
 			<td>E-Mail: </td>
 			<td><%=userArray[2]%></td>
 		</tr>
+			<%if(!userArray[6].equals("")){ %>
+		<tr>
+			<td>Lebenslauf: </td>
+			<td><a href="<%=userArray[6]%>" target="_blank"><%=userArray[6]%></a></td>
+		</tr>
+		<% }%>
 		<tr>
 			<td>Stellvertreter: </td>
 			<td><%=userArray[3]%></td>
