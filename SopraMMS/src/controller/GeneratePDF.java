@@ -61,22 +61,6 @@ public class GeneratePDF extends HttpServlet {
 		String semester;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 		Calendar cal = new GregorianCalendar();
-
-//		LinkedList<String> facListName = (LinkedList) uAdmin
-//				.getAllFacultiesByName();
-//		LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
-		LinkedList<Course> courses = (LinkedList<Course>) mAdmin.getCourses();
-
-		// all courses of faculty in courseArray[]
-//		String[] courseArray = new String[2 * courses.size()];
-//		for (int i = 0; i < courses.size(); i++) {
-//			courseArray[i] = "Bachelor " + courses.get(i).getDescription();
-//		}
-//		for (int j = 0; j < courses.size(); j++) {
-//			courseArray[j + courses.size()] = "Master "
-//					+ courses.get(j).getDescription();
-//		}
-		
 		
 		// get course from gui
 		String fullCourse = request.getParameter("course");
@@ -119,7 +103,7 @@ public class GeneratePDF extends HttpServlet {
 		// create filename
 		String fileName = version + ".pdf";
 
-		// TODO Create new ModuleManual in database
+		//Create new ModuleManual in database
 		mAdmin.createModuleManual(version, fileName, courseID, degree, new java.sql.Date(currentTime.getTime()), new java.sql.Date(latestModificationDate.getTime()),
 				semester, Integer.parseInt(examRegulation));
 
@@ -135,8 +119,7 @@ public class GeneratePDF extends HttpServlet {
 			System.out.println("couldn't create PDF of course: "
 					+ splitCourse[1]);
 		}
-		response.sendRedirect("/SopraMMS/fileExportServlet?filename="
-				+ fileName);
+		response.sendRedirect("/SopraMMS/FileExportServlet?filename="+fileName);
 	}
 
 	/**

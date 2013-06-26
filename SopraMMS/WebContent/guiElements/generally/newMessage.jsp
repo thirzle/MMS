@@ -28,7 +28,7 @@
 	<tr>
 		<td align="left" colspan="2">Empfänger:</td>
 		<td align="left">
-		<input form="sendMailForm" name="mailto" id="mailto"
+		<input class="inputField" form="sendMailForm" name="mailto" id="mailto"
 			onKeyUp="Eingabe(this.value);" type="text" size="40"></td>
 		<!-- <br>
 		<br> -->

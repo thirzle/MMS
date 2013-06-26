@@ -10,7 +10,7 @@ if(session.getAttribute("wrongDataNewInst") != null){
 		<error>Diese InstitutsID existiert bereits!</error>
 	<%
 	}
-	if(session.getAttribute("wrongDataNewInst").equals("wrongName")){
+	else if(session.getAttribute("wrongDataNewInst").equals("wrongName")){
 		session.removeAttribute("wrongDataNewInst");
 	%>
 		<error>Dieser Institutsname existiert bereits!</error>

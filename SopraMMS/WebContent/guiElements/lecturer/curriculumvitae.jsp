@@ -23,7 +23,7 @@
 				auf Ihren Lebenslauf verweißt:</td>
 		</tr>
 		<tr>
-			<td align="left"><input name="currurl" id="currurl" type="url"
+			<td align="left"><input class="inputField" name="currurl" id="currurl" type="url"
 				size="60" value="<%=session.getAttribute("currVitae")%>"></td>
 		</tr>
 		<tr>

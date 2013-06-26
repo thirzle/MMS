@@ -39,17 +39,17 @@
 	<table>
 		<tr>
 			<td>Altes Passwort:</td>
-			<td><input name="oldPassword" type="password" size="30"
+			<td><input class="inputField" name="oldPassword" type="password" size="30"
 				maxlength="30"></td>
 		</tr>
 		<tr>
 			<td>Neues Passwort:</td>
-			<td><input name="newPassword1" type="password" size="30"
+			<td><input class="inputField" name="newPassword1" type="password" size="30"
 				maxlength="40"></td>
 		</tr>
 		<tr>
 			<td>Neues Passwort best&auml;tigen:</td>
-			<td><input name="newPassword2" type="password" size="30"
+			<td><input class="inputField" name="newPassword2" type="password" size="30"
 				maxlength="40"></td>
 		</tr>
 

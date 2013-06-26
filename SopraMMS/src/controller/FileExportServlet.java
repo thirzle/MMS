@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebInitParam;
 /**
  * Servlet implementation class FileExportServlet
  */
-@WebServlet(urlPatterns = { "/fileExportServlet" }, initParams = { @WebInitParam(name = "exportFolder", value = "P:/Team7_12/TestPDF/", description = "Folder with files to export") })
+@WebServlet(urlPatterns = { "/FileExportServlet" }, initParams = { @WebInitParam(name = "exportFolder", value = "P:/Team7_12/TestPDF/", description = "Folder with files to export") })
 public class FileExportServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,6 @@ public class FileExportServlet extends HttpServlet {
 	 */
 	public FileExportServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -52,7 +51,6 @@ public class FileExportServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }
