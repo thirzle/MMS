@@ -1,11 +1,10 @@
 <%@page import="user.User"%>
-
-<h1>Name &auml;ndern</h1>
-<p>Sie sind angemeldet als</p>
 <%
 	User user = (User) session.getAttribute("user");
-	out.print(user.getFirstName() + " " + user.getLastName());
 %>
+<h1>Name &auml;ndern</h1>
+<p>Sie sind angemeldet als<%=" "+user.getFirstName()+" "+user.getLastName()+"." %></p>
+
 <form action="/SopraMMS/ChangeName" method="get">
 	<table>
 		<tr>
