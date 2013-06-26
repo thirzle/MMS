@@ -57,10 +57,10 @@
 %>
 <%
 	if (user == null) {
-		if (session.getAttribute("content") == null) {
+		if (session.getAttribute("content") == null &&  session.getAttribute("userCreatNewPassword")==null) {
 			session.invalidate();
 		} else if (!session.getAttribute("content").equals(
-				"createNewPassword")) {
+				"createNewPassword") && session.getAttribute("userCreatNewPassword")==null) {
 			session.invalidate();
 		}
 %>

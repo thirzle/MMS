@@ -33,19 +33,20 @@ public class AcceptNewPassword extends HttpServlet {
 		UserAdministration ua = new UserAdministration();
 
 		if (!newPassword1.equals(newPassword2)) {
-			request.getSession().setAttribute("content",
-					"ceateNewPwNotEqual");
+			request.getSession().setAttribute("content", "ceateNewPwNotEqual");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		} else {
-			User user = (User) (request.getSession().getAttribute("userCreatNewPassword"));
+			User user = (User) (request.getSession()
+					.getAttribute("userCreatNewPassword"));
 			ua.changePassword(user, newPassword1.hashCode() + "");
 
 			ua.deleteNewPasswordLink(user.getLogin());
 
-			request.getSession().setAttribute("content",
-					"ceateNewPwDone");
+			String infoText = "Ihr Passwort wurde erfolgreich geändert. Absofort können Sie sich mit Ihrem neuen Passwort einloggen.";
 			request.getSession().removeAttribute("userCreatNewPassword");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			request.getSession().setAttribute("content", "start");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?infotext="
+					+ infoText);
 
 		}
 

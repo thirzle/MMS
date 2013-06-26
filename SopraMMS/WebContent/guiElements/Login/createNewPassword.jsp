@@ -24,6 +24,7 @@
 %>
 
 <error>Die beiden Passw&ouml;rter stimmen nicht &uuml;berein</error>
+<br>
 
 <%
 	}
@@ -47,13 +48,6 @@
 	<input type="submit" name="Submit" value="Passwort &Auml;ndern"
 		class="btnChangePw" />
 </form>
-
-<%
-	} else if (session.getAttribute("content").equals("ceateNewPwDone")) {
-		//session.setAttribute("content","home");
-%>
-
-<h3>Ihr Passwort wurde erfolgreich ge&auml;ndert</h3>
 
 <%
 	}

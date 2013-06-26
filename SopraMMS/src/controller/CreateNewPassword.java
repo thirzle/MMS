@@ -14,7 +14,7 @@ import user.UserAdministration;
  * Servlet implementation class CreateNewPassword
  */
 @WebServlet("/CreateNewPassword")
-public class CreateNewPassword extends SessionCheck {
+public class CreateNewPassword extends HttpServlet{
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -27,26 +27,26 @@ public class CreateNewPassword extends SessionCheck {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if(isLoggedIn(request, response)) {
+		UserAdministration uAdmin = new UserAdministration();
+	
 			try {
 				User user = uAdmin.checkNewPasswordLink(request.getParameter("link"));
+				System.out.println(user);
 				if (user!=null) {
 					request.getSession().setAttribute("userCreatNewPassword", user);
 					request.getSession().setAttribute("content", "createNewPassword");
 					System.out.println("(CreateNewPassword.java): "+request.getSession().getAttribute("content"));
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 				}else{
-					response.sendRedirect("/SopraMMS/guiElements/error.jsp");
+					String errorText = "Dieser Link um ein neues Passwort zu erstellen existiert nicht.";
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?errortext="+errorText);
 				}
 			
 			} catch (Exception e) {
+				e.printStackTrace();
 				response.sendRedirect("/SopraMMS/guiElements/error.jsp");
 			}	
 		}
-		
-	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

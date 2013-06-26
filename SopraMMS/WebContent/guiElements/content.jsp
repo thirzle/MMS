@@ -6,10 +6,8 @@
 			.println("-- content: " + session.getAttribute("content"));
 	System.out.println("-- home: " + request.getParameter("home"));
 	System.out.println("-- user: " + session.getAttribute("user"));
-	if ((session.getAttribute("content") == null || request
-			.getParameter("home") != null)
-			&& session.getAttribute("user") == null) {
-
+	System.out.println("+++++++++ Content " + session.getAttribute("userCreatNewPassword"));
+	if ((session.getAttribute("content") == null || request.getParameter("home") != null) && session.getAttribute("user") == null&&session.getAttribute("userCreatNewPassword")==null) {
 		contentPage = "start";
 		if (request.getParameter("contentPdf") != null) {
 			contentPage = "contentPdf";
@@ -31,8 +29,7 @@
 <jsp:include page="/guiElements/frontend/frontendContent.jsp"></jsp:include>
 <%
 	} else if (contentPage.equals("createNewPassword")
-			|| contentPage.equals("ceateNewPwNotEqual")
-			|| contentPage.equals("ceateNewPwDone")) {
+			|| contentPage.equals("ceateNewPwNotEqual")) {
 %>
 <jsp:include page="/guiElements/Login/createNewPassword.jsp"></jsp:include>
 <%

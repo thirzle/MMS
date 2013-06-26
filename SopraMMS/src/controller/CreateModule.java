@@ -82,7 +82,7 @@ public class CreateModule extends SessionCheck {
 				fieldsTypeA.add(new String[] { "Verantwortlicher", "" });
 				fieldsTypeA.add(new String[] { "Turnus", "" });
 				fieldsTypeA.add(new String[] { "Sprache", "" });
-				fieldsTypeA.add(new String[] { "Präungsform", "" });
+				fieldsTypeA.add(new String[] { "Prüfungsform", "" });
 				
 				
 				
@@ -229,7 +229,7 @@ public class CreateModule extends SessionCheck {
 					String date = formatter.format(currentTime);
 					String title = null;
 					for (Entry entry : module) {
-						if (entry.getTitle().equals("Kï¿½rzel")) {
+						if (entry.getTitle().equals("Kürzel")) {
 							title = entry.getContent();
 						}
 					}
