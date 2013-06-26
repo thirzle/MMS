@@ -12,8 +12,8 @@
 
 
 <%
-	Module module = (Module)session.getAttribute("moduleEdit");
-	if(module!= null){
+	Module module = (Module) session.getAttribute("moduleEdit");
+	if (module != null) {
 %>
 <table class="informationAboutModule">
 	<tr>
@@ -22,7 +22,9 @@
 		<td>Autor: <%=module.getModificationauthor()%>
 	</tr>
 </table>
-<%} %>
+<%
+	}
+%>
 
 
 <form action="/SopraMMS/EditModule" method="get">
@@ -68,9 +70,9 @@
 				<td class='descriptionModule'><%=description[0]%></td>
 				<td class='entryModule'><notEditable> <%
  	String list[]=description[1].split("\n");
-           							for(String s:list){
-           								out.println(""+s+"<br>");
-           							}
+             							for(String s:list){
+             								out.println(""+s+"<br>");
+             							}
  %> </notEditable></td>
 			</tr>
 		</table>
@@ -90,13 +92,13 @@
 							<tr>
 								<%
 									String[] pt = new String[2];
-								if(fieldsTypeD.size() > 0){
-								pt = fieldsTypeD.get(0);
-								}else
-								{
-								pt[0] = "empty";
-								pt[1] = "empty";
-								}
+										if(fieldsTypeD.size() > 0){
+										pt = fieldsTypeD.get(0);
+									}else
+									{
+										pt[0] = "empty";
+										pt[1] = "empty";
+									}
 								%>
 								<td class="effortEntryTitel">Präsenzzeit</td>
 								<td>:</td>
@@ -106,7 +108,7 @@
 
 							<%
 								for (int i = 1; i < fieldsTypeD.size(); i++) {
-							String[] description = fieldsTypeD.get(i);
+																	String[] description = fieldsTypeD.get(i);
 							%>
 							<tr>
 								<td class="effortEntryTitel"><input name='<%=i%>TitleD'
@@ -132,13 +134,19 @@
 				<td class='entryModule'><select name='selectedInstitute'
 					id="instituteSelect">
 						<%
-							ModuleAdministration mAdmin = new ModuleAdministration();	
-																																																						for (int i = 0; i < institutes.size(); i++) {
+						ModuleAdministration mAdmin = new ModuleAdministration();	
+						for (int i = 0; i < institutes.size(); i++) {
+							if(module.getInstituteID().equals(institutes.get(i))){
+						%>
+						<option value="<%=institutes.get(i)%>" selected="selected"><%=mAdmin.getInstituteName(institutes.get(i))%></option>
+
+						<%
+							}else{
 						%>
 						<option value="<%=institutes.get(i)%>"><%=mAdmin.getInstituteName(institutes.get(i))%></option>
 
 						<%
-							}
+							}}
 						%>
 				</select></td>
 			</tr>
@@ -185,13 +193,19 @@
 	<%
 		}
 	%>
-<br>
+	<br>
 	<button type="submit" value="addRow" name="editModule">Zeile
 		hinzuf&uuml;gen</button>
 	<button type="submit" value="saveModule" name="editModule">Modul
 		f&uuml;r Sitzung speichern</button>
 	<button type="submit" value="sendModule" name="editModule"
 		id="editModuleButton" disabled>Bearbeitetes Modul einreichen</button>
+	<%
+		if(request.getParameter("editButton")!=null) {
+	%><input type="hidden" name="editButton" value="editUnapprovedModule">
+	<%
+		}
+	%>
 
 </form>
 <script type="text/javascript"

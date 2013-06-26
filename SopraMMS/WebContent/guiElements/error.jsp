@@ -9,6 +9,9 @@
 <title>Error Page</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/default.css">
+<link rel="icon"
+	href="${pageContext.request.contextPath}/images/favicon.ico"
+	type="image/x-icon" />
 </head>
 <body>
 
@@ -31,9 +34,12 @@
 		<div class="main">
 			<div class="menu">
 				<div class="menuBox">
-					<h1>MMS</h1><div class="errorNav">
-					<ul><li>
-					<a href="/SopraMMS/guiElements/home.jsp">Startseite</a></li></ul></div>
+					<h1>MMS</h1>
+					<div class="errorNav">
+						<ul>
+							<li><a href="/SopraMMS/guiElements/home.jsp">Startseite</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<div class="contentBox">
@@ -43,9 +49,11 @@
 				<p>
 					Bitte kehren Sie zur <a href="/SopraMMS/guiElements/home.jsp">Startseite</a>
 					zur&uuml;ck. <br />Sollte dies nicht klappen starten Sie Ihren
-					Browser neu und laden Sie danach das Modul Management System erneut.
+					Browser neu und laden Sie danach das Modul Management System
+					erneut.
 				</p>
-				<img src="${pageContext.request.contextPath}/images/Teambild.jpg" alt="Logo" align="right">
+				<img src="${pageContext.request.contextPath}/images/Teambild.jpg"
+					alt="Logo" align="right">
 
 			</div>
 		</div>

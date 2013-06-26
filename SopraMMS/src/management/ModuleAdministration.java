@@ -186,10 +186,10 @@ public class ModuleAdministration {
 		return moduleDBController.getModulesOverviewByAuthor(loginname);
 	}
 
-//	public List<Module> getUnapprovedModules() {
-//		return moduleDBController
-//				.getUnapprovedModulesOverview();
-//	}
+	public List<Module> getUnapprovedModules(String loginname) {
+		return moduleDBController
+				.getUnapprovedModulesOverview(loginname);
+	}
 
 	public List<Module> getVersionsOfModule(long moduleID) {
 		return moduleDBController.getAllVersionsOfModule(moduleID);

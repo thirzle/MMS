@@ -8,8 +8,10 @@
 	LinkedList<Module> moduleList = (LinkedList) session
 	.getAttribute("moduleListForModulemanager");
 
+	boolean editUnapprovedModule=false;
+
 	if(request.getParameter("edit")!=null){
-		session.setAttribute("editUnapprovedModule", true);
+		editUnapprovedModule=true;
 	}
 %>
 
@@ -43,8 +45,8 @@
 				<td>
 					<%
 						if (module.getSubject() != null) {
-																	out.println(module.getSubject());
-																}
+					out.println(module.getSubject());
+			}
 					%>
 				</td>
 				<td><%=module.getCreationDate()%></td>
@@ -52,21 +54,21 @@
 				<td>
 					<%
 						boolean rejected = false;
-															if (module.isApproved()) {
-																	out.println("Freigegeben");
-																} else {
-																	for(Entry entry: module.getEntryList()){
-																		if(entry.isRejected()){
-																			rejected = true;
-																			break;
-																		}
-																	}
-																	if(rejected){
-																		out.println("Abgelehnt");
-																	} else {
-																		out.println("Offen");
-																	}
-																}
+								if (module.isApproved()) {
+								out.println("Freigegeben");
+									} else {
+								for(Entry entry: module.getEntryList()){
+								if(entry.isRejected()){
+									rejected = true;
+								break;
+											}
+													}
+												if(rejected){
+								out.println("Abgelehnt");
+									} else {
+								out.println("Offen");
+						}
+		}
 					%>
 				</td>
 			</tr>
@@ -77,15 +79,19 @@
 	</table>
 	<%
 		if(session.getAttribute("showVersions")!=null){
-			session.removeAttribute("showVersions");
+		session.removeAttribute("showVersions");
 	%>
 	<button type="submit" name="showButton" value="showButton">Modul
 		betrachten</button>
 	<%
 		} else {
+	if(editUnapprovedModule){
 	%>
-	<button type="submit" name="editButton" value="editButton">Modul
+	<button type="submit" name="editButton" value="editUnapprovedModule">Modul
 		bearbeiten</button>
+	<%}else {%><button type="submit" name="editButton" value="editButton">Modul
+		bearbeiten</button>
+	<% }%>
 	<button type="submit" name="showVersionsButton"
 		value="showVersionsButton">Alle Versionen anzeigen</button>
 	<%
