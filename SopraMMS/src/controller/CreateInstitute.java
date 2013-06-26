@@ -41,29 +41,40 @@ public class CreateInstitute extends HttpServlet {
 		String infotext = "";
 		LinkedList<String> instituteList = (LinkedList<String>) uAdmin.getAllInstitute();
 		LinkedList<String> instituteIDList = (LinkedList<String>) uAdmin.getAllInstituteID();
+		boolean wrongData = false;
 
 		String instituteID = request.getParameter("instituteID");
 		String instituteName = request.getParameter("instituteName");
 		
 		for(String string : instituteList){
-			if(instituteName.contains(string)){
+			if(instituteName.equals(string)){
 				session.setAttribute("wrongDataNewInst", "wrongName");
-				response.sendRedirect("/SopraMMS/guiElements/admin/createNewInstitute.jsp");
+				session.setAttribute("content", "createNewInstitute");
+				wrongData = true;
 			}
 		}
-		for(String string : instituteIDList){
-			if(instituteID.equals(string)){
-				session.setAttribute("wrongDataNewInst", "wrongID");
-				response.sendRedirect("/SopraMMS/guiElements/admin/createNewInstitute.jsp");
+		if(!wrongData){
+			for(String string : instituteIDList){
+				if(instituteID.equals(string)){
+					session.setAttribute("wrongDataNewInst", "wrongID");
+					session.setAttribute("content", "createNewInstitute");
+					wrongData = true;
+				}
+			}	
+		}
+		
+		if(!wrongData){
+			if (mAdmin.createInstitute(instituteID, instituteName, "in")) {
+				infotext = "Das Institut " + instituteName
+						+ " wurde erfolgreich erstellt.";
+				session.setAttribute("content", "home");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);		
 			}
 		}
-		if (mAdmin.createInstitute(instituteID, instituteName, "in")) {
-			infotext = "Das Institut " + instituteName
-					+ " wurde erfolgreich erstellt.";
-			session.setAttribute("content", "home");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+		
+		else {
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
-
 	}
 
 	/**
