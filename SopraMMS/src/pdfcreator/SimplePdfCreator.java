@@ -240,12 +240,15 @@ public class SimplePdfCreator {
 	PDPageContentStream contentStream = new PDPageContentStream(doc, title_page);
 	
 	
-	ximage.setHeight(300);
-	ximage.setWidth((int)(title_page.getMediaBox().getWidth()-page_offset_left-page_offset_right));
+	//ximage.setHeight(300);
+	//ximage.setWidth((int)(title_page.getMediaBox().getWidth()-page_offset_left-page_offset_right));
 	
-	ximage.setBitsPerComponent(8);
+	//ximage.setBitsPerComponent(8);
 	
-	contentStream.drawImage( ximage, page_offset_left, page_offset_top );
+	//contentStream.drawImage( ximage, page_offset_left, page_offset_top );
+	
+	
+	
 	contentStream.drawXObject(ximage, page_offset_left, title_page.getMediaBox().getHeight()-page_offset_top-100,
 		title_page.getMediaBox().getWidth()-page_offset_left-page_offset_right,
 		95);
