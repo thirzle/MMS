@@ -28,8 +28,7 @@
 		<p class="menuContent">
 			<input class="inputField" name="loginname" type="text" size="29" />
 		</p>
-
-		<h3>Passwort:</h3>
+			<h3>Passwort:</h3>
 		<br>
 		<p class="menuContent">
 			<input class="inputField" name="password" type="password" size="29" />
