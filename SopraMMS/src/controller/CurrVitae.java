@@ -23,7 +23,7 @@ import user.UserAdministration;
  * @author Lisa
  */
 @WebServlet("/CurrVitae")
-public class CurrVitae extends SessionCheck implements Servlet {
+public class CurrVitae extends SessionCheck implements SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -42,30 +42,31 @@ public class CurrVitae extends SessionCheck implements Servlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		UserAdministration uAdmin = new UserAdministration();
-		User user = (User) session.getAttribute("user");
-		
-		if(request.getParameter("first")!=null)
-		{
-			String url=uAdmin.getCurriculum(user.getLogin());
-			if(url==null){
-				url="";
+		if(isLoggedIn(request, response)) {
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+			
+			if(request.getParameter("first")!=null)
+			{
+				String url=uAdmin.getCurriculum(user.getLogin());
+				if(url==null){
+					url="";
+				}
+				session.setAttribute("currVitae", url);
+				session.setAttribute("content", "currVitae");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
-			session.setAttribute("currVitae", url);
-			session.setAttribute("content", "currVitae");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-		}
-		else{
-			if(request.getParameter("action")!=null){
-				if(request.getParameter("action").equals("delete")){
-					uAdmin.setCurriculum(user.getLogin(), null);
-					String infotext = "Ihr Lebenslauf wurde von Ihrem Benutzerprofil gelöscht.";
-					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
-				}else if(request.getParameter("action").equals("add")){
-					uAdmin.setCurriculum(user.getLogin(), request.getParameter("currurl"));
-					String infotext = "Ihr Lebenslauf wurde in Ihrem Benutzerprofil geändert.";
-					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+			else{
+				if(request.getParameter("action")!=null){
+					if(request.getParameter("action").equals("delete")){
+						uAdmin.setCurriculum(user.getLogin(), null);
+						String infotext = "Ihr Lebenslauf wurde von Ihrem Benutzerprofil gelï¿½scht.";
+						response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+					}else if(request.getParameter("action").equals("add")){
+						uAdmin.setCurriculum(user.getLogin(), request.getParameter("currurl"));
+						String infotext = "Ihr Lebenslauf wurde in Ihrem Benutzerprofil geï¿½ndert.";
+						response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+					}
 				}
 			}
 		}

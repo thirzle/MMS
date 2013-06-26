@@ -15,7 +15,7 @@ import user.UserAdministration;
  * Servlet implementation class DeleteNews
  */
 @WebServlet("/DeleteNews")
-public class DeleteNews extends HttpServlet {
+public class DeleteNews extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -30,21 +30,22 @@ public class DeleteNews extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserAdministration ua = new UserAdministration();
-		ArrayList<String> deleted = new ArrayList<>();
-		int number = ua.numberOfNews();
-		for (int i = 0; i < number; i++) {
-			if(request.getParameter("delete"+i)!=null)
-			{
-				deleted.add(request.getParameter("delete"+i));
+		if(isLoggedIn(request, response)) {
+			ArrayList<String> deleted = new ArrayList<>();
+			int number = uAdmin.numberOfNews();
+			for (int i = 0; i < number; i++) {
+				if(request.getParameter("delete"+i)!=null)
+				{
+					deleted.add(request.getParameter("delete"+i));
+				}
 			}
+			
+			for (String title : deleted) {
+				uAdmin.deleteNews(title);
+			}
+			request.getSession().setAttribute("content", "showNews");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
-		
-		for (String title : deleted) {
-			ua.deleteNews(title);
-		}
-		request.getSession().setAttribute("content", "showNews");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	}
 
 	/**

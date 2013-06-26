@@ -18,7 +18,7 @@ import user.UserAdministration;
  * Servlet implementation class ChangePassword
  */
 @WebServlet("/ChangePassword")
-public class ChangePassword extends HttpServlet {
+public class ChangePassword extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -44,33 +44,33 @@ public class ChangePassword extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		if(isLoggedIn(request, response)) {
 		String oldPassword = request.getParameter("oldPassword");
 		String newPassword1 = request.getParameter("newPassword1");
 		String newPassword2 = request.getParameter("newPassword2");
-		UserAdministration ua = new UserAdministration();
 
 		request.getSession().setAttribute("generallyMenu", "open");
 		if (!newPassword1.equals(newPassword2)) {
-			request.getSession().setAttribute("content", "changedPw");
-
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp?changePwStatus=changedPwStatusPw12Wrong");
-		} else {
-			User user = (User) (request.getSession().getAttribute("user"));
-			if (ua.checkPassword(user.getLogin(), oldPassword.hashCode() + "")) {
-				ua.changePassword(user, newPassword1.hashCode() + "");
-
-				// Insert into History "Password changed"
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-				Date currentTime = new Date();
-				String date = formatter.format(currentTime);
-				ua.insertHistory(user.getLogin(), date, "Passwort ge&auml;ndert");
-
 				request.getSession().setAttribute("content", "changedPw");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?changePwStatus=changedPwStatusdone");
+	
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?changePwStatus=changedPwStatusPw12Wrong");
 			} else {
-				request.getSession().setAttribute("content", "changedPw");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?changePwStatus=changedPwStatusOldPwWrong");
+				User user = (User) (request.getSession().getAttribute("user"));
+				if (uAdmin.checkPassword(user.getLogin(), oldPassword.hashCode() + "")) {
+					uAdmin.changePassword(user, newPassword1.hashCode() + "");
+	
+					// Insert into History "Password changed"
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					Date currentTime = new Date();
+					String date = formatter.format(currentTime);
+					uAdmin.insertHistory(user.getLogin(), date, "Passwort ge&auml;ndert");
+	
+					request.getSession().setAttribute("content", "changedPw");
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?changePwStatus=changedPwStatusdone");
+				} else {
+					request.getSession().setAttribute("content", "changedPw");
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?changePwStatus=changedPwStatusOldPwWrong");
+				}
 			}
 		}
 

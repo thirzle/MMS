@@ -19,7 +19,7 @@ import management.ModuleAdministration;
  * Servlet implementation class ShowModulesForDez2
  */
 @WebServlet("/ShowModulesOverviewForDez2")
-public class ShowModulesOverviewForDez2 extends HttpServlet {
+public class ShowModulesOverviewForDez2 extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -34,28 +34,29 @@ public class ShowModulesOverviewForDez2 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		//check which button was clicked
-		//showVersionsButton was clicked
-		if (request.getParameter("showVersionsButton") != null) {
-			RequestDispatcher dispatcher = getServletContext()
-					.getRequestDispatcher("/ShowVersionsOfModule");
-			dispatcher.forward(request, response);
-		} else if(request.getParameter("showButton") != null) {
-			//TODO
-		} else {
-			ModuleAdministration mAdministration = new ModuleAdministration();
-			List<Module> moduleList = (LinkedList<Module>) mAdministration.getModules();
-			
-			session.setAttribute("moduleListForDez2", moduleList);
-			session.setAttribute("content", "showModulesForDez2");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-
-			session.removeAttribute("fieldsTypeAEdit");
-			session.removeAttribute("fieldsTypeBEdit");
-			session.removeAttribute("fieldsTypeCEdit");
-			session.removeAttribute("fieldsTypeDEdit");
-			session.removeAttribute("fieldsTypeEEdit");	
+		if(isLoggedIn(request, response)) {
+			HttpSession session = request.getSession();
+			//check which button was clicked
+			//showVersionsButton was clicked
+			if (request.getParameter("showVersionsButton") != null) {
+				RequestDispatcher dispatcher = getServletContext()
+						.getRequestDispatcher("/ShowVersionsOfModule");
+				dispatcher.forward(request, response);
+			} else if(request.getParameter("showButton") != null) {
+				//TODO
+			} else {
+				List<Module> moduleList = (LinkedList<Module>) mAdmin.getModules();
+				
+				session.setAttribute("moduleListForDez2", moduleList);
+				session.setAttribute("content", "showModulesForDez2");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+	
+				session.removeAttribute("fieldsTypeAEdit");
+				session.removeAttribute("fieldsTypeBEdit");
+				session.removeAttribute("fieldsTypeCEdit");
+				session.removeAttribute("fieldsTypeDEdit");
+				session.removeAttribute("fieldsTypeEEdit");	
+			}
 		}
 	}
 

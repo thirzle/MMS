@@ -19,7 +19,7 @@ import user.UserAdministration;
  * Servlet implementation class CreatePDF
  */
 @WebServlet("/CreatePDF")
-public class CreatePDF extends HttpServlet {
+public class CreatePDF extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -35,21 +35,21 @@ public class CreatePDF extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		UserAdministration uAdmin = new UserAdministration();
-		ModuleAdministration mAdmin = new ModuleAdministration();
-		HttpSession session = request.getSession();
-		
-		LinkedList<String> facListNames = (LinkedList) uAdmin.getAllFacultiesByName();
-		LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
-		LinkedList<Course> courses = (LinkedList<Course>) mAdmin.getCourses();
-		
-		 
-		session.setAttribute("faculty", facListNames.getFirst());
-		session.setAttribute("courses", courses);
-		
-
-		session.setAttribute("content", "generatePDF");
-	    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		if(isLoggedIn(request, response)) {
+			HttpSession session = request.getSession();
+			
+			LinkedList<String> facListNames = (LinkedList) uAdmin.getAllFacultiesByName();
+			LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
+			LinkedList<Course> courses = (LinkedList<Course>) mAdmin.getCourses();
+			
+			 
+			session.setAttribute("faculty", facListNames.getFirst());
+			session.setAttribute("courses", courses);
+			
+	
+			session.setAttribute("content", "generatePDF");
+		    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		}
 	}
 
 	/**

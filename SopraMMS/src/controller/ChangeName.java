@@ -21,7 +21,7 @@ import user.UserAdministration;
  * Servlet implementation class ChangeName
  */
 @WebServlet("/ChangeName")
-public class ChangeName extends HttpServlet {
+public class ChangeName extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -35,26 +35,27 @@ public class ChangeName extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String newFirstname = request.getParameter("newFirstname");
-		String newLastname = request.getParameter("newLastname");
-		User user = (User) request.getSession().getAttribute("user");
-		HttpSession session = request.getSession();
-		String infotext;
-		String content;
-		String address;
-		
-		UserAdministration uAdmin = new UserAdministration();
-		uAdmin.changeName(user, newFirstname, newLastname);
-		
-		// Insert into History "Name changed"
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date currentTime = new Date();
-		String date = formatter.format(currentTime);
-		uAdmin.insertHistory(user.getLogin(), date, "Name ge&auml;ndert");
-		
-		infotext = "Ihr Name wurde erfolgreich zu "+newFirstname+" "+newLastname+" geändert. ";
-		session.setAttribute("content", "home");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+		if(isLoggedIn(request, response)) {
+			String newFirstname = request.getParameter("newFirstname");
+			String newLastname = request.getParameter("newLastname");
+			User user = (User) request.getSession().getAttribute("user");
+			HttpSession session = request.getSession();
+			String infotext;
+			String content;
+			String address;
+			
+			uAdmin.changeName(user, newFirstname, newLastname);
+			
+			// Insert into History "Name changed"
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date currentTime = new Date();
+			String date = formatter.format(currentTime);
+			uAdmin.insertHistory(user.getLogin(), date, "Name ge&auml;ndert");
+			
+			infotext = "Ihr Name wurde erfolgreich zu "+newFirstname+" "+newLastname+" geï¿½ndert. ";
+			session.setAttribute("content", "home");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+		}
 	}
 
 	/**

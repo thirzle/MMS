@@ -18,7 +18,7 @@ import management.ModuleAdministration;
  * Servlet implementation class ShowEditModuleOverviewForCoordinator
  */
 @WebServlet("/ShowEditModuleOverviewForCoordinator")
-public class ShowEditModuleOverviewForCoordinator extends HttpServlet {
+public class ShowEditModuleOverviewForCoordinator extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
 
@@ -29,33 +29,34 @@ public class ShowEditModuleOverviewForCoordinator extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session =request.getSession();
-		ModuleAdministration ma= new ModuleAdministration();
-		
-		System.out.println("(ShowEditModuleForCoordinator.java): Bearbeite Modul durch Koordinator");
-		
-		if (request.getParameter("action") != null) {
-
-			if (request.getParameter("action").equals("editModule")) {
-				if (request.getParameter("selectedModule") != null) {
-					String[] selectedModule = request.getParameter("selectedModule")
-							.split("%");
-					response.sendRedirect("/SopraMMS/EditModule?selectedModuleToEdit="
-							+ selectedModule[0] + " " + selectedModule[1]);
-				} else {
-					request.getSession().setAttribute("content",
-							"showEditModulesForCoordinator");
-					response.sendRedirect("/SopraMMS/guiElements/home.jsp?info=chooseModule");
-				}
-			} 
-		} else {
-
-			List<Module> moduleList = ma.getModules();
-			request.getSession().setAttribute(
-					"editModuleListForCoordinator", moduleList);
-			request.getSession().setAttribute("content",
-					"showEditModulesForCoordinator");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		if(isLoggedIn(request, response)) {
+			HttpSession session =request.getSession();
+			
+			System.out.println("(ShowEditModuleForCoordinator.java): Bearbeite Modul durch Koordinator");
+			
+			if (request.getParameter("action") != null) {
+	
+				if (request.getParameter("action").equals("editModule")) {
+					if (request.getParameter("selectedModule") != null) {
+						String[] selectedModule = request.getParameter("selectedModule")
+								.split("%");
+						response.sendRedirect("/SopraMMS/EditModule?selectedModuleToEdit="
+								+ selectedModule[0] + " " + selectedModule[1]);
+					} else {
+						request.getSession().setAttribute("content",
+								"showEditModulesForCoordinator");
+						response.sendRedirect("/SopraMMS/guiElements/home.jsp?info=chooseModule");
+					}
+				} 
+			} else {
+	
+				List<Module> moduleList = mAdmin.getModules();
+				request.getSession().setAttribute(
+						"editModuleListForCoordinator", moduleList);
+				request.getSession().setAttribute("content",
+						"showEditModulesForCoordinator");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			}
 		}
 
 	}

@@ -14,7 +14,7 @@ import user.UserAdministration;
  * Servlet implementation class CreateNewPassword
  */
 @WebServlet("/CreateNewPassword")
-public class CreateNewPassword extends HttpServlet {
+public class CreateNewPassword extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -28,21 +28,22 @@ public class CreateNewPassword extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		UserAdministration ua = new UserAdministration();
-		try {
-			User user = ua.checkNewPasswordLink(request.getParameter("link"));
-			if (user!=null) {
-				request.getSession().setAttribute("userCreatNewPassword", user);
-				request.getSession().setAttribute("content", "createNewPassword");
-				System.out.println("(CreateNewPassword.java): "+request.getSession().getAttribute("content"));
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-			}else{
+		if(isLoggedIn(request, response)) {
+			try {
+				User user = uAdmin.checkNewPasswordLink(request.getParameter("link"));
+				if (user!=null) {
+					request.getSession().setAttribute("userCreatNewPassword", user);
+					request.getSession().setAttribute("content", "createNewPassword");
+					System.out.println("(CreateNewPassword.java): "+request.getSession().getAttribute("content"));
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				}else{
+					response.sendRedirect("/SopraMMS/guiElements/error.jsp");
+				}
+			
+			} catch (Exception e) {
 				response.sendRedirect("/SopraMMS/guiElements/error.jsp");
-			}
-		
-		} catch (Exception e) {
-			response.sendRedirect("/SopraMMS/guiElements/error.jsp");
-		}	
+			}	
+		}
 		
 	}
 

@@ -13,7 +13,7 @@ import user.UserAdministration;
  * Servlet implementation class CreatNews
  */
 @WebServlet("/AddNews")
-public class AddNews extends HttpServlet {
+public class AddNews extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -30,35 +30,36 @@ public class AddNews extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter("title").trim();
-		String content = request.getParameter("content").trim();
-		String frontend = request.getParameter("frontend");
-		String backend = request.getParameter("backend");
-		int visibility = -1;
+		if(isLoggedIn(request, response)){
+			String title = request.getParameter("title").trim();
+			String content = request.getParameter("content").trim();
+			String frontend = request.getParameter("frontend");
+			String backend = request.getParameter("backend");
+			int visibility = -1;
 
-		if (title.equals("") || content.equals("")) {
-			request.getSession().setAttribute("content", "createNews");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp?newsstatus=addtitleortext&title="
+			if (title.equals("") || content.equals("")) {
+				request.getSession().setAttribute("content", "createNews");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?newsstatus=addtitleortext&title="
+						+ title + "&text=" + content + "");
+			} else if (frontend == null && backend == null) {
+				request.getSession().setAttribute("content", "createNews");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?newsstatus=choosevisibility&title="
 					+ title + "&text=" + content + "");
-		} else if (frontend == null && backend == null) {
-			request.getSession().setAttribute("content", "createNews");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp?newsstatus=choosevisibility&title="
-					+ title + "&text=" + content + "");
-		} else {
-			visibility = 0;
-
-			if (frontend != null && backend == null) {
-				visibility = 1;
-			} else if (backend != null && frontend == null) {
-				visibility = 2;
 			} else {
 				visibility = 0;
-			}
-			UserAdministration ua = new UserAdministration();
-			String[] data = { title, content };
-			ua.addNews(data, visibility);
-			request.getSession().setAttribute("content", "showNews");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+
+				if (frontend != null && backend == null) {
+					visibility = 1;
+				} else if (backend != null && frontend == null) {
+					visibility = 2;
+				} else {
+					visibility = 0;
+				}
+				String[] data = { title, content };
+				uAdmin.addNews(data, visibility);
+				request.getSession().setAttribute("content", "showNews");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		}
 		}
 	}
 

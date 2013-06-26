@@ -17,7 +17,7 @@ import management.ModuleAdministration;
  * Servlet implementation class CreateCourse
  */
 @WebServlet("/CreateCourse")
-public class CreateCourse extends HttpServlet {
+public class CreateCourse extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -25,41 +25,41 @@ public class CreateCourse extends HttpServlet {
      */
     public CreateCourse() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		//check if menuentry or submit brought you here
-		if(request.getParameter("courseID")==null&&request.getParameter("description")==null&&request.getParameter("degree")==null){
-			session.setAttribute("content", "createNewCourse");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-		} else {
-			User user = (User) session.getAttribute("user");
-			ModuleAdministration mAdministration = new ModuleAdministration();
-			int tmp = Integer.parseInt(request.getParameter("degree"));
-			String degree = null;
-			switch (tmp) {
-			case 0:
-				degree = "Bachelor";
-				break;
-			case 1:
-				degree = "Master";
-				break;
-			case 2:
-				degree = "Lehramt";
+		if(isLoggedIn(request, response)) {
+			HttpSession session = request.getSession();
+			//check if menuentry or submit brought you here
+			if(request.getParameter("courseID")==null&&request.getParameter("description")==null&&request.getParameter("degree")==null){
+				session.setAttribute("content", "createNewCourse");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			} else {
+				User user = (User) session.getAttribute("user");
+				int tmp = Integer.parseInt(request.getParameter("degree"));
+				String degree = null;
+				switch (tmp) {
+				case 0:
+					degree = "Bachelor";
+					break;
+				case 1:
+					degree = "Master";
+					break;
+				case 2:
+					degree = "Lehramt";
+				}
+				Course course = new Course(request.getParameter("courseID"), 
+						request.getParameter("description"), 
+						degree, 
+						user.getFaculty());
+				mAdmin.addCourse(course);
+				session.setAttribute("courseCreated", true);
+				session.setAttribute("content", "createNewCourse");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
-			Course course = new Course(request.getParameter("courseID"), 
-					request.getParameter("description"), 
-					degree, 
-					user.getFaculty());
-			mAdministration.addCourse(course);
-			session.setAttribute("courseCreated", true);
-			session.setAttribute("content", "createNewCourse");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
 	}
 
@@ -67,7 +67,7 @@ public class CreateCourse extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	
 	}
 
 }

@@ -18,7 +18,7 @@ import user.UserAdministration;
  * Servlet implementation class ShowRepresentative
  */
 @WebServlet("/ShowRepresentative")
-public class ShowRepresentative extends HttpServlet {
+public class ShowRepresentative extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -33,33 +33,35 @@ public class ShowRepresentative extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User user = (User) request.getSession().getAttribute("user");
-		HttpSession session = request.getSession();
-		
-//		there is no representative
-		if(user.getRepresentative() == null){
-			session.setAttribute("content", "noRepresentative");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-		}
-		else{
-			User userR = new UserAdministration().getUser(user.getRepresentative());
-			session.setAttribute("generallyMenu", "open");
-			String firstnameRep = userR.getFirstName();
-			String lastnameRep = userR.getLastName();
-			String emailRep = userR.getMail();
-			String facRep = new UserAdministration().getFacultyName(userR);
-			ArrayList instituteListRep = (ArrayList) new UserAdministration().getInstituteNames(userR);
-			String[] userArray = new String[4];
+		if(isLoggedIn(request, response)) {
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
 			
-			userArray[0] = firstnameRep;
-			userArray[1] = lastnameRep;
-			userArray[2] = emailRep;
-			userArray[3] = facRep;
-			session.setAttribute("repUserArray", userArray);
-			session.setAttribute("instituteListRep", instituteListRep);
-			session.setAttribute("content", "showRepresentative");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-			
+	//		there is no representative
+			if(user.getRepresentative() == null){
+				session.setAttribute("content", "noRepresentative");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			}
+			else{
+				User userR = new UserAdministration().getUser(user.getRepresentative());
+				session.setAttribute("generallyMenu", "open");
+				String firstnameRep = userR.getFirstName();
+				String lastnameRep = userR.getLastName();
+				String emailRep = userR.getMail();
+				String facRep = uAdmin.getFacultyName(userR);
+				ArrayList instituteListRep = (ArrayList) new UserAdministration().getInstituteNames(userR);
+				String[] userArray = new String[4];
+				
+				userArray[0] = firstnameRep;
+				userArray[1] = lastnameRep;
+				userArray[2] = emailRep;
+				userArray[3] = facRep;
+				session.setAttribute("repUserArray", userArray);
+				session.setAttribute("instituteListRep", instituteListRep);
+				session.setAttribute("content", "showRepresentative");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				
+			}
 		}
 	}
 

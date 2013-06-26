@@ -15,7 +15,7 @@ import user.UserAdministration;
  * Servlet implementation class ShowHistory
  */
 @WebServlet("/ShowHistory")
-public class ShowHistory extends HttpServlet {
+public class ShowHistory extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -23,25 +23,26 @@ public class ShowHistory extends HttpServlet {
      */
     public ShowHistory() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserAdministration uAdmin = new UserAdministration();
-		LinkedList<String[]> userHistoryList = (LinkedList) uAdmin.showHistory();
-		request.getSession().setAttribute("history", userHistoryList);
-		request.getSession().setAttribute("content", "history");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		if(isLoggedIn(request, response)) {
+			LinkedList<String[]> userHistoryList = (LinkedList) uAdmin.showHistory();
+			request.getSession().setAttribute("history", userHistoryList);
+			request.getSession().setAttribute("content", "history");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -18,7 +18,7 @@ import user.User;
  * Servlet implementation class ShowVersionsOfModule
  */
 @WebServlet("/ShowVersionsOfModule")
-public class ShowVersionsOfModule extends HttpServlet {
+public class ShowVersionsOfModule extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -33,27 +33,28 @@ public class ShowVersionsOfModule extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("ShowVersionsOfModules");
-		HttpSession session = request.getSession();
-		ModuleAdministration mAdmin = new ModuleAdministration();
-		String module = request.getParameter("selectedModuleToEdit");
-		long moduleID;
-		if(module!=null){
-			String[] parts = module.split(" ");
-			moduleID = Long.parseLong(parts[0]);
-
-			// TODO getModulesOverview
-			List<Module> moduleList = mAdmin.getVersionsOfModule(moduleID);
-			session.setAttribute("showVersions", true);
-			session.setAttribute("moduleListForModulemanager", moduleList);
-			session.setAttribute("content", "showModulesForModulemanager");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-
-			session.removeAttribute("fieldsTypeAEdit");
-			session.removeAttribute("fieldsTypeBEdit");
-			session.removeAttribute("fieldsTypeCEdit");
-			session.removeAttribute("fieldsTypeDEdit");
-			session.removeAttribute("fieldsTypeEEdit");
+		if(isLoggedIn(request, response)) {
+			System.out.println("ShowVersionsOfModules");
+			HttpSession session = request.getSession();
+			String module = request.getParameter("selectedModuleToEdit");
+			long moduleID;
+			if(module!=null){
+				String[] parts = module.split(" ");
+				moduleID = Long.parseLong(parts[0]);
+	
+				// TODO getModulesOverview
+				List<Module> moduleList = mAdmin.getVersionsOfModule(moduleID);
+				session.setAttribute("showVersions", true);
+				session.setAttribute("moduleListForModulemanager", moduleList);
+				session.setAttribute("content", "showModulesForModulemanager");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+	
+				session.removeAttribute("fieldsTypeAEdit");
+				session.removeAttribute("fieldsTypeBEdit");
+				session.removeAttribute("fieldsTypeCEdit");
+				session.removeAttribute("fieldsTypeDEdit");
+				session.removeAttribute("fieldsTypeEEdit");
+			}
 		}
 	}
 

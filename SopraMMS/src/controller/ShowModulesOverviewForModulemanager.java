@@ -18,7 +18,7 @@ import user.User;
  * Servlet implementation class ShowModules
  */
 @WebServlet("/ShowModulesOverviewForModulemanager")
-public class ShowModulesOverviewForModulemanager extends HttpServlet {
+public class ShowModulesOverviewForModulemanager extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -36,23 +36,23 @@ public class ShowModulesOverviewForModulemanager extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
-		System.out.println("ShowModulesOverviewForModulemanager");
-		HttpSession session = request.getSession();
-		ModuleAdministration mAdmin = new ModuleAdministration();
-		User user = (User) session.getAttribute("user");
-
-		List<Module> moduleList = mAdmin.getModulesByAuthor(user.getLogin());
-
-		session.setAttribute("moduleListForModulemanager", moduleList);
-		session.setAttribute("content", "showModulesForModulemanager");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-
-		session.removeAttribute("fieldsTypeAEdit");
-		session.removeAttribute("fieldsTypeBEdit");
-		session.removeAttribute("fieldsTypeCEdit");
-		session.removeAttribute("fieldsTypeDEdit");
-		session.removeAttribute("fieldsTypeEEdit");
+		if(isLoggedIn(request, response)) {
+			System.out.println("ShowModulesOverviewForModulemanager");
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+	
+			List<Module> moduleList = mAdmin.getModulesByAuthor(user.getLogin());
+	
+			session.setAttribute("moduleListForModulemanager", moduleList);
+			session.setAttribute("content", "showModulesForModulemanager");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+	
+			session.removeAttribute("fieldsTypeAEdit");
+			session.removeAttribute("fieldsTypeBEdit");
+			session.removeAttribute("fieldsTypeCEdit");
+			session.removeAttribute("fieldsTypeDEdit");
+			session.removeAttribute("fieldsTypeEEdit");
+		}
 	}
 
 	/**

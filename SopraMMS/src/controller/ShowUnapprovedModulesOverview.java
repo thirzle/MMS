@@ -18,7 +18,7 @@ import user.User;
  * Servlet implementation class ShowUnapprovedModulesOverview
  */
 @WebServlet("/ShowUnapprovedModulesOverview")
-public class ShowUnapprovedModulesOverview extends HttpServlet {
+public class ShowUnapprovedModulesOverview extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -50,22 +50,23 @@ public class ShowUnapprovedModulesOverview extends HttpServlet {
 //		session.removeAttribute("fieldsTypeEEdit");
 //	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("ShowUnapprovedModulesOverview");
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		ModuleAdministration mAdmin = new ModuleAdministration();
-
-		List<Module> moduleList = mAdmin.getUnapprovedModules(user.getLogin());
-		session.setAttribute("moduleListForModulemanager", moduleList);
-		
-		session.setAttribute("content", "showModulesForModulemanager");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp?edit=true");
-
-		session.removeAttribute("fieldsTypeAEdit");
-		session.removeAttribute("fieldsTypeBEdit");
-		session.removeAttribute("fieldsTypeCEdit");
-		session.removeAttribute("fieldsTypeDEdit");
-		session.removeAttribute("fieldsTypeEEdit");
+		if(isLoggedIn(request, response)) {
+			System.out.println("ShowUnapprovedModulesOverview");
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+	
+			List<Module> moduleList = mAdmin.getUnapprovedModules(user.getLogin());
+			session.setAttribute("moduleListForModulemanager", moduleList);
+			
+			session.setAttribute("content", "showModulesForModulemanager");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?edit=true");
+	
+			session.removeAttribute("fieldsTypeAEdit");
+			session.removeAttribute("fieldsTypeBEdit");
+			session.removeAttribute("fieldsTypeCEdit");
+			session.removeAttribute("fieldsTypeDEdit");
+			session.removeAttribute("fieldsTypeEEdit");
+		}
 	}
 
 	/**

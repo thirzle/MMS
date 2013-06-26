@@ -19,7 +19,7 @@ import user.User;
  * Servlet implementation class ShowModulesOverviewForEditor
  */
 @WebServlet("/ShowModulesOverviewForEditor")
-public class ShowModulesOverviewForEditor extends HttpServlet {
+public class ShowModulesOverviewForEditor extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -33,24 +33,25 @@ public class ShowModulesOverviewForEditor extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		ModuleAdministration mAdmin = new ModuleAdministration();
-		User user = (User) session.getAttribute("user");
-		LinkedList<String> instituteIDListOfUser = (LinkedList) user.getInstitute();
-		LinkedList<Module> moduleListForEditor = new LinkedList();
-						
-		if(request.getParameter("editorMenu").equals("checkModule")){
-				moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteIDListOfUser));
+		if(isLoggedIn(request, response)) {
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+			LinkedList<String> instituteIDListOfUser = (LinkedList) user.getInstitute();
+			LinkedList<Module> moduleListForEditor = new LinkedList();
+							
+			if(request.getParameter("editorMenu").equals("checkModule")){
+					moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteIDListOfUser));
+					session.setAttribute("moduleListForEditor", moduleListForEditor);
+					session.setAttribute("content", "showApproveModulesOverviewForEditor");
+			}			
+			else if(request.getParameter("editorMenu").equals("editModule")){
+				moduleListForEditor = (LinkedList) mAdmin.getModules();
 				session.setAttribute("moduleListForEditor", moduleListForEditor);
-				session.setAttribute("content", "showApproveModulesOverviewForEditor");
-		}			
-		else if(request.getParameter("editorMenu").equals("editModule")){
-			moduleListForEditor = (LinkedList) mAdmin.getModules();
-			session.setAttribute("moduleListForEditor", moduleListForEditor);
-			session.setAttribute("content", "showEditModulesOverviewForEditor");
-		}	
-		
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				session.setAttribute("content", "showEditModulesOverviewForEditor");
+			}	
+			
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		}
 	}
 
 	/**

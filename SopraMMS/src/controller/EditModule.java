@@ -32,15 +32,13 @@ import user.UserAdministration;
  * Servlet implementation class editModuleForModulmanager
  */
 @WebServlet("/EditModule")
-public class EditModule extends HttpServlet {
+public class EditModule extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
 	// TODO Institut mit Aktuallisieren
 
 	HttpSession session = null;
 
-	UserAdministration uAdmin = new UserAdministration();
-	ModuleAdministration mAdmin = new ModuleAdministration();
 
 	long moduleID;
 	int moduleVersion;
@@ -73,88 +71,90 @@ public class EditModule extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		session = request.getSession();
-		editUnapprovedModule = false;
-		editUnapprovedModuleUrl="";
-		System.out.println("+++++ "+request.getParameter("editButton"));
-		if (request.getParameter("editButton") != null) {
-			if (request.getParameter("editButton").equals(
-					"editUnapprovedModule")) {
-				editUnapprovedModule = true;
-				editUnapprovedModuleUrl="?editButton=editUnapprovedModule";
-				System.out.println("(EditModule.java): Unbestätigtes Modul wird bearbeitet");
-			}
-		}
-		
-		if (request.getParameter("showVersionsButton") != null) {
-			RequestDispatcher dispatcher = getServletContext()
-					.getRequestDispatcher("/ShowVersionsOfModule");
-			dispatcher.forward(request, response);
-		} else if (request.getParameter("showButton") != null) {
-			RequestDispatcher dispatcher = getServletContext()
-					.getRequestDispatcher("/ViewModule");
-			dispatcher.forward(request, response);
-		}
-
-		else {
-
-			if (request.getParameter("selectedModuleToEdit") != null) {
-
-				String selectedModule = request
-						.getParameter("selectedModuleToEdit");
-				String[] selectedModuleArray = selectedModule.split(" ");
-				moduleID = Long.parseLong(selectedModuleArray[0]);
-				moduleVersion = Integer.parseInt(selectedModuleArray[1]);
-				session.setAttribute("selectedModuleIDToEdit", moduleID);
-				session.setAttribute("selectedVersionToEdit", moduleVersion);
-				firstRun = true;
-
-				module = mAdmin.getModuleByID(moduleID, moduleVersion);
-				System.out.println("(EditModule.java): Subject 1: "
-						+ module.getSubject());
-				entryList = mAdmin.sortModuleEntryListByOrder(module);
-
-				if (fieldsTypeA != null)
-					fieldsTypeA.clear();
-				if (fieldsTypeB != null)
-					fieldsTypeB.clear();
-				if (fieldsTypeC != null)
-					fieldsTypeC.clear();
-				if (fieldsTypeD != null)
-					fieldsTypeD.clear();
-				if (fieldsTypeE != null)
-					fieldsTypeE.clear();
-				if (textualEntrys != null)
-					textualEntrys.clear();
-
-				for (Entry entry : entryList) {
-					if (entry.getClass().equals(EffortEntry.class)) {
-						effortEntry = (EffortEntry) entry;
-					} else if (entry.getClass().equals(CourseEntry.class)) {
-						courseEntry = (CourseEntry) entry;
-					} else {
-						textualEntrys.add((TextualEntry) entry);
-					}
+		if(isLoggedIn(request, response)) {
+			session = request.getSession();
+			editUnapprovedModule = false;
+			editUnapprovedModuleUrl="";
+			System.out.println("+++++ "+request.getParameter("editButton"));
+			if (request.getParameter("editButton") != null) {
+				if (request.getParameter("editButton").equals(
+						"editUnapprovedModule")) {
+					editUnapprovedModule = true;
+					editUnapprovedModuleUrl="?editButton=editUnapprovedModule";
+					System.out.println("(EditModule.java): Unbestï¿½tigtes Modul wird bearbeitet");
 				}
-				System.out
-						.println("(EditModule.java): Initialisierung abgeschlossen");
-				firstRun = true;
-
-			} else {
-				moduleID = (long) session
-						.getAttribute("selectedModuleIDToEdit");
-				moduleVersion = (int) session
-						.getAttribute("selectedVersionToEdit");
-				firstRun = false;
 			}
-
 			
-
-			setContentToFields(request);
-
-			loadFieldsOnSession();
-
-			handleButtonEvents(request, response);
+			if (request.getParameter("showVersionsButton") != null) {
+				RequestDispatcher dispatcher = getServletContext()
+						.getRequestDispatcher("/ShowVersionsOfModule");
+				dispatcher.forward(request, response);
+			} else if (request.getParameter("showButton") != null) {
+				RequestDispatcher dispatcher = getServletContext()
+						.getRequestDispatcher("/ViewModule");
+				dispatcher.forward(request, response);
+			}
+	
+			else {
+	
+				if (request.getParameter("selectedModuleToEdit") != null) {
+	
+					String selectedModule = request
+							.getParameter("selectedModuleToEdit");
+					String[] selectedModuleArray = selectedModule.split(" ");
+					moduleID = Long.parseLong(selectedModuleArray[0]);
+					moduleVersion = Integer.parseInt(selectedModuleArray[1]);
+					session.setAttribute("selectedModuleIDToEdit", moduleID);
+					session.setAttribute("selectedVersionToEdit", moduleVersion);
+					firstRun = true;
+	
+					module = mAdmin.getModuleByID(moduleID, moduleVersion);
+					System.out.println("(EditModule.java): Subject 1: "
+							+ module.getSubject());
+					entryList = mAdmin.sortModuleEntryListByOrder(module);
+	
+					if (fieldsTypeA != null)
+						fieldsTypeA.clear();
+					if (fieldsTypeB != null)
+						fieldsTypeB.clear();
+					if (fieldsTypeC != null)
+						fieldsTypeC.clear();
+					if (fieldsTypeD != null)
+						fieldsTypeD.clear();
+					if (fieldsTypeE != null)
+						fieldsTypeE.clear();
+					if (textualEntrys != null)
+						textualEntrys.clear();
+	
+					for (Entry entry : entryList) {
+						if (entry.getClass().equals(EffortEntry.class)) {
+							effortEntry = (EffortEntry) entry;
+						} else if (entry.getClass().equals(CourseEntry.class)) {
+							courseEntry = (CourseEntry) entry;
+						} else {
+							textualEntrys.add((TextualEntry) entry);
+						}
+					}
+					System.out
+							.println("(EditModule.java): Initialisierung abgeschlossen");
+					firstRun = true;
+	
+				} else {
+					moduleID = (long) session
+							.getAttribute("selectedModuleIDToEdit");
+					moduleVersion = (int) session
+							.getAttribute("selectedVersionToEdit");
+					firstRun = false;
+				}
+	
+				
+	
+				setContentToFields(request);
+	
+				loadFieldsOnSession();
+	
+				handleButtonEvents(request, response);
+			}
 		}
 
 	}
@@ -205,8 +205,8 @@ public class EditModule extends HttpServlet {
 	private void loadFieldsA() {
 		fieldsTypeA = new ArrayList<>();
 		for (TextualEntry entry : textualEntrys) {
-			if (entry.getTitle().equals("Kürzel")) {
-				fieldsTypeA.add(new String[] { "Kürzel", entry.getContent() });
+			if (entry.getTitle().equals("Kï¿½rzel")) {
+				fieldsTypeA.add(new String[] { "Kï¿½rzel", entry.getContent() });
 				entry.setPredefined(true);
 			} else if (entry.getTitle().equals("Titel")) {
 				fieldsTypeA.add(new String[] { "Titel", entry.getContent() });
@@ -221,8 +221,8 @@ public class EditModule extends HttpServlet {
 			} else if (entry.getTitle().equals("Sprache")) {
 				fieldsTypeA.add(new String[] { "Sprache", entry.getContent() });
 				entry.setPredefined(true);
-			} else if (entry.getTitle().equals("Prüfungsform")) {
-				fieldsTypeA.add(new String[] { "Prüfungsform",
+			} else if (entry.getTitle().equals("Prï¿½fungsform")) {
+				fieldsTypeA.add(new String[] { "Prï¿½fungsform",
 						entry.getContent() });
 				entry.setPredefined(true);
 			}
@@ -271,7 +271,7 @@ public class EditModule extends HttpServlet {
 				.getSelfStudyList();
 
 		int selfStudySize = selfStudyList.size();
-		fieldsTypeD.add(new String[] { "Präsenzzeit",
+		fieldsTypeD.add(new String[] { "Prï¿½senzzeit",
 				effortEntry.getPresenceTime() + "" });
 		for (int i = 0; i < selfStudySize; i++) {
 			SelfStudy selfStudy = selfStudyList.get(i);
@@ -355,10 +355,10 @@ public class EditModule extends HttpServlet {
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp"+editUnapprovedModuleUrl);
 
 				System.out
-						.println("(EditModule.java): Reihe zum Modul hinzugefügt");
+						.println("(EditModule.java): Reihe zum Modul hinzugefï¿½gt");
 			} else if (request.getParameter("editModule").equals("saveModule")) {
 				System.out
-						.println("(EditModule.java): Modul für Sitzung gespeichert");
+						.println("(EditModule.java): Modul fï¿½r Sitzung gespeichert");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp"+editUnapprovedModuleUrl);
 			} else if (request.getParameter("editModule").equals("sendModule")) {
 
@@ -373,7 +373,7 @@ public class EditModule extends HttpServlet {
 
 				// save effort
 				int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
-				EffortEntry effort = new EffortEntry("Präsenzzeit", order++, pt);
+				EffortEntry effort = new EffortEntry("Prï¿½senzzeit", order++, pt);
 				List<SelfStudy> selfStudyList = new ArrayList<>();
 
 				for (int i = 1; i < fieldsTypeD.size(); i++) {
@@ -401,7 +401,7 @@ public class EditModule extends HttpServlet {
 				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
 				// TODO leere selbsterstellte felder aussortieren
 
-				// Spezifische Felder für Turnus, LP, Aufwand, Studiengang
+				// Spezifische Felder fï¿½r Turnus, LP, Aufwand, Studiengang
 				// Versionsnummer von Modul aktualisieren
 				java.sql.Date creationdate = (java.sql.Date) module
 						.getCreationDate();
@@ -420,7 +420,7 @@ public class EditModule extends HttpServlet {
 							module.getCreationDate(), newVersion);
 				} else {
 					System.out.println("+++++++++");
-					System.out.println("(EditModule.java): Bearbeitetes Modul --> Überschreibt Modul");
+					System.out.println("(EditModule.java): Bearbeitetes Modul --> ï¿½berschreibt Modul");
 					System.out.println(editUnapprovedModule+"  url: "+editUnapprovedModuleUrl);
 					System.out.println("+++++++++");
 					for (Entry entry : module.getEntryList()) {
@@ -455,7 +455,7 @@ public class EditModule extends HttpServlet {
 			int deleteEntry = Integer.parseInt(request
 					.getParameter("deleteRow").replace("Delete", ""));
 			fieldsTypeC.remove(deleteEntry);
-			System.out.println("(EditModule.java): Reihe gelöscht");
+			System.out.println("(EditModule.java): Reihe gelï¿½scht");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp"+editUnapprovedModuleUrl);
 
 		} else {

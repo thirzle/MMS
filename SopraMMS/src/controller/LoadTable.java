@@ -37,37 +37,39 @@ public class LoadTable extends SessionCheck implements Servlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session = request.getSession();	
-    	long x = System.currentTimeMillis();
-		List<User> users = ua.getAllUsers();
-		long y = System.currentTimeMillis();
-		System.out.println("(LoadTable.java) LoadUser Time: "+(y-x));
-		
-		
-		session.setAttribute("users", users);
-		session.removeAttribute("content");
-		String task = "";
-		try {
-			task = request.getParameter("task").toString();
-			if(task.equals("mail")) {
-				session.setAttribute("content", "newMessage"); 
-			} else if (task.equals("curr")) {
-				session.setAttribute("content", "CurrVitae");
-			} else if( task.equals("edit") ) {
+		if(isLoggedIn(request, response)) {
+	    	HttpSession session = request.getSession();	
+	    	long x = System.currentTimeMillis();
+			List<User> users = uAdmin.getAllUsers();
+			long y = System.currentTimeMillis();
+			System.out.println("(LoadTable.java) LoadUser Time: "+(y-x));
+			
+			
+			session.setAttribute("users", users);
+			session.removeAttribute("content");
+			String task = "";
+			try {
+				task = request.getParameter("task").toString();
+				if(task.equals("mail")) {
+					session.setAttribute("content", "newMessage"); 
+				} else if (task.equals("curr")) {
+					session.setAttribute("content", "CurrVitae");
+				} else if( task.equals("edit") ) {
+					session.setAttribute("task", "edit");
+					session.setAttribute("content", "loadTable");
+				} else if( task.equals("delete") ) {
+					session.setAttribute("task", "delete");
+					session.setAttribute("content", "loadTable");
+				} else {
+					session.setAttribute("task", "edit");
+					session.setAttribute("content", "loadTable");
+				}
+			} catch(NullPointerException e){
 				session.setAttribute("task", "edit");
 				session.setAttribute("content", "loadTable");
-			} else if( task.equals("delete") ) {
-				session.setAttribute("task", "delete");
-				session.setAttribute("content", "loadTable");
-			} else {
-				session.setAttribute("task", "edit");
-				session.setAttribute("content", "loadTable");
+			} finally {
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
-		} catch(NullPointerException e){
-			session.setAttribute("task", "edit");
-			session.setAttribute("content", "loadTable");
-		} finally {
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		}
 	}
 

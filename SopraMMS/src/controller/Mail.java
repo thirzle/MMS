@@ -18,7 +18,7 @@ import user.User;
  *
  */
 @WebServlet("/Mail")
-public class Mail extends HttpServlet  {
+public class Mail extends SessionCheck  {
 	
 	private static final long serialVersionUID = 1L;
 

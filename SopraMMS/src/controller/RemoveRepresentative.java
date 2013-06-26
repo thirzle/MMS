@@ -21,7 +21,7 @@ import user.UserAdministration;
  * Servlet implementation class RemoveRepresentative
  */
 @WebServlet("/RemoveRepresentative")
-public class RemoveRepresentative extends HttpServlet {
+public class RemoveRepresentative extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -38,39 +38,40 @@ public class RemoveRepresentative extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		UserAdministration uAdmin = new UserAdministration();
-		String repLoginname = user.getRepresentative();
-		User rep = uAdmin.getUser(repLoginname);
-		String firstNameRep = rep.getFirstName();
-		String lastNameRep = rep.getLastName();
-		String infotext = " ";
-		
-		// remove representative of user
-		if (uAdmin.removeRepresentative(user)) {
-			user.setRepresentative(null);
-			String mailRep = (String) session.getAttribute("mailRep");
-			session.setAttribute("content", "home");
+		if(isLoggedIn(request, response)) {
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+			String repLoginname = user.getRepresentative();
+			User rep = uAdmin.getUser(repLoginname);
+			String firstNameRep = rep.getFirstName();
+			String lastNameRep = rep.getLastName();
+			String infotext = " ";
 			
-			//send mail to deleted representative
-			String content = user.getFirstName() + " " + user.getLastName()
-					+ " hat Sie" + " als Stellvertreter entfernt";
-			EmailTelnet mail = new EmailTelnet();
-			mail.send_mail("Stellvertreter", mailRep, content);
-			
-			infotext = "Ihr Stellvertreter wurde entfernt. Erneuern Sie diesen bitte demnächst!";
-			
-			// insert into History "Representative removed"
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			Date currentTime = new Date();
-			String date = formatter.format(currentTime);
-			uAdmin.insertHistory(user.getLogin(), date, "Hat " + firstNameRep
-					+ " " + lastNameRep + " als Stellvertreter gel&ouml;scht.");
-
+			// remove representative of user
+			if (uAdmin.removeRepresentative(user)) {
+				user.setRepresentative(null);
+				String mailRep = (String) session.getAttribute("mailRep");
+				session.setAttribute("content", "home");
+				
+				//send mail to deleted representative
+				String content = user.getFirstName() + " " + user.getLastName()
+						+ " hat Sie" + " als Stellvertreter entfernt";
+				EmailTelnet mail = new EmailTelnet();
+				mail.send_mail("Stellvertreter", mailRep, content);
+				
+				infotext = "Ihr Stellvertreter wurde entfernt. Erneuern Sie diesen bitte demnï¿½chst!";
+				
+				// insert into History "Representative removed"
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				Date currentTime = new Date();
+				String date = formatter.format(currentTime);
+				uAdmin.insertHistory(user.getLogin(), date, "Hat " + firstNameRep
+						+ " " + lastNameRep + " als Stellvertreter gel&ouml;scht.");
+	
+			}
+			session.setAttribute("generallyMenu", "open");
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 		}
-		session.setAttribute("generallyMenu", "open");
-		response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 	}
 
 	/**

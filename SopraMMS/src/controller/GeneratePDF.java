@@ -39,7 +39,7 @@ import user.UserAdministration;
  * Servlet implementation class GeneratePDF
  */
 @WebServlet("/GeneratePDF")
-public class GeneratePDF extends HttpServlet {
+public class GeneratePDF extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -55,71 +55,71 @@ public class GeneratePDF extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		ModuleAdministration mAdmin = new ModuleAdministration();
-		UserAdministration uAdmin = new UserAdministration();
-		String semester;
-		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-		Calendar cal = new GregorianCalendar();
-		
-		// get course from gui
-		String fullCourse = request.getParameter("course");
-		System.out.println("fullCourse: "+fullCourse);
-		String[] splitCourse = fullCourse.split(":");
-		String courseName = splitCourse[0];
-		String degree = splitCourse[1];
-		String courseID = mAdmin.getCourseID(courseName);
-		System.out.println("(GeneratePDF.java) courseID=" + courseID
-				+ " degree=" + degree);
-
-		// get current Date
-		Date currentTime = cal.getTime();
-
-		// load all modules of course
-		LinkedList<Module> moduleList = (LinkedList) mAdmin.getModulesByCourse(
-				courseID, degree);
-		// generate latest version
-		String version;
-		if (cal.get(cal.MONTH) >= 4 && cal.get(cal.MONTH) <= 9) {
-			semester = "sose";
-		} else {
-			semester = "wise";
-		}
-		version = courseID + "_" + degree + "_" + semester
-				+ cal.get(cal.YEAR);
-		
-		//get latest modificatoinauthor and latest modificationdate
-		String latestAuthor = moduleList.getFirst().getModificationauthor();
-		Date latestModificationDate = moduleList.getFirst().getModificationDate();
-		for(Module module : moduleList){
-			if(module.getModificationDate().after(latestModificationDate)){
-				latestModificationDate = module.getModificationDate();
-				latestAuthor = module.getModificationauthor();
+		if(isLoggedIn(request, response)) {
+			HttpSession session = request.getSession();
+			String semester;
+			SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+			Calendar cal = new GregorianCalendar();
+			
+			// get course from gui
+			String fullCourse = request.getParameter("course");
+			System.out.println("fullCourse: "+fullCourse);
+			String[] splitCourse = fullCourse.split(":");
+			String courseName = splitCourse[0];
+			String degree = splitCourse[1];
+			String courseID = mAdmin.getCourseID(courseName);
+			System.out.println("(GeneratePDF.java) courseID=" + courseID
+					+ " degree=" + degree);
+	
+			// get current Date
+			Date currentTime = cal.getTime();
+	
+			// load all modules of course
+			LinkedList<Module> moduleList = (LinkedList) mAdmin.getModulesByCourse(
+					courseID, degree);
+			// generate latest version
+			String version;
+			if (cal.get(cal.MONTH) >= 4 && cal.get(cal.MONTH) <= 9) {
+				semester = "sose";
+			} else {
+				semester = "wise";
 			}
+			version = courseID + "_" + degree + "_" + semester
+					+ cal.get(cal.YEAR);
+			
+			//get latest modificatoinauthor and latest modificationdate
+			String latestAuthor = moduleList.getFirst().getModificationauthor();
+			Date latestModificationDate = moduleList.getFirst().getModificationDate();
+			for(Module module : moduleList){
+				if(module.getModificationDate().after(latestModificationDate)){
+					latestModificationDate = module.getModificationDate();
+					latestAuthor = module.getModificationauthor();
+				}
+			}
+			//get examRegulation from gui
+			String examRegulation = request.getParameter("examRegulation");
+			
+			// create filename
+			String fileName = version + ".pdf";
+	
+			//Create new ModuleManual in database
+			mAdmin.createModuleManual(version, fileName, courseID, degree, new java.sql.Date(currentTime.getTime()), new java.sql.Date(latestModificationDate.getTime()),
+					semester, Integer.parseInt(examRegulation));
+	
+			// Generate new PDF
+			try {
+				SimplePdfCreator pdfCreator = new SimplePdfCreator();
+				pdfCreator.createModulePdf("P:/Team7_12/TestPDF/" + fileName,
+						moduleList, "institut kommt noch raus", "Fakultï¿½t Ingenieurwissenschaften und Informatik", degree,
+						examRegulation, latestModificationDate.toString(), latestAuthor, semester,
+						version);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("couldn't create PDF of course: "
+						+ splitCourse[1]);
+			}
+			response.sendRedirect("/SopraMMS/FileExportServlet?filename="+fileName);
 		}
-		//get examRegulation from gui
-		String examRegulation = request.getParameter("examRegulation");
-		
-		// create filename
-		String fileName = version + ".pdf";
-
-		//Create new ModuleManual in database
-		mAdmin.createModuleManual(version, fileName, courseID, degree, new java.sql.Date(currentTime.getTime()), new java.sql.Date(latestModificationDate.getTime()),
-				semester, Integer.parseInt(examRegulation));
-
-		// Generate new PDF
-		try {
-			SimplePdfCreator pdfCreator = new SimplePdfCreator();
-			pdfCreator.createModulePdf("P:/Team7_12/TestPDF/" + fileName,
-					moduleList, "institut kommt noch raus", "Fakultät Ingenieurwissenschaften und Informatik", degree,
-					examRegulation, latestModificationDate.toString(), latestAuthor, semester,
-					version);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("couldn't create PDF of course: "
-					+ splitCourse[1]);
-		}
-		response.sendRedirect("/SopraMMS/FileExportServlet?filename="+fileName);
 	}
 
 	/**

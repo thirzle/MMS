@@ -16,7 +16,7 @@ import user.User;
  * Servlet implementation class CreateSubject
  */
 @WebServlet("/CreateSubject")
-public class CreateSubject extends HttpServlet {
+public class CreateSubject extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -31,17 +31,18 @@ public class CreateSubject extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		//check if menuentry or submit brought you here
-		if(request.getParameter("name")==null){
-			session.setAttribute("content", "createNewSubject");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-		} else {
-			ModuleAdministration mAdministration = new ModuleAdministration();
-			mAdministration.addSubject(request.getParameter("name"));
-			session.setAttribute("subjectCreated", true);
-			session.setAttribute("content", "createNewSubject");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		if(isLoggedIn(request, response)) {
+			HttpSession session = request.getSession();
+			//check if menuentry or submit brought you here
+			if(request.getParameter("name")==null){
+				session.setAttribute("content", "createNewSubject");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			} else {
+				mAdmin.addSubject(request.getParameter("name"));
+				session.setAttribute("subjectCreated", true);
+				session.setAttribute("content", "createNewSubject");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			}
 		}
 	}
 

@@ -15,7 +15,7 @@ import management.ModuleAdministration;
  * Servlet implementation class ViewModule
  */
 @WebServlet("/ViewModule")
-public class ViewModule extends HttpServlet {
+public class ViewModule extends SessionCheck {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -30,30 +30,31 @@ public class ViewModule extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			HttpSession session = request.getSession();
-			ModuleAdministration mAdmin = new ModuleAdministration();
-			String selectedModule = request.getParameter("selectedModuleToEdit");
-			long moduleID;
-			int version;
-			String instituteID;
-			String institute = null;
-			Module module = null;
-			String[] parts;
-			if(selectedModule != null){
-				parts = selectedModule.split(" ");
-				moduleID = Long.parseLong(parts[0]);
-				version = Integer.parseInt(parts[1]);
-				module = mAdmin.getModuleByID(moduleID, version);
-				instituteID = module.getInstituteID();
-				institute = mAdmin.getInstituteName(instituteID);
+			if(isLoggedIn(request, response)) {
+				HttpSession session = request.getSession();
+				String selectedModule = request.getParameter("selectedModuleToEdit");
+				long moduleID;
+				int version;
+				String instituteID;
+				String institute = null;
+				Module module = null;
+				String[] parts;
+				if(selectedModule != null){
+					parts = selectedModule.split(" ");
+					moduleID = Long.parseLong(parts[0]);
+					version = Integer.parseInt(parts[1]);
+					module = mAdmin.getModuleByID(moduleID, version);
+					instituteID = module.getInstituteID();
+					institute = mAdmin.getInstituteName(instituteID);
+				}
+				
+				System.out.println("ViewModule: module == null "+(module==null));
+				
+				session.setAttribute("instituteForViewModule", institute);
+				session.setAttribute("moduleForViewModule", module);
+				session.setAttribute("content", "viewModule");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
-			
-			System.out.println("ViewModule: module == null "+(module==null));
-			
-			session.setAttribute("instituteForViewModule", institute);
-			session.setAttribute("moduleForViewModule", module);
-			session.setAttribute("content", "viewModule");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			
 	}
 

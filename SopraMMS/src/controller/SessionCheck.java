@@ -24,18 +24,18 @@ public class SessionCheck extends HttpServlet {
 	 * An object representing an interface to the database.
 	 * @see User
 	 */
-	protected UserAdministration ua;
+	protected UserAdministration uAdmin;
 	/**
 	 * An object representing an interface to the database.
 	 */
-	protected ModuleAdministration ma;
+	protected ModuleAdministration mAdmin;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public SessionCheck() {
         super();
-        ua = new UserAdministration();
-        ma = new ModuleAdministration();
+        uAdmin = new UserAdministration();
+        mAdmin = new ModuleAdministration();
     }
 
 	/**

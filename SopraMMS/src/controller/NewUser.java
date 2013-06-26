@@ -36,7 +36,7 @@ public class NewUser extends SessionCheck {
 	    System.out.println("(NewUser.java): doGet() called");
 	    HttpSession session = request.getSession();
 		if(isLoggedIn(request, response) && actionGranted(request, 3)) {
-		    List<String> institutes = ua.getAllInstitute();
+		    List<String> institutes = uAdmin.getAllInstitute();
 		    session.removeAttribute("institutes");
     		session.removeAttribute("instituteNames");
     		session.removeAttribute("emptyInputs");

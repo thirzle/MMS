@@ -14,7 +14,7 @@ import user.UserAdministration;
  * Servlet implementation class SendNewPassword
  */
 @WebServlet("/SendNewPassword")
-public class SendNewPassword extends HttpServlet {
+public class SendNewPassword extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -33,9 +33,8 @@ public class SendNewPassword extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String email = request.getParameter("email");
-		UserAdministration ua = new UserAdministration();
 		try {
-			ua.sendNewPasswordLink(email);
+			uAdmin.sendNewPasswordLink(email);
 			String infotext= "Es wurde eine Mail an Ihre E-Mail Adresse versand.";
 			session.setAttribute("content", "start");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp?infotext="+infotext);
