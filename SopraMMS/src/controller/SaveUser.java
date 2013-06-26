@@ -41,6 +41,8 @@ public class SaveUser extends SessionCheck {
 		if (isLoggedIn(request, response) && actionGranted(request, right)) {
 			HttpSession session = request.getSession();
 			User user = createUser(request);
+			String loginname = ua.checkLoginname(user.getLogin());
+			user.setLogin(loginname);
 			ua.createUser(user);
 			try {
 				ua.sendNewPasswordLinkForNewUser(user);

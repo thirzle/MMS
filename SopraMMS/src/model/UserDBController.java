@@ -140,8 +140,8 @@ public class UserDBController {
 			password = resultSet.getString("password");
 			session = resultSet.getString("session");
 			supervisor = resultSet.getString("supervisor");
-			institutes = getInstitutesByName(loginname);
-			rights = getRights(loginname);
+			institutes = getAllInstitutesByName(loginname, connection);
+			rights = getAllRights(loginname, connection);
 			query = "SELECT facultyID FROM institute WHERE instituteID = ?";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1,
@@ -372,7 +372,8 @@ public class UserDBController {
 		}
 		return rightsArray;
 	}
-
+	
+	
 	/**
 	 * Gets the rights of a specified user with established connection.
 	 * 
@@ -382,6 +383,33 @@ public class UserDBController {
 	 * @see User
 	 */
 	public boolean[] getRights(String loginname, Connection connection) {
+		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
+		query = "SELECT rightsID FROM rightsaffiliation WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			// set all rights listed in table rightsaffiliation
+			while (resultSet.next()) {
+				rightsArray[resultSet.getInt("rightsID")] = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get rights of user: " + loginname);
+		}
+		return rightsArray;
+	}
+	
+
+	/**
+	 * Gets the rights of a specified user and rights of its supervisor with established connection.
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @param connection	Connection object.
+	 * @return				An array set with true and false values for the corresponding rights.
+	 * @see User
+	 */
+	public boolean[] getAllRights(String loginname, Connection connection) {
 		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
 		query = "SELECT rightsID FROM rightsaffiliation WHERE loginname = ?";
 		try {
@@ -667,7 +695,7 @@ public class UserDBController {
 		return instituteList;
 	}
 	
-
+	
 	/**
 	 * Gets institute of existing user with established connection
 	 * 
@@ -687,12 +715,40 @@ public class UserDBController {
 			while (resultSet.next()) {
 				instituteList.add(resultSet.getString("instituteID"));
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get list of institutes from user: "
+					+ loginname);
+		}
+		return instituteList;
+	}
+	
+
+	/**
+	 * Gets institute of existing user and insitutes of its supervisor with established connection
+	 * 
+	 * @param loginname		The name with which the user uses to log into the system.
+	 * @param connection	Connection object.
+	 * @return				List of institutes.
+	 * @see User
+	 */
+	public List<String> getAllInstitutesByName(String loginname,
+			Connection connection) {
+		LinkedList<String> instituteList = new LinkedList<String>();
+		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				instituteList.add(resultSet.getString("instituteID"));
+			}
 			pStatement = connection
 					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
 			pStatement.setString(1, loginname);
-			resultSet = pStatement.executeQuery();
+			ResultSet sResultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				loginname = resultSet.getString("supervisor");
+				loginname = sResultSet.getString("supervisor");
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, loginname);
 				resultSet = pStatement.executeQuery();
@@ -1580,6 +1636,35 @@ public class UserDBController {
 		}
 		return null;
 	}
+	
+	/**
+	 * Checks, if given loginname is already used and returns an unused one.
+	 * For exampe: "reuterm" is already taken -> "reuterm-1" will be returned
+	 * 
+	 * @param loginname				The name with which the user uses to log into the system.
+	 * @return						An unused loginname.
+	 */
+	public String checkLoginname(String loginname) {
+		Connection connection = connect();
+		query = "SELECT loginname FROM user WHERE loginname = ?";
+		int i = 1;
+		try {
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, loginname);
+			ResultSet resultSet = pStatement.executeQuery();
+			while (resultSet.next()) {
+				loginname = loginname+"-"+i;
+				pStatement.setString(1, loginname);
+				resultSet = pStatement.executeQuery();
+				i++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't generate loginname");
+		}
+		return loginname;
+	}
+	
 
 	/**
 	 * Closes the connection

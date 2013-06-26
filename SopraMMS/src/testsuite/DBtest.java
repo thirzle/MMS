@@ -28,10 +28,10 @@ public class DBtest {
 		// TODO Auto-generated method stub
 		UserDBController uController = new UserDBController();
 		ModuleDBController mController = new ModuleDBController();
-		uController.connect();
-		for (User user : uController.getAllUsers()) {
-			System.out.println(user);
-		}
+//		uController.connect();
+//		for (User user : uController.getAllUsers()) {
+//			System.out.println(user);
+//		}
 //		uController.getRights
 //		boolean [] rights = uController.getRights("lehrd");
 //		System.out.println("get rights of lehrd: "+rights[1]);		
@@ -180,10 +180,7 @@ public class DBtest {
 //		System.out.println("done");+
 
 		//System.out.println(mController.clearDatabase());
-		List<Module> module = mController.getModulesByCourse("inf", "Master");
-		Calendar cal = new GregorianCalendar();
-		cal.set(2013, 6, 24);
-		System.out.println(cal.getTime());
+		System.out.println(uController.checkLoginname("reuterm"));
 
 
 	}
