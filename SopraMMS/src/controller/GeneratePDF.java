@@ -103,7 +103,7 @@ public class GeneratePDF extends HttpServlet {
 		// create filename
 		String fileName = version + ".pdf";
 
-		// TODO Create new ModuleManual in database
+		//Create new ModuleManual in database
 		mAdmin.createModuleManual(version, fileName, courseID, degree, new java.sql.Date(currentTime.getTime()), new java.sql.Date(latestModificationDate.getTime()),
 				semester, Integer.parseInt(examRegulation));
 
