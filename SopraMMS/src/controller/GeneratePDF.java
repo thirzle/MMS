@@ -109,10 +109,19 @@ public class GeneratePDF extends SessionCheck {
 			// Generate new PDF
 			try {
 				SimplePdfCreator pdfCreator = new SimplePdfCreator();
+				//AJ
+				//replaced absolute path to relative path, see configuration file...
+				/*
 				pdfCreator.createModulePdf("P:/Team7_12/TestPDF/" + fileName,
 						moduleList, "institut kommt noch raus", "Fakultät Ingenieurwissenschaften und Informatik", degree,
 						examRegulation, latestModificationDate.toString(), latestAuthor, semester,
 						version);
+						*/
+				pdfCreator.createModulePdf(sysconfig.Config.system_path.getValue() + sysconfig.Config.system_pdf_path.getValue() + fileName,
+					moduleList, "institut kommt noch raus", "Fakultät Ingenieurwissenschaften und Informatik", degree,
+					examRegulation, latestModificationDate.toString(), latestAuthor, semester,
+					version);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("couldn't create PDF of course: "

@@ -1,5 +1,7 @@
 package controller;
 
+import sysconfig.*;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -35,23 +37,34 @@ public class ApplicationListener implements ServletContextListener, HttpSessionL
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0) {
-        System.out.println("MMS started");
-        Timer caretaker = new Timer();
-        final UserAdministration uAdmin = new UserAdministration();
-        List<Deadline> deadlines = new LinkedList<Deadline>();
-        List<TaskManager> deadlineTasks = new LinkedList<TaskManager>();
-        for (String facultyID : uAdmin.getAllFacultiesID()) {
-			deadlines.add(uAdmin.getDeadlinebyFaculty(facultyID));
-		}
-        for (Deadline deadline : deadlines) {
-			deadlineTasks.add(new TaskManager(deadline));
-		}
-        TimerTask clearHistroy = new TimerTask() {
-			public void run() {
-				uAdmin.clearHistory();
-			}
-		};
-		caretaker.schedule(clearHistroy, 0, 60*24*60*60*1000);
+	//AJ's system startup...
+        System.out.println("MMS starting...");
+        
+        
+        
+        Config conf = new Config();
+        conf.load_settings();
+        
+        
+        
+        
+	Timer caretaker = new Timer();
+	final UserAdministration uAdmin = new UserAdministration();
+	List<Deadline> deadlines = new LinkedList<Deadline>();
+	List<TaskManager> deadlineTasks = new LinkedList<TaskManager>();
+	for (String facultyID : uAdmin.getAllFacultiesID()) {
+	    deadlines.add(uAdmin.getDeadlinebyFaculty(facultyID));
+	}
+	for (Deadline deadline : deadlines) {
+	    deadlineTasks.add(new TaskManager(deadline));
+	}
+	TimerTask clearHistroy = new TimerTask() {
+	    public void run() {
+		uAdmin.clearHistory();
+	    }
+	};
+	caretaker.schedule(clearHistroy, 0, 60 * 24 * 60 * 60 * 1000);
+	System.out.println("MMS started.");
     }
 
 	/**

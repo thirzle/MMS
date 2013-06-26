@@ -39,10 +39,10 @@ public class UserDBController {
 //	 private static final String PASSWORD = "";
 
 	// db4free.net database
-	private static final String URL = "jdbc:mysql://db4free.net:3306/sopramms";
-	private static final String USER = "teamaccount";
-	private static final String PASSWORD = "6lsj7tdm";
-	private static final String DRIVER = "com.mysql.jdbc.Driver";
+    	private static final String URL = sysconfig.Config.system_database_url.getValue();
+	private static final String USER = sysconfig.Config.system_database_user.getValue();
+	private static final String PASSWORD = sysconfig.Config.system_database_password.getValue();
+	private static final String DRIVER = sysconfig.Config.system_database_driver.getValue();
 
 	// Tim database
 	// private static final String URL = "jdbc:mysql://127.0.0.1:3306/MMS";

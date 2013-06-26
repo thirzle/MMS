@@ -15,7 +15,8 @@ import javax.servlet.annotation.WebInitParam;
 /**
  * Servlet implementation class FileExportServlet
  */
-@WebServlet(urlPatterns = { "/FileExportServlet" }, initParams = { @WebInitParam(name = "exportFolder", value = "P:/Team7_12/TestPDF/", description = "Folder with files to export") })
+//@WebServlet(urlPatterns = { "/FileExportServlet" }, initParams = { @WebInitParam(name = "exportFolder", value = "P:/Team7_12/TestPDF/", description = "Folder with files to export") })
+@WebServlet(urlPatterns = { "/FileExportServlet" })
 public class FileExportServlet extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
@@ -35,7 +36,9 @@ public class FileExportServlet extends SessionCheck {
 			HttpServletResponse response) throws ServletException, IOException {
 		if(isLoggedIn(request, response)) {
 			response.setContentType("application/pdf");
-			String exportFolder = this.getInitParameter("exportFolder");
+			//AJ
+			//String exportFolder = this.getInitParameter("exportFolder");
+			String exportFolder = sysconfig.Config.system_path.getValue() + sysconfig.Config.system_pdf_path.getValue();
 			String exportFile = request.getParameter("filename");
 			FileInputStream fi = new FileInputStream(new File(exportFolder
 					+ exportFile));
@@ -44,6 +47,7 @@ public class FileExportServlet extends SessionCheck {
 			while ((bytesRead = (fi.read(buffer))) > 0) {
 				response.getOutputStream().write(buffer, 0, bytesRead);
 			}
+			fi.close();
 		}
 	}
 
