@@ -81,8 +81,10 @@ public class Deadline extends SessionCheck {
 					TaskManager taskMananer = new TaskManager(new management.Deadline(deadline, 
 							beginremember, user.getFaculty()));
 					session.removeAttribute("existingDeadline");
-					session.setAttribute("content", "showDeadline");
-					response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=done");
+					session.setAttribute("content", "home");
+					String infotext = "Der Stichtag wurde erfolgreich geändert.";
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+//					response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=done");
 				} else{
 					if ((boolean)session.getAttribute("existingDeadline")) {
 						session.setAttribute("content", "showDeadline");
@@ -111,7 +113,6 @@ public class Deadline extends SessionCheck {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }
