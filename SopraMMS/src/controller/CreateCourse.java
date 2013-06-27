@@ -59,6 +59,9 @@ public class CreateCourse extends SessionCheck {
 				String infoText = "Der Studiengang '"+course.toString()+"' wurde erfolgreich zum System hinzugefügt.";
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infoText);
 			}
+		} else {
+			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 		}
 	}
 

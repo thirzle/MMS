@@ -42,6 +42,9 @@ public class CreateSubject extends SessionCheck {
 				String infoText = "Das Fach '"+request.getParameter("name")+"' wurde erfolgreich angelegt.";
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infoText);
 			}
+		} else {
+			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 		}
 	}
 

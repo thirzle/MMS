@@ -128,6 +128,9 @@ public class GeneratePDF extends SessionCheck {
 						+ splitCourse[1]);
 			}
 			response.sendRedirect("/SopraMMS/FileExportServlet?filename="+fileName);
+		} else {
+			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 		}
 	}
 

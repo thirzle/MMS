@@ -255,6 +255,9 @@ public class CreateModule extends SessionCheck {
 			session.setAttribute("fieldsTypeB", fieldsTypeB);
 			session.setAttribute("fieldsTypeC", fieldsTypeC);
 			session.setAttribute("fieldsTypeD", fieldsTypeD);
+		} else {
+			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 		}
 	}
 

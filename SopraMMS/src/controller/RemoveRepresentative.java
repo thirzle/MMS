@@ -71,6 +71,9 @@ public class RemoveRepresentative extends SessionCheck {
 			}
 			session.setAttribute("generallyMenu", "open");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+		} else {
+			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 		}
 	}
 

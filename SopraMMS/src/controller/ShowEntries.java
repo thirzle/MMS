@@ -53,6 +53,9 @@ public class ShowEntries extends SessionCheck {
 			String[] splitCourse = course.split(" ");
 	//		load all modules of course
 			LinkedList<Module> moduleList= (LinkedList) mAdmin.getModulesByCourse(mAdmin.getCourseID(splitCourse[1]), splitCourse[0]);
+		} else {
+			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 		}
 		
 		

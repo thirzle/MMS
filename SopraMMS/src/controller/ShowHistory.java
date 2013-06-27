@@ -35,6 +35,9 @@ public class ShowHistory extends SessionCheck {
 			request.getSession().setAttribute("history", userHistoryList);
 			request.getSession().setAttribute("content", "history");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		} else {
+			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 		}
 	}
 

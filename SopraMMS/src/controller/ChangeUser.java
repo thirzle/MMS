@@ -74,10 +74,8 @@ public class ChangeUser extends SessionCheck implements Servlet {
 	    session.removeAttribute("errormessage");
 	    response.sendRedirect("/SopraMMS/LoadTable");
 	} else {
-	    // Unerlaubter Zugriff / weil nicht eingeloggt oder keine Erlaubnis
-	    session.setAttribute("content", "start");
-	    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-	    System.out.println("not logged in or access denied.");
+		String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+		response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 	}
 
     } // end doGet()

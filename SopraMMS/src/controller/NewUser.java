@@ -44,10 +44,8 @@ public class NewUser extends SessionCheck {
 		    session.setAttribute("content", "newUser");
 		    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		} else {
-		    // not logged in or access denied!
-		    System.out.println("(Access denied): You are not logged in or permitted");
-		    session.setAttribute("content", "start");
-		    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 		}
 	}
 	

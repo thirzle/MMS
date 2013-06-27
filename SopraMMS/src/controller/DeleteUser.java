@@ -32,31 +32,31 @@ public class DeleteUser extends SessionCheck implements Servlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	System.out.println("(DeleteUser.java):doGet() called");
-	HttpSession session = request.getSession();
-	if (isLoggedIn(request, response) && actionGranted(request, 3)) {
-	    String loginname = request.getParameter("selectedRowID");
-	    String thisloginname = ((User) session.getAttribute("user")).getLogin();
-	    if((!loginname.equals(thisloginname))) {
-		    System.out.println("(DeleteUser.java):user:" + loginname);
-		    // insert into History "User removed"
-		    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		    Date currentTime = new Date();
-		    String date = formatter.format(currentTime);
-		    uAdmin.insertHistory(loginname, date, "Wurde geloescht");
-	
-		    uAdmin.deleteUser(loginname);
-		    session.setAttribute("task", "edit");
-		    response.sendRedirect("/SopraMMS/LoadTable");
-	    } else {
-	    	 session.setAttribute("errormessage", "Sie können sich nicht selbst löschen! Bitte kontaktieren Sie einen anderen Administrator.");
-	    	 session.setAttribute("task", "edit");
-			 response.sendRedirect("/SopraMMS/LoadTable");
-	    }
-	} else {
-	    session.setAttribute("content", "start");
-	    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-	}
+		System.out.println("(DeleteUser.java):doGet() called");
+		HttpSession session = request.getSession();
+		if (isLoggedIn(request, response) && actionGranted(request, 3)) {
+		    String loginname = request.getParameter("selectedRowID");
+		    String thisloginname = ((User) session.getAttribute("user")).getLogin();
+		    if((!loginname.equals(thisloginname))) {
+			    System.out.println("(DeleteUser.java):user:" + loginname);
+			    // insert into History "User removed"
+			    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			    Date currentTime = new Date();
+			    String date = formatter.format(currentTime);
+			    uAdmin.insertHistory(loginname, date, "Wurde geloescht");
+		
+			    uAdmin.deleteUser(loginname);
+			    session.setAttribute("task", "edit");
+			    response.sendRedirect("/SopraMMS/LoadTable");
+		    } else {
+		    	 session.setAttribute("errormessage", "Sie können sich nicht selbst löschen! Bitte kontaktieren Sie einen anderen Administrator.");
+		    	 session.setAttribute("task", "edit");
+				 response.sendRedirect("/SopraMMS/LoadTable");
+		    }
+		} else {
+			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
+		}
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

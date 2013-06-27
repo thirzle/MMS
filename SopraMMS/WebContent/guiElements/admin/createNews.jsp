@@ -1,5 +1,8 @@
 <h1>Neuigkeit verfassen</h1>
-<p></p>
+<p>Bitte tragen Sie Titel, Inhalt und Sichtbarkeit der Neuigkeit ein.<br>
+Front-End bedeutet hierbei, dass jeder die Nachricht lesen kann, wobei Nachrichten für 
+das Back-End nur eingeloggten Benutzen angezeigt werden.
+</p>
 <%
 	session.setAttribute("content", "createNews");
 	if (request.getParameter("newsstatus") != null) {

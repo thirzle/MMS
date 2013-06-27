@@ -424,15 +424,15 @@ public class UserDBController {
 					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
 			pStatement.setString(1, loginname);
 			resultSet = pStatement.executeQuery();
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				loginname = resultSet.getString("supervisor");
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, loginname);
-				resultSet = pStatement.executeQuery();
+				ResultSet resultSetRi = pStatement.executeQuery();
 				// set all rights of supervisor listed in table
 				// rightsaffiliation
-				while (resultSet.next()) {
-					rightsArray[resultSet.getInt("rightsID")] = true;
+				while (resultSetRi.next()) {
+					rightsArray[resultSetRi.getInt("rightsID")] = true;
 				}
 			}
 		} catch (SQLException e) {
@@ -747,15 +747,15 @@ public class UserDBController {
 					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
 			pStatement.setString(1, loginname);
 			ResultSet sResultSet = pStatement.executeQuery();
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				loginname = sResultSet.getString("supervisor");
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, loginname);
-				resultSet = pStatement.executeQuery();
+				ResultSet resultSetIns = pStatement.executeQuery();
 				// get all institutes of supervisor
-				while (resultSet.next()) {
-					if(!instituteList.contains(resultSet.getString("insituteID"))){
-						instituteList.add(resultSet.getString("insituteID"));
+				while (resultSetIns.next()) {
+					if(!instituteList.contains(resultSetIns.getString("insituteID"))){
+						instituteList.add(resultSetIns.getString("insituteID"));
 					}
 				}
 			}
