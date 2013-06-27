@@ -22,7 +22,8 @@ import management.ModuleAdministration;
 public class TaskManager {
 	
 	/**
-	 * @param deadline
+	 * 
+	 * @param deadline			{@link Deadline#getDeadline()}
 	 */
 	public TaskManager (final Deadline deadline) {
 		final ModuleAdministration mAdmin = new ModuleAdministration();
