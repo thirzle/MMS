@@ -39,9 +39,8 @@ public class CreateSubject extends SessionCheck {
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			} else {
 				mAdmin.addSubject(request.getParameter("name"));
-				session.setAttribute("subjectCreated", true);
-				session.setAttribute("content", "createNewSubject");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				String infoText = "Das Fach '"+request.getParameter("name")+"' wurde erfolgreich angelegt.";
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infoText);
 			}
 		}
 	}
