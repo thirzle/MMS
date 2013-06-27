@@ -30,6 +30,8 @@ import user.UserAdministration;
 
 /**
  * Servlet implementation class editModuleForModulmanager
+ * 
+ * @author Teresa Hirzle, David Leer
  */
 @WebServlet("/EditModule")
 public class EditModule extends SessionCheck {

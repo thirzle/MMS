@@ -16,6 +16,8 @@ import user.UserAdministration;
 
 /**
  * Servlet implementation class ShowRepresentative
+ * 
+ * @author Teresa Hirzle
  */
 @WebServlet("/ShowRepresentative")
 public class ShowRepresentative extends SessionCheck {
