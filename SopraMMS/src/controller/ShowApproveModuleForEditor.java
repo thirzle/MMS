@@ -83,6 +83,7 @@ public class ShowApproveModuleForEditor extends SessionCheck {
 			}
 	
 			Module approveModule = mAdmin.getModuleByID(moduleID, version);
+			session.setAttribute("moduleApprove", approveModule);
 			entryList = (LinkedList<Entry>) mAdmin
 					.sortModuleEntryListByOrder(approveModule);
 	
@@ -160,7 +161,7 @@ public class ShowApproveModuleForEditor extends SessionCheck {
 								refusedEntries = refusedEntries + entry.getTitle()+"\n";
 							}
 						}
-						infotext = "Die Freigabestatus der Einträge des Moduls "+moduleName+" wurden gespeichert.";
+						infotext = "Die Freigabestatus der Einträge des Moduls '"+moduleName+"' wurden gespeichert.";
 						//send mail to modulemanager
 						builder.append("Der Administrator hat folgende Einträge des Moduls ");
 						builder.append(moduleName);
