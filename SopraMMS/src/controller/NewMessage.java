@@ -24,14 +24,14 @@ public class NewMessage extends SessionCheck implements Servlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	HttpSession session = request.getSession();
-	if (isLoggedIn(request, response)) {
-	    session.setAttribute("content", "newMessage");
-	    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-	} else {
-	    session.setAttribute("content", "start");
-	    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-	}
+		HttpSession session = request.getSession();
+		if (isLoggedIn(request, response)) {
+		    session.setAttribute("content", "newMessage");
+		    response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		} else {
+			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
+		}
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -532,24 +532,24 @@ public class ModuleDBController {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
 			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
+			while(resultSet.next()){
 				supervisor = resultSet.getString("supervisor");
 				query = "SELECT m.* FROM module AS m JOIN latestmodule AS l ON " +
 						"m.moduleID = l.moduleID AND m.version = l.version " +
 						"WHERE modificationauthor = ?";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, supervisor);
-				resultSet = pStatement.executeQuery();
-				while (resultSet.next()) {
-					moduleList.add(new Module(resultSet.getLong("moduleID"),
-							resultSet.getInt("version"),
-							resultSet.getString("name"),
-							resultSet.getDate("creationdate"),
-							resultSet.getDate("modificationdate"),
-							resultSet.getBoolean("approvalstatus"),
-							resultSet.getString("instituteID"),
-							resultSet.getString("subject"),
-							resultSet.getString("modificationauthor")));
+				ResultSet resultSetSup = pStatement.executeQuery();
+				while (resultSetSup.next()) {
+					moduleList.add(new Module(resultSetSup.getLong("moduleID"),
+							resultSetSup.getInt("version"),
+							resultSetSup.getString("name"),
+							resultSetSup.getDate("creationdate"),
+							resultSetSup.getDate("modificationdate"),
+							resultSetSup.getBoolean("approvalstatus"),
+							resultSetSup.getString("instituteID"),
+							resultSetSup.getString("subject"),
+							resultSetSup.getString("modificationauthor")));
 				}
 			}
 		} catch (SQLException e) {
@@ -1059,23 +1059,23 @@ public class ModuleDBController {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, loginname);
 			ResultSet resultSet = pStatement.executeQuery();
-			if(resultSet.next()){
+			while(resultSet.next()){
 				supervisor = resultSet.getString("supervisor");
 				query = "SELECT m.* FROM module AS m WHERE modificationauthor = ? " +
 						"AND m.approvalstatus = FALSE";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setString(1, supervisor);
-				resultSet = pStatement.executeQuery();
+				ResultSet resultSetSup = pStatement.executeQuery();
 				while (resultSet.next()) {
-					moduleList.add(new Module(resultSet.getLong("moduleID"),
-							resultSet.getInt("version"),
-							resultSet.getString("name"),
-							resultSet.getDate("creationdate"),
-							resultSet.getDate("modificationdate"),
-							resultSet.getBoolean("approvalstatus"),
-							resultSet.getString("instituteID"),
-							resultSet.getString("subject"),
-							resultSet.getString("modificationauthor")));
+					moduleList.add(new Module(resultSetSup.getLong("moduleID"),
+							resultSetSup.getInt("version"),
+							resultSetSup.getString("name"),
+							resultSetSup.getDate("creationdate"),
+							resultSetSup.getDate("modificationdate"),
+							resultSetSup.getBoolean("approvalstatus"),
+							resultSetSup.getString("instituteID"),
+							resultSetSup.getString("subject"),
+							resultSetSup.getString("modificationauthor")));
 				}
 			}
 		} catch (SQLException e) {

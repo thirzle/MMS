@@ -19,7 +19,7 @@ import user.UserAdministration;
  * Servlet implementation class CreateInstitute
  */
 @WebServlet("/CreateInstitute")
-public class CreateInstitute extends HttpServlet {
+public class CreateInstitute extends SessionCheck {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -35,45 +35,48 @@ public class CreateInstitute extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		ModuleAdministration mAdmin = new ModuleAdministration();
-		UserAdministration uAdmin = new UserAdministration();
-		String infotext = "";
-		LinkedList<String> instituteList = (LinkedList<String>) uAdmin.getAllInstitute();
-		LinkedList<String> instituteIDList = (LinkedList<String>) uAdmin.getAllInstituteID();
-		boolean wrongData = false;
-
-		String instituteID = request.getParameter("instituteID");
-		String instituteName = request.getParameter("instituteName");
-		
-		for(String string : instituteList){
-			if(instituteName.equals(string)){
-				session.setAttribute("wrongDataNewInst", "wrongName");
-				session.setAttribute("content", "createNewInstitute");
-				wrongData = true;
-			}
-		}
-		if(!wrongData){
-			for(String string : instituteIDList){
-				if(instituteID.equals(string)){
-					session.setAttribute("wrongDataNewInst", "wrongID");
+		if(isLoggedIn(request, response)) {
+			HttpSession session = request.getSession();
+			String infotext = "";
+			LinkedList<String> instituteList = (LinkedList<String>) uAdmin.getAllInstitute();
+			LinkedList<String> instituteIDList = (LinkedList<String>) uAdmin.getAllInstituteID();
+			boolean wrongData = false;
+	
+			String instituteID = request.getParameter("instituteID");
+			String instituteName = request.getParameter("instituteName");
+			
+			for(String string : instituteList){
+				if(instituteName.equals(string)){
+					session.setAttribute("wrongDataNewInst", "wrongName");
 					session.setAttribute("content", "createNewInstitute");
 					wrongData = true;
 				}
-			}	
-		}
-		
-		if(!wrongData){
-			if (mAdmin.createInstitute(instituteID, instituteName, "in")) {
-				infotext = "Das Institut " + instituteName
-						+ " wurde erfolgreich erstellt.";
-				session.setAttribute("content", "home");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);		
 			}
-		}
-		
-		else {
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			if(!wrongData){
+				for(String string : instituteIDList){
+					if(instituteID.equals(string)){
+						session.setAttribute("wrongDataNewInst", "wrongID");
+						session.setAttribute("content", "createNewInstitute");
+						wrongData = true;
+					}
+				}	
+			}
+			
+			if(!wrongData){
+				if (mAdmin.createInstitute(instituteID, instituteName, "in")) {
+					infotext = "Das Institut " + instituteName
+							+ " wurde erfolgreich erstellt.";
+					session.setAttribute("content", "home");
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);		
+				}
+			}
+			
+			else {
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			}
+		} else {
+			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 		}
 	}
 

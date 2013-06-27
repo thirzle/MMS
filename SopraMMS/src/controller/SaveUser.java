@@ -68,11 +68,8 @@ public class SaveUser extends SessionCheck {
 				response.sendRedirect("/SopraMMS/LoadTable");
 			}
 		} else {
-			// Unerlaubter Zugriff / weil nicht eingeloggt oder keine Erlaubnis
-			HttpSession session = request.getSession();
-			session.setAttribute("content", "start");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-			System.out.println("not logged in or access denied.");
+				String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 		}
 	}
 
