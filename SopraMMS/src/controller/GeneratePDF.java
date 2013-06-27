@@ -81,11 +81,13 @@ public class GeneratePDF extends SessionCheck {
 			String version;
 			if (cal.get(cal.MONTH) >= 4 && cal.get(cal.MONTH) <= 9) {
 				semester = "sose";
+				version = courseID + "_" + degree + "_" + semester
+						+ cal.get(cal.YEAR);
 			} else {
 				semester = "wise";
+				version = courseID + "_" + degree + "_" + semester
+						+ cal.get(cal.YEAR)+cal.get(cal.YEAR+1);
 			}
-			version = courseID + "_" + degree + "_" + semester
-					+ cal.get(cal.YEAR);
 			
 			//get latest modificatoinauthor and latest modificationdate
 			String latestAuthor = moduleList.getFirst().getModificationauthor();

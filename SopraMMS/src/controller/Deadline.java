@@ -84,7 +84,6 @@ public class Deadline extends SessionCheck {
 					session.setAttribute("content", "home");
 					String infotext = "Der Stichtag wurde erfolgreich geändert.";
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
-//					response.sendRedirect("/SopraMMS/guiElements/home.jsp?submitDeadline=done");
 				} else{
 					if ((boolean)session.getAttribute("existingDeadline")) {
 						session.setAttribute("content", "showDeadline");

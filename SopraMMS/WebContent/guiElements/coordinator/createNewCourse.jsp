@@ -6,6 +6,22 @@
 <p>Bitte tragen Sie K&uuml;rzel, Namen und Abschluss des neuen
 	Studiengangs ein.</p>
 
+<%
+if(session.getAttribute("wrongDataCreateCourse") != null){
+	if(session.getAttribute("wrongDataCreateCourse").equals("wrongCourseID")){
+		session.removeAttribute("wrongDataCreateCourse");
+		%>
+		<error>Dieses Kürzel existiert bereits.</error>
+		<%
+	}
+	else if(session.getAttribute("wrongDataCreateCourse").equals("wrongCourseDescription")){
+		session.removeAttribute("wrongDataCreateCourse");
+		%>
+		<error>Dieser Studiengang existiert bereits.</error>
+		<%
+	}
+}
+%>
 <form name="submit" action="/SopraMMS/CreateCourse" method="get">
 	<table>
 		<tr>
