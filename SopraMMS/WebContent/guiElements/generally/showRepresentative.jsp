@@ -11,7 +11,7 @@
 
 <form id="removeRep" action="/SopraMMS/RemoveRepresentative"
 	method="get">
-	<table>
+	<table class="userdata">
 		<tr>
 			<td>Vorname:</td>
 			<td><%=userArray[0]%></td>

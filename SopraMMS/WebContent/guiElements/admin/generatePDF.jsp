@@ -16,41 +16,42 @@
 		%>
 	</p>
 	<p>W&auml;hlen Sie einen Studiengang aus:</p>
-	<select name="course" id="course" style="width: 270px">
+	<select class="inputField" name="course" id="course" style="width: 270px">
 		<%
 			for (Course course : courses) {
 		%>
 		<option value=<%=course.getDescription()+":"+course.getDegree()%>>
-		<%=course.getDescription()+" "+course.getDegree()%></option>
+			<%=course.getDescription()+" "+course.getDegree()%></option>
 		<%
 			}
 		%>
-	</select><br>
+	</select>
 	<p>Geben Sie die aktuelle Pr&uuml;fungsordnung ein:</p>
-	<input name="examRegulation" type="text" size="30" maxlength="30"/>
-	<br> <button type="submit" name="Submit" id="showEntries" value="Modulhandbuch erstellen" >Modulhandbuch erstellen</button>
+	<input class="inputField" name="examRegulation" type="text" size="30" maxlength="30"> <br>
+	<button type="submit" name="Submit" id="showEntries"
+		value="Modulhandbuch erstellen">Modulhandbuch erstellen</button>
 </form>
 <script>
-$(document).ready(function() {
-	enableButton();
-	$("input[type=text]").keyup(function() {
+	$(document).ready(function() {
 		enableButton();
-	});
-	function enableButton() {
-		if (!($("input[type=text]")[0].value == "")) {
-			$('button[type=submit]').each(function() {
-				if ($(this).attr('disabled')) {
-					$(this).removeAttr('disabled');
-				}
-			});
-		} else {
-			$('button[type=submit]').each(function() {
-				$(this).attr({
-					'disabled' : 'disabled'
+		$("input[type=text]").keyup(function() {
+			enableButton();
+		});
+		function enableButton() {
+			if (!($("input[type=text]")[0].value == "")) {
+				$('button[type=submit]').each(function() {
+					if ($(this).attr('disabled')) {
+						$(this).removeAttr('disabled');
+					}
 				});
-			});
+			} else {
+				$('button[type=submit]').each(function() {
+					$(this).attr({
+						'disabled' : 'disabled'
+					});
+				});
+			}
 		}
-	}
-});
+	});
 </script>
 

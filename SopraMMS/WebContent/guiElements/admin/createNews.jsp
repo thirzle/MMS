@@ -26,7 +26,7 @@
 	<table>
 		<tr>
 			<td>Titel:</td>
-			<td><input name="title" type="text" size="30" maxlength="50"
+			<td><input class="inputField" name="title" type="text" size="30" maxlength="50"
 				value="<%if (request.getParameter("title") != null) {
 				out.println(request.getParameter("title"));
 			}%>"></td>

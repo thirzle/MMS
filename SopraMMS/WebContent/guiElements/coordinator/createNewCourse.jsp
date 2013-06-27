@@ -10,15 +10,15 @@
 	<table>
 		<tr>
 			<td>K&uuml;rzel:</td>
-			<td><input name="courseID" type="text" /></td>
+			<td><input class="inputField" name="courseID" type="text" /></td>
 		</tr>
 		<tr>
 			<td>Studiengang:</td>
-			<td><input name="description" type="text" /></td>
+			<td><input class="inputField" name="description" type="text" /></td>
 		</tr>
 		<tr>
 			<td>Abschluss:</td>
-			<td><select name="degree" style="width: 142px">
+			<td><select class="inputField" name="degree" style="width: 142px">
 					<option value="0">Bachelor</option>
 					<option value="1">Master</option>
 					<option value="2">Lehramt</option>

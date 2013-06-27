@@ -33,7 +33,7 @@
 		<!-- <br>
 		<br> -->
 		<td align="left">
-		<select name="mailaddress" id="mailaddress" onclick="uebertrag();" style="width: 250px">
+		<select class="inputField" name="mailaddress" id="mailaddress" onclick="uebertrag();" style="width: 250px">
 				<%
 			for(int i=0; i<users.size();i++) {
 		%>
@@ -46,7 +46,7 @@
 	</tr>
 	<tr>
 		<td align="left" colspan="2">Betreff:</td>
-		<td align="left" colspan="4"><input form="sendMailForm"
+		<td align="left" colspan="4"><input class="inputField" form="sendMailForm"
 			type="text" name="subject" size="40"></td>
 	</tr>
 	<tr>
