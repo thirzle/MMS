@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mail.EmailTelnet;
 import management.Module;
 import management.ModuleAdministration;
 
@@ -33,11 +34,11 @@ public class DisableModule extends SessionCheck {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(isLoggedIn(request, response)) {
+		if (isLoggedIn(request, response)) {
 			if (request.getParameter("action") == null) {
-	
+
 				HttpSession session = request.getSession();
-	
+
 				String selectedModule = request
 						.getParameter("selectedModuleToEdit");
 				long moduleID;
@@ -53,10 +54,10 @@ public class DisableModule extends SessionCheck {
 					instituteID = module.getInstituteID();
 					institute = mAdmin.getInstituteName(instituteID);
 				}
-	
-				System.out
-						.println("ViewModule: module == null " + (module == null));
-	
+
+				System.out.println("ViewModule: module == null "
+						+ (module == null));
+
 				session.setAttribute("instituteForViewModule", institute);
 				session.setAttribute("moduleForViewModule", module);
 				session.setAttribute("content", "disableModule");
@@ -69,6 +70,20 @@ public class DisableModule extends SessionCheck {
 							+ "' wurde zurückgesetzt und muss erst wieder feigegeben werden um in einem neuen Modulhandbuch aufzutauchen.";
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
 							+ infotext);
+				
+					// Send mail to author
+					EmailTelnet mail = new EmailTelnet();
+					String emailAddress = uAdmin.getEmailOfUser(module
+							.getModificationauthor());
+				
+					StringBuilder sb = new StringBuilder();
+					sb.append("Ihr Modul '" + module.getName()
+							+ "' (Version: "+module.getVersion()+") wurde durch das Dezernat 2 zurückgesetzt.\n");
+					sb.append("Wenn Sie dieses Modul bis zum Stichtag nicht überarbeiten wird es nicht in das aktuelle Modulhandbuch aufgenommen.\n\n");
+					sb.append("Um nähere Informationen über das abgelehnete Modul zu bekommen nehmen Sie bitte direkten Kontakt mit dem Dezernat 2 auf.\n");
+					mail.send_mail("Modul wurde zurückgesetzt", emailAddress,
+							sb.toString());
+				
 				} else if (request.getParameter("action").equals("ok")) {
 					String infotext = "Das Modul '"
 							+ module.getName()
@@ -79,7 +94,8 @@ public class DisableModule extends SessionCheck {
 			}
 		} else {
 			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="
+					+ error);
 		}
 	}
 

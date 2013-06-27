@@ -62,8 +62,8 @@
 	<p>
 	<%
 	session.setAttribute("mailRep", userArray[2]);
-	session.removeAttribute("repUserArray");
-	session.removeAttribute("instituteListRep");
+	//session.removeAttribute("repUserArray");
+	//TODO session.removeAttribute("instituteListRep");
 	%>
 		<input onclick="removeRep.submit()" type="submit"
 			name="StellvertreterEntfernen" value="Stellvertreter entfernen" />

@@ -1,4 +1,5 @@
 
+<%@page import="management.Module"%>
 <%@page import="management.SelfStudy"%>
 <%@page import="management.EffortEntry"%>
 <%@page import="management.Entry"%>
@@ -10,6 +11,22 @@
 	href="${pageContext.request.contextPath}/css/moduleView.css">
 
 <h1>Freizugebendes Modul</h1>
+
+
+<%
+	Module module = (Module) session.getAttribute("moduleApprove");
+	if (module != null) {
+%>
+<table class="informationAboutModule">
+	<tr>
+		<td>&Auml;nderungsdatum: <%=module.getModificationDate()%></td>
+		<td>Erstellungsdatum: <%=module.getCreationDate()%></td>
+		<td>Autor: <%=module.getModificationauthor()%>
+	</tr>
+</table>
+<%
+	}
+%>
 
 <form action="/SopraMMS/ShowApproveModuleForEditor" method="get">
 	<%
