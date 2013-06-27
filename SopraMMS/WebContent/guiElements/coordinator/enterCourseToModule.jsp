@@ -104,10 +104,6 @@ try {
 		}
 	%>
 	<br>
-	<button type="submit" value="addRow" name="createModule">Zeile
-		hinzuf&uuml;gen</button>
-	<button type="submit" value="saveModule" name="createModule">Modul
-		f&uuml;r Sitzung speichern</button>
 	<button type="submit" value="sendModule" name="createModule" id="submitModule" disabled>Modul
 		einreichen</button>
 	<textarea name="obligatoryModulSelect" style="display: none;" id="obligatoryLabel"></textarea>
