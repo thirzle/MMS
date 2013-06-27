@@ -19,6 +19,8 @@ import user.UserAdministration;
 
 /**
  * Servlet implementation class ChangeName
+ * 
+ * @author Teresa Hirzle
  */
 @WebServlet("/ChangeName")
 public class ChangeName extends SessionCheck {

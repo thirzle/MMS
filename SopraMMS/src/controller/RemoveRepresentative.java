@@ -19,6 +19,8 @@ import user.UserAdministration;
 
 /**
  * Servlet implementation class RemoveRepresentative
+ * 
+ * @author Teresa Hirzle
  */
 @WebServlet("/RemoveRepresentative")
 public class RemoveRepresentative extends SessionCheck {
