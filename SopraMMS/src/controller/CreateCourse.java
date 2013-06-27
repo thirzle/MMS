@@ -56,9 +56,8 @@ public class CreateCourse extends SessionCheck {
 						degree, 
 						user.getFaculty());
 				mAdmin.addCourse(course);
-				session.setAttribute("courseCreated", true);
-				session.setAttribute("content", "createNewCourse");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				String infoText = "Der Studiengang '"+course.toString()+"' wurde erfolgreich zum System hinzugefügt.";
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infoText);
 			}
 		} else {
 			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
