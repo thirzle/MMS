@@ -10,11 +10,11 @@ import model.ModuleDBController;
 import user.User;
 
 /**
- * The ModuleAdministration class provides easy access to the data that is gathered
- * from the database.
+ * The ModuleAdministration class provides easy access to the data that is
+ * gathered from the database.
  * 
  * @author David, name here...
- *
+ * 
  */
 public class ModuleAdministration {
 	List<Module> moduleList;
@@ -46,8 +46,18 @@ public class ModuleAdministration {
 	}
 
 	public List<String[]> getModuleManualPdfByCourse(String course) {
+		System.out.println("(ModuleAdministration): getModuleManualPdf");
 		List<String[]> list = moduleDBController.getPDFListByCourse(course);
 		for (String[] strings : list) {
+			int year = Integer.parseInt(strings[4]);
+			String semester = strings[2];
+			if (semester.equals("sose")) {
+				strings[2] = "SoSe " + year;
+			} else if (semester.equals("wise")) {
+				strings[2] = "WiSe " + year+"/"+(year+1);
+			} else {
+				strings [2] = "Fehler";
+			}
 			System.out.println("-> " + strings[1] + " " + strings[2] + " "
 					+ strings[3] + " " + strings[0] + " ");
 		}
@@ -91,28 +101,29 @@ public class ModuleAdministration {
 		return moduleDBController.getModulesByCourse(course, degree);
 	}
 
-//	public String getLastModificationDateOfModuleManual(String courseID,
-//			String degree) {
-//		return moduleDBController.getLastModificationDate(courseID, degree);
-//	}
+	// public String getLastModificationDateOfModuleManual(String courseID,
+	// String degree) {
+	// return moduleDBController.getLastModificationDate(courseID, degree);
+	// }
 
-//	public String getLatestVersionOfModuleManual(String courseID, String degree) {
-//		return moduleDBController.generateLatestVersionOfModuleManual(courseID,
-//				degree);
-//	}
+	// public String getLatestVersionOfModuleManual(String courseID, String
+	// degree) {
+	// return moduleDBController.generateLatestVersionOfModuleManual(courseID,
+	// degree);
+	// }
 
-//	public LinkedList<String> getInstituteListOfModuleManual(String courseID,
-//			String degree) {
-//		return moduleDBController.getInstituteList(courseID, degree);
-//	}
+	// public LinkedList<String> getInstituteListOfModuleManual(String courseID,
+	// String degree) {
+	// return moduleDBController.getInstituteList(courseID, degree);
+	// }
 
 	public String getInstituteName(String instituteID) {
 		return moduleDBController.getInstituteName(instituteID);
 	}
 
 	public void createModuleManual(String version, String url, String courseID,
-			String degree, java.sql.Date creationdate, java.sql.Date modificationdate,
-			String semester, int examregulation) {
+			String degree, java.sql.Date creationdate,
+			java.sql.Date modificationdate, String semester, int examregulation) {
 		moduleDBController.createModuleMaunal(version, url, courseID, degree,
 				creationdate, modificationdate, semester, examregulation);
 	}
@@ -157,7 +168,7 @@ public class ModuleAdministration {
 		String insituteID = module.getInstituteID();
 		List<Entry> entryList = module.getEntryList();
 		for (Entry entry : entryList) {
-			if(entry.getClass().equals(CourseEntry.class)) {
+			if (entry.getClass().equals(CourseEntry.class)) {
 				entry.setNewEntryID();
 			}
 		}
@@ -178,17 +189,16 @@ public class ModuleAdministration {
 		return module;
 	}
 
-//	public String getModuleManual(long moduleID) {
-//		return moduleDBController.getModuleManualByModule(moduleID);
-//	}
+	// public String getModuleManual(long moduleID) {
+	// return moduleDBController.getModuleManualByModule(moduleID);
+	// }
 
 	public List<Module> getModulesByAuthor(String loginname) {
 		return moduleDBController.getModulesOverviewByAuthor(loginname);
 	}
 
 	public List<Module> getUnapprovedModules(String loginname) {
-		return moduleDBController
-				.getUnapprovedModulesOverview(loginname);
+		return moduleDBController.getUnapprovedModulesOverview(loginname);
 	}
 
 	public List<Module> getVersionsOfModule(long moduleID) {
@@ -243,34 +253,36 @@ public class ModuleAdministration {
 	public void clearDatabase() {
 		moduleDBController.clearDatabase();
 	}
-		
-	public List<Module> getSortedModulesByCourse(String subject, String degree){   
-	    List<Module> module_list =  moduleDBController.getModulesByCourse(subject, degree);
-	    
-	    List<Module> module_list_final = new LinkedList<Module>();
-	    for(int i = 0; i < module_list.size(); i++){
-		Module m = module_list.get(i);
-		m.setEntryList(sortModuleEntryListByOrder(m));	
-		module_list_final.add(m);
-	    }
-	    
-	    return module_list_final;
+
+	public List<Module> getSortedModulesByCourse(String subject, String degree) {
+		List<Module> module_list = moduleDBController.getModulesByCourse(
+				subject, degree);
+
+		List<Module> module_list_final = new LinkedList<Module>();
+		for (int i = 0; i < module_list.size(); i++) {
+			Module m = module_list.get(i);
+			m.setEntryList(sortModuleEntryListByOrder(m));
+			module_list_final.add(m);
+		}
+
+		return module_list_final;
 	}
-	
-	public List<Module> getAllModules(){
+
+	public List<Module> getAllModules() {
 		return moduleDBController.getAllModules();
 	}
-	
-	public void deleteModule(long moduleID,int version)
-	{
+
+	public void deleteModule(long moduleID, int version) {
 		moduleDBController.deleteModule(moduleID, version);
 	}
-	
-	public void editModule(Module module){
+
+	public void editModule(Module module) {
 		moduleDBController.editRejectedModule(module);
 	}
-	
-	public boolean createInstitute(String instituteID, String managerLoginname, String facultyID){
-		return moduleDBController.createInstitute(instituteID, managerLoginname, facultyID);
+
+	public boolean createInstitute(String instituteID, String managerLoginname,
+			String facultyID) {
+		return moduleDBController.createInstitute(instituteID,
+				managerLoginname, facultyID);
 	}
 }

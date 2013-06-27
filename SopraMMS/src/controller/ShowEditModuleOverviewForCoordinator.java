@@ -36,13 +36,14 @@ public class ShowEditModuleOverviewForCoordinator extends SessionCheck {
 				RequestDispatcher dispatcher = getServletContext()
 						.getRequestDispatcher("/ShowVersionsOfModule");
 				dispatcher.forward(request, response);
-			} else if (request.getParameter("action") != null) {
-				if (request.getParameter("action").equals("editModule")) {
+			} else if (request.getParameter("editButton") != null) {
+				String editButton = request.getParameter("editButton");
+				if (editButton.equals("editButton")||editButton.equals("editUnapprovedModule")) {
 					System.out.println("(ShowEditModuleForCoordinator.java): Bearbeite Modul durch Koordinator");
 					if (request.getParameter("selectedModuleToEdit") != null) {
 						String[] selectedModule = request.getParameter("selectedModuleToEdit")
 								.split(" ");
-						response.sendRedirect("/SopraMMS/EditModule?selectedModuleToEdit="
+						response.sendRedirect("/SopraMMS/EditModule?editButton=editUnapprovedModule&selectedModuleToEdit="
 								+ selectedModule[0] + " " + selectedModule[1]);
 					} else {
 						request.getSession().setAttribute("content",
@@ -57,7 +58,7 @@ public class ShowEditModuleOverviewForCoordinator extends SessionCheck {
 						"editModuleListForCoordinator", moduleList);
 				request.getSession().setAttribute("content",
 						"showEditModulesForCoordinator");
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+				response.sendRedirect("/SopraMMS/guiElements/home.jsp?edit=true");
 			}
 		} else {
 			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";

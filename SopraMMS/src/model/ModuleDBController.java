@@ -1554,7 +1554,8 @@ public class ModuleDBController {
 	public List<String[]> getPDFListByCourse(String description) {
 		List<String[]> pdfList = new LinkedList<String[]>();
 		Connection connection = connect();
-		query = "SELECT c.description, c.degree, p.semester, p.url "
+		Calendar cal = new GregorianCalendar();
+		query = "SELECT c.description, c.degree, p.semester, p.url, p.creationdate "
 				+ "FROM course AS c JOIN modulemanual AS p ON c.courseID = "
 				+ "p.courseID AND c.degree = p.degree WHERE c.description = ?";
 		try {
@@ -1562,10 +1563,11 @@ public class ModuleDBController {
 			pStatement.setString(1, description);
 			ResultSet resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
+				cal.setTime(resultSet.getDate("creationdate"));
 				pdfList.add(new String[] { resultSet.getString("description"),
 						resultSet.getString("degree"),
 						resultSet.getString("semester"),
-						resultSet.getString("url") });
+						resultSet.getString("url"), cal.get(cal.YEAR)+""});
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
