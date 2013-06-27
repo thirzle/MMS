@@ -24,6 +24,8 @@ public class CreatePDF extends SessionCheck {
        
     /**
      * @see HttpServlet#HttpServlet()
+     * 
+     * @author Teresa Hirzle
      */
     public CreatePDF() {
         super();

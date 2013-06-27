@@ -39,7 +39,7 @@ public class User {
 
 	//
 	/**
-	 * The name with which the user uses to log into the system.
+	 * The name that is used to login to the system.
 	 */
 	private String loginname;
 	/**

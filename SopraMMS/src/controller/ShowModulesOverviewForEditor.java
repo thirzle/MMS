@@ -17,6 +17,8 @@ import user.User;
 
 /**
  * Servlet implementation class ShowModulesOverviewForEditor
+ * 
+ * @author Teresa Hirzle, David Lehr
  */
 @WebServlet("/ShowModulesOverviewForEditor")
 public class ShowModulesOverviewForEditor extends SessionCheck {

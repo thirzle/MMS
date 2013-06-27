@@ -10,10 +10,10 @@ import model.ModuleDBController;
 import user.User;
 
 /**
- * The ModuleAdministration class provides easy access to the data that is gathered
- * from the database.
- * 
- * @author David ?, Max ? name here...
+ * The ModuleAdministration class provides easy access to the data that is
+ * gathered from the database.
+ *  
+ * @author David Lehr, Teresa Hirzle name here...
  *
  */
 public class ModuleAdministration {
@@ -69,8 +69,18 @@ public class ModuleAdministration {
 	 * @return
 	 */
 	public List<String[]> getModuleManualPdfByCourse(String course) {
+		System.out.println("(ModuleAdministration): getModuleManualPdf");
 		List<String[]> list = moduleDBController.getPDFListByCourse(course);
 		for (String[] strings : list) {
+			int year = Integer.parseInt(strings[4]);
+			String semester = strings[2];
+			if (semester.equals("sose")) {
+				strings[2] = "SoSe " + year;
+			} else if (semester.equals("wise")) {
+				strings[2] = "WiSe " + year+"/"+(year+1);
+			} else {
+				strings [2] = "Fehler";
+			}
 			System.out.println("-> " + strings[1] + " " + strings[2] + " "
 					+ strings[3] + " " + strings[0] + " ");
 		}
@@ -157,20 +167,21 @@ public class ModuleAdministration {
 		return moduleDBController.getModulesByCourse(course, degree);
 	}
 
-//	public String getLastModificationDateOfModuleManual(String courseID,
-//			String degree) {
-//		return moduleDBController.getLastModificationDate(courseID, degree);
-//	}
+	// public String getLastModificationDateOfModuleManual(String courseID,
+	// String degree) {
+	// return moduleDBController.getLastModificationDate(courseID, degree);
+	// }
 
-//	public String getLatestVersionOfModuleManual(String courseID, String degree) {
-//		return moduleDBController.generateLatestVersionOfModuleManual(courseID,
-//				degree);
-//	}
+	// public String getLatestVersionOfModuleManual(String courseID, String
+	// degree) {
+	// return moduleDBController.generateLatestVersionOfModuleManual(courseID,
+	// degree);
+	// }
 
-//	public LinkedList<String> getInstituteListOfModuleManual(String courseID,
-//			String degree) {
-//		return moduleDBController.getInstituteList(courseID, degree);
-//	}
+	// public LinkedList<String> getInstituteListOfModuleManual(String courseID,
+	// String degree) {
+	// return moduleDBController.getInstituteList(courseID, degree);
+	// }
 
 	/**
 	 * Retrieves the institute name.
@@ -197,8 +208,8 @@ public class ModuleAdministration {
 	 * @param examregulation	The exam regulation.
 	 */
 	public void createModuleManual(String version, String url, String courseID,
-			String degree, java.sql.Date creationdate, java.sql.Date modificationdate,
-			String semester, int examregulation) {
+			String degree, java.sql.Date creationdate,
+			java.sql.Date modificationdate, String semester, int examregulation) {
 		moduleDBController.createModuleMaunal(version, url, courseID, degree,
 				creationdate, modificationdate, semester, examregulation);
 	}
@@ -269,7 +280,7 @@ public class ModuleAdministration {
 		String insituteID = module.getInstituteID();
 		List<Entry> entryList = module.getEntryList();
 		for (Entry entry : entryList) {
-			if(entry.getClass().equals(CourseEntry.class)) {
+			if (entry.getClass().equals(CourseEntry.class)) {
 				entry.setNewEntryID();
 			}
 		}
@@ -299,9 +310,9 @@ public class ModuleAdministration {
 		return module;
 	}
 
-//	public String getModuleManual(long moduleID) {
-//		return moduleDBController.getModuleManualByModule(moduleID);
-//	}
+	// public String getModuleManual(long moduleID) {
+	// return moduleDBController.getModuleManualByModule(moduleID);
+	// }
 
 	/**
 	 * Retrieves all modules of a given author.
@@ -324,8 +335,7 @@ public class ModuleAdministration {
 	 * @return		A list of all unapproved modules the author is responsible for.
 	 */
 	public List<Module> getUnapprovedModules(String loginname) {
-		return moduleDBController
-				.getUnapprovedModulesOverview(loginname);
+		return moduleDBController.getUnapprovedModulesOverview(loginname);
 	}
 
 	/**

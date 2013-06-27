@@ -13,7 +13,7 @@ import model.UserDBController;
 /**
  * The UserAdministration class provides easy access to the data that is gathered from the database.
  * 
- * @author David
+ * @author David Lehr, Teresa Hirzle
  * @see User
  */
 public class UserAdministration {

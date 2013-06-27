@@ -29,6 +29,8 @@ import user.UserAdministration;
 
 /**
  * Servlet implementation class ShowApproveModuleForEditor
+ * 
+ * @author Teresa Hirzle
  */
 @WebServlet("/ShowApproveModuleForEditor")
 public class ShowApproveModuleForEditor extends SessionCheck {

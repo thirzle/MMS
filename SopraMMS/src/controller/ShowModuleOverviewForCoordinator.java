@@ -17,6 +17,8 @@ import management.ModuleAdministration;
 
 /**
  * Servlet implementation class ShowModulListForCoordinator
+ * 
+ * @author Teresa Hirzle
  */
 @WebServlet("/ShowModuleOverviewForCoordinator")
 public class ShowModuleOverviewForCoordinator extends SessionCheck {
@@ -27,7 +29,6 @@ public class ShowModuleOverviewForCoordinator extends SessionCheck {
 	 */
 	public ShowModuleOverviewForCoordinator() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -98,7 +99,6 @@ public class ShowModuleOverviewForCoordinator extends SessionCheck {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

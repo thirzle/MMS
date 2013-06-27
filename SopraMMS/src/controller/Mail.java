@@ -42,14 +42,14 @@ public class Mail extends SessionCheck  {
 		String subject = req.getParameter("subject");
 		String content = req.getParameter("message");
 		EmailTelnet.send_mail(mail_address_from, mail_from, subject, mail_address_to, content);
+		String infotext = "Ihre Nachricht wurde erfolgreich an "+mail_address_to+" verschickt.";
 		session.setAttribute("content", "home");
-		resp.sendRedirect("/SopraMMS/guiElements/home.jsp");
+		resp.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

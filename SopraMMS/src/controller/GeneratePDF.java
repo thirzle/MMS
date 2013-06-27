@@ -37,6 +37,8 @@ import user.UserAdministration;
 
 /**
  * Servlet implementation class GeneratePDF
+ * 
+ * @author Teresa Hirzle
  */
 @WebServlet("/GeneratePDF")
 public class GeneratePDF extends SessionCheck {

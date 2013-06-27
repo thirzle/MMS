@@ -1,3 +1,4 @@
+<script src="/SopraMMS/js/inputmanager.js"></script>
 <h1>Studiengang erstellen</h1>
 
 <div class="importantBox">Beachten Sie, dass der Studiengang
@@ -45,3 +46,6 @@ if(session.getAttribute("wrongDataCreateCourse") != null){
 	<button value="Neuen Studiengang anlegen">Neuen Studiengang
 		anlegen</button>
 </form>
+<script>
+checkInput(null);
+</script>

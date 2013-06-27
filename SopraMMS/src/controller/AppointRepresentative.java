@@ -21,6 +21,8 @@ import mail.EmailTelnet;
 
 /**
  * Servlet implementation class AppointRepresentative
+ * 
+ * @author Teresa Hirzle
  */
 @WebServlet("/AppointRepresentative")
 public class AppointRepresentative extends SessionCheck {

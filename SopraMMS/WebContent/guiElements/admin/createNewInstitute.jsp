@@ -1,5 +1,6 @@
 <%@page import="user.User"%>
 <%@page import="java.util.LinkedList"%>
+<script src="/SopraMMS/js/inputmanager.js"></script>
 <h1>Neues Institut erstellen</h1>
 <p>Bitte tragen sie K&uuml;rzel, Namen und den Verantwortlichen ein.</p>
 <%
@@ -33,3 +34,6 @@
 	<br>
 	<button value="Neues Institut anlegen">Neues Institut anlegen</button>
 </form>
+<script>
+checkInput(null);
+</script>

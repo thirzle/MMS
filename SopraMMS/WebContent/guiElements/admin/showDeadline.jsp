@@ -5,7 +5,7 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="/SopraMMS/js/jquery.datepicker.translate.js"></script>
-<script src="/SopraMMS/js/jquery.deadline.js"></script>
+<script src="/SopraMMS/js/inputmanager.js"></script>
 <h1>Stichtag</h1>
 <%
 	String content = request.getParameter("submitDeadline") + "";
@@ -31,15 +31,6 @@
 <%
 	}
 %>
-<script>
-	$(function() {
-		$("#datepicker1").datepicker();
-
-	});
-	$(function() {
-		$("#datepicker2").datepicker();
-	});
-</script>
 <form name="change" action="/SopraMMS/Deadline" method="get">
 	<table>
 		<tr>
@@ -62,3 +53,13 @@
 	<br>
 	<button type="submit" value="Stichtag ändern">Stichtag ändern</button>
 </form>
+<script>
+	$(function() {
+		$("#datepicker1").datepicker();
+
+	});
+	$(function() {
+		$("#datepicker2").datepicker();
+	});
+	checkInput(null);
+</script>

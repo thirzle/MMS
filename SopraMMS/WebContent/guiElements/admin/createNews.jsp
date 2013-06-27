@@ -14,7 +14,7 @@ das Back-End nur eingeloggten Benutzen angezeigt werden.
 	}if (request.getParameter("newsstatus").equals("addtitleortext"))
 	{
 		%>
-		<error>Bitte tragen Sie immer einen Titel und einen Text in die daf&uulm;r vorgesehenen Felder ein.</error>
+		<error>Bitte tragen Sie immer einen Titel und einen Text in die dafür vorgesehenen Felder ein.</error>
 		<%
 	}
 	}
