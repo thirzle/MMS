@@ -15,13 +15,23 @@ import mail.EmailTelnet;
 import management.Deadline;
 import management.ModuleAdministration;
 
+//TODO Kontrollieren und Autoren eintragen
 /**
- * @author ...
+ * On the base of a given deadline there are multiple different tasks initialized and
+ * on the base of the actual date it is decided when they are scheduled.
+ * 
+ * @author Max
  *
  */
 public class TaskManager {
 	
 	/**
+	 * Gets a deadline, compares it to the actual date and decides whether the deadline date lies behind the actual date or not.
+	 * <p>
+	 * In the first case it sends an email immediately to all users,
+	 * in the second case it sets a date where it is reminding all users about the deadline.
+	 * <p>
+	 * It also makes sure to keep the database clean, for this the old deadline is deleted two weeks after elapsing.
 	 * 
 	 * @param deadline			{@link Deadline#getDeadline()}
 	 */
