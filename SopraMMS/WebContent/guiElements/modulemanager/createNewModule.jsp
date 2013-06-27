@@ -18,7 +18,7 @@
 	fieldsTypeD.addAll((ArrayList<String[]>) session
 	.getAttribute("fieldsTypeD"));
 %>
-<h1>Neues Modul erstellen</h1>
+<h1>Modul erstellen</h1>
 <p>Alle Felder die mit einem * markiert sind m&uuml;ssen ausgef&uuml;llt werden.</p>
 
 <form action="/SopraMMS/CreateModule" method="get">

@@ -7,18 +7,24 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/moduleView.css">
 
-<h1>Module betrachten</h1>
+<h1>Modul betrachten</h1>
 
 <%
 	Module module = (Module) session.getAttribute("moduleForViewModule");
 LinkedList<Entry> entryList = (LinkedList) module.getEntryList();
 String institute = (String) session.getAttribute("instituteForViewModule");
-
-
-
+%><table class="informationAboutModule">
+	<tr>
+		<td>&Auml;nderungsdatum: <%=module.getModificationDate()%></td>
+		<td>Erstellungsdatum: <%=module.getCreationDate()%></td>
+		<td>Autor: <%=module.getModificationauthor()%>
+	</tr>
+</table>
+<%
 	for (int i = 0; i < 6&&i<entryList.size(); i++) {
 		Entry entry = entryList.get(i);
 %>
+
 <div class='moduleEntry'>
 	<table>
 		<tr>
@@ -26,9 +32,9 @@ String institute = (String) session.getAttribute("instituteForViewModule");
 
 			<td class='entryModule'><notEditable> <%
  	String list[]=entry.getContent().split("\n");
-    									for(String s:list){
-    										out.println(""+s+"<br>");
-    									}
+     									for(String s:list){
+     										out.println(""+s+"<br>");
+     									}
  %> </notEditable></td>
 
 		</tr>
@@ -71,9 +77,9 @@ String institute = (String) session.getAttribute("instituteForViewModule");
 
 			<td class='entryModule'><notEditable> <%
  	String list[]=entry.getContent().split("\n");
-   							for(String s:list){
-   								out.println(""+s+"<br>");
-   							}
+    							for(String s:list){
+    								out.println(""+s+"<br>");
+    							}
  %> </notEditable></td>
 
 		</tr>
