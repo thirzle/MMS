@@ -41,8 +41,7 @@ public class ShowVersionsOfModule extends SessionCheck {
 			if(module!=null){
 				String[] parts = module.split(" ");
 				moduleID = Long.parseLong(parts[0]);
-	
-				// TODO getModulesOverview
+
 				List<Module> moduleList = mAdmin.getVersionsOfModule(moduleID);
 				session.setAttribute("showVersions", true);
 				session.setAttribute("moduleListForModulemanager", moduleList);

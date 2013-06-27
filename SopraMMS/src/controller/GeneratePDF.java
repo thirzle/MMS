@@ -118,7 +118,7 @@ public class GeneratePDF extends SessionCheck {
 						version);
 						*/
 				pdfCreator.createModulePdf(sysconfig.Config.system_path.getValue() + sysconfig.Config.system_pdf_path.getValue() + fileName,
-					moduleList, "institut kommt noch raus", "Fakultät Ingenieurwissenschaften und Informatik", degree,
+					moduleList, courseName, "Fakultät Ingenieurwissenschaften und Informatik", degree,
 					examRegulation, latestModificationDate.toString(), latestAuthor, semester,
 					version);
 				

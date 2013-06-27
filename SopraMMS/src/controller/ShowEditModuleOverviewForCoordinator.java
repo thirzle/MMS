@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,15 +32,16 @@ public class ShowEditModuleOverviewForCoordinator extends SessionCheck {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(isLoggedIn(request, response)) {
 			HttpSession session =request.getSession();
-			
-			System.out.println("(ShowEditModuleForCoordinator.java): Bearbeite Modul durch Koordinator");
-			
-			if (request.getParameter("action") != null) {
-	
+			if (request.getParameter("showVersionsButton") != null) {
+				RequestDispatcher dispatcher = getServletContext()
+						.getRequestDispatcher("/ShowVersionsOfModule");
+				dispatcher.forward(request, response);
+			} else if (request.getParameter("action") != null) {
 				if (request.getParameter("action").equals("editModule")) {
-					if (request.getParameter("selectedModule") != null) {
-						String[] selectedModule = request.getParameter("selectedModule")
-								.split("%");
+					System.out.println("(ShowEditModuleForCoordinator.java): Bearbeite Modul durch Koordinator");
+					if (request.getParameter("selectedModuleToEdit") != null) {
+						String[] selectedModule = request.getParameter("selectedModuleToEdit")
+								.split(" ");
 						response.sendRedirect("/SopraMMS/EditModule?selectedModuleToEdit="
 								+ selectedModule[0] + " " + selectedModule[1]);
 					} else {

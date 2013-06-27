@@ -7,7 +7,7 @@
 			.getAttribute("editModuleListForCoordinator");
 %>
 
-<h1>Studieng&auml;nge und F&auml;cher hinzuf&uuml;gen</h1>
+<h1>Module &uuml;berarbeiten</h1>
 
 <%
 	if (request.getParameter("info") != null) {
@@ -36,8 +36,8 @@
 			for (Module module : moduleList) {
 		%>
 		<tr>
-			<td><input type="radio" name="selectedModule"
-				value='<%=module.getModuleID()%>%<%=module.getVersion()%>' /></td>
+			<td><input type="radio" name="selectedModuleToEdit"
+				value='<%=module.getModuleID()%> <%=module.getVersion()%>' /></td>
 			<td><%=module.getName()%></td>
 			<td><%=module.getVersion()%></td>
 			<td><%=module.getModificationauthor()%></td>
@@ -67,6 +67,8 @@
 		</tbody>
 	</table>
 	<button type="submit" name="action" value="editModule">Modul bearbeiten</button>
+	<button type="submit" name="showVersionsButton"
+		value="showVersionsButton">Alle Versionen anzeigen</button>
 </form>
 
 <script type="text/javascript" src="/SopraMMS/js/tablemanager.js"></script>
