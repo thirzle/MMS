@@ -13,7 +13,7 @@ import user.User;
  * The ModuleAdministration class provides easy access to the data that is gathered
  * from the database.
  * 
- * @author David, name here...
+ * @author David Lehr, Teresa Hirzle name here...
  *
  */
 public class ModuleAdministration {
