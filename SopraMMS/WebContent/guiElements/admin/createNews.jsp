@@ -1,5 +1,5 @@
 <h1>Neuigkeit verfassen</h1>
-
+<p></p>
 <%
 	session.setAttribute("content", "createNews");
 	if (request.getParameter("newsstatus") != null) {

@@ -11,8 +11,12 @@
 	ArrayList<Module> moduleList = (ArrayList<Module>) session
 			.getAttribute("listOfAllModules");
 %>
-<h1>&Uuml;bersicht Neuigkeiten</h1>
-<h3>Wählen sie die Module aus, die gelöscht werden sollen</h3>
+<h1>Module l&ouml;schen</h1>
+	<div class="importantBox">Die ausgewählten Module werden
+		endgültig aus dem Module Management System gelöscht und können nicht
+		wieder hergestellt werden.
+	</div>
+<p>Wählen sie die Module aus, die gelöscht werden sollen</p>
 
 <form action="/SopraMMS/DeleteModule">
 	<table id="deleteModuleTable" class='tablesorter'>
@@ -63,9 +67,6 @@
 	</table>
 	<button type="submit" value="true" name="delete">L&ouml;schen</button>
 	<br><br>
-	<div class="importantBox">Die ausgewählten Module werden
-		endgültig aus dem Module Management System gelöscht und können nicht
-		wieder hergestellt werden.</div>
 </form>
 <script>
 manageTable($("#deleteModuleTable"));

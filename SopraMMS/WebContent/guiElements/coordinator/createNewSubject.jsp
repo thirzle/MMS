@@ -15,5 +15,6 @@
 		</td>
 	</tr>
 </table>
+<br>
 	<input type="submit" value="Neues Studienfach anlegen">
 </form>

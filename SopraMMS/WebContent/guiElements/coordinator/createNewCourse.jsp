@@ -4,9 +4,10 @@
 %>
 <p> Der Studiengang wurde erfolgreich erstellt <p>
 <%} else { %>
-<p> Bitte tragen Sie K&uuml;rzel, Namen und Abschluss des neuen Studiengangs ein.</p>
 <div class="importantBox">Beachten Sie, dass der Studiengang vertraglich von der
-	 Universit&auml;t Ulm angeboten werden muss,<br> bevor dieser im System erstellt werden darf.</div>
+	 Universit&auml;t Ulm angeboten werden muss, bevor dieser im System erstellt werden darf.
+</div>
+<p> Bitte tragen Sie K&uuml;rzel, Namen und Abschluss des neuen Studiengangs ein.</p>
 <%} %>
  <form name="submit" action="/SopraMMS/CreateCourse" method="get">
 <table>
@@ -33,5 +34,6 @@
 			</td>
 	</tr>
 </table>
+<br>
 	<input type="submit" value="Neuen Studiengang anlegen">
 </form>

@@ -11,7 +11,7 @@
 		<div class="expandModul">
 			<ul class="subNav">
 				<li><a href="/SopraMMS/CreateModule">Modul erstellen</a></li>
-				<li><a href="/SopraMMS/ShowModulesOverviewForModulemanager">Modul bearbeiten</a></li>
+				<li><a href="/SopraMMS/ShowModulesOverviewForModulemanager">Module bearbeiten</a></li>
 				<li><a href="/SopraMMS/ShowUnapprovedModulesOverview">Unbest&auml;tige Module</a></li>
 			</ul>
 		</div>

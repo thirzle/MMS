@@ -40,7 +40,7 @@ $(document).ready(function() {
 				<li id="generatePDF"><a href="/SopraMMS/CreatePDF">Modulhandbuch erstellen</a></li>
 				<li id="deadline"><a href="/SopraMMS/Deadline">Stichtag festlegen</a></li>
 				<li id="createInstitute">Institut erstellen</li>
-				<li id="deleteModule"><a href="/SopraMMS/DeleteModule">Modul löschen</a></li>
+				<li id="deleteModule"><a href="/SopraMMS/DeleteModule">Module löschen</a></li>
 			</ul>
 		</div>
 		

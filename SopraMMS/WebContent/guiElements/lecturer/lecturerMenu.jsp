@@ -7,7 +7,7 @@
 		</div>
 		<div class="expandResume">
 			<ul class="subNav">
-				<li><a href="/SopraMMS/CurrVitae?first=true">Lebenslauf</a></li>
+				<li><a href="/SopraMMS/CurrVitae?first=true">Lebenslauf einreichen</a></li>
 
 				<!--<li id="seecurriculumvitae"><a href="/SopraMMS/GetAllUsers?task=curr">Lebenslauf ansehen</a></li>-->
 			</ul>

@@ -4,7 +4,7 @@
 
 	<ul class="nav">
 		<div class="headerNavDez2Module">
-			<li>Module</li>
+			<li>Modulverwaltung</li>
 		</div>
 		<div class="expandDez2Module">
 			<ul class="subNav">
