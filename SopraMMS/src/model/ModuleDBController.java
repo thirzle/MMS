@@ -25,7 +25,7 @@ import management.TextualEntry;
  * <p>
  * It also provides a number of methods which are used to retrieve, create, edit, and delete contents like modules, courses and their entries.
  * 
- * @author Max
+ * @author Max Reuter, Teresa Hirzle
  *
  */
 public class ModuleDBController {

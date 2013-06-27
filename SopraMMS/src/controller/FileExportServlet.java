@@ -14,6 +14,8 @@ import javax.servlet.annotation.WebInitParam;
 
 /**
  * Servlet implementation class FileExportServlet
+ * 
+ * @author Teresa Hirzle, Johann Albach
  */
 //@WebServlet(urlPatterns = { "/FileExportServlet" }, initParams = { @WebInitParam(name = "exportFolder", value = "P:/Team7_12/TestPDF/", description = "Folder with files to export") })
 @WebServlet(urlPatterns = { "/FileExportServlet" })

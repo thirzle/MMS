@@ -13,6 +13,8 @@ import management.ModuleAdministration;
 
 /**
  * Servlet implementation class ViewModule
+ * 
+ * @author Teresa Hirzle
  */
 @WebServlet("/ViewModule")
 public class ViewModule extends SessionCheck {
@@ -23,7 +25,6 @@ public class ViewModule extends SessionCheck {
      */
     public ViewModule() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -65,7 +66,6 @@ public class ViewModule extends SessionCheck {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }
