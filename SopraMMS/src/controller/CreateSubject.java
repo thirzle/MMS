@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.LinkedList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,9 +40,22 @@ public class CreateSubject extends SessionCheck {
 				session.setAttribute("content", "createNewSubject");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			} else {
-				mAdmin.addSubject(request.getParameter("name"));
-				String infoText = "Das Fach '"+request.getParameter("name")+"' wurde erfolgreich angelegt.";
-				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infoText);
+				LinkedList<String> subjectList = (LinkedList<String>) mAdmin.getSubjects();
+				String subject = request.getParameter("name");
+				boolean wrongData = false;
+				for(String string : subjectList){
+					if(!wrongData && subject.equals(string)){
+						session.setAttribute("wrongDataCreateSubject", "wrongData");
+						session.setAttribute("content", "createNewSubject");
+						response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+						wrongData = true;
+					}
+				}
+				if(!wrongData){
+					mAdmin.addSubject(subject);
+					String infoText = "Das Fach '"+subject+"' wurde erfolgreich angelegt.";
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infoText);	
+				}
 			}
 		} else {
 			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
