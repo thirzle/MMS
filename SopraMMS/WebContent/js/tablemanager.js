@@ -73,25 +73,31 @@ function setTHeads() {
 	var contentLength = 0;
 	for(var i=0;i<theads.length;i++){
 		contentLength = theads[i].textContent.length;
+		var thClass = theads[i].getAttribute("class");
+		if(thClass == null) {
+			thClass = "null";
+		}
+		if(thClass.toLowerCase().indexOf("final") === -1) {
 		
-		if(contentLength == 0) {
-			
-			theads[i].setAttribute("class","xs header");
-		} else if(contentLength < 6) {
-			
-			theads[i].setAttribute("class","s header");
-		} else if(contentLength < 9) {
-			
-			theads[i].setAttribute("class","m header");
-		} else if(contentLength < 13) {
-			
-			theads[i].setAttribute("class","l header");
-		} else if(contentLength < 17) {
-			
-			theads[i].setAttribute("class","xl header");
-		} else {
-			
-			theads[i].setAttribute("class","xxl header");
+			if(contentLength == 0) {
+				
+				theads[i].setAttribute("class","xs header");
+			} else if(contentLength < 6) {
+				
+				theads[i].setAttribute("class","s header");
+			} else if(contentLength < 9) {
+				
+				theads[i].setAttribute("class","m header");
+			} else if(contentLength < 13) {
+				
+				theads[i].setAttribute("class","l header");
+			} else if(contentLength < 17) {
+				
+				theads[i].setAttribute("class","xl header");
+			} else {
+				
+				theads[i].setAttribute("class","xxl header");
+			}
 		}
 	}
 }
