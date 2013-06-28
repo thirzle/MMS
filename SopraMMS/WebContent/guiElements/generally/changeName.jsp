@@ -1,3 +1,4 @@
+<script src="/SopraMMS/js/inputmanager.js"></script>
 <%@page import="user.User"%>
 <%
 	User user = (User) session.getAttribute("user");
@@ -18,5 +19,8 @@
 				maxlength="30" /></td>
 		</tr>
 	</table>
-	<input type="submit" name="newName" value="&Auml;ndern" />
+	<button type="submit" name="newName" value="&Auml;ndern" >Ändern</button>
 </form>
+<script>
+checkInput(null);
+</script>

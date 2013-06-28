@@ -1,3 +1,4 @@
+<script src="/SopraMMS/js/inputmanager.js"></script>
 <%@page import="user.User"%>
 <%
 	session.setAttribute("content", "changedPw");
@@ -54,6 +55,9 @@
 		</tr>
 
 	</table>
-	<input type="submit" name="Submit" value="Passwort &Auml;ndern"
-		class="btnChangePw" />
+	<button type="submit" name="Submit" value="Passwort &Auml;ndern"
+		class="btnChangePw" >Passwort ändern</button>
 </form>
+<script>
+checkInput(null);
+</script>

@@ -43,7 +43,7 @@ if(session.getAttribute("wrongDataCreateCourse") != null){
 		</tr>
 	</table>
 	<br>
-	<button value="Neuen Studiengang anlegen">Neuen Studiengang
+	<button type="submit" value="Neuen Studiengang anlegen">Neuen Studiengang
 		anlegen</button>
 </form>
 <script>

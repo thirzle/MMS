@@ -20,7 +20,7 @@ if(session.getAttribute("wrongDataCreateSubject") != null){
 	</tr>
 </table>
 <br>
-	<button value="Neues Studienfach anlegen">Neues Studienfach anlegen</button>
+	<button type="submit" value="Neues Studienfach anlegen">Neues Studienfach anlegen</button>
 </form>
 <script>
 checkInput(null);
