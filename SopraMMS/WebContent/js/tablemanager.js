@@ -1,4 +1,8 @@
-
+/**
+ * checks whether a radiobutton is checked or not and returns the result.
+ * 
+ * @returns {Boolean}
+ */
 function checkRadioButton() {
 	var checked = false;
 	var radios = $('input[type=radio]');
@@ -9,7 +13,9 @@ function checkRadioButton() {
 	}
 	return checked;
 }
-
+/**
+ * enables all buttons with type of 'submit' if a single radio button is checked or half of all radio buttons
+ */
 function showButton() {
 	var radios = $('input[type=radio]');
 	var radiocount = radios.length;
@@ -27,7 +33,11 @@ function showButton() {
 		});
 	}
 }
-
+/**
+ * registers a tablesorter to the given parameter and a onchange event listener to all radio buttons.
+ * 
+ * @param table
+ */
 function manageTable(table) {
 	var radios = $('input[type=radio]');
 	var checkboxes = $('input[type=checkbox]');
@@ -46,7 +56,11 @@ function manageTable(table) {
 	});
 	showButton();
 }
-
+/**
+ * checks whether a checkbox is checked or not and returns the result.
+ * 
+ * @returns {Boolean}
+ */
 function checkCheckBox() {
 	var checked = false;
 	for(var i=0; i < $('input[type=checkbox]').length; i++) {
@@ -56,7 +70,11 @@ function checkCheckBox() {
 	}
 	return checked;
 }
-
+/**
+ * checks whether half of all radio buttons is checked or not and returns result.
+ * 
+ * @returns {Boolean}
+ */
 function checkRadioButtons() {
 	var needToBeChecked = $('input[type=radio]').length/2;
 	var areChecked = 0;
@@ -67,7 +85,11 @@ function checkRadioButtons() {
 	}
 	return (needToBeChecked == areChecked && needToBeChecked != 0);
 }
-
+/**
+ * sets class attribute of table head depending on its text content length to xs, s, m, l, xl or xxl.
+ * that class attribute is used of the cascade stylesheet 'style.css' which sets th width accordingly to the class attribute.
+ *  
+ */
 function setTHeads() {
 	var theads = $("th");
 	var contentLength = 0;
