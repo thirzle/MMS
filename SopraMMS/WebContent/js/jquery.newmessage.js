@@ -10,7 +10,7 @@ var mailto = $("#mailto");
  */
 function Eingabe(value)
 {
-    for(i = 0; i < document.getElementById("mailaddress").options.length; i++)
+    for(var i = 0; i < document.getElementById("mailaddress").options.length; i++)
     {
         if(value.substr(0, value.length).toLowerCase() == document.getElementById("mailaddress").options[i].value.substr(0, value.length).toLowerCase() && value.length != 0)
         {

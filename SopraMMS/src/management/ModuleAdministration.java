@@ -17,8 +17,16 @@ import user.User;
  *
  */
 public class ModuleAdministration {
-	List<Module> moduleList;
-	ModuleDBController moduleDBController = new ModuleDBController();
+    
+    	/**
+    	 * A list of modules.
+    	 */
+	private List<Module> moduleList;
+	
+	/**
+	 * The controller of the Module-database.
+	 */
+	private ModuleDBController moduleDBController = new ModuleDBController();
 
 	// TODO:
 	// - Modulhandbuch Titelseite Daten:
@@ -30,6 +38,15 @@ public class ModuleAdministration {
 	// - Semester des Modulhandbuchs
 	// - basierend auf Revision ???
 
+	/**
+	 * Returns a list of {@link Module}s the {@link User} modified.
+	 * 
+	 * @see Module
+	 * @see User
+	 * 
+	 * @param user	The {@link User} who modified the {@link Module}s.
+	 * @return	The modified {@link Module}s.
+	 */
 	public List<Module> getModifiedModules(User user) {
 		List<Module> modules = new LinkedList<Module>();
 		List<Entry> entries = new LinkedList<Entry>();
@@ -45,6 +62,12 @@ public class ModuleAdministration {
 		return modules;
 	}
 
+	//TODO:
+	/**
+	 * 
+	 * @param course
+	 * @return
+	 */
 	public List<String[]> getModuleManualPdfByCourse(String course) {
 		System.out.println("(ModuleAdministration): getModuleManualPdf");
 		List<String[]> list = moduleDBController.getPDFListByCourse(course);
@@ -64,6 +87,19 @@ public class ModuleAdministration {
 		return list;
 	}
 
+	/**
+	 * This functions sorts the entries of a {@link Module} and returns a list
+	 * of sorted entries.
+	 * <p>
+	 * The database returns the entries unsorted so this method can fix the order.
+	 * (Used during PDF generation...)
+	 * 
+	 * @see Module
+	 * @see Entry
+	 * 
+	 * @param module	The module that needs to be sorted
+	 * @return		A list of sorted entries.
+	 */
 	public List<Entry> sortModuleEntryListByOrder(Module module) {
 		LinkedList<Entry> entryList = (LinkedList<Entry>) module.getEntryList();
 		Collections.sort(entryList, new Comparator<Entry>() {
@@ -81,22 +117,52 @@ public class ModuleAdministration {
 		return entryList;
 	}
 
+	/**
+	 * Retrieves the entries of a module.
+	 * 
+	 * @see Module
+	 * @see Entry
+	 * 
+	 * @param module	The module that should have the entries.
+	 * @return		The entries of the module.
+	 */
 	public List<Entry> getEntryListOfModule(Module module) {
 		return moduleDBController.getEntryListOfModule(module);
 	}
 
+	/**
+	 * Retrieves the course ID from the course name.
+	 * @param course	The course name.
+	 * @return		The course ID.
+	 */
 	public String getCourseID(String course) {
 		return moduleDBController.getCourseID(course);
 	}
 
+	/**
+	 * Retrieves the names of courses, that belong to the faculty ID.
+	 * @param id	The faculty ID.
+	 * @return	A list of course names.
+	 */
 	public List<String> getCoursNamesByFacultyID(String id) {
 		return moduleDBController.getCoursesByFaculty(id);
 	}
 
+	/**
+	 * Retrieves all modules.
+	 * @see Module
+	 * @return	A list of all Modules.
+	 */
 	public List<Module> getModules() {
 		return moduleDBController.getModules();
 	}
 
+	/**
+	 * Retrieves all modules of a given course of the specified degree.
+	 * @param course	The course name.
+	 * @param degree	The degree.
+	 * @return		A list of modules of the course.
+	 */
 	public List<Module> getModulesByCourse(String course, String degree) {
 		return moduleDBController.getModulesByCourse(course, degree);
 	}
@@ -117,10 +183,30 @@ public class ModuleAdministration {
 	// return moduleDBController.getInstituteList(courseID, degree);
 	// }
 
+	/**
+	 * Retrieves the institute name.
+	 * @param instituteID	The institute ID.
+	 * @return		The institute name.
+	 */
 	public String getInstituteName(String instituteID) {
 		return moduleDBController.getInstituteName(instituteID);
 	}
+	
+	//TODO:
+	//mehr info (was das teil hier macht) ist nich schlecht...
 
+	/**
+	 * Creates a module manual.
+	 * 
+	 * @param version		The version.
+	 * @param url			The url.
+	 * @param courseID		The course ID.
+	 * @param degree		The degree.
+	 * @param creationdate		The creation date.
+	 * @param modificationdate	The modification date.
+	 * @param semester		The semester.
+	 * @param examregulation	The exam regulation.
+	 */
 	public void createModuleManual(String version, String url, String courseID,
 			String degree, java.sql.Date creationdate,
 			java.sql.Date modificationdate, String semester, int examregulation) {
@@ -137,6 +223,19 @@ public class ModuleAdministration {
 	 * dateRepresentation = cal.getTime();
 	 */
 
+	//TODO:
+	//deprecation fix noch machen...
+	
+	/**
+	 * Creates the module of the given author.
+	 * 
+	 * @see Module
+	 * @see Entry
+	 * 
+	 * @param list		The list of module entries.
+	 * @param author	The author.
+	 * @param institut	The institute.
+	 */
 	public void createModuleByModuleManager(List<Entry> list, String author,
 			String institut) {
 		String name = list.get(1).getContent();
@@ -156,6 +255,19 @@ public class ModuleAdministration {
 		moduleDBController.createModule(module);
 	}
 
+	
+	//TODO:
+	//deprecation fix noch machen...
+	/**
+	 * Creates the module of the given module manager.
+	 * 
+	 * @see Module
+	 * 
+	 * @param module	The module.
+	 * @param author	The author/module manager.
+	 * @param creationdate	The creation date.
+	 * @param version	The version.
+	 */
 	public void createModuleByModuleManager(Module module, String author,
 			Date creationdate, int version) {
 		System.out.println("(ModulAdministration.java): Subject 3: "
@@ -183,6 +295,15 @@ public class ModuleAdministration {
 		moduleDBController.createModule(moduleFinished);
 	}
 
+	/**
+	 * Retrieves the module by a given ID.
+	 * 
+	 * @see Module
+	 * 
+	 * @param moduleID	The module ID.
+	 * @param version	The version of the module.
+	 * @return		The module.
+	 */
 	public Module getModuleByID(long moduleID, int version) {
 		Module module = moduleDBController.getModule(moduleID, version);
 		module.setEntryList(sortModuleEntryListByOrder(module));
@@ -193,96 +314,235 @@ public class ModuleAdministration {
 	// return moduleDBController.getModuleManualByModule(moduleID);
 	// }
 
+	/**
+	 * Retrieves all modules of a given author.
+	 * 
+	 * @see Module
+	 * 
+	 * @param loginname	The login name of the author.
+	 * @return		A list of modules the author is responsible for.
+	 */
 	public List<Module> getModulesByAuthor(String loginname) {
 		return moduleDBController.getModulesOverviewByAuthor(loginname);
 	}
 
+	/**
+	 * Retrieves all unapproved modules of a given author.
+	 * 
+	 * @see Module
+	 * 
+	 * @param loginname	The login name of the author.
+	 * @return		A list of all unapproved modules the author is responsible for.
+	 */
 	public List<Module> getUnapprovedModules(String loginname) {
 		return moduleDBController.getUnapprovedModulesOverview(loginname);
 	}
 
+	/**
+	 * Retrieves a list of modules filled with all different versions of the module.
+	 * 
+	 * @see Module
+	 * 
+	 * @param moduleID	The module ID.
+	 * @return		A list of all module versions.
+	 */
 	public List<Module> getVersionsOfModule(long moduleID) {
 		return moduleDBController.getAllVersionsOfModule(moduleID);
 	}
 
+	//TODO:
+	//not sure if ...
+	/**
+	 * Retrieves unfinished overviewed/reviewed modules as a list.
+	 * 
+	 * @see Module
+	 * 
+	 * @return	A list with unfinished overviewed/reviewed modules.
+	 */
 	public List<Module> getUnfinishedModulesOverview() {
 		return moduleDBController.getUnfinishedModulesOverview();
 	}
 
+	//TODO:
+	//not sure if ...
+	/**
+	 * Retrieves latest overviewed/reviewed modules as a list.
+	 * 
+	 * @Module
+	 * 
+	 * @return	A list of the latest overviewed/reviewed modules.
+	 */
 	public List<Module> getLatestModulesOverview() {
 		return moduleDBController.getModules();
 	}
 
+	/**
+	 * Retrieves a list of modules for the overview/review editor.
+	 * 
+	 * @see Module
+	 * 
+	 * @param instituteList		A list of institutes.
+	 * @return			A list of modules for the overview/review editor
+	 */
 	public List<Module> getModuleOverviewForEditor(List<String> instituteList) {
 		return moduleDBController.getModuleOverviewForEditor(instituteList);
 	}
 
+	/**
+	 * Retrieves a list of all subjects.
+	 * 
+	 * @return A list of all subjects.
+	 */
 	public List<String> getSubjects() {
 		return moduleDBController.getSubjects();
 	}
 
+	/**
+	 * Adds a subject to the database.
+	 * 
+	 * @param subject 	The subject that is going to be added to the database.
+	 */
 	public void addSubject(String subject) {
 		moduleDBController.createSubject(subject);
 	}
 
+	/**
+	 * Adds a course to the database.
+	 * 
+	 * @see Course
+	 * 
+	 * @param course	The course that is going to be added to the database.
+	 */
 	public void addCourse(Course course) {
 		moduleDBController.createCourse(course);
 	}
 
+	/**
+	 * Adds the given subject to the module.
+	 * 
+	 * @param moduleID	The module ID.
+	 * @param version	The version.
+	 * @param subject	The subject.
+	 */
 	public void setSubjectToModule(long moduleID, int version, String subject) {
 		moduleDBController.setSubjectToModule(moduleID, version, subject);
-
 	}
 
+	/**
+	 * Retrieves all courses as a list.
+	 * 
+	 * @see Course
+	 * 
+	 * @return 	A list of all courses.
+	 */
 	public List<Course> getCourses() {
 		return moduleDBController.getCourses();
 	}
 
+	//TODO:
+	//dafuq does it do.
+	/**
+	 * 
+	 * @param module
+	 */
 	public void setCoursesToModule(Module module) {
 		moduleDBController.finishNewModule(module);
 	}
 
+	//TODO:
+	//i have no idea what it's doing ...
+	/**
+	 * 
+	 * @param module
+	 */
 	public void changeEntryListOfModule(Module module) {
 		moduleDBController.approveModuleEntries(module);
 	}
 
+	/**
+	 * Deactivates the given module.
+	 * 
+	 * @see Module
+	 * 
+	 * @param module A module.
+	 */
 	public void deactivateModule(Module module) {
 		moduleDBController.deactivateModule(module);
 	}
 
+	/**
+	 * Clears the entire database.
+	 */
 	public void clearDatabase() {
 		moduleDBController.clearDatabase();
 	}
-
-	public List<Module> getSortedModulesByCourse(String subject, String degree) {
-		List<Module> module_list = moduleDBController.getModulesByCourse(
-				subject, degree);
-
-		List<Module> module_list_final = new LinkedList<Module>();
-		for (int i = 0; i < module_list.size(); i++) {
-			Module m = module_list.get(i);
-			m.setEntryList(sortModuleEntryListByOrder(m));
-			module_list_final.add(m);
-		}
-
-		return module_list_final;
+		
+	/**
+	 * Retrieves a list of modules of the specified subject and degree with sorted entries.
+	 * 
+	 * @see Module
+	 * @see Entry
+	 * 
+	 * @param subject	The subject.
+	 * @param degree	The degree.
+	 * @return		A list of modules of the specified subject and degree with sorted entries.
+	 */
+	public List<Module> getSortedModulesByCourse(String subject, String degree){   
+	    List<Module> module_list =  moduleDBController.getModulesByCourse(subject, degree);
+	    
+	    List<Module> module_list_final = new LinkedList<Module>();
+	    for(int i = 0; i < module_list.size(); i++){
+		Module m = module_list.get(i);
+		m.setEntryList(sortModuleEntryListByOrder(m));	
+		module_list_final.add(m);
+	    }
+	    
+	    return module_list_final;
 	}
-
-	public List<Module> getAllModules() {
+	
+	/**
+	 * Retrieves all modules as a list.
+	 * 
+	 * @see Module
+	 * 
+	 * @return	All modules as a list.
+	 */
+	public List<Module> getAllModules(){
 		return moduleDBController.getAllModules();
 	}
-
-	public void deleteModule(long moduleID, int version) {
+	
+	/**
+	 * Deletes a module in the database.
+	 * 
+	 * @see Module
+	 * 
+	 * @param moduleID	The module ID.
+	 * @param version	the version.
+	 */
+	public void deleteModule(long moduleID,int version)
+	{
 		moduleDBController.deleteModule(moduleID, version);
 	}
-
-	public void editModule(Module module) {
+	
+	//TODO:
+	//no idea...
+	/**
+	 * 
+	 * @param module
+	 */
+	public void editModule(Module module){
 		moduleDBController.editRejectedModule(module);
 	}
-
-	public boolean createInstitute(String instituteID, String managerLoginname,
-			String facultyID) {
-		return moduleDBController.createInstitute(instituteID,
-				managerLoginname, facultyID);
+	
+	/**
+	 * Creates a new institute entry in the database.
+	 * 
+	 * @param instituteID		The institute ID.
+	 * @param managerLoginname	The manager's loginname.
+	 * @param facultyID		The faculty ID.
+	 * @return			A boolean set to true if successfully created ???????
+	 */
+	public boolean createInstitute(String instituteID, String managerLoginname, String facultyID){
+		return moduleDBController.createInstitute(instituteID, managerLoginname, facultyID);
 	}
 }

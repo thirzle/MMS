@@ -1,3 +1,5 @@
+<script type="text/javascript" src="/SopraMMS/js/jquery.newmessage.js"></script>
+<script type="text/javascript" src="/SopraMMS/js/inputmanager.js"></script>
 <%@page import="user.User"%>
 <%@ page import="model.UserDBController"%>
 <%@ page import="java.util.List"%>
@@ -63,11 +65,13 @@
 </table>
 <table cellpadding="10" cellspacing="10" align=right>
 	<tr>
-		<td><input form="sendMailForm" type="submit" value="Senden">
+		<td><button form="sendMailForm" type="submit" value="Senden">Senden</button>
 		</td>
 	</tr>
 	<!--  	<td>
 				<input type="button" name="Cancel" value="Abbrechen" onclick="window.location = '/SopraMMS/guiElements/home.jsp?home=true' " />
 			</td>-->
 </table>
-<script type="text/javascript" src="/SopraMMS/js/jquery.newmessage.js"></script>
+<script>
+checkInput(null);
+</script>

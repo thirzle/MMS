@@ -19,13 +19,13 @@
 	<thead>
 		<tr>
 			<th></th>
-			<th>Benutzername</th>
-			<th>Vorname</th>
-			<th>Nachname</th>
-			<th>Email</th>
-			<th>Recht</th>
+			<th class="final s">Login</th>
+			<th class="final s">Vorn.</th>
+			<th class="final s">Nachn.</th>
+			<th class="final xxl">Email</th>
+			<th class="final xxl">Recht</th>
 			<th>Institut</th>
-			<th>Stellvertreter</th>
+			<th class="final s">Stell.</th>
 		</tr>
 	</thead>
 	<tbody id="userTableBody">
@@ -43,7 +43,7 @@
 				for(int j=0; j<rights.length; j++) {
 				  if(rights[j]) {
 					  if(right != "") {
-				  		right += ";"+status[j];
+				  		right += ";"+System.getProperty("line.separator")+status[j];
 					  }else{
 						  right = status[j];
 					  }
@@ -54,13 +54,13 @@
 			  String institute = "";
 			  for(int j=0; j<institutes.size(); j++) {
 				  if(institute != "") {
-					  	institute += ";"+institutes.get(j);;
+					  	institute += ";"+System.getProperty("line.separator")+institutes.get(j);;
 					  }else{
 						  institute = institutes.get(j);;
 					  }
 			  }%>
 			<td><%=institute %></td>
-			<td><%=users.get(i).getRepresentative()%></td>
+			<td><% String rep = users.get(i).getRepresentative();if(rep == null){rep="-";};%><%=rep %></td>
 		</tr>
 		<%
 			}
