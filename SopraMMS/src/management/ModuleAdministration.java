@@ -13,7 +13,7 @@ import user.User;
  * The ModuleAdministration class provides easy access to the data that is
  * gathered from the database.
  *  
- * @author David Lehr, Teresa Hirzle name here...
+ * @author David Lehr, Teresa Hirzle, Max Reuter
  *
  */
 public class ModuleAdministration {
@@ -88,7 +88,7 @@ public class ModuleAdministration {
 	}
 
 	/**
-	 * This functions sorts the entries of a {@link Module} and returns a list
+	 * This functions sorts the entries of a {@link Module} by their order and returns a list
 	 * of sorted entries.
 	 * <p>
 	 * The database returns the entries unsorted so this method can fix the order.

@@ -10,7 +10,7 @@ import java.util.Random;
  * <p>
  * It is used by the {@link EffortEntry} class to store a list of all SelfStudy objects, that belong to the corresponding {@link Module}.
  * 
- * @author AJ, add names here...
+ * @author AJ, Max Reuter
  * @see Module
  * @see EffortEntry
  * 

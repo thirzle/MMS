@@ -16,7 +16,7 @@ import java.util.List;
  * @see Module
  * @see Entry
  * @see Course
- * @author AJ, Teresa, David, add names here...
+ * @author AJ, Teresa Hirzle, David Lehr, Max Reuter
  *
  */
 public class CourseEntry extends Entry {

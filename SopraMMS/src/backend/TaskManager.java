@@ -15,18 +15,18 @@ import mail.EmailTelnet;
 import management.Deadline;
 import management.ModuleAdministration;
 
-//TODO Kontrollieren und Autoren eintragen
 /**
  * On the base of a given deadline there are multiple different tasks initialized and
  * on the base of the actual date it is decided when they are scheduled.
  * 
- * @author Max
+ * @author Max Reuter
  *
  */
 public class TaskManager {
 	
 	/**
 	 * Gets a deadline, compares it to the actual date and decides whether the deadline date lies behind the actual date or not.
+	 * With this information some TimerTasks are scheduled.
 	 * <p>
 	 * In the first case it sends an email immediately to all users,
 	 * in the second case it sets a date where it is reminding all users about the deadline.
@@ -65,13 +65,13 @@ public class TaskManager {
 					text.append("Sehr geehrte/geehrter Frau/Herr " + user.getLastName()
 						+ ",");
 					text.append("\n\n");
-					text.append("Bis zum "+date+" müssen Änderungen oder neue Module im MMS eingereicht werden,"
+					text.append("Bis zum "+date+" mÃ¼ssen Ã„nderungen oder neue Module im MMS eingereicht werden,"
 						+" im kommenden Semester wirksam zu sein.");
 					text.append("\n\n");
-					text.append("Falls Sie diesen Termin nicht einhalten können, treten Sie bitte"
+					text.append("Falls Sie diesen Termin nicht einhalten kÃ¶nnen, treten Sie bitte"
 						+" mit dem Administrator in Kontakt.");
 					text.append("\n\n");
-					text.append("Mit freundlichen Grüßen");
+					text.append("Mit freundlichen GrÃ¼ÃŸen");
 					text.append("\n");
 					text.append("MMS-Team");
 					try {

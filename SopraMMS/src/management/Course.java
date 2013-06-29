@@ -10,7 +10,7 @@ package management;
  * @see Module
  * @see Entry
  * @see CourseEntry
- * @author David
+ * @author David Lehr
  * 
  */
 public class Course {

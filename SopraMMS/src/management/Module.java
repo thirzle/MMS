@@ -21,14 +21,14 @@ import java.util.Random;
  * @see EffortEntry
  * @see TextualEntry
  * @see SelfStudy
- * @author AJ, add names here...
+ * @author AJ, Max Reuter
  * 
  */
 public class Module {
     /**
      * The name of the Module.
      * <p>
-     * e.g. "Analysis I für Ingenieure und Informatiker"
+     * e.g. "Analysis I fÃ¼r Ingenieure und Informatiker"
      */
     private String name;
     /**
@@ -108,7 +108,7 @@ public class Module {
      * 
      * @param moduleID			This Module's ID.
      * @param version			The version number of this Module.
-     * @param name			The name of the Module. e.g. "Analysis I für Ingenieure und Informatiker"
+     * @param name			The name of the Module. e.g. "Analysis I fÃ¼r Ingenieure und Informatiker"
      * @param creationDate		The creation date of this Module.
      * @param modificationDate		The modification date of this Module.
      * @param approved			Approve-status of this Module. Is this Module approved ?
@@ -139,7 +139,7 @@ public class Module {
      * 
      * @param moduleID			This Module's ID.
      * @param version			The version number of this Module.
-     * @param name			The name of the Module. e.g. "Analysis I für Ingenieure und Informatiker"
+     * @param name			The name of the Module. e.g. "Analysis I fÃ¼r Ingenieure und Informatiker"
      * @param creationDate		The creation date of this Module.
      * @param modificationDate		The modification date of this Module.
      * @param approved			Approve-status of this Module. Is this Module approved ?
@@ -170,7 +170,7 @@ public class Module {
      * 
      * @param moduleID			This Module's ID.
      * @param version			The version number of this Module.
-     * @param name			The name of the Module. e.g. "Analysis I für Ingenieure und Informatiker"
+     * @param name			The name of the Module. e.g. "Analysis I fÃ¼r Ingenieure und Informatiker"
      * @param creationDate		The creation date of this Module.
      * @param modificationDate		The modification date of this Module.
      * @param approved			Approve-status of this Module. Is this Module approved ?
@@ -198,7 +198,7 @@ public class Module {
      *  
      * @param moduleID			This Module's ID.
      * @param version			The version number of this Module.
-     * @param name			The name of the Module. e.g. "Analysis I für Ingenieure und Informatiker"
+     * @param name			The name of the Module. e.g. "Analysis I fï¿½r Ingenieure und Informatiker"
      * @param creationDate		The creation date of this Module.
      * @param modificationDate		The modification date of this Module.
      * @param approved			Approve-status of this Module. Is this Module approved ?
@@ -228,7 +228,7 @@ public class Module {
      * <p>
      * Entries are added after initialization.
      * 
-     * @param name			The name of the Module. e.g. "Analysis I für Ingenieure und Informatiker"
+     * @param name			The name of the Module. e.g. "Analysis I fÃ¼r Ingenieure und Informatiker"
      * @param creationDate		The creation date of this Module.
      * @param modificationDate		The modification date of this Module.
      * @param approved			Approve-status of this Module. Is this Module approved ?
@@ -257,7 +257,7 @@ public class Module {
      * <p>
      * Entries are added during initialization.
      * 
-     * @param name			The name of the Module. e.g. "Analysis I für Ingenieure und Informatiker"
+     * @param name			The name of the Module. e.g. "Analysis I fÃ¼r Ingenieure und Informatiker"
      * @param creationDate		The creation date of this Module.
      * @param modificationDate		The modification date of this Module.
      * @param approved			Approve-status of this Module. Is this Module approved ?

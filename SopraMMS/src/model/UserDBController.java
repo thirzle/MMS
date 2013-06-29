@@ -186,11 +186,10 @@ public class UserDBController {
 	// }
 	// return null;
 	// }
-	// find user by email
 	/**
 	 * Gets specified user by his email address.
 	 * 
-	 * @param mail		The user��s email address.
+	 * @param mail		The user's email address.
 	 * @return			User object.
 	 * @see User
 	 */
@@ -213,7 +212,7 @@ public class UserDBController {
 		return null;
 	}
 
-	// create new user in database
+
 	/**
 	 * Creates a new user.
 	 * 
@@ -331,7 +330,7 @@ public class UserDBController {
 	 * Gets the rights of a specified user.
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system. 
-	 * @return				An array set with true and false values ������for the corresponding rights.
+	 * @return				An array set with true and false values for the corresponding rights.
 	 * @see User
 	 */
 //	@Deprecated
@@ -379,7 +378,7 @@ public class UserDBController {
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system.
 	 * @param connection	Connection object.
-	 * @return				An array set with true and false values ������for the corresponding rights.
+	 * @return				An array set with true and false values for the corresponding rights.
 	 * @see User
 	 */
 	public boolean[] getRights(String loginname, Connection connection) {
@@ -446,7 +445,7 @@ public class UserDBController {
 	 * Changes the rights of a specified user.
 	 * 
 	 * @param user			User object
-	 * @param newRights		Array set with true and false values ������for the new rights.
+	 * @param newRights		Array set with true and false values for the new rights.
 	 * @return				<code>true</code> if changing the rights was successful <code>false</code> otherwise.
 	 * @see User
 	 */
@@ -489,7 +488,7 @@ public class UserDBController {
 	 * 
 	 * @param oldLogin		Old loginname.
 	 * @param newLogin		New loginname.
-	 * @param newRights		Array set with true and false values ������for the new rights.	
+	 * @param newRights		Array set with true and false values for the new rights.	
 	 * @param connection	Connection object.
 	 * @return				<code>true</code> if changing the rights was successful <code>false</code> otherwise.
 	 * @see User
@@ -945,7 +944,7 @@ public class UserDBController {
 
 
 	/**
-	 * Gets the user��s facultyname.
+	 * Gets the user's facultyname.
 	 * 
 	 * @param user		User object.
 	 * @return			The faculty name.
@@ -998,7 +997,14 @@ public class UserDBController {
 		}
 	}
 	
-	
+	/**
+	 * Sets the representative of an user.
+	 * 
+	 * @param user				User object.
+	 * @param representative	Loginname of the new representative
+	 * @return					<code>true</code> if setting the representative was successful <code>false</code> otherwise.
+	 * @see User
+	 */
 	public boolean setRepresentative(User user, String representative) {
 		Connection connection = connect();
 		query = "UPDATE user SET representative = ? WHERE loginname = ?";
@@ -1021,7 +1027,7 @@ public class UserDBController {
 	/**
 	 * Sets the password if the user forgets it.
 	 * 
-	 * @param mail			The user��s email address.
+	 * @param mail			The user's email address.
 	 * @param forgotPwd		The forgotten password.
 	 * @return				<code>true</code> if setting the password was successful <code>false</code> otherwise.
 	 * @see User
@@ -1046,10 +1052,10 @@ public class UserDBController {
 	}
 
 	/**
-	 * Removes the forgotten password.
+	 * Removes the forgotten-password token.
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system.
-	 * @return				<code>true</code> if removing the password was successful <code>false</code> otherwise.
+	 * @return				<code>true</code> if removing the token was successful <code>false</code> otherwise.
 	 * @see User
 	 */
 	public Boolean removeForgotPwdByLoginname(String loginname) {
@@ -1070,7 +1076,7 @@ public class UserDBController {
 	}
 
 	/**
-	 * Gets the user by his forgotten password.
+	 * Gets the user by his forgotten-password token.
 	 * 
 	 * @param forgotPwd		The user´s forgotten password.
 	 * @return				User object.
@@ -1478,7 +1484,6 @@ public class UserDBController {
 		}
 	}
 
-	// TODO checkLoginName
 
 	/**
 	 * Shows history.
@@ -1536,7 +1541,7 @@ public class UserDBController {
 	}
 
 	/**
-	 * Deletes the forgotten password.
+	 * Deletes the forgotten-password token.
 	 * 
 	 * @param loginname		The name with which the user uses to log into the system.
 	 * @param connection	Connection object.

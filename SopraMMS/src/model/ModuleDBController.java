@@ -67,9 +67,9 @@ public class ModuleDBController {
 	}
 
 	/**
-	 * Loads all available modules.
+	 * Loads all approved modules.
 	 * <p>
-	 * Gets all available modules from the database and stores them in a {@link List} of modules.
+	 * Gets all approved modules from the database and stores them in a {@link List} of modules.
 	 * 
 	 * @return		List of modules.
 	 * @see Module
@@ -106,7 +106,7 @@ public class ModuleDBController {
 	/**
 	 * Loads all entries of a specified module.
 	 * <p>
-	 * Gets a module and with his "moduleID" and his "module version"
+	 * Gets a module and with his "moduleID" and his "version"
 	 * it gets the appropriate entries the module consists of.
 	 * These are returned in the form of a {@link Module#entryList}.
 	 * 
@@ -224,7 +224,7 @@ public class ModuleDBController {
 
 	
 	/**
-	 * Loads all entries of a specified module.
+	 * Loads all entries of a specified module with an established connection.
 	 * <p>
 	 * Gets a module and with his "moduleID" and his "module version"
 	 * it gets the appropriate entries the module consists of.
@@ -388,7 +388,7 @@ public class ModuleDBController {
 	// 
 	// TODO
 	/**
-	 * Loads all available modules by a chosen course.
+	 * Loads all approved modules by a chosen course.
 	 * 
 	 * @param course		Course which belongs to the inquired module
 	 * @param degree
@@ -477,7 +477,7 @@ public class ModuleDBController {
 
 	// tested: check
 	/**
-	 * Loads all available modules by a chosen author.
+	 * Loads all approved modules by a chosen author.
 	 * <p>
 	 * 
 	 * @param author		The author of the modules content.
@@ -518,7 +518,7 @@ public class ModuleDBController {
 	
 	
 	/**
-	 * Loads modules by the loginname of an supervisor.
+	 * Loads modules by the loginname of a supervisor.
 	 * 
 	 * @param loginname		The loginname of the supervisor.
 	 * @param connection	Connection to a database.
@@ -562,7 +562,7 @@ public class ModuleDBController {
 	
 	
 	/**
-	 * Loads modules by the loginname of an representative.
+	 * Loads modules by the loginname of a representative.
 	 * 
 	 * @param loginname		The loginname of the representative.
 	 * @param connection	Connection to a database.
@@ -643,7 +643,7 @@ public class ModuleDBController {
 	}
 	
 	/**
-	 * Loads all available modules.
+	 * Loads all modules.
 	 * <p>
 	 * Gets all modules from the database and stores them in a {@link List} of modules.
 	 * 
@@ -1045,7 +1045,7 @@ public class ModuleDBController {
 	}
 	
 	/**
-	 * Loads unapproved modules by the loginname of an supervisor.
+	 * Loads unapproved modules by the loginname of a supervisor.
 	 * 
 	 * @param loginname		The loginname of the supervisor.
 	 * @param connection	Connection to a database.
@@ -1089,7 +1089,7 @@ public class ModuleDBController {
 	
 	
 	/**
-	 * Loads unapproved modules by the loginname of an representative.
+	 * Loads unapproved modules by the loginname of a representative.
 	 * 
 	 * @param loginname		The loginname of the representative.
 	 * @param connection	Connection to a database.
@@ -1536,13 +1536,7 @@ public class ModuleDBController {
 	}
 
 
-	/**
-	 * Deletes an existing module.
-	 * 
-	 * @param module		The module which should be deleted.
-	 * @return 				<code>true</code> If the module has been deleted, <code>false</code> otherwise.
-	 * @see Module
-	 */
+
 	
 	//TODO Vervollst�ndigen
 	/**
@@ -2118,20 +2112,6 @@ public class ModuleDBController {
 		}
 		return courses;
 	}
-
-	// String Array wie oben
-	/**
-	 * Sets the courses in a module.
-	 * 
-	 * @param moduleID		The unique ID of a module.
-	 * @param version		The version number of this Module.
-	 * @param courses		List of course names.
-	 * @return
-	 * @see Course
-	 */
-	public boolean setCoursesToModule(long moduleID, int version, List<String[]> courses) {
-		return false;
-	}
 	
 	
 	/**
@@ -2185,7 +2165,7 @@ public class ModuleDBController {
 	
 	
 	/**
-	 * Unapproves a module.
+	 * Unapproves a whole module.
 	 * 
 	 * @param module		Module object.
 	 * @return				<code>true</code> if the module was deactivated <code>false</code> otherwise.
@@ -2247,7 +2227,8 @@ public class ModuleDBController {
 	
 
 	/**
-	 * Clears the content of the database.
+	 * Clears content of the database, which is older than two years and unused
+	 * and unused in current modulemanuals.
 	 * 
 	 * @return		<code>true</code> if the content was cleared <code>false</code> otherwise.
 	 */
@@ -2287,7 +2268,8 @@ public class ModuleDBController {
 	
 	//TODO
 	/**
-	 * Gets the newest module version
+	 * Determines the highest version of a given moduleID
+	 * and returns a higher one.
 	 * 
 	 * @param moduleID		The unique ID of a module.
 	 * @param connection	Connection object.

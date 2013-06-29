@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
  * 
  * @see Date
  * 
- * @author Max
+ * @author Max Reuter
  *
  */
 public class Deadline {

@@ -20,7 +20,7 @@ import java.util.LinkedList;
  * @see Module
  * @see Entry
  * @see SelfStudy
- * @author AJ, add names here...
+ * @author AJ, Max Reuter
  * 
  */
 public class EffortEntry extends Entry {
@@ -192,7 +192,7 @@ public class EffortEntry extends Entry {
     public String toString() {
 	StringBuilder sb = new StringBuilder();
 	sb.append("Aufwand\n");
-	sb.append("    Präsenzzeit: " + presenceTime + "\n");
+	sb.append("    Prï¿½senzzeit: " + presenceTime + "\n");
 	for (SelfStudy ss : selfStudyList) {
 	    sb.append("    " + ss.toString() + "\n");
 	}
@@ -201,7 +201,7 @@ public class EffortEntry extends Entry {
 
     public String getContent() {
 	StringBuilder sb = new StringBuilder();
-	sb.append("Präsenzzeit: " + presenceTime + " Stunden\n");
+	sb.append("Prï¿½senzzeit: " + presenceTime + " Stunden\n");
 	for (SelfStudy ss : selfStudyList) {
 	    sb.append("" + ss.toString() + " Stunden\n");
 	}

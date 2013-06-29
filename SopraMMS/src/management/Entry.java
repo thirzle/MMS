@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
  * @see CourseEntry
  * @see EffortEntry
  * @see TextualEntry
- * @author AJ, add names here...
+ * @author AJ, Max Reuter
  *
  */
 public abstract class Entry {
