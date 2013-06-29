@@ -304,6 +304,15 @@ body {
 	cursor: pointer;
 }
 
+.menuContent { /*background-color: gray;*/
+	margin: 5px 0px 5px 10px;
+
+}
+
+#loginPw {
+	width: 210px;
+}
+
 .userManagementEntryContainer p {
 	list-style-image: url(../images/bullet1.bmp);
 }
@@ -321,10 +330,7 @@ body {
 	cursor: pointer;
 }
 
-.menuContent { /*background-color: gray;*/
-	margin: 5px 0px 5px 10px;
-	float: right;
-}
+
 
 .menu h3 {
 	font-size: 10pt;
