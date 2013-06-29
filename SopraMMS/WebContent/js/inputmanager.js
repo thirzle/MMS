@@ -3,13 +3,13 @@ function checkInput(except) {
 	inputs.change(function() {
 		var isEmpty = false;
 		for ( var i = 0; i < inputs.length; i++) {
-			if (except != null && inputs[i].name != except.attr("name")) {
+			if (inputs[i].name != except.get(0).name) {
+				alert("!");
 				if (inputs[i].value == "") {
 					isEmpty = true;
 				}
 			}
 		}
-
 		if (!isEmpty) {
 			$('button[type=submit]').each(function() {
 				if ($(this).attr('disabled')) {

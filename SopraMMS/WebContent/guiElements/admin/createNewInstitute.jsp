@@ -32,8 +32,8 @@
 		</tr>
 	</table>
 	<br>
-	<button value="Neues Institut anlegen">Neues Institut anlegen</button>
+	<button type="submit" value="Neues Institut anlegen">Neues Institut anlegen</button>
 </form>
 <script>
-checkInput(null);
+checkInput($('input[name=instituteID]'));
 </script>
