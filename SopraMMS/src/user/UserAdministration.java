@@ -264,16 +264,16 @@ public class UserAdministration {
 		text.append("Sehr geehrte/geehrter Frau/Herr " + user.getLastName()
 				+ ",");
 		text.append("\n\n");
-		text.append("Sie haben soeben ein neues Passwort für Ihren Account (Benutzername: "
+		text.append("Sie haben soeben ein neues Passwort fï¿½r Ihren Account (Benutzername: "
 				+ user.getLogin() + ") im MMS beantragt.");
 		text.append("\n\n");
-		text.append("Bitte rufen Sie folgenden Link auf und ändern Sie ihr Passwort.");
+		text.append("Bitte rufen Sie folgenden Link auf und ï¿½ndern Sie ihr Passwort.");
 		text.append("\n\n");
 		text.append(url);
 		text.append("\n\n");
-		text.append("Sollten Sie kein Passwort für Ihren Account beantragt haben ignorieren Sie diese E-Mail.");
+		text.append("Sollten Sie kein Passwort fï¿½r Ihren Account beantragt haben ignorieren Sie diese E-Mail.");
 		text.append("\n\n\n");
-		text.append("Mit freundlichen Grüßen");
+		text.append("Mit freundlichen Grï¿½ï¿½en");
 		text.append("\n");
 		text.append("MMS-Team");
 
@@ -303,17 +303,17 @@ public class UserAdministration {
 		text.append("Sehr geehrte/geehrter Frau/Herr " + user.getLastName()
 				+ ",");
 		text.append("\n\n");
-		text.append("Sie wurden soeben an dem Modul Management System der Universität Ulm registriert.");
+		text.append("Sie wurden soeben an dem Modul Management System der Universitï¿½t Ulm registriert.");
 		text.append("\n\n");
-		text.append("Der Benutzername für Ihren registrierten Account lautet: "+user.getLogin());
+		text.append("Der Benutzername fï¿½r Ihren registrierten Account lautet: "+user.getLogin());
 		text.append("\n\n");
 		text.append("Bitte rufen Sie folgenden Link auf und erstellen Sie ihr Passwort.");
 		text.append("\n\n");
 		text.append(url);
 		text.append("\n\n");
-		text.append("Sie haben die Möglichkeit das neu erstellte Passwort zu einem späteren Zeitpunkt zu ändern.");
+		text.append("Sie haben die Mï¿½glichkeit das neu erstellte Passwort zu einem spï¿½teren Zeitpunkt zu ï¿½ndern.");
 		text.append("\n\n");
-		text.append("Mit freundlichen Grüßen");
+		text.append("Mit freundlichen Grï¿½ï¿½en");
 		text.append("\n");
 		text.append("MMS-Team");
 
@@ -358,7 +358,7 @@ public class UserAdministration {
 	 * @param loginname			{@link User#getLogin()}
 	 * @param password			{@link User#getPassword()}
 	 * @param session			{@link User#getSession()}
-	 * @return					User object or <code>null</code> if the login wasn´t successful.
+	 * @return					User object or <code>null</code> if the login wasnï¿½t successful.
 	 */
 	public User login(String loginname, String password, String session) {
 
@@ -521,7 +521,7 @@ public class UserAdministration {
 		return userDBController.getAllUsers();
 	}
 
-//	get Mail: übergeben: Liste von Rechten, gibt zurück: Liste mit String Array -->Name, Vorname, Email-Adresse
+//	get Mail: ï¿½bergeben: Liste von Rechten, gibt zurï¿½ck: Liste mit String Array -->Name, Vorname, Email-Adresse
 	/**
 	 * Gets all emails from the users which are available in the database.
 	 * 
@@ -568,7 +568,7 @@ public class UserAdministration {
 	 * Gets the curriculum vitae of a user.
 	 * 
 	 * @param loginname			{@link User#getLogin()}
-	 * @return					The URL which leads to the user´s curriculum vitae.
+	 * @return					The URL which leads to the userï¿½s curriculum vitae.
 	 */
 	public String getCurriculum(String loginname){
 		return userDBController.getCurriculum(loginname);
@@ -606,7 +606,7 @@ public class UserAdministration {
 	 * Sets the curriculum vitae in form of an url from a specified user.
 	 * 
 	 * @param loginname			{@link User#getLogin()}
-	 * @param url				The URL which leads to the user´s curriculum vitae.
+	 * @param url				The URL which leads to the userï¿½s curriculum vitae.
 	 */
 	public void setCurriculum(String loginname, String url){
 		userDBController.setCurriculum(loginname, url);

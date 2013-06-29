@@ -334,45 +334,45 @@ public class UserDBController {
 	 * @return				An array set with true and false values ������for the corresponding rights.
 	 * @see User
 	 */
-	@Deprecated
-	public boolean[] getRights(String loginname) {
-		Connection connection = connect();
-		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
-		query = "SELECT rightsID FROM rightsaffiliation WHERE loginname = ?";
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, loginname);
-			ResultSet resultSet = pStatement.executeQuery();
-			// set all rights listed in table rightsaffiliation
-			while (resultSet.next()) {
-				rightsArray[resultSet.getInt("rightsID")] = true;
-			}
-			pStatement = connection
-					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
-			pStatement.setString(1, loginname);
-			resultSet = pStatement.executeQuery();
-			if (resultSet.next()) {
-				loginname = resultSet.getString("supervisor");
-				pStatement = connection.prepareStatement(query);
-				pStatement.setString(1, loginname);
-				resultSet = pStatement.executeQuery();
-				// set all rights of supervisor listed in table
-				// rightsaffiliation
-				while (resultSet.next()) {
-					if(resultSet.getInt("rightsID")!=1){
-						rightsArray[resultSet.getInt("rightsID")] = true;
-					}
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Couldn't get rights of user: " + loginname);
-		} finally {
-			close(connection);
-		}
-		return rightsArray;
-	}
-	
+//	@Deprecated
+//	public boolean[] getRights(String loginname) {
+//		Connection connection = connect();
+//		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
+//		query = "SELECT rightsID FROM rightsaffiliation WHERE loginname = ?";
+//		try {
+//			pStatement = connection.prepareStatement(query);
+//			pStatement.setString(1, loginname);
+//			ResultSet resultSet = pStatement.executeQuery();
+//			// set all rights listed in table rightsaffiliation
+//			while (resultSet.next()) {
+//				rightsArray[resultSet.getInt("rightsID")] = true;
+//			}
+//			pStatement = connection
+//					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
+//			pStatement.setString(1, loginname);
+//			resultSet = pStatement.executeQuery();
+//			if (resultSet.next()) {
+//				loginname = resultSet.getString("supervisor");
+//				pStatement = connection.prepareStatement(query);
+//				pStatement.setString(1, loginname);
+//				resultSet = pStatement.executeQuery();
+//				// set all rights of supervisor listed in table
+//				// rightsaffiliation
+//				while (resultSet.next()) {
+//					if(resultSet.getInt("rightsID")!=1){
+//						rightsArray[resultSet.getInt("rightsID")] = true;
+//					}
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			System.out.println("Couldn't get rights of user: " + loginname);
+//		} finally {
+//			close(connection);
+//		}
+//		return rightsArray;
+//	}
+//	
 	
 	/**
 	 * Gets the rights of a specified user with established connection.
@@ -610,45 +610,46 @@ public class UserDBController {
 	 * @return				List of users.
 	 * @see User
 	 */
-	public List<User> getAllUsersFromInstitute(String institute) {
-		Connection connection = connect();
-		List<User> userList = new LinkedList<User>();
-		query = "SELECT loginname FROM instituteaffiliatoin WHERE instituteID = ?";
-		String loginname;
-		ResultSet resultSetUsers = null;
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, institute);
-			ResultSet resultSet = pStatement.executeQuery();
-
-			while (resultSet.next()) {
-				loginname = resultSet.getString("loginname");
-				query = "SELECT * FROM user WHERE loginname = ?";
-				pStatement = connection.prepareStatement(query);
-				pStatement.setString(1, loginname);
-				resultSetUsers = pStatement.executeQuery();
-
-				userList.add(new User(resultSetUsers.getString("login"),
-						resultSetUsers.getString("firstName"), resultSetUsers
-								.getString("lastName"), resultSetUsers
-								.getString("mail"), getRights(loginname),
-						resultSetUsers.getString("session"), resultSetUsers
-								.getString("faculty"),
-						getInstitutesByName(loginname), resultSetUsers
-								.getString("representative"), resultSetUsers
-								.getString("supervisor"), resultSetUsers
-								.getString("password")));
-
-			}
-		} catch (SQLException e) {
-			System.out.println("Couldn't get all users from institute: "
-					+ institute);
-			e.printStackTrace();
-		} finally {
-			close(connection);
-		}
-		return userList;
-	}
+//	@Deprecated
+//	public List<User> getAllUsersFromInstitute(String institute) {
+//		Connection connection = connect();
+//		List<User> userList = new LinkedList<User>();
+//		query = "SELECT loginname FROM instituteaffiliatoin WHERE instituteID = ?";
+//		String loginname;
+//		ResultSet resultSetUsers = null;
+//		try {
+//			pStatement = connection.prepareStatement(query);
+//			pStatement.setString(1, institute);
+//			ResultSet resultSet = pStatement.executeQuery();
+//
+//			while (resultSet.next()) {
+//				loginname = resultSet.getString("loginname");
+//				query = "SELECT * FROM user WHERE loginname = ?";
+//				pStatement = connection.prepareStatement(query);
+//				pStatement.setString(1, loginname);
+//				resultSetUsers = pStatement.executeQuery();
+//
+//				userList.add(new User(resultSetUsers.getString("login"),
+//						resultSetUsers.getString("firstName"), resultSetUsers
+//								.getString("lastName"), resultSetUsers
+//								.getString("mail"), getRights(loginname, connection),
+//						resultSetUsers.getString("session"), resultSetUsers
+//								.getString("faculty"),
+//						getInstitutesByName(loginname, connection), resultSetUsers
+//								.getString("representative"), resultSetUsers
+//								.getString("supervisor"), resultSetUsers
+//								.getString("password")));
+//
+//			}
+//		} catch (SQLException e) {
+//			System.out.println("Couldn't get all users from institute: "
+//					+ institute);
+//			e.printStackTrace();
+//		} finally {
+//			close(connection);
+//		}
+//		return userList;
+//	}
 
 	/**
 	 * Gets instituteID of existing user.
@@ -657,43 +658,43 @@ public class UserDBController {
 	 * @return				List of institutes.
 	 * @see User
 	 */
-	@Deprecated
-	public List<String> getInstitutesByName(String loginname) {
-		Connection connection = connect();
-		LinkedList<String> instituteList = new LinkedList<String>();
-		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, loginname);
-			ResultSet resultSet = pStatement.executeQuery();
-			while (resultSet.next()) {
-				instituteList.add(resultSet.getString("instituteID"));
-			}
-			pStatement = connection
-					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
-			pStatement.setString(1, loginname);
-			resultSet = pStatement.executeQuery();
-			if (resultSet.next()) {
-				loginname = resultSet.getString("supervisor");
-				pStatement = connection.prepareStatement(query);
-				pStatement.setString(1, loginname);
-				resultSet = pStatement.executeQuery();
-				// get all institutes of supervisor
-				while (resultSet.next()) {
-					if(!instituteList.contains(resultSet.getString("instituteID"))){
-						instituteList.add(resultSet.getString("instituteID"));
-					}
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Couldn't get list of institutes from user: "
-					+ loginname);
-		} finally {
-			close(connection);
-		}
-		return instituteList;
-	}
+//	@Deprecated
+//	public List<String> getInstitutesByName(String loginname) {
+//		Connection connection = connect();
+//		LinkedList<String> instituteList = new LinkedList<String>();
+//		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
+//		try {
+//			pStatement = connection.prepareStatement(query);
+//			pStatement.setString(1, loginname);
+//			ResultSet resultSet = pStatement.executeQuery();
+//			while (resultSet.next()) {
+//				instituteList.add(resultSet.getString("instituteID"));
+//			}
+//			pStatement = connection
+//					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
+//			pStatement.setString(1, loginname);
+//			resultSet = pStatement.executeQuery();
+//			if (resultSet.next()) {
+//				loginname = resultSet.getString("supervisor");
+//				pStatement = connection.prepareStatement(query);
+//				pStatement.setString(1, loginname);
+//				resultSet = pStatement.executeQuery();
+//				// get all institutes of supervisor
+//				while (resultSet.next()) {
+//					if(!instituteList.contains(resultSet.getString("instituteID"))){
+//						instituteList.add(resultSet.getString("instituteID"));
+//					}
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			System.out.println("Couldn't get list of institutes from user: "
+//					+ loginname);
+//		} finally {
+//			close(connection);
+//		}
+//		return instituteList;
+//	}
 	
 	
 	/**
