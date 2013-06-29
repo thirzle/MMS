@@ -35,5 +35,5 @@
 	<button type="submit" value="Neues Institut anlegen">Neues Institut anlegen</button>
 </form>
 <script>
-checkInput($('input[name=instituteID]'));
+checkInput(null);
 </script>
