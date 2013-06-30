@@ -20,7 +20,7 @@ import java.util.LinkedList;
  * @see Module
  * @see Entry
  * @see SelfStudy
- * @author AJ, Max Reuter
+ * @author AJ, Max Reuter, David Lehr
  * 
  */
 public class EffortEntry extends Entry {

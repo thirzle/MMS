@@ -17,7 +17,7 @@ import management.TextualEntry;
  * There are different kind of users which is shown by the rights they own.
  * The different rights give them the possibility to insert, change and confirm content in the system.
  * 
- * @author David
+ * @author David Lehr
  *
  */
 public class User {
