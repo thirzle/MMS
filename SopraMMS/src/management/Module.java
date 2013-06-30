@@ -21,7 +21,7 @@ import java.util.Random;
  * @see EffortEntry
  * @see TextualEntry
  * @see SelfStudy
- * @author AJ, Max Reuter
+ * @author AJ, Max Reuter, David Lehr
  * 
  */
 public class Module {
