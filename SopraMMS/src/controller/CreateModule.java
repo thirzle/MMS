@@ -17,12 +17,9 @@ import com.ibm.icu.text.SimpleDateFormat;
 
 import management.EffortEntry;
 import management.Entry;
-import management.Module;
-import management.ModuleAdministration;
 import management.SelfStudy;
 import management.TextualEntry;
 import user.User;
-import user.UserAdministration;
 
 /**
  * Servlet implementation class CreateModule
@@ -36,7 +33,6 @@ public class CreateModule extends SessionCheck {
 	 */
 	public CreateModule() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -77,12 +73,12 @@ public class CreateModule extends SessionCheck {
 	
 			if (session.getAttribute("fieldsTypeA") == null) {
 	
-				fieldsTypeA.add(new String[] { "Kürzel", "" });
+				fieldsTypeA.add(new String[] { "KÃ¼rzel", "" });
 				fieldsTypeA.add(new String[] { "Titel", "" });
 				fieldsTypeA.add(new String[] { "Verantwortlicher", "" });
 				fieldsTypeA.add(new String[] { "Turnus", "" });
 				fieldsTypeA.add(new String[] { "Sprache", "" });
-				fieldsTypeA.add(new String[] { "Prüfungsform", "" });
+				fieldsTypeA.add(new String[] { "PrÃ¼fungsform", "" });
 				
 				
 				
@@ -96,10 +92,10 @@ public class CreateModule extends SessionCheck {
 	
 			// Fuer TypD
 			if (session.getAttribute("fieldsTypeD") == null) {
-				fieldsTypeD.add(new String[] { "Präsenzzeit", "" });
+				fieldsTypeD.add(new String[] { "PrÃ¤senzzeit", "" });
 				fieldsTypeD.add(new String[] { "Nacharbeitung", "" });
-				fieldsTypeD.add(new String[] { "Übungsaufgaben", "" });
-				fieldsTypeD.add(new String[] { "Prüfung", "" });
+				fieldsTypeD.add(new String[] { "Ãœbungsaufgaben", "" });
+				fieldsTypeD.add(new String[] { "PrÃ¼fung", "" });
 				fieldsTypeD.add(new String[] { "", "" });
 	
 			} else {
@@ -174,7 +170,7 @@ public class CreateModule extends SessionCheck {
 				// Modul fï¿½r Sitzung Speichern
 				else if (request.getParameter("createModule").equals("saveModule")) {
 					System.out
-							.println("(CreateModule.java): Modul für Sitzung gespeichert");
+							.println("(CreateModule.java): Modul fÃ¼r Sitzung gespeichert");
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 				}
 				// Bei Klick Module Speichern
@@ -217,11 +213,10 @@ public class CreateModule extends SessionCheck {
 					fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
 					// TODO leere selbsterstellte felder aussortieren
 					// TODO Modul an DB uebertragen
-					// Spezifische Felder fï¿½r Turnus, LP, Aufwand, Studiengang
+					// Spezifische Felder fÃ¼r Turnus, LP, Aufwand, Studiengang
 					mAdmin.createModuleByModuleManager(module,
 							((User) session.getAttribute("user")).getLogin(),
 							institute);
-					// TODO pruefen ob Pflichfelder befuellt sind
 	
 					// insert into History "Module created"
 					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -229,7 +224,7 @@ public class CreateModule extends SessionCheck {
 					String date = formatter.format(currentTime);
 					String title = null;
 					for (Entry entry : module) {
-						if (entry.getTitle().equals("Kürzel")) {
+						if (entry.getTitle().equals("KÃ¼rzel")) {
 							title = entry.getContent();
 						}
 					}
@@ -267,6 +262,5 @@ public class CreateModule extends SessionCheck {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 }

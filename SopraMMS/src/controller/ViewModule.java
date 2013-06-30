@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import management.Module;
-import management.ModuleAdministration;
 
 /**
  * Servlet implementation class ViewModule

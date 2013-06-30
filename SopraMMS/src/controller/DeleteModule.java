@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import management.Module;
-import management.ModuleAdministration;
 
 /**
  * Servlet implementation class DeleteModule
@@ -23,7 +22,6 @@ public class DeleteModule extends SessionCheck {
 
 	public DeleteModule() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	protected void doGet(HttpServletRequest request,
@@ -46,11 +44,11 @@ public class DeleteModule extends SessionCheck {
 						mAdmin.deleteModule(moduleID, moduleVersion);
 						System.out.println("(DeleteModule.java): Das Modul '"
 								+ moduleID + " - " + moduleVersion
-								+ "' wurde gelöscht");
+								+ "' wurde gelÃ¶scht");
 					}
 	
 				}
-				String infoText = "Die ausgewählten Module wurden entgültig aus dem Modul Management System gelöscht.";
+				String infoText = "Die ausgewÃ¤hlten Module wurden entgÃ¼ltig aus dem Modul Management System gelÃ¶scht.";
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
 						+ infoText);
 			}
@@ -66,7 +64,6 @@ public class DeleteModule extends SessionCheck {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

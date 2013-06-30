@@ -13,10 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import management.Module;
-import management.ModuleAdministration;
 
 /**
- * Servlet implementation class ShowModulesForDez2
+ * Servlet implementation class ShowModulesOverviewForDez2
  */
 @WebServlet("/ShowModulesOverviewForDez2")
 public class ShowModulesOverviewForDez2 extends SessionCheck {
@@ -27,7 +26,6 @@ public class ShowModulesOverviewForDez2 extends SessionCheck {
      */
     public ShowModulesOverviewForDez2() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -67,7 +65,6 @@ public class ShowModulesOverviewForDez2 extends SessionCheck {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

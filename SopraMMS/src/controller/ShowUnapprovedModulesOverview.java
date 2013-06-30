@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import management.Module;
-import management.ModuleAdministration;
 import user.User;
 
 /**
@@ -26,29 +25,11 @@ public class ShowUnapprovedModulesOverview extends SessionCheck {
      */
     public ShowUnapprovedModulesOverview() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		System.out.println("ShowUnapprovedModulesOverview");
-//		HttpSession session = request.getSession();
-//		ModuleAdministration mAdmin = new ModuleAdministration();
-//
-//		List<Module> moduleList = mAdmin.getUnapprovedModules();
-//
-//		session.setAttribute("moduleListForModulemanager", moduleList);
-//		session.setAttribute("content", "showModulesForModulemanager");
-//		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
-//
-//		session.removeAttribute("fieldsTypeAEdit");
-//		session.removeAttribute("fieldsTypeBEdit");
-//		session.removeAttribute("fieldsTypeCEdit");
-//		session.removeAttribute("fieldsTypeDEdit");
-//		session.removeAttribute("fieldsTypeEEdit");
-//	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(isLoggedIn(request, response)) {
 			System.out.println("ShowUnapprovedModulesOverview");
@@ -76,7 +57,6 @@ public class ShowUnapprovedModulesOverview extends SessionCheck {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

@@ -19,7 +19,7 @@ import management.Entry;
 import management.Module;
 import management.SelfStudy;
 import management.TextualEntry;
-//TODO Bitte alle Kommentare pr�fen und Autoren eintragen(degree?)
+
 /**
  * The class ModuleDBController provides a connection to the database.
  * <p>
@@ -385,8 +385,6 @@ public class ModuleDBController {
 //		return moduleList;
 //	}
 
-	// 
-	// TODO
 	/**
 	 * Loads all approved modules by a chosen course.
 	 * 
@@ -1080,7 +1078,6 @@ public class ModuleDBController {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();	
 			System.out.println("Couldn't get unapproved modules by supervisor: " + supervisor);
 		}
@@ -1124,7 +1121,6 @@ public class ModuleDBController {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();	
 			System.out.println("Couldn't get unapproved modules by representative: " + representative);
 		}
@@ -1537,8 +1533,6 @@ public class ModuleDBController {
 
 
 
-	
-	//TODO Vervollst�ndigen
 	/**
 	 * Gets a list of PDFs which belong to a course.
 	 * 
@@ -1573,41 +1567,41 @@ public class ModuleDBController {
 		return pdfList;
 	}
 
-	// TODO
-	/**
-	 * Gets the URL of a specified module manual.
-	 * 
-	 * @param courseID		The unique ID of a course.
-	 * @param degree		The degree the manual refers to.
-	 * @param version		The version number of this Module.
-	 * @return				The URL leading to the module manual.
-	 * @see Module
-	 * @see Course
-	 * @see ModuleAdministration
-	 */
-	public String getModuleManualURL(String courseID, String degree,
-			String version) {
-		Connection connection = connect();
-		query = "SELECT url FROM modulemanual " 
-				+ "WHERE m.courseID = ? AND m.degree = ? and m.versionnumber = ?";
-		try {
-			pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, courseID);
-			pStatement.setString(2, degree);
-			pStatement.setString(3, version);
-			ResultSet resultSet = pStatement.executeQuery();
-			if (resultSet.next()) {
-				return resultSet.getString("url");
-			} else
-				return null;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Could't find modulmanual");
-		} finally {
-			close(connection);
-		}
-		return null;
-	}
+//	@Deprecated
+//	/**
+//	 * Gets the URL of a specified module manual.
+//	 * 
+//	 * @param courseID		The unique ID of a course.
+//	 * @param degree		The degree the manual refers to.
+//	 * @param version		The version number of this Module.
+//	 * @return				The URL leading to the module manual.
+//	 * @see Module
+//	 * @see Course
+//	 * @see ModuleAdministration
+//	 */
+//	public String getModuleManualURL(String courseID, String degree,
+//			String version) {
+//		Connection connection = connect();
+//		query = "SELECT url FROM modulemanual " 
+//				+ "WHERE m.courseID = ? AND m.degree = ? and m.versionnumber = ?";
+//		try {
+//			pStatement = connection.prepareStatement(query);
+//			pStatement.setString(1, courseID);
+//			pStatement.setString(2, degree);
+//			pStatement.setString(3, version);
+//			ResultSet resultSet = pStatement.executeQuery();
+//			if (resultSet.next()) {
+//				return resultSet.getString("url");
+//			} else
+//				return null;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			System.out.println("Could't find modulmanual");
+//		} finally {
+//			close(connection);
+//		}
+//		return null;
+//	}
 
 	/**
 	 * Gets a List of Module Manuals selected by a specified course.
@@ -1648,15 +1642,14 @@ public class ModuleDBController {
 //				module.setEntryList(getEntryListOfModule(module, connection));
 //			}
 //		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
+//			// 
 //			e.printStackTrace();
 //		} finally {
 //			close(connection);
 //		}
 //		return modulemanual;
 //	}
-	
-	//TODO
+
 	/**
 	 * Gets the course ID belonging to a specified course.
 	 * 
@@ -1715,7 +1708,7 @@ public class ModuleDBController {
 //		return null;
 //	}	
 	
-	//TODO
+
 	/**
 	 * Gets the latest version of modulemanual of a course.
 	 * 
@@ -2266,7 +2259,6 @@ public class ModuleDBController {
 		}
 	}
 	
-	//TODO
 	/**
 	 * Determines the highest version of a given moduleID
 	 * and returns a higher one.
@@ -2339,7 +2331,7 @@ public class ModuleDBController {
 	 * 
 	 * @param connection		Connection object.
 	 */
-	public void close(Connection connection) {
+	private void close(Connection connection) {
 		try {
 			connection.close();
 		} catch (SQLException e) {
