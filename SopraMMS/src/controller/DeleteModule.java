@@ -48,7 +48,7 @@ public class DeleteModule extends SessionCheck {
 					}
 	
 				}
-				String infoText = "Die ausgewÃ¤hlten Module wurden entgÃ¼ltig aus dem Modul Management System gelÃ¶scht.";
+				String infoText = "Die ausgewählten Module wurden entgültig aus dem Modul Management System gelöscht.";
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
 						+ infoText);
 			}

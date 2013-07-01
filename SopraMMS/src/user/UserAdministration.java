@@ -303,17 +303,17 @@ public class UserAdministration {
 		text.append("Sehr geehrte/geehrter Frau/Herr " + user.getLastName()
 				+ ",");
 		text.append("\n\n");
-		text.append("Sie wurden soeben an dem Modul Management System der Universitï¿½t Ulm registriert.");
+		text.append("Sie wurden soeben an dem Modul Management System der Universität Ulm registriert.");
 		text.append("\n\n");
-		text.append("Der Benutzername fï¿½r Ihren registrierten Account lautet: "+user.getLogin());
+		text.append("Der Benutzername für Ihren registrierten Account lautet: "+user.getLogin());
 		text.append("\n\n");
 		text.append("Bitte rufen Sie folgenden Link auf und erstellen Sie ihr Passwort.");
 		text.append("\n\n");
 		text.append(url);
 		text.append("\n\n");
-		text.append("Sie haben die Mï¿½glichkeit das neu erstellte Passwort zu einem spï¿½teren Zeitpunkt zu ï¿½ndern.");
+		text.append("Sie haben die Möglichkeit das neu erstellte Passwort zu einem späteren Zeitpunkt zu ändern.");
 		text.append("\n\n");
-		text.append("Mit freundlichen Grï¿½ï¿½en");
+		text.append("Mit freundlichen Grüßen");
 		text.append("\n");
 		text.append("MMS-Team");
 
