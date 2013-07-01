@@ -21,7 +21,7 @@ import java.util.Random;
  * @see EffortEntry
  * @see TextualEntry
  * @see SelfStudy
- * @author AJ, Max Reuter
+ * @author AJ, Max Reuter, David Lehr
  * 
  */
 public class Module {
@@ -98,69 +98,69 @@ public class Module {
      */
     private List<Entry> entryList = new LinkedList<Entry>();
 
-    @Deprecated
-    /**
-     * This constructor should be used to import existing data.
-     * <p>
-     * Entries are added after initialization.
-     * <p>
-     * Deprecation caused by moduleID's type change to long.
-     * 
-     * @param moduleID			This Module's ID.
-     * @param version			The version number of this Module.
-     * @param name			The name of the Module. e.g. "Analysis I für Ingenieure und Informatiker"
-     * @param creationDate		The creation date of this Module.
-     * @param modificationDate		The modification date of this Module.
-     * @param approved			Approve-status of this Module. Is this Module approved ?
-     * @param insituteID		The institute of this Module.
-     * @param subject			The subject this Module will be grouped by.
-     * @param modificationauthor	The author that made the last modification.
-     */
-    public Module(int moduleID, int version, String name, Date creationDate, Date modificationDate, boolean approved, String insituteID, String subject, String modificationauthor) {
-	this.moduleID = moduleID;
-	this.version = version;
-	this.name = name;
-	this.creationDate = creationDate;
-	this.modificationDate = modificationDate;
-	this.approved = approved;
-	this.instituteID = insituteID;
-	this.subject = subject;
-	this.modificationauthor = modificationauthor;
-	random = new Random();
-    }
-    
-    @Deprecated
-    /**
-     * This constructor should be used to import existing data.
-     * <p>
-     * Entries are added during initialization.
-     * <p>
-     * Deprecation caused by moduleID's type change to long.
-     * 
-     * @param moduleID			This Module's ID.
-     * @param version			The version number of this Module.
-     * @param name			The name of the Module. e.g. "Analysis I für Ingenieure und Informatiker"
-     * @param creationDate		The creation date of this Module.
-     * @param modificationDate		The modification date of this Module.
-     * @param approved			Approve-status of this Module. Is this Module approved ?
-     * @param insituteID		The institute of this Module.
-     * @param entryList			A list of entries that represent this module.
-     * @param subject			The subject this Module will be grouped by.
-     * @param modificationauthor	The author that made the last modification.
-     */
-    public Module(int moduleID, int version, String name, Date creationDate, Date modificationDate, boolean approved, String insituteID, List<Entry> entryList, String subject, String modificationauthor) {
-	this.moduleID = moduleID;
-	this.version = version;
-	this.name = name;
-	this.creationDate = creationDate;
-	this.modificationDate = modificationDate;
-	this.approved = approved;
-	this.instituteID = insituteID;
-	this.entryList = entryList;
-	this.subject = subject;
-	this.modificationauthor = modificationauthor;
-	random = new Random();
-    }
+//    @Deprecated
+//    /**
+//     * This constructor should be used to import existing data.
+//     * <p>
+//     * Entries are added after initialization.
+//     * <p>
+//     * Deprecation caused by moduleID's type change to long.
+//     * 
+//     * @param moduleID			This Module's ID.
+//     * @param version			The version number of this Module.
+//     * @param name			The name of the Module. e.g. "Analysis I für Ingenieure und Informatiker"
+//     * @param creationDate		The creation date of this Module.
+//     * @param modificationDate		The modification date of this Module.
+//     * @param approved			Approve-status of this Module. Is this Module approved ?
+//     * @param insituteID		The institute of this Module.
+//     * @param subject			The subject this Module will be grouped by.
+//     * @param modificationauthor	The author that made the last modification.
+//     */
+//    public Module(int moduleID, int version, String name, Date creationDate, Date modificationDate, boolean approved, String insituteID, String subject, String modificationauthor) {
+//	this.moduleID = moduleID;
+//	this.version = version;
+//	this.name = name;
+//	this.creationDate = creationDate;
+//	this.modificationDate = modificationDate;
+//	this.approved = approved;
+//	this.instituteID = insituteID;
+//	this.subject = subject;
+//	this.modificationauthor = modificationauthor;
+//	random = new Random();
+//    }
+//    
+//    @Deprecated
+//    /**
+//     * This constructor should be used to import existing data.
+//     * <p>
+//     * Entries are added during initialization.
+//     * <p>
+//     * Deprecation caused by moduleID's type change to long.
+//     * 
+//     * @param moduleID			This Module's ID.
+//     * @param version			The version number of this Module.
+//     * @param name			The name of the Module. e.g. "Analysis I für Ingenieure und Informatiker"
+//     * @param creationDate		The creation date of this Module.
+//     * @param modificationDate		The modification date of this Module.
+//     * @param approved			Approve-status of this Module. Is this Module approved ?
+//     * @param insituteID		The institute of this Module.
+//     * @param entryList			A list of entries that represent this module.
+//     * @param subject			The subject this Module will be grouped by.
+//     * @param modificationauthor	The author that made the last modification.
+//     */
+//    public Module(int moduleID, int version, String name, Date creationDate, Date modificationDate, boolean approved, String insituteID, List<Entry> entryList, String subject, String modificationauthor) {
+//	this.moduleID = moduleID;
+//	this.version = version;
+//	this.name = name;
+//	this.creationDate = creationDate;
+//	this.modificationDate = modificationDate;
+//	this.approved = approved;
+//	this.instituteID = insituteID;
+//	this.entryList = entryList;
+//	this.subject = subject;
+//	this.modificationauthor = modificationauthor;
+//	random = new Random();
+//    }
 
     // updated version
     /**

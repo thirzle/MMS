@@ -9,6 +9,7 @@
 	<h1>Stellvertreter beantragen</h1>
 	<%
 		if ((session.getAttribute("lessDataRep") != null)) {
+			session.removeAttribute("lessDataRep");
 	%>
 	<error>Alle Felder m&uuml;ssen ausgef&uuml;llt werden!</error>
 	<%
@@ -22,6 +23,7 @@
 				%>
 				<error>Sie k&ouml;nnen sich nicht selbst zum Stellvertreter ernennen!</error>
 				<%				
+			session.removeAttribute("wrongDataRep");			
 			}
 
 		}
@@ -29,17 +31,17 @@
 	<table>
 		<tr>
 			<td>Vorname:</td>
-			<td><input name="firstNameRep" type="text" size="30"
+			<td><input name="firstNameRep" class="inputField" type="text" size="30"
 				maxlength="30"></td>
 		</tr>
 		<tr>
 			<td>Nachname:</td>
-			<td><input name="lastNameRep" type="textx" size="30"
+			<td><input name="lastNameRep" class="inputField" type="textx" size="30"
 				maxlength="30"></td>
 		</tr>
 		<tr>
 			<td>E-Mail:</td>
-			<td><input name="mailRep" type="email" size="30" maxlength="30"></td>
+			<td><input name="mailRep" class="inputField" type="email" size="30" maxlength="30"></td>
 		</tr>
 	</table>
 		

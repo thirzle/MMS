@@ -25,7 +25,6 @@ public class Login extends SessionCheck {
      */
     public Login() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -61,7 +60,7 @@ public class Login extends SessionCheck {
 			}
 		} else if (uAdmin.checkLogin(sessionID).getLogin()
 				.equals(session.getAttribute("loginname").toString())) {
-			System.out.println("User ist eingelogt Seite kann neu geladen werden");
+			System.out.println("User ist eingeloggt Seite kann neu geladen werden");
 			session.setAttribute("content", "home");
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 		} else {
@@ -75,7 +74,6 @@ public class Login extends SessionCheck {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

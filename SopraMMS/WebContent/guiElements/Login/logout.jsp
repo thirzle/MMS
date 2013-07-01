@@ -9,7 +9,7 @@
 <div class="menuBox">
 	<form action="/SopraMMS/guiElements/Login/doLogout.jsp" method="post">
 		<h1>Logout</h1>
-		
+
 		<h3>Sie sind angemeldet als:</h3>
 		<h3>
 			<%
@@ -17,8 +17,10 @@
 			%>
 		</h3>
 		<div class="menuContent">
-		<br />
-		<input type="submit" name="Submit" value="Abmelden" />
+		<br><br><br>
+			
+				<button name="Submit">Abmelden</button>
+		
 		</div>
 	</form>
 </div>

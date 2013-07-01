@@ -15,7 +15,6 @@ import mail.EmailTelnet;
 import com.ibm.icu.text.SimpleDateFormat;
 
 import user.User;
-import user.UserAdministration;
 
 /**
  * Servlet implementation class RemoveRepresentative
@@ -31,7 +30,6 @@ public class RemoveRepresentative extends SessionCheck {
 	 */
 	public RemoveRepresentative() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -48,6 +46,7 @@ public class RemoveRepresentative extends SessionCheck {
 			String firstNameRep = rep.getFirstName();
 			String lastNameRep = rep.getLastName();
 			String infotext = " ";
+			StringBuilder builder = new StringBuilder();
 			
 			// remove representative of user
 			if (uAdmin.removeRepresentative(user)) {
@@ -56,10 +55,13 @@ public class RemoveRepresentative extends SessionCheck {
 				session.setAttribute("content", "home");
 				
 				//send mail to deleted representative
-				String content = user.getFirstName() + " " + user.getLastName()
-						+ " hat Sie" + " als Stellvertreter entfernt";
+				
+				builder.append(user.getFirstName());
+				builder.append(" ");
+				builder.append(user.getLastName());
+				builder.append(" hat Sie als Stellvertreter entfernt.");
 				EmailTelnet mail = new EmailTelnet();
-				mail.send_mail("Stellvertreter", mailRep, content);
+				mail.send_mail("Stellvertreter", mailRep, builder.toString());
 				
 				infotext = "Ihr Stellvertreter wurde entfernt. Erneuern Sie diesen bitte demnächst!";
 				
@@ -68,7 +70,7 @@ public class RemoveRepresentative extends SessionCheck {
 				Date currentTime = new Date();
 				String date = formatter.format(currentTime);
 				uAdmin.insertHistory(user.getLogin(), date, "Hat " + firstNameRep
-						+ " " + lastNameRep + " als Stellvertreter gel&ouml;scht.");
+						+ " " + lastNameRep + " als Stellvertreter entfernt.");
 	
 			}
 			session.setAttribute("generallyMenu", "open");
@@ -85,7 +87,6 @@ public class RemoveRepresentative extends SessionCheck {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

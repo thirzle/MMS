@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import management.Module;
-import management.ModuleAdministration;
-import user.User;
 
 /**
  * Servlet implementation class ShowVersionsOfModule
@@ -26,7 +24,6 @@ public class ShowVersionsOfModule extends SessionCheck {
      */
     public ShowVersionsOfModule() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -64,7 +61,6 @@ public class ShowVersionsOfModule extends SessionCheck {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

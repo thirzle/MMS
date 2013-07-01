@@ -1,10 +1,8 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,15 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import com.ibm.icu.text.SimpleDateFormat;
 
-import mail.EmailApache;
-import mail.EmailMercury;
 import mail.EmailTelnet;
-import management.EffortEntry;
 import management.Entry;
 import management.Module;
-import management.ModuleAdministration;
-import management.SelfStudy;
-import management.TextualEntry;
 import user.User;
 import user.UserAdministration;
 
@@ -163,13 +155,13 @@ public class ShowApproveModuleForEditor extends SessionCheck {
 								refusedEntries = refusedEntries + entry.getTitle()+"\n";
 							}
 						}
-						infotext = "Die Freigabestatus der Eintr‰ge des Moduls '"+moduleName+"' wurden gespeichert.";
+						infotext = "Die Freigabestatus der Eintr√§ge des Moduls '"+moduleName+"' wurden gespeichert.";
 						//send mail to modulemanager
-						builder.append("Der Administrator hat folgende Eintr‰ge des Moduls ");
+						builder.append("Der Administrator hat folgende Eintr√§ge des Moduls ");
 						builder.append(moduleName);
 						builder.append(" freigegeben: \n");
 						builder.append(approvedEntries+" \n");
-						builder.append("Diese Eintr‰e wurden abgelehnt: \n");
+						builder.append("Diese Eintr√§ge wurden abgelehnt: \n");
 						builder.append(refusedEntries);
 						EmailTelnet mail = new EmailTelnet();
 						mail.send_mail("Freigabe Ihres Moduls", mailAuthor, builder.toString());

@@ -17,7 +17,7 @@ package management;
  * @see Module
  * @see Entry
  * @see SelfStudy
- * @author AJ, Max Reuter
+ * @author AJ, Max Reuter, David Lehr
  * 
  */
 public class TextualEntry extends Entry {

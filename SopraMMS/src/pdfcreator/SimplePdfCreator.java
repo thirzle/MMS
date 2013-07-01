@@ -235,19 +235,10 @@ public class SimplePdfCreator {
 	//IMAGE
 	
 	PDXObjectImage ximage = null;
-	ximage = new PDJpeg(doc, new FileInputStream( sysconfig.Config.system_path.getValue() + "pdf/uulm_logo.jpg" ) );
+	ximage = new PDJpeg(doc, new FileInputStream( sysconfig.Config.system_path.getValue() + "images/uulmPdfHeader.jpg" ) );
 
 	PDPageContentStream contentStream = new PDPageContentStream(doc, title_page);
-	
-	
-	//ximage.setHeight(300);
-	//ximage.setWidth((int)(title_page.getMediaBox().getWidth()-page_offset_left-page_offset_right));
-	
-	//ximage.setBitsPerComponent(8);
-	
-	//contentStream.drawImage( ximage, page_offset_left, page_offset_top );
-	
-	
+		
 	
 	contentStream.drawXObject(ximage, page_offset_left, title_page.getMediaBox().getHeight()-page_offset_top-100,
 		title_page.getMediaBox().getWidth()-page_offset_left-page_offset_right,
@@ -259,7 +250,7 @@ public class SimplePdfCreator {
 	String string = "Modulhandbuch";
 	float string_width = font_bold.getStringWidth(string) / 1000 * font_size_content;
 	float string_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_content;
-	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 290 - 150);
+	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 290 - 200);
 	contentStream.drawString(string);
 	contentStream.endText();
 	contentStream.close();
@@ -269,7 +260,7 @@ public class SimplePdfCreator {
 	string = degree + "studiengang";
 	string_width = font_bold.getStringWidth(string) / 1000 * font_size_title;
 	string_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_title;
-	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 200  - 150);
+	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 200  - 170);
 	contentStream.drawString(string);
 	contentStream.endText();
 	contentStream.close();
@@ -279,7 +270,7 @@ public class SimplePdfCreator {
 	string = institute;
 	string_width = font_bold.getStringWidth(string) / 1000 * font_size_title;
 	string_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_title;
-	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 170  - 150);
+	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 170  - 170);
 	contentStream.drawString(string);
 	contentStream.endText();
 	contentStream.close();
@@ -289,29 +280,40 @@ public class SimplePdfCreator {
 	string = "(" + po + ")";
 	string_width = font_bold.getStringWidth(string) / 1000 * font_size_title;
 	string_height = font_bold.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * font_size_title;
-	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 140  - 150);
+	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, (title_page.getMediaBox().getHeight() - string_height) / 2 + 140  - 170);
 	contentStream.drawString(string);
 	contentStream.endText();
 	contentStream.close();
 
 	// TODO:
 	// parse faculty into several strings if too big....
-	contentStream.beginText();
-	contentStream.setFont(font_bold, font_size_content);
 	string = faculty;
-	contentStream.moveTextPositionByAmount(title_page.getMediaBox().getWidth() - page_offset_top - 100, title_page.getMediaBox().getHeight() - page_offset_top - 20 - 150);
-	contentStream.drawString(string);
-	contentStream.endText();
-	contentStream.close();
+	List<String> string_list = divide_string(string, title_page.getMediaBox().getWidth() - page_offset_right - page_offset_left, font_bold, font_size_content);
+	
+	for(int i = 0; i < string_list.size(); i++){
+	    contentStream.beginText();
+	    contentStream.setFont(font_bold, font_size_content);
+	    string_width = font_bold.getStringWidth(string_list.get(i)) / 1000 * font_size_content;
+	    contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, title_page.getMediaBox().getHeight() - page_offset_top - 20 - 150 - (i*space_between_content));
+	    contentStream.drawString(string);
+	    contentStream.endText();
+	    contentStream.close();
+	}
+	
+	
 
-	contentStream.beginText();
-	contentStream.setFont(font_normal, font_size_content);
 	string = "Basierend auf Rev. " + version + ". Letzte Änderung am " + last_modification_date + " durch " + last_author + ". Generiert am " + get_current_time() + ".";
-	string_width = font_normal.getStringWidth(string) / 1000 * font_size_content;
-	contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, page_offset_bottom);
-	contentStream.drawString(string);
-	contentStream.endText();
-	contentStream.close();
+	string_list = divide_string(string, title_page.getMediaBox().getWidth() - page_offset_right - page_offset_left, font_bold, font_size_content);
+	
+	for(int i = 0; i < string_list.size(); i++){
+	    contentStream.beginText();
+	    contentStream.setFont(font_normal, font_size_content);
+	    string_width = font_normal.getStringWidth(string_list.get(i)) / 1000 * font_size_content;
+	    contentStream.moveTextPositionByAmount((title_page.getMediaBox().getWidth() - string_width) / 2, page_offset_bottom + 20 - (i*space_between_lines));
+	    contentStream.drawString(string_list.get(i));
+	    contentStream.endText();
+	    contentStream.close();
+	}
 
 	return title_page;
     }
@@ -406,6 +408,9 @@ public class SimplePdfCreator {
 
 		EffortEntry effent = (EffortEntry) entrylist.get(j);
 
+		int summe_time = 0;
+		
+		summe_time += effent.getTime();
 		module_contentStream.beginText();
 		module_contentStream.setFont(font_normal, font_size_content);
 		module_contentStream.moveTextPositionByAmount(x, y);
@@ -424,28 +429,36 @@ public class SimplePdfCreator {
 		    y = (int) page.getMediaBox().getHeight() - page_offset_top;
 		}
 
-		module_contentStream.beginText();
-		module_contentStream.setFont(font_normal, font_size_content);
-		module_contentStream.moveTextPositionByAmount(x, y);
-		module_contentStream.drawString("Vor- und Nachbereitung: " + effent.getSelfStudyList().get(0).getTime() + " h");
-		module_contentStream.endText();
-		module_contentStream.close();
-		y -= space_between_content;
+		
+		List<SelfStudy> self_study_list = effent.getSelfStudyList();
+		
+		
+		
+		for (int p = 0; p < self_study_list.size(); p++) {
+		    summe_time += self_study_list.get(p).getTime();
+		    module_contentStream.beginText();
+		    module_contentStream.setFont(font_normal, font_size_content);
+		    module_contentStream.moveTextPositionByAmount(x, y);
+		    module_contentStream.drawString(self_study_list.get(p).getTitle() + ": "  + self_study_list.get(p).getTime() + " h");
+		    module_contentStream.endText();
+		    module_contentStream.close();
+		    y -= space_between_content;
 
-		// IF the page end is reached create a new page
-		// and
-		// work on it
-		if (y < page_offset_bottom) {
-		    page = new PDPage();
-		    pages.add(page);
-		    module_contentStream = new PDPageContentStream(doc, page);
-		    y = (int) page.getMediaBox().getHeight() - page_offset_top;
+		    // IF the page end is reached create a new page
+		    // and
+		    // work on it
+		    if (y < page_offset_bottom) {
+			page = new PDPage();
+			pages.add(page);
+			module_contentStream = new PDPageContentStream(doc, page);
+			y = (int) page.getMediaBox().getHeight() - page_offset_top;
+		    }
 		}
 
 		module_contentStream.beginText();
 		module_contentStream.setFont(font_normal, font_size_content);
 		module_contentStream.moveTextPositionByAmount(x, y);
-		module_contentStream.drawString("Summe: " + (effent.getTime() + effent.getSelfStudyList().get(0).getTime()) + " h");
+		module_contentStream.drawString("Summe: " + summe_time + " h");
 		module_contentStream.endText();
 		module_contentStream.close();
 		y -= space_between_lines;
@@ -463,7 +476,7 @@ public class SimplePdfCreator {
 		module_contentStream.beginText();
 		module_contentStream.setFont(font_bold, font_size_content);
 		module_contentStream.moveTextPositionByAmount(x, y);
-		module_contentStream.drawString("Leistungspunkte:");
+		module_contentStream.drawString("Leistungspunkte");
 		module_contentStream.endText();
 		module_contentStream.close();
 
@@ -486,7 +499,7 @@ public class SimplePdfCreator {
 		module_contentStream.beginText();
 		module_contentStream.setFont(font_bold, font_size_content);
 		module_contentStream.moveTextPositionByAmount(x, y);
-		module_contentStream.drawString("Semesterwochenstunden:");
+		module_contentStream.drawString("Semesterwochenstunden");
 		module_contentStream.endText();
 		module_contentStream.close();
 
@@ -864,7 +877,6 @@ public class SimplePdfCreator {
 	} finally {
 	    if (doc != null) {
 		doc.close();
-		System.out.println("fertsch");
 	    }
 	}
     }

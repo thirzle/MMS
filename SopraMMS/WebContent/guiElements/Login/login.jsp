@@ -39,3 +39,6 @@
 		</p>
 	</form>
 </div>
+<div class="importantBox" style="width : 200px">
+Falls Sie sich im MMS registrieren m&ouml;chten, kontaktieren Sie bitte bei einem der Administratoren.
+</div>

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import user.User;
-import user.UserAdministration;
 
 /**
  * Servlet implementation class ShowUserData

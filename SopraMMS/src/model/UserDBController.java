@@ -18,7 +18,6 @@ import management.Deadline;
 
 import user.User;
 
-//TODO Bitte alle Kommentare pr��fen und Autoren eintragen
 /**
  * The class UserDBController provides a connection to the database.
  * <p>
@@ -1023,7 +1022,6 @@ public class UserDBController {
 		}
 	}
 	
-	//TODO ?
 	/**
 	 * Sets the password if the user forgets it.
 	 * 
@@ -1043,7 +1041,6 @@ public class UserDBController {
 			return true;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -1067,7 +1064,6 @@ public class UserDBController {
 			pStatement.execute();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -1098,7 +1094,6 @@ public class UserDBController {
 						resultSet.getString("password"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return user;
 		} finally {
@@ -1168,7 +1163,6 @@ public class UserDBController {
 		try {
 			connection.rollback();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -1193,7 +1187,6 @@ public class UserDBController {
 						resultSet.getString("facultyID"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(connection);
@@ -1219,7 +1212,6 @@ public class UserDBController {
 			pStatement.execute();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -1245,7 +1237,6 @@ public class UserDBController {
 			pStatement.execute();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -1277,7 +1268,6 @@ public class UserDBController {
 		}
 	}
 	
-	//TODO
 	/**
 	 * Gets the latest news.
 	 * 
@@ -1307,7 +1297,6 @@ public class UserDBController {
 						resultSet.getInt("visibility") + "" });
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't load news");
 		} finally {
@@ -1358,7 +1347,6 @@ public class UserDBController {
 			pStatement.execute();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't delete news");
 			return false;
@@ -1381,7 +1369,6 @@ public class UserDBController {
 			rs.next();
 			return rs.getInt("number");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Couldn't delete news");
 			return 0;
@@ -1390,7 +1377,6 @@ public class UserDBController {
 		}
 	}
 	
-	//TODO
 	/**
 	 * @param instituteName		Name of the institute.
 	 * @return					List of instituteIDs.
@@ -1409,7 +1395,6 @@ public class UserDBController {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		} finally {
@@ -1418,7 +1403,6 @@ public class UserDBController {
 		return instituteID;
 	}
 	
-	//TODO Wo verwendung?
 	/**
 	 * Gets all emails from the users which are available in the database.
 	 * 

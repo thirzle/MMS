@@ -4,7 +4,7 @@
 <%
 	String faculty = (String) session.getAttribute("faculty");
 	LinkedList<Course> courses = (LinkedList<Course>) session
-	.getAttribute("courses");
+	.getAttribute("coursesForPDF");
 %>
 <form action="/SopraMMS/Home" method="get">
 	<h1>Neue PDF erstellen</h1>

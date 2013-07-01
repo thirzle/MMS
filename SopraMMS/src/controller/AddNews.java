@@ -21,7 +21,6 @@ public class AddNews extends SessionCheck {
 	 */
 	public AddNews() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -72,7 +71,6 @@ public class AddNews extends SessionCheck {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

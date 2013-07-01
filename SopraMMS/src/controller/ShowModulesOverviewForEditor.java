@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import management.Module;
-import management.ModuleAdministration;
 import user.User;
 
 /**
@@ -38,8 +36,8 @@ public class ShowModulesOverviewForEditor extends SessionCheck {
 		if(isLoggedIn(request, response)) {
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("user");
-			LinkedList<String> instituteIDListOfUser = (LinkedList) user.getInstitute();
-			LinkedList<Module> moduleListForEditor = new LinkedList();
+			LinkedList<String> instituteIDListOfUser = (LinkedList<String>) user.getInstitute();
+			LinkedList<Module> moduleListForEditor = new LinkedList<Module>();
 							
 			if(request.getParameter("editorMenu").equals("checkModule")){
 					moduleListForEditor.addAll(mAdmin.getModuleOverviewForEditor(instituteIDListOfUser));
@@ -47,7 +45,7 @@ public class ShowModulesOverviewForEditor extends SessionCheck {
 					session.setAttribute("content", "showApproveModulesOverviewForEditor");
 			}			
 			else if(request.getParameter("editorMenu").equals("editModule")){
-				moduleListForEditor = (LinkedList) mAdmin.getModules();
+				moduleListForEditor = (LinkedList<Module>) mAdmin.getModules();
 				session.setAttribute("moduleListForEditor", moduleListForEditor);
 				session.setAttribute("content", "showEditModulesOverviewForEditor");
 			}	

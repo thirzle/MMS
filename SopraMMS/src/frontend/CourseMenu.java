@@ -9,7 +9,7 @@ import model.ModuleDBController;
 /**
  * The CourseMenu class fills the Menu on the sidebar with the appropriate courses belonging to computer science.
  * 
- * @author ...
+ * @author David Lehr
  *
  */
 public class CourseMenu {
