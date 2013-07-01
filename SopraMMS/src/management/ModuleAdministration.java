@@ -28,16 +28,6 @@ public class ModuleAdministration {
 	 */
 	private ModuleDBController moduleDBController = new ModuleDBController();
 
-	// TODO:
-	// - Modulhandbuch Titelseite Daten:
-	// - Fakultaet
-	// - Bachelor/Master Sudiengang(name)
-	// - Pruefungsordnung
-	// - letzte Aenderungen
-	// - Name der Person die zuletzt bearbeitet hat...
-	// - Semester des Modulhandbuchs
-	// - basierend auf Revision ???
-
 	/**
 	 * Returns a list of {@link Module}s the {@link User} modified.
 	 * 
