@@ -6,9 +6,7 @@
 	LinkedList<Course> courses = (LinkedList<Course>) session
 	.getAttribute("courses");
 %>
-
-<form id="showEntries" onsubmit="setValues()"
-	action="/SopraMMS/GeneratePDF" method="get">
+<form action="/SopraMMS/Home" method="get">
 	<h1>Neue PDF erstellen</h1>
 	<p>
 		<%
@@ -28,10 +26,14 @@
 	</select>
 	<p>Geben Sie die aktuelle Pr&uuml;fungsordnung ein:</p>
 	<input class="inputField" name="examRegulation" type="text" size="30" maxlength="30"> <br>
-	<button type="submit" name="Submit" id="showEntries"
-		value="Modulhandbuch erstellen">Modulhandbuch erstellen</button>
+	<button type="submit" id="showEntries" onclick="newTab()" value="Modulhandbuch erstellen">Modulhandbuch erstellen</button>
 </form>
 <script>
+	function newTab() {
+		var course = $("select[name=course]").val();
+		var examRegulation = $("input[name=examRegulation]").val();
+		window.open("/SopraMMS/GeneratePDF?course="+course+"&examRegulation="+examRegulation);
+	}
 	$(document).ready(function() {
 		enableButton();
 		$("input[type=text]").keyup(function() {

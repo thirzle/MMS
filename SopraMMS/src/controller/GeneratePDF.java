@@ -58,9 +58,9 @@ public class GeneratePDF extends SessionCheck {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(isLoggedIn(request, response)) {
-			HttpSession session = request.getSession();
+			request.getSession();
 			String semester;
-			SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+			new SimpleDateFormat("dd.MM.yyyy");
 			Calendar cal = new GregorianCalendar();
 			
 			// get course from gui
