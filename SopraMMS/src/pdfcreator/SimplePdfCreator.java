@@ -864,7 +864,6 @@ public class SimplePdfCreator {
 	} finally {
 	    if (doc != null) {
 		doc.close();
-		System.out.println("fertsch");
 	    }
 	}
     }
