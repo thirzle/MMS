@@ -15,9 +15,6 @@
 		session.invalidate();
 		response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 	} else {
-%><img src="${pageContext.request.contextPath}/images/Teambild.jpg"
-	alt="Logo" align="left">
-<%
-	out.println("you are already not login");
-	}
 %>
+<meta http-equiv=refresh content="0; URL= /SopraMMS/guiElements/home.jsp?errortext=Sie haben sich bereits ausgeloggt.">
+<%} %>

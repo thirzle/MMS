@@ -4,7 +4,7 @@
 <%
 	String faculty = (String) session.getAttribute("faculty");
 	LinkedList<Course> courses = (LinkedList<Course>) session
-	.getAttribute("courses");
+	.getAttribute("coursesForPDF");
 %>
 
 <form id="showEntries" onsubmit="setValues()"

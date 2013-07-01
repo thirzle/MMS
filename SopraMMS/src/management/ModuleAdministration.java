@@ -28,16 +28,6 @@ public class ModuleAdministration {
 	 */
 	private ModuleDBController moduleDBController = new ModuleDBController();
 
-	// TODO:
-	// - Modulhandbuch Titelseite Daten:
-	// - Fakultaet
-	// - Bachelor/Master Sudiengang(name)
-	// - Pruefungsordnung
-	// - letzte Aenderungen
-	// - Name der Person die zuletzt bearbeitet hat...
-	// - Semester des Modulhandbuchs
-	// - basierend auf Revision ???
-
 	/**
 	 * Returns a list of {@link Module}s the {@link User} modified.
 	 * 
@@ -164,7 +154,14 @@ public class ModuleAdministration {
 	 * @return		A list of modules of the course.
 	 */
 	public List<Module> getModulesByCourse(String course, String degree) {
-		return moduleDBController.getModulesByCourse(course, degree);
+		
+		List<Module> list =  moduleDBController.getModulesByCourse(course, degree);
+		for (int i=0;i<list.size();i++) {
+			Module m = list.get(i);
+			m.setEntryList(this.sortModuleEntryListByOrder(m));
+			list.set(i, m);
+		}
+		return list;
 	}
 
 	// public String getLastModificationDateOfModuleManual(String courseID,
@@ -437,6 +434,10 @@ public class ModuleAdministration {
 	 */
 	public List<Course> getCourses() {
 		return moduleDBController.getCourses();
+	}
+	
+	public List<Course> getCoursesExistModules(){
+		return moduleDBController.getCoursesExistModules();
 	}
 
 	//TODO:

@@ -73,12 +73,12 @@ public class CreateModule extends SessionCheck {
 	
 			if (session.getAttribute("fieldsTypeA") == null) {
 	
-				fieldsTypeA.add(new String[] { "KÃ¼rzel", "" });
+				fieldsTypeA.add(new String[] { "Kürzel", "" });
 				fieldsTypeA.add(new String[] { "Titel", "" });
 				fieldsTypeA.add(new String[] { "Verantwortlicher", "" });
 				fieldsTypeA.add(new String[] { "Turnus", "" });
 				fieldsTypeA.add(new String[] { "Sprache", "" });
-				fieldsTypeA.add(new String[] { "PrÃ¼fungsform", "" });
+				fieldsTypeA.add(new String[] { "Prüfungsform", "" });
 				
 				
 				
@@ -92,10 +92,10 @@ public class CreateModule extends SessionCheck {
 	
 			// Fuer TypD
 			if (session.getAttribute("fieldsTypeD") == null) {
-				fieldsTypeD.add(new String[] { "PrÃ¤senzzeit", "" });
+				fieldsTypeD.add(new String[] { "Präsenzzeit", "" });
 				fieldsTypeD.add(new String[] { "Nacharbeitung", "" });
-				fieldsTypeD.add(new String[] { "Ãœbungsaufgaben", "" });
-				fieldsTypeD.add(new String[] { "PrÃ¼fung", "" });
+				fieldsTypeD.add(new String[] { "Übungsaufgaben", "" });
+				fieldsTypeD.add(new String[] { "Prüfung", "" });
 				fieldsTypeD.add(new String[] { "", "" });
 	
 			} else {

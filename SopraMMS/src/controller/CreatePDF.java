@@ -42,11 +42,11 @@ public class CreatePDF extends SessionCheck {
 			
 			LinkedList<String> facListNames = (LinkedList) uAdmin.getAllFacultiesByName();
 			LinkedList<String> facListID = (LinkedList) uAdmin.getAllFacultiesID();
-			LinkedList<Course> courses = (LinkedList<Course>) mAdmin.getCourses();
+			LinkedList<Course> courses = (LinkedList<Course>) mAdmin.getCoursesExistModules();
 			
 			 
 			session.setAttribute("faculty", facListNames.getFirst());
-			session.setAttribute("courses", courses);
+			session.setAttribute("coursesForPDF", courses);
 			
 	
 			session.setAttribute("content", "generatePDF");

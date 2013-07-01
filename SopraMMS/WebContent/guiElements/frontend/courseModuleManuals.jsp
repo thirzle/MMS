@@ -44,7 +44,7 @@
 		<%
 			for (String[] s : pdfs) {
 					if (s[1].equals("Bachelor")) {
-						out.println("<a href='/SopraMMS/pdf/" + s[3]
+						out.println("<a href='/SopraMMS/" + s[3]
 								+ "' target='_blank'>");
 						out.println("<li>" + s[2] + " &rarr; " + s[0] + " - "
 								+ s[1] + "</li>");
@@ -64,7 +64,7 @@
 		<%
 			for (String[] s : pdfs) {
 					if (s[1].equals("Master")) {
-						out.println("<a href='/SopraMMS/pdf/" + s[3]
+						out.println("<a href='/SopraMMS/" + s[3]
 								+ "' target='_blank'>");
 						out.println("<li>" + s[2] + " &rarr; " + s[0] + " - "
 								+ s[1] + "</li>");
@@ -84,7 +84,7 @@
 		<%
 			for (String[] s : pdfs) {
 					if (s[1].equals("Lehramt")) {
-						out.println("<a href='/SopraMMS/pdf/" + s[3]
+						out.println("<a href='/SopraMMS/" + s[3]
 								+ "' target='_blank'>");
 						out.println("<li>" + s[2] + " &rarr; " + s[0] + " - "
 								+ s[1] + "</li>");
@@ -104,7 +104,7 @@
 		<%
 			for (String[] s : pdfs) {
 					if (s[1].equals("Diplom")) {
-						out.println("<a href='/SopraMMS/pdf/" + s[3]
+						out.println("<a href='/SopraMMS/" + s[3]
 								+ "' target='_blank'>");
 						out.println("<li>" + s[2] + " &rarr; " + s[0] + " - "
 								+ s[1] + "</li>");
