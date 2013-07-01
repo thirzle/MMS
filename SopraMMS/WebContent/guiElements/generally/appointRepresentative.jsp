@@ -9,6 +9,7 @@
 	<h1>Stellvertreter beantragen</h1>
 	<%
 		if ((session.getAttribute("lessDataRep") != null)) {
+			session.removeAttribute("lessDataRep");
 	%>
 	<error>Alle Felder m&uuml;ssen ausgef&uuml;llt werden!</error>
 	<%
@@ -22,6 +23,7 @@
 				%>
 				<error>Sie k&ouml;nnen sich nicht selbst zum Stellvertreter ernennen!</error>
 				<%				
+			session.removeAttribute("wrongDataRep");			
 			}
 
 		}
