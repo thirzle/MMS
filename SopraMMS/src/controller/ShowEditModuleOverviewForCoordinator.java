@@ -50,8 +50,7 @@ public class ShowEditModuleOverviewForCoordinator extends SessionCheck {
 					}
 				} 
 			} else {
-	
-				List<Module> moduleList = mAdmin.getModules();
+				List<Module> moduleList = mAdmin.getUnapprovedModulesOverviewForCoordinator();
 				request.getSession().setAttribute(
 						"editModuleListForCoordinator", moduleList);
 				request.getSession().setAttribute("content",

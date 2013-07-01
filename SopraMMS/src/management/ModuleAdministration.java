@@ -359,6 +359,32 @@ public class ModuleAdministration {
 	public List<Module> getUnfinishedModulesOverview() {
 		return moduleDBController.getUnfinishedModulesOverview();
 	}
+	
+	
+	/**
+	 * Retrieves finished overviewed/reviewed modules as a list.
+	 * 
+	 * @see Module
+	 * 
+	 * @return	A list with finished overviewed/reviewed modules.
+	 */
+	public List<Module> getFinishedModulesOverview() {
+		return moduleDBController.getFinishedModulesOverview();
+	}
+	
+	
+	
+	/**
+	 * Retrieves reviewed modules as a list.
+	 * 
+	 * @see Module
+	 * 
+	 * @return	A list with unfinished reviewed modules.
+	 */
+	public List<Module> getUnapprovedModulesOverviewForCoordinator() {
+		return moduleDBController.getUnapprovedModulesOverviewForCoordinator();
+	}
+	
 
 	//TODO:
 	//not sure if ...

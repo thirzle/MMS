@@ -1166,6 +1166,42 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
+	
+	
+	/**
+	 * Loads all unapproved modules.
+	 * 
+	 * @return List of modules.
+	 * @see Module
+	 */
+	public List<Module> getUnapprovedModulesOverviewForCoordinator() {
+		Connection connection = connect();
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		query = "SELECT m.* FROM module AS m WHERE m.approvalstatus = FALSE";
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				moduleList.add(new Module(resultSet.getLong("moduleID"),
+						resultSet.getInt("version"), resultSet
+								.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
+								.getDate("modificationdate"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID"), resultSet
+								.getString("subject"), resultSet
+								.getString("modificationauthor")));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get unapproved modules");
+		} finally {
+			close(connection);
+		}
+		return moduleList;
+	}
+	
 
 	/**
 	 * Gets the overview of unfinished modules for the coordinator.
@@ -1176,7 +1212,7 @@ public class ModuleDBController {
 	public List<Module> getUnfinishedModulesOverview() {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT DISTINCT * FROM module WHERE subject IS NULL";
+		query = "SELECT * FROM module WHERE subject IS NULL AND approvalstatus = FALSE";
 
 		try {
 			statement = connection.createStatement();
@@ -1199,6 +1235,41 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
+	
+	/**
+	 * Gets the overview of already finished modules for the coordinator.
+	 * 
+	 * @return List of modules.
+	 * @see Module
+	 */
+	public List<Module> getFinishedModulesOverview() {
+		Connection connection = connect();
+		List<Module> moduleList = new LinkedList<Module>();
+		query = "SELECT * FROM module WHERE subject IS NOT NULL AND approvalstatus = FALSE";
+
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				moduleList.add(new Module(resultSet.getLong("moduleID"),
+						resultSet.getInt("version"), resultSet
+								.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
+								.getDate("modificationdate"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID"), resultSet
+								.getString("subject"), resultSet
+								.getString("modificationauthor")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get finished modules.");
+		} finally {
+			close(connection);
+		}
+		return moduleList;
+	}
+	
 
 	/**
 	 * Gets an overview of modules for the editor.
