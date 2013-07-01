@@ -20,6 +20,10 @@ try {
 %>
 <h1>Studiengang und Fach festlegen</h1>
 
+<div class="importantBox" style="width : 600px">
+Ein Modul kann nicht gleichzeitig als Pflicht- und Wahlmodul f&uuml;r einen Studiengang ausgew&auml;hlt werden.
+</div>
+
 <table class="informationAboutModule">
 	<tr>
 		<td>&Auml;nderungsdatum: <%=session
