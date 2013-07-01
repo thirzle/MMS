@@ -60,8 +60,12 @@
 	List<String[]> list = ua.getNewsByType(2);
 	for (String[] entry : list) {
 		out.println("<h1>" + entry[0] + "</h1>");
-		out.println("<div class='contentTextBox'><p>" + entry[1]
-				+ "</p></div>");
+		String[] text =entry[1].split("\n");
+		out.println("<div class='contentTextBox'><p>");
+		for(String s:text){
+			out.println(s + "<br>");
+		}
+		out.println("</p></div>");
 		out.println("<div class='contentBoxDate'> Erstellt am "
 				+ entry[2] + "</div>");
 	}
