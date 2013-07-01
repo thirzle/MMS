@@ -6,8 +6,7 @@
 <p>
 	Bitte geben Sie in das Feld Ihre im System hinterlegte E-Mail-Adresse
 	ein.<br />Anschließend wird Ihnen eine E-Mail mit einem Link
-	zugesendet. Rufen Sie diesen auf und &auml;ndern Sie ihr Passwort
-	anschließend ab.
+	zugesendet. Rufen Sie diesen auf um ein neues Passwort zu erstellen.
 </p>
 <form action="/SopraMMS/SendNewPassword">
 	<table>
@@ -18,4 +17,4 @@
 	</table>
 	<br /> <input type="submit" value="Neues Passwort beantragen">
 </form>
-<p class=importantBox>Das Zusenden der E-Mail kann einige Minuten dauern. <br/>Bitte haben Sie etwas geduld.</p>
+<p class=importantBox>Das Zusenden der E-Mail kann einige Minuten dauern. <br/>Bitte haben Sie etwas Geduld.</p>
