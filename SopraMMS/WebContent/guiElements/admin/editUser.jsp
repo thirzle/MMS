@@ -28,8 +28,7 @@ if(user != null) {
 	<table>
 		<tr>
 			<td>Benutzername:</td>
-			<td><input form="newUserForm" type='text' id="loginCellText"
-				style="cursor: default; border: none;" name="loginCellText" readonly /></td>
+			<td><%=user.getLogin() %></td>		
 		</tr>
 		<tr>
 			<td>Vorname:</td>
@@ -46,7 +45,7 @@ if(user != null) {
 		<tr>
 			<td>Email:</td>
 			<td><input oninput="setBooleans()" class="inputField"
-				form="newUserForm" type='text' id="emailCellText"
+				form="newUserForm" type='email' id="emailCellText"
 				name="emailCellText" style="width: 260px"
 				value='<%=user.getMail()%>' /></td>
 		</tr>
