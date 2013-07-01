@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.ibm.icu.util.Calendar;
+
 import model.ModuleDBController;
 import user.User;
 
@@ -52,11 +54,11 @@ public class ModuleAdministration {
 		return modules;
 	}
 
-	//TODO:
 	/**
+	 * This function returns all existing modulemanuals which belong to this course
 	 * 
 	 * @param course
-	 * @return
+	 * @return	A list of modulemanuals of this course
 	 */
 	public List<String[]> getModuleManualPdfByCourse(String course) {
 		System.out.println("(ModuleAdministration): getModuleManualPdf");

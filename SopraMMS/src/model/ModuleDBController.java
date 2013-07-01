@@ -46,6 +46,7 @@ public class ModuleDBController {
 	private static final String DRIVER = sysconfig.Config.system_database_driver
 			.getValue();
 
+
 	private static String query = null;
 	private static PreparedStatement pStatement = null;
 	private static Statement statement = null;
