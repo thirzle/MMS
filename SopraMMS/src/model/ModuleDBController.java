@@ -46,6 +46,7 @@ public class ModuleDBController {
 	private static final String DRIVER = sysconfig.Config.system_database_driver
 			.getValue();
 
+
 	private static String query = null;
 	private static PreparedStatement pStatement = null;
 	private static Statement statement = null;
@@ -359,38 +360,6 @@ public class ModuleDBController {
 	 * @return List of modules.
 	 * @see Module
 	 */
-	// @Deprecated
-	// public List<Module> getModulesByInstitute(String institute) {
-	// Connection connection = connect();
-	// List<Module> moduleList = new LinkedList<Module>();
-	// query = "SELECT module.* FROM module WHERE instituteID = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setString(1, institute);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// while (resultSet.next()) {
-	// moduleList.add(new Module(resultSet.getLong("moduleID"),
-	// resultSet.getInt("version"), resultSet
-	// .getString("name"), resultSet
-	// .getDate("creationdate"), resultSet
-	// .getDate("modificationdate"), resultSet
-	// .getBoolean("approvalstatus"), resultSet
-	// .getString("instituteID"), resultSet
-	// .getString("subject"), resultSet
-	// .getString("modificationauthor")));
-	// }
-	// for (Module module : moduleList) {
-	// module.setEntryList(getEntryListOfModule(module, connection));
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out.println("Couldn't get modules by institute: "
-	// + institute);
-	// } finally {
-	// close(connection);
-	// }
-	// return moduleList;
-	// }
 
 	/**
 	 * Loads all approved modules by a chosen course.
@@ -450,37 +419,6 @@ public class ModuleDBController {
 	 * @return List of modules.
 	 * @see Module
 	 */
-	// @Deprecated
-	// public List<Module> getModulesByFaculty(String facultyID) {
-	// Connection connection = connect();
-	// List<Module> moduleList = new LinkedList<Module>();
-	// query = "SELECT module.* FROM module AS m JOIN institute AS i ON "
-	// + "m.instituteID = i.institute WHERE i.facultyID = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setString(1, facultyID);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// while (resultSet.next()) {
-	// moduleList.add(new Module(resultSet.getLong("moduleID"),
-	// resultSet.getInt("version"), resultSet
-	// .getString("name"), resultSet
-	// .getDate("creationdate"), resultSet
-	// .getDate("modificationdate"), resultSet
-	// .getBoolean("approvalstatus"), resultSet
-	// .getString("instituteID"), resultSet
-	// .getString("subject"), resultSet
-	// .getString("modificationauthor")));
-	//
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out.println("Couldn't get modules by faculty: " + facultyID);
-	// } finally {
-	// close(connection);
-	// }
-	// return moduleList;
-	// }
-	//
 
 	// tested: check
 	/**
@@ -734,303 +672,6 @@ public class ModuleDBController {
 		return module;
 	}
 
-	/**
-	 * Gets the latest version of an specified module.
-	 * 
-	 * @param moduleID
-	 *            The unique ID of the module.
-	 * @return A module object.
-	 */
-	// @Deprecated
-	// public Module getLatestModule(long moduleID) {
-	// Connection connection = connect();
-	// Module module = null;
-	// int version = -1;
-	// query = "SELECT version FROM latestmodule WHERE moduleID = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setLong(1, moduleID);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// if (resultSet.next()) {
-	// version = resultSet.getInt("version");
-	// }
-	// if (version != -1) {
-	// query = "SELECT * FROM module WHERE moduleID = ? AND version = ?";
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setLong(1, moduleID);
-	// pStatement.setInt(2, version);
-	// resultSet = pStatement.executeQuery();
-	// if (resultSet.next()) {
-	// module = new Module(resultSet.getLong("moduleID"),
-	// resultSet.getInt("version"),
-	// resultSet.getString("name"),
-	// resultSet.getDate("creationdate"),
-	// resultSet.getDate("modificationdate"),
-	// resultSet.getBoolean("approvalstatus"),
-	// resultSet.getString("instituteID"),
-	// resultSet.getString("subject"),
-	// resultSet.getString("modificationauthor"));
-	// }
-	// }
-	// module.setEntryList(getEntryListOfModule(module, connection));
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// System.out.println("Couldn't get module: " + moduleID);
-	// } finally {
-	// close(connection);
-	// }
-	// return module;
-	// }
-	//
-	// // load all modified modules
-	// // tested: check
-	// /**
-	// * Loads all modules which are modified.
-	// *
-	// * @return List of modules.
-	// * @see Module
-	// */
-	// @Deprecated
-	// public List<Module> getModifiedModules() {
-	// Connection connection = connect();
-	// LinkedList<Module> moduleList = new LinkedList<Module>();
-	// LinkedList<Long> temp = new LinkedList<Long>();
-	// Module module;
-	// query =
-	// "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
-	// + "WHERE entry.approvalstatus = TRUE AND declined = FALSE;";
-	// try {
-	// statement = connection.createStatement();
-	// ResultSet resultSet = statement.executeQuery(query);
-	// while (resultSet.next()) {
-	// module = new Module(resultSet.getLong("moduleID"),
-	// resultSet.getInt("version"),
-	// resultSet.getString("name"),
-	// resultSet.getDate("creationdate"),
-	// resultSet.getDate("modificationdate"),
-	// resultSet.getBoolean("approvalstatus"),
-	// resultSet.getString("instituteID"),
-	// resultSet.getString("subject"),
-	// resultSet.getString("modificationauthor"));
-	// // check for duplicate
-	// if (!temp.contains(module.getModuleID())) {
-	// moduleList.add(module);
-	// temp.add(module.getModuleID());
-	// }
-	// }
-	// for (Module modules : moduleList) {
-	// modules.setEntryList(getEntryListOfModule(modules, connection));
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out.println("Couldn't get modified modules.");
-	// } finally {
-	// close(connection);
-	// }
-	// return moduleList;
-	// }
-	//
-	// // tested: check
-	// /**
-	// * Loads all modified modules by a chosen institute.
-	// *
-	// * @param instituteID The unique ID of the institute.
-	// * @return List of modules.
-	// * @see Module
-	// */
-	// @Deprecated
-	// public List<Module> getModifiedModulesByInstitute(String instituteID) {
-	// Connection connection = connect();
-	// LinkedList<Module> moduleList = new LinkedList<Module>();
-	// LinkedList<Long> temp = new LinkedList<Long>();
-	// Module module;
-	// query =
-	// "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
-	// +
-	// "WHERE entry.approvalstatus = TRUE AND declined = FALSE AND instituteID = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setString(1, instituteID);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// while (resultSet.next()) {
-	// module = new Module(resultSet.getLong("moduleID"),
-	// resultSet.getInt("version"),
-	// resultSet.getString("name"),
-	// resultSet.getDate("creationdate"),
-	// resultSet.getDate("modificationdate"),
-	// resultSet.getBoolean("approvalstatus"),
-	// resultSet.getString("instituteID"),
-	// resultSet.getString("subject"),
-	// resultSet.getString("modificationauthor"));
-	// // check for duplicate
-	// if (!temp.contains(module.getModuleID())) {
-	// moduleList.add(module);
-	// temp.add(module.getModuleID());
-	// }
-	// }
-	// for (Module modules : moduleList) {
-	// modules.setEntryList(getEntryListOfModule(modules, connection));
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out.println("Couldn't get modified modules by institute: "
-	// + instituteID);
-	// } finally {
-	// close(connection);
-	// }
-	// return moduleList;
-	// }
-
-	// tested: check
-	/**
-	 * Loads all modified modules by a chosen author.
-	 * 
-	 * @param author
-	 *            The author of the modules.
-	 * @return List of modules.
-	 * @see Module
-	 */
-	// @Deprecated
-	// public List<Module> getModifiedModulesByAuthor(String author) {
-	// Connection connection = connect();
-	// LinkedList<Module> moduleList = new LinkedList<Module>();
-	// LinkedList<Long> temp = new LinkedList<Long>();
-	// Module module;
-	// query =
-	// "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
-	// +
-	// "WHERE entry.approvalstatus = TRUE AND declined = FALSE AND author = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setString(1, author);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// while (resultSet.next()) {
-	// module = new Module(resultSet.getLong("moduleID"),
-	// resultSet.getInt("version"),
-	// resultSet.getString("name"),
-	// resultSet.getDate("creationdate"),
-	// resultSet.getDate("modificationdate"),
-	// resultSet.getBoolean("approvalstatus"),
-	// resultSet.getString("instituteID"),
-	// resultSet.getString("subject"),
-	// resultSet.getString("modificationauthor"));
-	// // check for duplicate
-	// if (!temp.contains(module.getModuleID())) {
-	// moduleList.add(module);
-	// temp.add(module.getModuleID());
-	// }
-	// }
-	// for (Module modules : moduleList) {
-	// modules.setEntryList(getEntryListOfModule(modules, connection));
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out.println("Couldn't get modified modules by author: "
-	// + author);
-	// } finally {
-	// close(connection);
-	// }
-	// return moduleList;
-	//
-	// }
-
-	// tested: check
-	/**
-	 * Loads all rejected modules.
-	 * 
-	 * @return List of modules.
-	 * @see Module
-	 */
-	// @Deprecated
-	// public List<Module> getRejectedModules() {
-	// Connection connection = connect();
-	// LinkedList<Module> moduleList = new LinkedList<Module>();
-	// LinkedList<Long> temp = new LinkedList<Long>();
-	// query =
-	// "SELECT module.* FROM module JOIN entry ON module.moduleID = entry.moduleID "
-	// + "WHERE declined = TRUE";
-	// Module module;
-	// try {
-	// statement = connection.createStatement();
-	// ResultSet resultSet = statement.executeQuery(query);
-	// while (resultSet.next()) {
-	// module = new Module(resultSet.getLong("moduleID"),
-	// resultSet.getInt("version"),
-	// resultSet.getString("name"),
-	// resultSet.getDate("creationdate"),
-	// resultSet.getDate("modificationdate"),
-	// resultSet.getBoolean("approvalstatus"),
-	// resultSet.getString("instituteID"),
-	// resultSet.getString("subject"),
-	// resultSet.getString("modificationauthor"));
-	// // check for duplicate
-	// if (!temp.contains(module.getModuleID())) {
-	// moduleList.add(module);
-	// temp.add(module.getModuleID());
-	// }
-	// }
-	// for (Module modules : moduleList) {
-	// modules.setEntryList(getEntryListOfModule(modules, connection));
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out.println("Couldn't get rejected modules.");
-	// } finally {
-	// close(connection);
-	// }
-	// return moduleList;
-	// }
-
-	// tested: check
-	/**
-	 * Loads all rejected modules by a chosen institute.
-	 * 
-	 * @param instituteID
-	 *            The unique ID of the institute.
-	 * @return List of modules.
-	 * @see Module
-	 */
-	// @Deprecated
-	// public List<Module> getRejectedModulesByInstitute(String instituteID) {
-	// Connection connection = connect();
-	// LinkedList<Module> moduleList = new LinkedList<Module>();
-	// LinkedList<Long> temp = new LinkedList<Long>();
-	// Module module;
-	// query = "SELECT module.*"
-	// + "FROM module JOIN entry ON module.moduleID = entry.moduleID "
-	// + "WHERE declined = TRUE AND instituteID = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setString(1, instituteID);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// while (resultSet.next()) {
-	// module = new Module(resultSet.getLong("moduleID"),
-	// resultSet.getInt("version"),
-	// resultSet.getString("name"),
-	// resultSet.getDate("creationdate"),
-	// resultSet.getDate("modificationdate"),
-	// resultSet.getBoolean("approvalstatus"),
-	// resultSet.getString("instituteID"),
-	// resultSet.getString("subject"),
-	// resultSet.getString("modificationauthor"));
-	// // check for duplicate
-	// if (!temp.contains(module.getModuleID())) {
-	// moduleList.add(module);
-	// temp.add(module.getModuleID());
-	// }
-	// }
-	// for (Module modules : moduleList) {
-	// modules.setEntryList(getEntryListOfModule(modules, connection));
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out.println("Couldn't get rejected modules by institute: "
-	// + instituteID);
-	// } finally {
-	// close(connection);
-	// }
-	// return moduleList;
-	// }
 
 	// tested: check
 	/**
@@ -1166,6 +807,42 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
+	
+	
+	/**
+	 * Loads all unapproved modules.
+	 * 
+	 * @return List of modules.
+	 * @see Module
+	 */
+	public List<Module> getUnapprovedModulesOverviewForCoordinator() {
+		Connection connection = connect();
+		LinkedList<Module> moduleList = new LinkedList<Module>();
+		query = "SELECT m.* FROM module AS m WHERE m.approvalstatus = FALSE";
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				moduleList.add(new Module(resultSet.getLong("moduleID"),
+						resultSet.getInt("version"), resultSet
+								.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
+								.getDate("modificationdate"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID"), resultSet
+								.getString("subject"), resultSet
+								.getString("modificationauthor")));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get unapproved modules");
+		} finally {
+			close(connection);
+		}
+		return moduleList;
+	}
+	
 
 	/**
 	 * Gets the overview of unfinished modules for the coordinator.
@@ -1176,7 +853,7 @@ public class ModuleDBController {
 	public List<Module> getUnfinishedModulesOverview() {
 		Connection connection = connect();
 		List<Module> moduleList = new LinkedList<Module>();
-		query = "SELECT DISTINCT * FROM module WHERE subject IS NULL";
+		query = "SELECT * FROM module WHERE subject IS NULL AND approvalstatus = FALSE";
 
 		try {
 			statement = connection.createStatement();
@@ -1199,6 +876,41 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
+	
+	/**
+	 * Gets the overview of already finished modules for the coordinator.
+	 * 
+	 * @return List of modules.
+	 * @see Module
+	 */
+	public List<Module> getFinishedModulesOverview() {
+		Connection connection = connect();
+		List<Module> moduleList = new LinkedList<Module>();
+		query = "SELECT * FROM module WHERE subject IS NOT NULL AND approvalstatus = FALSE";
+
+		try {
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				moduleList.add(new Module(resultSet.getLong("moduleID"),
+						resultSet.getInt("version"), resultSet
+								.getString("name"), resultSet
+								.getDate("creationdate"), resultSet
+								.getDate("modificationdate"), resultSet
+								.getBoolean("approvalstatus"), resultSet
+								.getString("instituteID"), resultSet
+								.getString("subject"), resultSet
+								.getString("modificationauthor")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't get finished modules.");
+		} finally {
+			close(connection);
+		}
+		return moduleList;
+	}
+	
 
 	/**
 	 * Gets an overview of modules for the editor.
@@ -1615,93 +1327,7 @@ public class ModuleDBController {
 		return pdfList;
 	}
 
-	// @Deprecated
-	// /**
-	// * Gets the URL of a specified module manual.
-	// *
-	// * @param courseID The unique ID of a course.
-	// * @param degree The degree the manual refers to.
-	// * @param version The version number of this Module.
-	// * @return The URL leading to the module manual.
-	// * @see Module
-	// * @see Course
-	// * @see ModuleAdministration
-	// */
-	// public String getModuleManualURL(String courseID, String degree,
-	// String version) {
-	// Connection connection = connect();
-	// query = "SELECT url FROM modulemanual "
-	// + "WHERE m.courseID = ? AND m.degree = ? and m.versionnumber = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setString(1, courseID);
-	// pStatement.setString(2, degree);
-	// pStatement.setString(3, version);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// if (resultSet.next()) {
-	// return resultSet.getString("url");
-	// } else
-	// return null;
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out.println("Could't find modulmanual");
-	// } finally {
-	// close(connection);
-	// }
-	// return null;
-	// }
-
-	/**
-	 * Gets a List of Module Manuals selected by a specified course.
-	 * 
-	 * @param courseID
-	 *            The unique ID of a course.
-	 * @param degree
-	 *            The degree the manual refers to.
-	 * @param versionnumber
-	 *            The version number of this Module.
-	 * @return List of modules.
-	 * @see Course
-	 * @see Module
-	 * @see ModuleAdministration
-	 */
-	// @Deprecated
-	// public List<Module> getModuleManualbyCourse(String courseID, String
-	// degree,
-	// String versionnumber) {
-	// Connection connection = connect();
-	// List<Module> modulemanual = new LinkedList<Module>();
-	// query =
-	// "SELECT m.* FROM modulemanual AS mm JOIN module AS m ON mm.versionnumber = m.modulemanual "
-	// + "WHERE mm.courseID = ? AND mm.degree = ? AND mm.versionnumber = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setString(1, courseID);
-	// pStatement.setString(2, degree);
-	// pStatement.setString(3, versionnumber);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// while (resultSet.next()) {
-	// modulemanual.add(new Module(resultSet.getLong("moduleID"),
-	// resultSet.getInt("version"), resultSet
-	// .getString("name"), resultSet
-	// .getDate("creationdate"), resultSet
-	// .getDate("modificationdate"), resultSet
-	// .getBoolean("approvalstatus"), resultSet
-	// .getString("instituteID"), resultSet
-	// .getString("subject"), resultSet
-	// .getString("modificationauthor")));
-	// }
-	// for (Module module : modulemanual) {
-	// module.setEntryList(getEntryListOfModule(module, connection));
-	// }
-	// } catch (SQLException e) {
-	// //
-	// e.printStackTrace();
-	// } finally {
-	// close(connection);
-	// }
-	// return modulemanual;
-	// }
+	
 
 	/**
 	 * Gets the course ID belonging to a specified course.
@@ -1730,162 +1356,7 @@ public class ModuleDBController {
 		return null;
 	}
 
-	/**
-	 * Gets the date a module was last modified.
-	 * 
-	 * @param courseID
-	 *            The unique ID of a course.
-	 * @param degree
-	 *            The degree the module refers to.
-	 * @return The date of modification.
-	 * @see Course
-	 * @see Module
-	 */
-	// @Deprecated
-	// public String getLastModificationDate(String courseID, String degree) {
-	// Connection connection = connect();
-	// query = "SELECT MAX(module.modificationdate) FROM module "
-	// + "JOIN modulecourseaffiliation AS ma ON module.moduleID = ma.moduleID "
-	// + "WHERE ma.courseID = ? AND ma.degree = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setString(1, courseID);
-	// pStatement.setString(2, degree);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// if (resultSet.next()) {
-	// return "" + resultSet.getDate(1);
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out.println("couldn't get modificationdates of moduleList");
-	// } finally {
-	// close(connection);
-	// }
-	// return null;
-	// }
 
-	/**
-	 * Gets the latest version of modulemanual of a course.
-	 * 
-	 * @param courseID
-	 *            The unique ID of a course.
-	 * @param degree
-	 * @return
-	 * @see Course
-	 * @see Module
-	 * @see ModuleAdministration
-	 */
-	// @Deprecated
-	// public String generateLatestVersionOfModuleManual(String courseID,
-	// String degree) {
-	// Connection connection = connect();
-	// LinkedList<String> versionnumbers = new LinkedList<String>();
-	// LinkedList<String> sSemesters = new LinkedList<String>();
-	// LinkedList<String> wSemesters = new LinkedList<String>();
-	// query =
-	// "SELECT versionnumber FROM modulemanual WHERE courseID = ? AND degree = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setString(1, courseID);
-	// pStatement.setString(2, degree);
-	// ResultSet resultSet = pStatement.executeQuery();
-	//
-	//
-	// // get all versionnumbers of module
-	// while (resultSet.next()) {
-	// versionnumbers.add(resultSet.getString(1));
-	// }
-	// if(versionnumbers.isEmpty()){
-	// return null;
-	// }
-	//
-	// System.out.println("(ModuleDBController) versionnumbers is empty: "
-	// + versionnumbers.isEmpty());
-	// // separate sSemester and wSemester
-	// for (String version : versionnumbers) {
-	// if (version.charAt(0) == 's') {
-	// sSemesters.add(version);
-	// } else {
-	// wSemesters.add(version);
-	// }
-	// }
-	// // find latest sSemester version
-	// System.out.println("(ModuleDBController) sSemesters is empty: "
-	// + sSemesters.isEmpty());
-	// String latestSS = sSemesters.getFirst().substring(4, 8);
-	// for (String version : sSemesters) {
-	// if (Integer.parseInt(latestSS) < Integer.parseInt(version
-	// .substring(4, 8))) {
-	// latestSS = version.substring(4, 8);
-	// }
-	// }
-	// // find latest wSemester version
-	// String latestWS = wSemesters.getFirst().substring(8, 12);
-	// for (String version : wSemesters) {
-	// if (Integer.parseInt(latestWS) < Integer.parseInt(version
-	// .substring(8, 12))) {
-	// latestWS = version.substring(8, 12);
-	// }
-	// }
-	// // if latest sSemester version >= latest wSemester version return
-	// // new wise
-	// if (Integer.parseInt(latestSS) >= Integer.parseInt(latestWS)) {
-	// return "wise" + latestSS + ""
-	// + (Integer.parseInt(latestSS) + 1);
-	// }
-	// // if latest sSemester version < latest wSemester version return new
-	// // sose
-	// else {
-	// return "sose" + latestWS;
-	// }
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out
-	// .println("couldn't get latest version of modulemanual of course: "
-	// + courseID);
-	// } finally {
-	// close(connection);
-	// }
-	// return null;
-	// }
-
-	/**
-	 * Gets a list of institutes selected by a course.
-	 * 
-	 * @param courseID
-	 *            The unique ID of a course.
-	 * @param degree
-	 * @return List of instituteIDs.
-	 * @see Course
-	 * @see Module
-	 */
-	// public LinkedList<String> getInstituteList(String courseID, String
-	// degree) {
-	// Connection connection = connect();
-	// LinkedList<String> instituteIDList = new LinkedList<String>();
-	// query = "SELECT DISTINCT m.instituteID FROM module AS m "
-	// + "JOIN modulecourseaffiliation AS ma ON m.moduleID = ma.moduleID "
-	// + "WHERE ma.courseID = ? AND ma.degree = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setString(1, courseID);
-	// pStatement.setString(2, degree);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// while (resultSet.next()) {
-	// instituteIDList.add(resultSet.getString(1));
-	// }
-	// return instituteIDList;
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out
-	// .println("couldn't get institutes of modulemanual of course: "
-	// + courseID + " " + degree);
-	// } finally {
-	// close(connection);
-	// }
-	// return instituteIDList;
-	// }
 
 	/**
 	 * Gets the name of an institute refering to an unique ID.
@@ -2098,33 +1569,6 @@ public class ModuleDBController {
 			return false;
 		}
 	}
-
-	/**
-	 * Gets the module manual which refers to the specified moduleID.
-	 * 
-	 * @param moduleID
-	 *            The unique ID of a module.
-	 * @return The module manual.
-	 * @see Module
-	 * @see ModuleAdministration
-	 */
-	// @Deprecated
-	// public String getModuleManualByModule(long moduleID) {
-	// Connection connection = connect();
-	// query = "SELECT modulemanual FROM module WHERE moduleID = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setLong(1, moduleID);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// return resultSet.getString(1);
-	// } catch (SQLException e) {
-	// System.err.println("couldn't get modulemanual of module: "
-	// + moduleID);
-	// return "";
-	// } finally {
-	// close(connection);
-	// }
-	// }
 
 	/**
 	 * Sets the subject in a module.

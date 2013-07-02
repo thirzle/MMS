@@ -1,7 +1,5 @@
 package management;
 
-//TODO:
-//namen adden bitte, alle die an der Klasse geschafft haben...
 /**
  * The TextualEntry class stores any textual information that belongs to a module.
  * <p>

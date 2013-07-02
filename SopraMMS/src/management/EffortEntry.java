@@ -3,8 +3,6 @@ package management;
 import java.util.List;
 import java.util.LinkedList;
 
-//TODO:
-//namen adden bitte, alle die an der Klasse geschafft haben...
 /**
  * The EffortEntry class stores effort information that belong to a module.
  * <p>
@@ -20,7 +18,7 @@ import java.util.LinkedList;
  * @see Module
  * @see Entry
  * @see SelfStudy
- * @author AJ, Max Reuter, David Lehr
+ * @author Johann Albach, Max Reuter, David Lehr
  * 
  */
 public class EffortEntry extends Entry {

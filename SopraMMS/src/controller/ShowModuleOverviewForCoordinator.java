@@ -36,14 +36,14 @@ public class ShowModuleOverviewForCoordinator extends SessionCheck {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(isLoggedIn(request, response)) {
+		if (isLoggedIn(request, response)) {
 			HttpSession session = request.getSession();
 			if (request.getParameter("action") != null) {
-	
+
 				if (request.getParameter("action").equals("editModule")) {
 					if (request.getParameter("selectedModule") != null) {
-						String[] selectedModule = request.getParameter("selectedModule")
-								.split("%");
+						String[] selectedModule = request.getParameter(
+								"selectedModule").split("%");
 						response.sendRedirect("/SopraMMS/ShowEditModule?selectedModuleToEdit="
 								+ selectedModule[0] + " " + selectedModule[1]);
 					} else {
@@ -53,10 +53,11 @@ public class ShowModuleOverviewForCoordinator extends SessionCheck {
 					}
 				} else if (request.getParameter("action").equals("enterCourse")) {
 					if (request.getParameter("selectedModule") != null) {
-						String[] selectedModule = request.getParameter("selectedModule")
-								.split("%");
+						String[] selectedModule = request.getParameter(
+								"selectedModule").split("%");
 						List<Course> courses = mAdmin.getCourses();
-						List<String> subjects = mAdmin.getSubjects();					session.setAttribute("subjects",subjects);
+						List<String> subjects = mAdmin.getSubjects();
+						session.setAttribute("subjects", subjects);
 						session.setAttribute("courses", courses);
 						response.sendRedirect("/SopraMMS/EnterCourseToModule?moduleID="
 								+ selectedModule[0]
@@ -67,18 +68,27 @@ public class ShowModuleOverviewForCoordinator extends SessionCheck {
 										+ selectedModule[0]
 										+ " Version-"
 										+ selectedModule[1]);
-	
+
 					} else {
 						request.getSession().setAttribute("content",
 								"showModulesForCoordinator");
 						response.sendRedirect("/SopraMMS/guiElements/home.jsp?info=chooseModule");
 					}
-	
+
 				}
 			} else {
-	
+
 				ModuleAdministration ma = new ModuleAdministration();
-				List<Module> moduleList = ma.getUnfinishedModulesOverview();
+				List<Module> moduleList = null;
+				if (request.getParameter("option") != null) {
+					if (request.getParameter("option").equals("old")) {
+						moduleList = ma.getFinishedModulesOverview();
+					}else if(request.getParameter("option").equals("new")){
+						moduleList = ma.getUnfinishedModulesOverview();
+					}
+				} else {
+					moduleList = ma.getUnfinishedModulesOverview();
+				}
 				request.getSession().setAttribute(
 						"unfinishedModuleListForCoordinator", moduleList);
 				request.getSession().setAttribute("content",
@@ -87,7 +97,8 @@ public class ShowModuleOverviewForCoordinator extends SessionCheck {
 			}
 		} else {
 			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="
+					+ error);
 		}
 
 	}

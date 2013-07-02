@@ -3,14 +3,12 @@ package management;
 import java.util.Calendar;
 import java.util.Random;
 
-//TODO:
-//namen adden bitte, alle die an der Klasse geschafft haben...
 /**
  * This class stores the "self study" information.
  * <p>
  * It is used by the {@link EffortEntry} class to store a list of all SelfStudy objects, that belong to the corresponding {@link Module}.
  * 
- * @author AJ, Max Reuter
+ * @author Johann Albach, Max Reuter
  * @see Module
  * @see EffortEntry
  * 

@@ -43,11 +43,6 @@ public class UserDBController {
 	private static final String PASSWORD = sysconfig.Config.system_database_password.getValue();
 	private static final String DRIVER = sysconfig.Config.system_database_driver.getValue();
 
-	// Tim database
-	// private static final String URL = "jdbc:mysql://127.0.0.1:3306/MMS";
-	// private static final String USER = "sopramms";
-	// private static final String PASSWORD = "sopra13";
-	// private static final String DRIVER = "com.mysql.jdbc.Driver";
 	
 	/**
 	 * Number of possible rights a user can own.
@@ -163,28 +158,6 @@ public class UserDBController {
 		return null;
 	}
 
-	// tested: check
-	// public User getUser(String session, String password) {
-	// Connection connection = connect();
-	// query = "SELECT * FROM user WHERE session = ? AND password = ?";
-	// try {
-	// pStatement = connection.prepareStatement(query);
-	// pStatement.setString(1, session);
-	// pStatement.setString(2, password);
-	// ResultSet resultSet = pStatement.executeQuery();
-	// if (resultSet.next()) {
-	// return new User(resultSet.getString("loginname"),
-	// resultSet.getString("firstname"),
-	// resultSet.getString("lastname"),
-	// resultSet.getString("mail"), password);
-	// }
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// System.out.println("couldn't get user by session and password");
-	// }
-	// return null;
-	// }
 	/**
 	 * Gets specified user by his email address.
 	 * 
@@ -325,52 +298,6 @@ public class UserDBController {
 		return false;
 	}
 
-	/**
-	 * Gets the rights of a specified user.
-	 * 
-	 * @param loginname		The name with which the user uses to log into the system. 
-	 * @return				An array set with true and false values for the corresponding rights.
-	 * @see User
-	 */
-//	@Deprecated
-//	public boolean[] getRights(String loginname) {
-//		Connection connection = connect();
-//		boolean[] rightsArray = new boolean[NUMBEROFRIGHTS];
-//		query = "SELECT rightsID FROM rightsaffiliation WHERE loginname = ?";
-//		try {
-//			pStatement = connection.prepareStatement(query);
-//			pStatement.setString(1, loginname);
-//			ResultSet resultSet = pStatement.executeQuery();
-//			// set all rights listed in table rightsaffiliation
-//			while (resultSet.next()) {
-//				rightsArray[resultSet.getInt("rightsID")] = true;
-//			}
-//			pStatement = connection
-//					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
-//			pStatement.setString(1, loginname);
-//			resultSet = pStatement.executeQuery();
-//			if (resultSet.next()) {
-//				loginname = resultSet.getString("supervisor");
-//				pStatement = connection.prepareStatement(query);
-//				pStatement.setString(1, loginname);
-//				resultSet = pStatement.executeQuery();
-//				// set all rights of supervisor listed in table
-//				// rightsaffiliation
-//				while (resultSet.next()) {
-//					if(resultSet.getInt("rightsID")!=1){
-//						rightsArray[resultSet.getInt("rightsID")] = true;
-//					}
-//				}
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			System.out.println("Couldn't get rights of user: " + loginname);
-//		} finally {
-//			close(connection);
-//		}
-//		return rightsArray;
-//	}
-//	
 	
 	/**
 	 * Gets the rights of a specified user with established connection.
@@ -601,100 +528,6 @@ public class UserDBController {
 		}
 	}
 
-	/**
-	 * Gets all users of a specified institute.
-	 * 
-	 * @param institute		ID of the institute.
-	 * @return				List of users.
-	 * @see User
-	 */
-//	@Deprecated
-//	public List<User> getAllUsersFromInstitute(String institute) {
-//		Connection connection = connect();
-//		List<User> userList = new LinkedList<User>();
-//		query = "SELECT loginname FROM instituteaffiliatoin WHERE instituteID = ?";
-//		String loginname;
-//		ResultSet resultSetUsers = null;
-//		try {
-//			pStatement = connection.prepareStatement(query);
-//			pStatement.setString(1, institute);
-//			ResultSet resultSet = pStatement.executeQuery();
-//
-//			while (resultSet.next()) {
-//				loginname = resultSet.getString("loginname");
-//				query = "SELECT * FROM user WHERE loginname = ?";
-//				pStatement = connection.prepareStatement(query);
-//				pStatement.setString(1, loginname);
-//				resultSetUsers = pStatement.executeQuery();
-//
-//				userList.add(new User(resultSetUsers.getString("login"),
-//						resultSetUsers.getString("firstName"), resultSetUsers
-//								.getString("lastName"), resultSetUsers
-//								.getString("mail"), getRights(loginname, connection),
-//						resultSetUsers.getString("session"), resultSetUsers
-//								.getString("faculty"),
-//						getInstitutesByName(loginname, connection), resultSetUsers
-//								.getString("representative"), resultSetUsers
-//								.getString("supervisor"), resultSetUsers
-//								.getString("password")));
-//
-//			}
-//		} catch (SQLException e) {
-//			System.out.println("Couldn't get all users from institute: "
-//					+ institute);
-//			e.printStackTrace();
-//		} finally {
-//			close(connection);
-//		}
-//		return userList;
-//	}
-
-	/**
-	 * Gets instituteID of existing user.
-	 * 
-	 * @param loginname		The name with which the user uses to log into the system.
-	 * @return				List of institutes.
-	 * @see User
-	 */
-//	@Deprecated
-//	public List<String> getInstitutesByName(String loginname) {
-//		Connection connection = connect();
-//		LinkedList<String> instituteList = new LinkedList<String>();
-//		query = "SELECT instituteID FROM instituteaffiliation WHERE loginname = ?";
-//		try {
-//			pStatement = connection.prepareStatement(query);
-//			pStatement.setString(1, loginname);
-//			ResultSet resultSet = pStatement.executeQuery();
-//			while (resultSet.next()) {
-//				instituteList.add(resultSet.getString("instituteID"));
-//			}
-//			pStatement = connection
-//					.prepareStatement("SELECT supervisor FROM supervisor WHERE username = ?");
-//			pStatement.setString(1, loginname);
-//			resultSet = pStatement.executeQuery();
-//			if (resultSet.next()) {
-//				loginname = resultSet.getString("supervisor");
-//				pStatement = connection.prepareStatement(query);
-//				pStatement.setString(1, loginname);
-//				resultSet = pStatement.executeQuery();
-//				// get all institutes of supervisor
-//				while (resultSet.next()) {
-//					if(!instituteList.contains(resultSet.getString("instituteID"))){
-//						instituteList.add(resultSet.getString("instituteID"));
-//					}
-//				}
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			System.out.println("Couldn't get list of institutes from user: "
-//					+ loginname);
-//		} finally {
-//			close(connection);
-//		}
-//		return instituteList;
-//	}
-	
-	
 	/**
 	 * Gets institute of existing user with established connection
 	 * 

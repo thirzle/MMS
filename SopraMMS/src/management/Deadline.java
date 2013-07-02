@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
  * 
  * @see Date
  * 
- * @author Max Reuter
+ * @author Max Reuter, Johann Albach
  *
  */
 public class Deadline {
@@ -70,15 +70,6 @@ public class Deadline {
 	this.facultyID = facultyID;
     }
 
-    /*
-     * Beispiel um den veralteten Konstruktor zu umgehen....
-     * 
-     * Calendar cal = Calendar.getInstance();
-     * cal.set(Calendar.YEAR, 1988);
-     * cal.set(Calendar.MONTH, 1);
-     * cal.set(Calendar.DAY_OF_MONTH, 1);
-     * Date dateRepresentation = cal.getTime();
-     */
 
     /**
      * Creates a Date object from day, month and year values.
@@ -89,15 +80,7 @@ public class Deadline {
      * @return		The Date object.
      */
     private Date calcDate(int day, int month, int year) {
-	//Date constructor deprecation fix (AJ)
-	
-	//old
-	/*
-	 * return new Date(year-1900, month-1, day);
-	 */
-	
-	//TODO: sollte noch jemand durch checken ob das so stimmt...
-	//new
+
 	Calendar cal = Calendar.getInstance();
 	cal.set(Calendar.YEAR, year);
 	cal.set(Calendar.MONTH, month);
@@ -113,22 +96,7 @@ public class Deadline {
      * @return		True or False.
      */
     public boolean checkRemember(Date current) {
-	//Date function's deprecation fix (AJ)
-	
-	//old
-	/*
-	if (current.getYear() >= beginremember.getYear()) {
-	    if (current.getMonth() >= beginremember.getMonth()) {
-		if (current.getDay() >= beginremember.getDay()) {
-		    return true;
-		}
-	    }
-	}
-	return false;
-	*/
-	
-	//TODO: sollte noch jemand durch checken ob das so stimmt...
-	//new
+
 	Calendar calcurrent = new GregorianCalendar();
 	calcurrent.setTime(beginremember);
 

@@ -41,7 +41,7 @@ Ein Modul kann nicht gleichzeitig als Pflicht- und Wahlmodul f&uuml;r einen Stud
 		<table>
 			<tr>
 				<td class='descriptionModule'>Fach:</td>
-				<td class='entryModule'><select onchange="getSelectedIndex()" id="subject" style="width: 250px;">
+				<td class='entryModule'><select class="inputField" onchange="getSelectedIndex()" id="subject" style="width: 250px;">
 						<%int a=0;
 							for (String subject : subjects) {
 						%>
