@@ -3,8 +3,6 @@ package management;
 import java.util.LinkedList;
 import java.util.List;
 
-//TODO:
-//namen adden bitte, alle die an der Klasse geschafft haben...
 /**
  * The CourseEntry class stores all course entries that belong to a {@link Module}.
  * <p>
@@ -16,7 +14,7 @@ import java.util.List;
  * @see Module
  * @see Entry
  * @see Course
- * @author AJ, Teresa Hirzle, David Lehr, Max Reuter
+ * @author Johann Albach, Teresa Hirzle, David Lehr, Max Reuter
  *
  */
 public class CourseEntry extends Entry {
