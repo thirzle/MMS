@@ -1,12 +1,12 @@
 package management;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.ibm.icu.util.Calendar;
 
 import model.ModuleDBController;
 import user.User;
@@ -190,9 +190,6 @@ public class ModuleAdministration {
 	public String getInstituteName(String instituteID) {
 		return moduleDBController.getInstituteName(instituteID);
 	}
-	
-	//TODO:
-	//mehr info (was das teil hier macht) ist nich schlecht...
 
 	/**
 	 * Creates a module manual.
@@ -213,17 +210,6 @@ public class ModuleAdministration {
 				creationdate, modificationdate, semester, examregulation);
 	}
 
-	// TODO
-	/*
-	 * Beispiel um den veralteten Konstruktor zu umgehen....
-	 * 
-	 * Calendar cal = Calendar.getInstance(); cal.set(Calendar.YEAR, 1988);
-	 * cal.set(Calendar.MONTH, 1); cal.set(Calendar.DAY_OF_MONTH, 1); Date
-	 * dateRepresentation = cal.getTime();
-	 */
-
-	//TODO:
-	//deprecation fix noch machen...
 	
 	/**
 	 * Creates the module of the given author.
@@ -238,11 +224,10 @@ public class ModuleAdministration {
 	public void createModuleByModuleManager(List<Entry> list, String author,
 			String institut) {
 		String name = list.get(1).getContent();
-		Date d = new Date();
-		java.sql.Date creationDate = new java.sql.Date(d.getYear(),
-				d.getMonth(), d.getDate());
-		java.sql.Date modificationDate = new java.sql.Date(d.getYear(),
-				d.getMonth(), d.getDate());
+		Calendar cal = new GregorianCalendar();
+		
+		java.sql.Date creationDate = new java.sql.Date(cal.getTime().getTime());
+		java.sql.Date modificationDate = new java.sql.Date(cal.getTime().getTime());
 		boolean approved = false;
 		String insituteID = institut;
 		List<Entry> entryList = list;
@@ -254,9 +239,7 @@ public class ModuleAdministration {
 		moduleDBController.createModule(module);
 	}
 
-	
-	//TODO:
-	//deprecation fix noch machen...
+
 	/**
 	 * Creates the module of the given module manager.
 	 * 
@@ -272,9 +255,8 @@ public class ModuleAdministration {
 		System.out.println("(ModulAdministration.java): Subject 3: "
 				+ module.getSubject());
 		String name = module.getEntryList().get(1).getContent();
-		Date d = new Date();
-		java.sql.Date modificationDate = new java.sql.Date(d.getYear(),
-				d.getMonth(), d.getDate());
+		Calendar cal = new GregorianCalendar();
+		java.sql.Date modificationDate = new java.sql.Date(cal.getTime().getTime());
 		boolean approved = false;
 		String insituteID = module.getInstituteID();
 		List<Entry> entryList = module.getEntryList();
@@ -309,9 +291,6 @@ public class ModuleAdministration {
 		return module;
 	}
 
-	// public String getModuleManual(long moduleID) {
-	// return moduleDBController.getModuleManualByModule(moduleID);
-	// }
 
 	/**
 	 * Retrieves all modules of a given author.
@@ -349,8 +328,7 @@ public class ModuleAdministration {
 		return moduleDBController.getAllVersionsOfModule(moduleID);
 	}
 
-	//TODO:
-	//not sure if ...
+
 	/**
 	 * Retrieves unfinished overviewed/reviewed modules as a list.
 	 * 
@@ -388,8 +366,6 @@ public class ModuleAdministration {
 	}
 	
 
-	//TODO:
-	//not sure if ...
 	/**
 	 * Retrieves latest overviewed/reviewed modules as a list.
 	 * 
@@ -468,9 +444,9 @@ public class ModuleAdministration {
 		return moduleDBController.getCoursesExistModules();
 	}
 
-	//TODO:
-	//dafuq does it do.
+
 	/**
+	 * Finishes an unfinished module by setting courses.
 	 * 
 	 * @param module
 	 */
@@ -478,9 +454,8 @@ public class ModuleAdministration {
 		moduleDBController.finishNewModule(module);
 	}
 
-	//TODO:
-	//i have no idea what it's doing ...
 	/**
+	 *Changes the entrylist of a given module in database.
 	 * 
 	 * @param module
 	 */
@@ -553,9 +528,8 @@ public class ModuleAdministration {
 		moduleDBController.deleteModule(moduleID, version);
 	}
 	
-	//TODO:
-	//no idea...
 	/**
+	 * Edit a module in database.
 	 * 
 	 * @param module
 	 */
@@ -569,7 +543,7 @@ public class ModuleAdministration {
 	 * @param instituteID		The institute ID.
 	 * @param managerLoginname	The manager's loginname.
 	 * @param facultyID		The faculty ID.
-	 * @return			A boolean set to true if successfully created ???????
+	 * @return			A boolean set to true if successfully created
 	 */
 	public boolean createInstitute(String instituteID, String managerLoginname, String facultyID){
 		return moduleDBController.createInstitute(instituteID, managerLoginname, facultyID);

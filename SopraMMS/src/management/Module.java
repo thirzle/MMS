@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-//TODO:
-//namen adden bitte, alle die an der Klasse geschafft haben...
 /**
  * This class is the representation of a single Module.
  * <p>
@@ -21,7 +19,7 @@ import java.util.Random;
  * @see EffortEntry
  * @see TextualEntry
  * @see SelfStudy
- * @author AJ, Max Reuter, David Lehr
+ * @author Johann Albach, Max Reuter, David Lehr
  * 
  */
 public class Module {

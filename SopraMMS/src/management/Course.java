@@ -1,7 +1,5 @@
 package management;
 
-//TODO:
-//namen adden bitte, alle die an der Klasse geschafft haben...
 /**
  * The Course class stores attributes of a single course, that belongs to a {@link CourseEntry}.
  * <p>

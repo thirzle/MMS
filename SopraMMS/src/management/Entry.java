@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.Random;
 import java.text.SimpleDateFormat;
 
-
-//TODO:
-//namen adden bitte, alle die an der Klasse geschafft haben...
 /**
  * This class is the super class of several Entry related subclasses.
  * <p>
@@ -22,7 +19,7 @@ import java.text.SimpleDateFormat;
  * @see CourseEntry
  * @see EffortEntry
  * @see TextualEntry
- * @author AJ, Max Reuter
+ * @author Johann Albach, Max Reuter
  *
  */
 public abstract class Entry {

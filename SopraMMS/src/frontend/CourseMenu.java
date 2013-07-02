@@ -5,7 +5,6 @@ import java.util.List;
 
 import model.ModuleDBController;
 
-//TODO Autoren eintragen und kontrollieren
 /**
  * The CourseMenu class fills the Menu on the sidebar with the appropriate courses belonging to computer science.
  * 
