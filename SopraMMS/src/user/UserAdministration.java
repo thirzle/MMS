@@ -364,8 +364,6 @@ public class UserAdministration {
 
 		String pwhash = "" + password.hashCode();
 		System.out.println("##### Einloggen #####");
-		System.out.println("Loginname: " + loginname);
-		System.out.println("Passwort: " + password + " --> " + pwhash);
 
 		if (userDBController.checkPassword(loginname, pwhash)) {
 
@@ -521,7 +519,7 @@ public class UserAdministration {
 		return userDBController.getAllUsers();
 	}
 
-//	get Mail: ï¿½bergeben: Liste von Rechten, gibt zurï¿½ck: Liste mit String Array -->Name, Vorname, Email-Adresse
+//	get Mail: Übergeben: Liste von Rechten, gibt zurï¿½ck: Liste mit String Array -->Name, Vorname, Email-Adresse
 	/**
 	 * Gets all emails from the users which are available in the database.
 	 * 
