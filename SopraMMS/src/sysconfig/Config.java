@@ -77,6 +77,10 @@ public class Config {
      * The driver of the database.
      */
     public final static Setting system_database_driver = new Setting();
+    /**
+     * The manual of the system.
+     */
+    public final static Setting system_manual = new Setting();
 
     // not so final settings:
     /**
@@ -140,6 +144,9 @@ public class Config {
 			} else if (type.compareTo("system_database_driver") == 0) {
 			    system_database_driver.setValue(value);
 			    System.out.println("	system_database_driver: " + value);
+			}else if (type.compareTo("system_manual") == 0) {
+				system_manual.setValue(value);
+			    System.out.println("	system_manual: " + value);
 			}
 		    }
 		    else{

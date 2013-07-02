@@ -5,9 +5,6 @@ $(document).ready(function(){
 	$(".start").click(function() {
 		window.location.replace("home.jsp?home=true");
 	});
-	$(".error").click(function() {
-		window.location.replace("/SopraMMS/guiElements/error.jsp");
-	});
 });
 </script>
 <a href="/SopraMMS/guiElements/home.jsp?home=true"><img src="${pageContext.request.contextPath}/images/textHeader.bmp" alt="Logo" align="left"></a>
@@ -15,5 +12,5 @@ $(document).ready(function(){
 <br>
 <div class="headerNavigation" id="navigation">
 	<span class="start"><navigation>Startseite</navigation></span>
-	<span class="error" style="padding-left: 850px;"><navigation>&rarr;&ensp;Errorseite&ensp;&larr;</navigation></span>
+	<span class="error" style="padding-left: 900px;"><navigation><a href="<%=sysconfig.Config.system_path.getValue() + sysconfig.Config.system_manual.getValue()%>"  target='_blank'>&rarr;&ensp;Hilfe</a></navigation></span>
 </div>
