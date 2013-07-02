@@ -7,7 +7,19 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.nio.charset.Charset;
 
-@SuppressWarnings("serial")
+/**
+ * This class sends mails via the university's network.
+ * <p>
+ * The settings are already set up properly and work in ulm's university.
+ * <p>
+ * Use the<br>
+ * {@link #send_mail(String mail_address_from, String mail_from, String subject, String mail_address_to, String content)},<br>
+ * {@link #send_mail(String subject, String mail_address_to, String content)}<br>
+ * functions to send mails.
+ * 
+ * @author AJ
+ *
+ */
 public class EmailTelnet {
 
     private static BufferedOutputStream os = null;
@@ -23,19 +35,42 @@ public class EmailTelnet {
     // private static String user_name = "benutzer_name";
     // private static String user_password = "passwort";
 
-    private static String mail_address_from = "adresse@gmail.com";
+    private static String mail_address_from = "mms@uni-ulm.de";
     private static String mail_from = mail_address_from;
 
     private static String mail_footer = "\n\nThis message was sent by the MMS of the University of Ulm. It is not possible to reply.";
 
+    /**
+     * Sends a mail to the given address.
+     * <p>
+     * Requires a few more arguments because you can provide the address where the mail came from...
+     * 
+     * @param mail_address_from		The mail address this mail came from.
+     * @param mail_from			The name/author of the mail.
+     * @param subject			The subject of the mail.
+     * @param mail_address_to		The address this mail is heading to.
+     * @param content			The content of the mail.
+     * @throws IOException
+     */
     public static void send_mail(String mail_address_from, String mail_from, String subject, String mail_address_to, String content) throws IOException {
 	mail_transfer(mail_address_from, mail_from, mail_address_to, mail_address_to, subject, content + mail_footer);
     }
 
+    /**
+     * Sends a mail to the fiven address.
+     * <p>
+     * Uses predefined attributes for address and name of sender.
+     * 
+     * @param subject		The subject of the mail.
+     * @param mail_address_to	The address this mail is send to.
+     * @param content		The content of the mail.
+     * @throws IOException
+     */
     public static void send_mail(String subject, String mail_address_to, String content) throws IOException {
 	mail_transfer(mail_address_from, mail_from, mail_address_to, mail_address_to, subject, content + mail_footer);
     }
 
+    
     private synchronized final static void mail_transfer(String mail_address_from, String mail_from, String mail_address_to, String mail_to, String subject, String content) throws IOException {
 	Socket so = null;
 	try {

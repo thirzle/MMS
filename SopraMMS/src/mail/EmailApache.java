@@ -2,6 +2,24 @@ package mail;
 
 import org.apache.commons.mail.*;
 
+/**
+ * This class uses Apache's commons mail and is configured to send
+ * mails via an external email account.
+ * <p>
+ * Set up the attributes like {@link #host_name}, {@link #port}, 
+ * {@link #user_name}, {@link #user_password} and {@link #mail_address_from}
+ * to meet the requirements of your account.
+ * <p>
+ * Current settings are already working with a google mail account.
+ * Just change {@link #user_name}, {@link #user_password} and {@link #mail_address_from}.
+ * <p>
+ * Use the <br>
+ * {@link #send_mail(String subject, String mail_address_to, String content)}<br>
+ * function to send mails.
+ * 
+ * @author AJ
+ *
+ */
 public class EmailApache {
     
     
@@ -15,9 +33,15 @@ public class EmailApache {
     
     private static String mail_address_from = "adresse@gmail.com";
     
-    private static String mail_footer = "\n\nDo not reply...";
+    private static String mail_footer = "\n\nThis message was sent by the MMS of the University of Ulm. It is not possible to reply.";
     
-    
+    /**
+     * Sends a mail to the given address with subject and content.
+     * 
+     * @param subject		The subject that will appear in the mail.
+     * @param mail_address_to	The address the mail is sent to.
+     * @param content		The content of the mail.
+     */
     public static void send_mail(String subject, String mail_address_to, String content) {
 	Email email = new SimpleEmail();
 	email.setHostName(host_name);

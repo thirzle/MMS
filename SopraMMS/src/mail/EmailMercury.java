@@ -20,6 +20,20 @@ import javax.mail.internet.MimeMessage;
  * or EmailTelnet to send mails from university's mail server... (server needs to run in uni network)
  */
 
+/**
+ * This class sends mails via the Mercury mail server.
+ * <p>
+ * The Mercury mail server therefore needs to be set up properly on the server to NOT fail
+ * the authentication on other mail servers. Otherwise no mails will be accepted on other mail servers.
+ * <p>
+ * Set up {@link #mail_address_from}.
+ * <p>
+ * Use the<br>
+ * {@link #send_mail(String subject, String mail_address_to, String content)},<br>
+ * function to send mails.
+ * @author AJ
+ *
+ */
 @SuppressWarnings("unused")
 public class EmailMercury {
 
@@ -32,9 +46,16 @@ public class EmailMercury {
 
     private static String mail_address_from = "adresse@gmail.com";
 
-    private static String mail_footer = "\n\nDo not reply...";
+    private static String mail_footer = "\n\nThis message was sent by the MMS of the University of Ulm. It is not possible to reply.";
     
 
+    /**
+     * Sends a mail to the given address.
+     * 
+     * @param subject		The subject of the mail.
+     * @param mail_address_to	The address this mail is going to.
+     * @param content		The content of this mail.
+     */
     public static void send_mail(String subject, String mail_address_to, String content) {
 	// Assuming you are sending email from localhost
 	String host = "localhost";
@@ -46,7 +67,7 @@ public class EmailMercury {
 	properties.setProperty(host_name, host);
 
 	// Debug mode ON
-	properties.put("mail.debug", "true");
+	//properties.put("mail.debug", "true");
 
 	// Get the default Session object.
 	Session session = Session.getDefaultInstance(properties);
