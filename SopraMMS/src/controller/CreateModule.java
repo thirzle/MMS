@@ -170,7 +170,7 @@ public class CreateModule extends SessionCheck {
 				// Modul f�r Sitzung Speichern
 				else if (request.getParameter("createModule").equals("saveModule")) {
 					System.out
-							.println("(CreateModule.java): Modul für Sitzung gespeichert");
+							.println("(CreateModule.java): Modul f�r Sitzung gespeichert");
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 				}
 				// Bei Klick Module Speichern
@@ -224,7 +224,7 @@ public class CreateModule extends SessionCheck {
 					String date = formatter.format(currentTime);
 					String title = null;
 					for (Entry entry : module) {
-						if (entry.getTitle().equals("Kürzel")) {
+						if (entry.getTitle().equals("Titel")) {
 							title = entry.getContent();
 						}
 					}
