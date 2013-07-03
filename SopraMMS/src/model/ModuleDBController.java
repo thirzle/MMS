@@ -1234,16 +1234,39 @@ public class ModuleDBController {
 	public boolean finishNewModule(Module module) {
 		Connection connection = connect();
 		CourseEntry courseEntry = null;
-		query = "UPDATE module SET subject = ? WHERE moduleID = ? AND version = ?";
+		long oldCourseEntry;
 		try {
+			// find existing course entry
+			query = "SELECT e.entryID FROM module AS m JOIN entry AS e ON " +
+					"m.moduleID = e.moduleID AND m.version = e.moduleversion " +
+					"JOIN courseentry AS ce ON e.entryID = ce.entryID " +
+					"WHERE m.moduleID = ? AND m.version = ?";
+			pStatement = connection.prepareStatement(query);
+			pStatement.setLong(1, module.getModuleID());
+			pStatement.setInt(2, module.getVersion());
+			ResultSet resultSet = pStatement.executeQuery();
+			oldCourseEntry = resultSet.getLong("entryID");
+			
 			connection.setAutoCommit(false);
+			if(oldCourseEntry!=0) {
+				// delete existing course entry
+				query = "DELETE FROM entry WHERE moduleID = ? AND" +
+						" moduleversion = ? AND entryID = ?";
+				pStatement = connection.prepareStatement(query);
+				pStatement.setLong(1, module.getModuleID());
+				pStatement.setInt(2, module.getVersion());
+				pStatement.setLong(3, oldCourseEntry);
+				pStatement.execute();
+			}
+			
 			// set subject of unfinished module
+			query = "UPDATE module SET subject = ? WHERE moduleID = ? AND version = ?";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, module.getSubject());
 			pStatement.setLong(2, module.getModuleID());
 			pStatement.setInt(3, module.getVersion());
 			pStatement.execute();
-
+	
 			// find the course entry
 			for (Entry entry : module.getEntryList()) {
 				if (entry.getClass() == CourseEntry.class) {
@@ -1548,10 +1571,18 @@ public class ModuleDBController {
 			String courseID, String degree, Date creationdate,
 			Date modificationdate, String semester, int examregulation) {
 		Connection connection = connect();
-		query = "INSERT INTO modulemanual (versionnumber, url, courseID, degree, "
-				+ "creationdate, modificationdate, semester, examregulation) "
-				+ "VALUES (?,?,?,?,?,?,?,?)";
+		query = "DELETE FROM modulemanual WHERE versionnumber = ?";
 		try {
+			//delete modulemanual, that may already be created
+			connection.setAutoCommit(false);
+			pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, version);
+			pStatement.execute();
+			
+			//insert new modulemanual
+			query = "INSERT INTO modulemanual (versionnumber, url, courseID, degree, "
+					+ "creationdate, modificationdate, semester, examregulation) "
+					+ "VALUES (?,?,?,?,?,?,?,?)";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, version);
 			pStatement.setString(2, url);
@@ -1562,6 +1593,8 @@ public class ModuleDBController {
 			pStatement.setString(7, semester);
 			pStatement.setInt(8, examregulation);
 			pStatement.execute();
+			
+			connection.commit();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
