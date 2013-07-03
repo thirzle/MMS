@@ -7,6 +7,7 @@
  * @param except optional - inputmanager checks all inputs on the page except the one given in the parameter.
  */
 function checkInput(except) {
+	$('html, body').animate({ scrollTop: 0 }, 'slow');
 	var inputs = $("input");
 	doCheck(except, inputs);
 	inputs.keyup(function(){doCheck(except, inputs);});
