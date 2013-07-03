@@ -155,13 +155,13 @@ public class ShowApproveModuleForEditor extends SessionCheck {
 								refusedEntries = refusedEntries + entry.getTitle()+"\n";
 							}
 						}
-						infotext = "Die Freigabestatus der Eintr√§ge des Moduls '"+moduleName+"' wurden gespeichert.";
+						infotext = "Die Freigabestatus der Eintr‰ge des Moduls '"+moduleName+"' wurden gespeichert.";
 						//send mail to modulemanager
-						builder.append("Der Administrator hat folgende Eintr√§ge des Moduls ");
+						builder.append("Der Administrator hat folgende Eintr‰e des Moduls ");
 						builder.append(moduleName);
 						builder.append(" freigegeben: \n");
 						builder.append(approvedEntries+" \n");
-						builder.append("Diese Eintr√§ge wurden abgelehnt: \n");
+						builder.append("Diese Eintr‰ge wurden abgelehnt: \n");
 						builder.append(refusedEntries);
 						EmailTelnet mail = new EmailTelnet();
 						mail.send_mail("Freigabe Ihres Moduls", mailAuthor, builder.toString());

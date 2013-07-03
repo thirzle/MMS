@@ -61,13 +61,15 @@ public class EnterCourseToModule extends SessionCheck {
 								.getParameter("voteModuleSelect")).replace(
 								"empty", "");
 						String subject = request.getParameter("subjectSelect");
+						System.out.println("obligatoryModulSelect: "+obligatoryModulSelect);
+						System.out.println("voteModuleSelect: "+voteModuleSelect);
 						if (!obligatoryModulSelect.isEmpty()) {
 							for (int i = 0; i < obligatoryModulSelect.length(); i++) {
 								courses.get(
 										Character
 												.getNumericValue(obligatoryModulSelect
 														.charAt(i)))
-										.setObligatory(true);
+										.setObligatory(false);
 							}
 						}
 						if (!voteModuleSelect.isEmpty()) {
@@ -76,7 +78,7 @@ public class EnterCourseToModule extends SessionCheck {
 										Character
 												.getNumericValue(voteModuleSelect
 														.charAt(i)))
-										.setObligatory(false);
+										.setObligatory(true);
 							}
 						}
 						entryList.add(new TextualEntry("Fach", 5, subjects
