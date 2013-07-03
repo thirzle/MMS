@@ -42,17 +42,18 @@ public class CreateModule extends SessionCheck {
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(isLoggedIn(request, response)) {
+		if (isLoggedIn(request, response)) {
 			HttpSession session = request.getSession();
 			LinkedList<Entry> entryList = new LinkedList<Entry>();
-	
+
 			if (session.getAttribute("institutesModuleEntry") == null) {
-	
-				List<String[]> institutes = uAdmin.getAllInstitutesByName(session
-						.getAttribute("loginname").toString());
+
+				List<String[]> institutes = uAdmin
+						.getAllInstitutesByName(session.getAttribute(
+								"loginname").toString());
 				session.setAttribute("institutesModuleEntry", institutes);
 			}
-	
+
 			// TypA --> Vordefinierte Pflichfelder Feld
 			// TypB --> Vordefinierte Pflichfelder Textarea
 			// TypC --> Selbstdefinierte Felder Textarea
@@ -61,35 +62,33 @@ public class CreateModule extends SessionCheck {
 			ArrayList<String[]> fieldsTypeB = new ArrayList<>();
 			ArrayList<String[]> fieldsTypeC = new ArrayList<>();
 			ArrayList<String[]> fieldsTypeD = new ArrayList<>();
-	
+
 			String institute = request.getParameter("selectedInstitute");
 			System.out.println("(CreateModule.java) selectedInstituteID: "
 					+ institute);
-			// Fuelle Liste mit Standartwerten falls das Session Attribut noch nicht
+			// Fuelle Liste mit Standartwerten falls das Session Attribut noch
+			// nicht
 			// besteht, anderenfalls kopiere das Session Attribut in das lokale
 			// Attribut
-	
+
 			// Fuer TypA
-	
+
 			if (session.getAttribute("fieldsTypeA") == null) {
-	
+
 				fieldsTypeA.add(new String[] { "Kürzel", "" });
 				fieldsTypeA.add(new String[] { "Titel", "" });
 				fieldsTypeA.add(new String[] { "Verantwortlicher", "" });
 				fieldsTypeA.add(new String[] { "Turnus", "" });
 				fieldsTypeA.add(new String[] { "Sprache", "" });
 				fieldsTypeA.add(new String[] { "Prüfungsform", "" });
-				
-				
-				
-	
+
 				System.out.println("fieldsTypeA");
-	
+
 			} else {
 				fieldsTypeA.addAll((ArrayList<String[]>) session
 						.getAttribute("fieldsTypeA"));
 			}
-	
+
 			// Fuer TypD
 			if (session.getAttribute("fieldsTypeD") == null) {
 				fieldsTypeD.add(new String[] { "Präsenzzeit", "" });
@@ -97,33 +96,34 @@ public class CreateModule extends SessionCheck {
 				fieldsTypeD.add(new String[] { "Übungsaufgaben", "" });
 				fieldsTypeD.add(new String[] { "Prüfung", "" });
 				fieldsTypeD.add(new String[] { "", "" });
-	
+
 			} else {
 				fieldsTypeD.addAll((ArrayList<String[]>) session
 						.getAttribute("fieldsTypeD"));
 			}
-	
+
 			// Fuer TypB
 			if (session.getAttribute("fieldsTypeB") == null) {
 				fieldsTypeB.add(new String[] { "Notenbildung", "" });
 				fieldsTypeB.add(new String[] { "Inhalt", "" });
 				fieldsTypeB.add(new String[] { "Lernziele", "" });
 				fieldsTypeB.add(new String[] { "Literatur", "" });
-	
+
 				System.out.println("fieldsTypeB");
-	
+
 			} else {
 				fieldsTypeB.addAll((ArrayList<String[]>) session
 						.getAttribute("fieldsTypeB"));
 			}
-	
+
 			// Fuer TypC
 			if (session.getAttribute("fieldsTypeC") != null) {
 				fieldsTypeC.addAll((ArrayList<String[]>) session
 						.getAttribute("fieldsTypeC"));
 			}
-	
-			// Lese Parameter aus der URL und fuege Sie den jeweiligen Listen hinzu
+
+			// Lese Parameter aus der URL und fuege Sie den jeweiligen Listen
+			// hinzu
 			// Fuer TypA
 			for (int i = 0; i < fieldsTypeA.size(); i++) {
 				String[] entry = fieldsTypeA.get(i);
@@ -141,7 +141,7 @@ public class CreateModule extends SessionCheck {
 					entry[1] = request.getParameter(i + "ContentD").trim();
 				}
 			}
-	
+
 			// Fuer TypB
 			for (int i = 0; i < fieldsTypeB.size(); i++) {
 				String[] entry = fieldsTypeB.get(i);
@@ -160,7 +160,7 @@ public class CreateModule extends SessionCheck {
 				}
 				fieldsTypeC.set(i, entry);
 			}
-	
+
 			if (request.getParameter("createModule") != null) {
 				// Bei Klick Zeile hinzufuegen
 				if (request.getParameter("createModule").equals("addRow")) {
@@ -168,27 +168,30 @@ public class CreateModule extends SessionCheck {
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 				}
 				// Modul fï¿½r Sitzung Speichern
-				else if (request.getParameter("createModule").equals("saveModule")) {
+				else if (request.getParameter("createModule").equals(
+						"saveModule")) {
 					System.out
 							.println("(CreateModule.java): Modul für Sitzung gespeichert");
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 				}
 				// Bei Klick Module Speichern
-				else if (request.getParameter("createModule").equals("sendModule")) {
-	
+				else if (request.getParameter("createModule").equals(
+						"sendModule")) {
+
 					ArrayList<Entry> module = new ArrayList<>();
-					int order=0;
+					int order = 0;
 					for (String[] strings : fieldsTypeA) {
-						TextualEntry entry = new TextualEntry(strings[0],order++,
-								strings[1]);
+						TextualEntry entry = new TextualEntry(strings[0],
+								order++, strings[1]);
 						module.add(entry);
 					}
-					order+=2;
+					order += 2;
 					// Aufwand speichern
 					int pt = Integer.parseInt(fieldsTypeD.get(0)[1]);
-					EffortEntry effort = new EffortEntry("Zeitaufwand",order++,pt);
+					EffortEntry effort = new EffortEntry("Zeitaufwand",
+							order++, pt);
 					List<SelfStudy> selfStudyList = new ArrayList<>();
-	
+
 					for (int i = 1; i < fieldsTypeD.size(); i++) {
 						String[] entry = fieldsTypeD.get(i);
 						if (!(entry[0].equals("") || entry[1].equals(""))) {
@@ -198,16 +201,16 @@ public class CreateModule extends SessionCheck {
 					}
 					effort.setSelfStudyList(selfStudyList);
 					module.add(effort);
-	
+
 					// Textfelder speichern
 					for (String[] strings : fieldsTypeB) {
-						TextualEntry entry = new TextualEntry(strings[0],order++,
-								strings[1]);
+						TextualEntry entry = new TextualEntry(strings[0],
+								order++, strings[1]);
 						module.add(entry);
 					}
 					for (String[] strings : fieldsTypeC) {
-						TextualEntry entry = new TextualEntry(strings[0],order++,
-								strings[1]);
+						TextualEntry entry = new TextualEntry(strings[0],
+								order++, strings[1]);
 						module.add(entry);
 					}
 					fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
@@ -217,26 +220,35 @@ public class CreateModule extends SessionCheck {
 					mAdmin.createModuleByModuleManager(module,
 							((User) session.getAttribute("user")).getLogin(),
 							institute);
-	
+
 					// insert into History "Module created"
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					SimpleDateFormat formatter = new SimpleDateFormat(
+							"yyyy-MM-dd");
 					Date currentTime = new Date();
 					String date = formatter.format(currentTime);
+
 					String title = null;
 					for (Entry entry : module) {
 						if (entry.getTitle().equals("Titel")) {
 							title = entry.getContent();
 						}
 					}
-					
-					String infotext = "Das Modul '"+title+"' wurde erfolgreich erstellt und zur Freigabe weitergeleitet.";
-					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="+infotext);
+
+					uAdmin.insertHistory(
+							((User) session.getAttribute("user")).getLogin(),
+							date, "Hat folgendes Modul erstellt: " + title);
+
+					String infotext = "Das Modul '"
+							+ title
+							+ "' wurde erfolgreich erstellt und zur Freigabe weitergeleitet.";
+					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
+							+ infotext);
 				}
 			}
 			// Bei Klick entsprechende Zeile loeschen
 			else if (request.getParameter("deleteRow") != null) {
-				int deleteEntry = Integer.parseInt(request
-						.getParameter("deleteRow").replace("Delete", ""));
+				int deleteEntry = Integer.parseInt(request.getParameter(
+						"deleteRow").replace("Delete", ""));
 				fieldsTypeC.remove(deleteEntry);
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
@@ -245,14 +257,15 @@ public class CreateModule extends SessionCheck {
 				session.setAttribute("content", "createNewModule");
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp");
 			}
-	
+
 			session.setAttribute("fieldsTypeA", fieldsTypeA);
 			session.setAttribute("fieldsTypeB", fieldsTypeB);
 			session.setAttribute("fieldsTypeC", fieldsTypeC);
 			session.setAttribute("fieldsTypeD", fieldsTypeD);
 		} else {
 			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="
+					+ error);
 		}
 	}
 

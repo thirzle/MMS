@@ -27,14 +27,14 @@
 <jsp:include page="/guiElements/coordinator/coordinatorMenu.jsp"></jsp:include>
 <%
 	}
-		if (rights[3]) {
-%>
-<jsp:include page="/guiElements/dez2/dez2Menu.jsp"></jsp:include>
-<%
-	}
 		if (rights[2]) {
 %>
 <jsp:include page="/guiElements/modulemanager/modulemanagerMenu.jsp"></jsp:include>
+<%
+	}
+		if (rights[3]) {
+%>
+<jsp:include page="/guiElements/dez2/dez2Menu.jsp"></jsp:include>
 <%
 	}
 		if (rights[1]) {

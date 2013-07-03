@@ -400,7 +400,7 @@ public class EditModule extends SessionCheck {
 				fieldsTypeA = fieldsTypeB = fieldsTypeC = fieldsTypeD = null;
 				// TODO leere selbsterstellte felder aussortieren
 
-				// Spezifische Felder fÃ¼r Turnus, LP, Aufwand, Studiengang
+				// Spezifische Felder fuer Turnus, LP, Aufwand, Studiengang
 				// Versionsnummer von Modul aktualisieren
 				java.sql.Date creationdate = (java.sql.Date) module
 						.getCreationDate();
@@ -422,9 +422,9 @@ public class EditModule extends SessionCheck {
 					System.out.println("(EditModule.java): Bearbeitetes Modul --> Überschreibt Modul");
 					System.out.println(editUnapprovedModule+"  url: "+editUnapprovedModuleUrl);
 					System.out.println("+++++++++");
-					for (Entry entry : module.getEntryList()) {
-						System.out.println(entry.getTitle() + "");
-					}
+//					for (Entry entry : module.getEntryList()) {
+//						System.out.println(entry.getTitle() + "");
+//					}
 					module.setAuthor(((User) session.getAttribute("user"))
 							.getLogin());
 					java.util.Calendar cal = new GregorianCalendar();
