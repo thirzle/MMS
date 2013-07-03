@@ -9,13 +9,22 @@
 	List<String[]> newsList = ua.getNewsByType(0);
 %>
 <h1>&Uuml;bersicht Neuigkeiten</h1>
+<%
+	// checks whether an infotext is available
+	String infoText = request.getParameter("infotext");
+	if (infoText != null) {
+%>
+<div class="infoBox"><%=infoText%></div>
+<%
+	}
+%>
 <form action="/SopraMMS/DeleteNews">
 	<table id="showNewsTable" class='tablesorter'>
 		<thead>
 			<tr>
 				<th></th>
 				<th>Titel</th>
-				<th>Text</th>
+				<th>Textvorschau</th>
 				<th>Sichtbarkeit</th>
 				<th>Erstellungsdatum</th>
 			</tr>
