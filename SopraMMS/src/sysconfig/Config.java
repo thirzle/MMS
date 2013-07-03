@@ -92,7 +92,7 @@ public class Config {
      */
     public void load_settings() {
 	System.out.println("	loading config...");
-	//dirty hack... (jumping a few folder up from the class crap ...)
+	
 	URL sys_path = this.getClass().getResource("../../../");
 	String decoded_sys_path;
 	try {
@@ -104,7 +104,7 @@ public class Config {
 	    System.out.println("	sys_path URL decoding failed... (unsupported)");
 	    return;
 	}
-	//dirty hack end
+	
 	
 	system_path.setValue(decoded_sys_path);
 	System.out.println("	system_path: " + decoded_sys_path);
@@ -115,47 +115,49 @@ public class Config {
 	    BufferedReader br = new BufferedReader(new InputStreamReader(in));
 	    String line;
 	    while ((line = br.readLine()) != null) {
-		if(line.startsWith(";")){
-		    System.out.println("	" + line);
-		}
-		else{
-		    String[] val = line.split("=");  
-		    if(val.length >= 2){
-			
-			String type = val[0];
-			String value = "";
-			for(int i = 1; i < val.length; i++){
-			    value = value.concat(val[i]);
-			    if(i != val.length-1){
-				value = value.concat("=");
+			if(line.startsWith(";")){
+			    System.out.println("	" + line);
+			}
+			else{
+			    String[] val = line.split("=");  
+			    if(val.length >= 2){
+					
+					String type = val[0];
+					String value = "";
+					// handle multiple "=" in value
+					for(int i = 1; i < val.length; i++){
+					    value = value.concat(val[i]);
+					    // restore "=" except for last one
+					    if(i != val.length-1){
+					    	value = value.concat("=");
+					    }
+					}
+					
+					if (type.compareTo("system_pdf_path") == 0) {
+					    system_pdf_path.setValue(value);
+					    System.out.println("	system_pdf_path: " + value);
+					} else if (type.compareTo("system_database_url") == 0) {
+					    system_database_url.setValue(value);
+					    System.out.println("	system_database_url: " + value);
+					} else if (type.compareTo("system_database_user") == 0) {
+					    system_database_user.setValue(value);
+					    System.out.println("	system_database_user: " + value);
+					} else if (type.compareTo("system_database_password") == 0) {
+					    system_database_password.setValue(value);
+					    System.out.println("	system_database_password: " + value);
+					} else if (type.compareTo("system_database_driver") == 0) {
+					    system_database_driver.setValue(value);
+					    System.out.println("	system_database_driver: " + value);
+					}else if (type.compareTo("system_manual") == 0) {
+						system_manual.setValue(value);
+					    System.out.println("	system_manual: " + value);
+					}
 			    }
+			    else{
+				System.out.println("	The following configuraion.ini line is invalid:\n" + line);
+			    }
+	
 			}
-			
-			if (type.compareTo("system_pdf_path") == 0) {
-			    system_pdf_path.setValue(value);
-			    System.out.println("	system_pdf_path: " + value);
-			} else if (type.compareTo("system_database_url") == 0) {
-			    system_database_url.setValue(value);
-			    System.out.println("	system_database_url: " + value);
-			} else if (type.compareTo("system_database_user") == 0) {
-			    system_database_user.setValue(value);
-			    System.out.println("	system_database_user: " + value);
-			} else if (type.compareTo("system_database_password") == 0) {
-			    system_database_password.setValue(value);
-			    System.out.println("	system_database_password: " + value);
-			} else if (type.compareTo("system_database_driver") == 0) {
-			    system_database_driver.setValue(value);
-			    System.out.println("	system_database_driver: " + value);
-			}else if (type.compareTo("system_manual") == 0) {
-				system_manual.setValue(value);
-			    System.out.println("	system_manual: " + value);
-			}
-		    }
-		    else{
-			System.out.println("	The following configuraion.ini line is invalid:\n" + line);
-		    }
-
-		}
 	    }
 	    in.close();
 	} catch (Exception e) {
