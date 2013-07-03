@@ -425,6 +425,7 @@ public class EditModule extends SessionCheck {
 //					for (Entry entry : module.getEntryList()) {
 //						System.out.println(entry.getTitle() + "");
 //					}
+					module.getEntryList().remove(null);
 					module.setAuthor(((User) session.getAttribute("user"))
 							.getLogin());
 					java.util.Calendar cal = new GregorianCalendar();
