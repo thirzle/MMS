@@ -37,14 +37,16 @@ public class SaveUser extends SessionCheck {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int right = 3; // 3 entspricht dem Recht: Administrator
+		int right = 3; // 3 corresponds: Administrator
 		if (isLoggedIn(request, response) && actionGranted(request, right)) {
 			HttpSession session = request.getSession();
 			User user = createUser(request);
+			// checks whether the users login name already exists.
 			String loginname = uAdmin.checkLoginname(user.getLogin());
 			user.setLogin(loginname);
 			uAdmin.createUser(user);
 			try {
+				// a link is going to be sent to the users email adress.
 				uAdmin.sendNewPasswordLinkForNewUser(user);
 				session.removeAttribute("emptyInputs");
 				System.out
@@ -65,9 +67,11 @@ public class SaveUser extends SessionCheck {
 						.println("(SaveUser.java.94): failed to sendNewPasswordLink to email: "
 								+ user.getMail());
 			} finally {
+				// redirect to the user table
 				response.sendRedirect("/SopraMMS/LoadTable");
 			}
 		} else {
+				// error caught if the users session timed out.
 				String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
 				response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);
 		}

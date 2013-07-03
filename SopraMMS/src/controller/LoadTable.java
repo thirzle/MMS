@@ -39,11 +39,14 @@ public class LoadTable extends SessionCheck implements Servlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(isLoggedIn(request, response)) {
 	    	HttpSession session = request.getSession();	
+	    	
+	    	
+	    	// just for debug reasons####################################
 	    	long x = System.currentTimeMillis();
 			List<User> users = uAdmin.getAllUsers();
 			long y = System.currentTimeMillis();
 			System.out.println("(LoadTable.java) LoadUser Time: "+(y-x));
-			
+			//###########################################################
 			
 			session.setAttribute("users", users);
 			session.removeAttribute("content");
