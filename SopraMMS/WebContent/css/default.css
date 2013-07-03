@@ -232,6 +232,11 @@ body {
 	color: #1E6289;
 }
 
+.menuBox a:hover {
+	cursor: pointer;
+	color: #1E6289;
+}
+
 .subNav li {
 	color: black;
 	list-style-image: url(../images/bullet2.bmp);

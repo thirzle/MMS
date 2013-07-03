@@ -11,7 +11,7 @@
   </welcome-file-list>
   <error-page>
     <error-code>404</error-code>
-    <location>/errors/error404.html</location>
+    <location>/errors/error404.jsp</location>
   </error-page>
   <error-page>
     <error-code>500</error-code>
