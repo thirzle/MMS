@@ -25,14 +25,6 @@ public class TextualEntry extends Entry {
      */
     private String text;
 
-    // invoke this constructor if you create a class with already existing data
-    // public TextualEntry(int version, String date, boolean classification,
-    // boolean approvalstatus, boolean declined, long entryID, String title, String text) {
-    // // all parameters are related to abstract class Entry...
-    // super(version, date, classification, approvalstatus, declined, entryID, title);
-    // // actual data is text...
-    // this.text = text;
-    // }
 
     @Deprecated
     /**
