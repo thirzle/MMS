@@ -30,8 +30,8 @@ public class LoadManual extends SessionCheck {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/pdf");
-		String exportFolder = sysconfig.Config.system_path.getValue() + sysconfig.Config.system_manual.getValue();
-		FileInputStream fi = new FileInputStream(new File(exportFolder));
+		String manual = sysconfig.Config.system_path.getValue() + sysconfig.Config.system_manual.getValue();
+		FileInputStream fi = new FileInputStream(new File(manual));
 		int bytesRead = 0;	
 		byte[] buffer = new byte[1024];
 		while ((bytesRead = (fi.read(buffer))) > 0) {

@@ -12,5 +12,5 @@ $(document).ready(function(){
 <br>
 <div class="headerNavigation" id="navigation">
 	<span class="start"><navigation>Startseite</navigation></span>
-	<span class="error" style="padding-left: 900px;"><navigation><a href="/SopraMMS/LoadManual" target='_blank'>&rarr;&ensp;Hilfe</a></navigation></span>
+	<span class="error" style="padding-left: 920px;"><navigation><a href="/SopraMMS/LoadManual" target='_blank'>Hilfe</a></navigation></span>
 </div>
