@@ -1303,7 +1303,7 @@ public class ModuleDBController {
 		Calendar cal = new GregorianCalendar();
 		query = "SELECT c.description, c.degree, p.semester, p.versionnumber, p.creationdate "
 				+ "FROM course AS c JOIN modulemanual AS p ON c.courseID = "
-				+ "p.courseID AND c.degree = p.degree WHERE c.description = ?";
+				+ "p.courseID AND c.degree = p.degree WHERE c.description = ? ORDER BY p.creationdate DESC";
 		try {
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, description);

@@ -65,7 +65,7 @@ public class DisableModule extends SessionCheck {
 					mAdmin.deactivateModule(module);
 					String infotext = "Das Modul '"
 							+ module.getName()
-							+ "' wurde zurÃ¼ckgesetzt und muss erst wieder feigegeben werden um in einem neuen Modulhandbuch aufzutauchen.";
+							+ "' wurde zurückgesetzt und muss erst wieder feigegeben werden um in einem neuen Modulhandbuch aufzutauchen.";
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
 							+ infotext);
 				
@@ -76,16 +76,16 @@ public class DisableModule extends SessionCheck {
 				
 					StringBuilder sb = new StringBuilder();
 					sb.append("Ihr Modul '" + module.getName()
-							+ "' (Version: "+module.getVersion()+") wurde durch das Dezernat 2 zurÃ¼ckgesetzt.\n");
-					sb.append("Wenn Sie dieses Modul bis zum Stichtag nicht Ã¼berarbeiten wird es nicht in das aktuelle Modulhandbuch aufgenommen.\n\n");
-					sb.append("Um nÃ¤here Informationen Ã¼ber das abgelehnete Modul zu bekommen nehmen Sie bitte direkten Kontakt mit dem Dezernat 2 auf.\n");
-					mail.send_mail("Modul wurde zurÃ¼ckgesetzt", emailAddress,
+							+ "' (Version: "+module.getVersion()+") wurde durch das Dezernat 2 zurückgesetzt.\n");
+					sb.append("Wenn Sie dieses Modul bis zum Stichtag nicht überarbeiten wird es nicht in das aktuelle Modulhandbuch aufgenommen.\n\n");
+					sb.append("Um nähere Informationen über das abgelehnete Modul zu bekommen nehmen Sie bitte direkten Kontakt mit dem Dezernat 2 auf.\n");
+					mail.send_mail("Modul wurde zurückgesetzt", emailAddress,
 							sb.toString());
 				
 				} else if (request.getParameter("action").equals("ok")) {
 					String infotext = "Das Modul '"
 							+ module.getName()
-							+ "' wurde akzeptieren und wird im neuen Modulhandbuch verÃ¶ffentlicht.";
+							+ "' wurde akzeptieren und wird im neuen Modulhandbuch veröffentlicht.";
 					response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&infotext="
 							+ infotext);
 				}

@@ -451,7 +451,7 @@ public class SimplePdfCreator {
 
 		List<Entry> entrylist = module.getEntryList();
 		for (int j = 0; j < entrylist.size(); j++) {
-
+			boolean newPageCreated = false;
 			boolean title_exists = false;
 
 			// TITLE FIRST...
@@ -657,7 +657,13 @@ public class SimplePdfCreator {
 					// IF the page end is reached create a new page
 					// and
 					// work on it
-					if (y < page_offset_bottom) {
+					if(entrylist.size()==j+1){
+						newPageCreated=true;
+					}
+					
+					
+					if (y < page_offset_bottom&&!newPageCreated) {
+						
 						page = new PDPage();
 						pages.add(page);
 						module_contentStream = new PDPageContentStream(doc,
@@ -674,7 +680,7 @@ public class SimplePdfCreator {
 
 			// IF the page end is reached create a new page and work on
 			// it
-			if (y < page_offset_bottom) {
+			if (y < page_offset_bottom&&!newPageCreated) {
 				page = new PDPage();
 				pages.add(page);
 				module_contentStream = new PDPageContentStream(doc, page);
