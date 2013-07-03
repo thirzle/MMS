@@ -43,11 +43,11 @@
 				</div>
 			</div>
 			<div class="contentBox">
-				<h1>Fehler 500</h1>
+				<h1>Fehler 404</h1>
 
 				<h3>Es ist ein Fehler aufgetreten.</h3>
 				<p>
-			 		Es liegt ein Fehler auf dem Server vor.<br />
+					Diese Seite konnte nicht gefunden werden.<br/>
 					Bitte kehren Sie zur <a href="/SopraMMS/guiElements/home.jsp">Startseite</a>
 					zur&uuml;ck und versuchen Sie die Aktionen erneut durchzuführen.<br />
 					Sollte erneut ein Fehler auftreten kontaktieren Sie bitte den Administrator.
