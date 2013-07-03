@@ -1104,7 +1104,7 @@ public class UserDBController {
 	/**
 	 * Gets the latest news.
 	 * 
-	 * @param type
+	 * @param type		Parameter for the visibility.
 	 * @return			List of news.
 	 */
 	public List<String[]> getNews(int type) {
@@ -1143,7 +1143,7 @@ public class UserDBController {
 	 * 
 	 * @param title		The news heading.
 	 * @param content	The news content.
-	 * @param type
+	 * @param type		Parameter for the visibility.
 	 * @return			<code>true</code> if adding news was successful <code>false</code> otherwise.
 	 */
 	public boolean addNews(String title, String content, int type) {

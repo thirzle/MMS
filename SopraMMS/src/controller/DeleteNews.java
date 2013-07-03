@@ -30,9 +30,13 @@ public class DeleteNews extends SessionCheck {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// checks whether the user is logged
 		if(isLoggedIn(request, response)) {
+			// initialize variables
 			ArrayList<String> deleted = new ArrayList<>();
 			int number = uAdmin.numberOfNews();
+			
+			// check whether a news entry should be deleted
 			for (int i = 0; i < number; i++) {
 				if(request.getParameter("delete"+i)!=null)
 				{
@@ -40,11 +44,20 @@ public class DeleteNews extends SessionCheck {
 				}
 			}
 			
+			// send request to delete to data controller
 			for (String title : deleted) {
 				uAdmin.deleteNews(title);
 			}
+			
+			// send request including info text for the user
 			request.getSession().setAttribute("content", "showNews");
-			response.sendRedirect("/SopraMMS/guiElements/home.jsp");
+			String infoText="";
+			if(deleted.size()==1){
+				infoText="Die Nachricht '"+deleted.get(0)+"' wurde erfolgreich gelöscht";
+			}else if(deleted.size()>1){
+				infoText="Die "+deleted.size()+" Nachricht wurden erfolgreich gelöscht";
+			}
+			response.sendRedirect("/SopraMMS/guiElements/home.jsp?infotext="+infoText);
 		} else {
 			String error = "Ihre Session ist abgelaufen, bitte loggen Sie sich erneut ein.";
 			response.sendRedirect("/SopraMMS/guiElements/home.jsp?home=true&errortext="+error);

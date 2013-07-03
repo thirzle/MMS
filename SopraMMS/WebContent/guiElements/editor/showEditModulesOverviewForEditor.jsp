@@ -5,19 +5,15 @@
 
 <%@page import="management.Module" import="java.util.LinkedList"%>
 <%
-	LinkedList<Module> moduleList = (LinkedList) session
+	LinkedList<Module> moduleList = (LinkedList<Module>) session
 			.getAttribute("moduleListForEditor");
-	//System.out.println("showModulesForEditor:");
-	//System.out.println("moduleList is null: "+(moduleList==null)+" moduleList is empty: "+moduleList.isEmpty());
 	for(Module module : moduleList){
 		System.out.println(module.getName());
 	}
 %>
 
 <h1>Modul bearbeiten</h1>
-<%
-	//TODO
-%>
+
 <form action="/SopraMMS/EditModule" method="get">
 	<table class="tablesorter informationAboutModule" id="modulesForEditor">
 		<thead>

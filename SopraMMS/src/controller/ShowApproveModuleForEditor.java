@@ -53,9 +53,9 @@ public class ShowApproveModuleForEditor extends SessionCheck {
 			StringBuilder builder = new StringBuilder();
 			boolean allEntriesApproved = false;
 			
-			// speichert das ausge�hlte Modul + Version
+			// saves the chosen module
 			String selectedModule = null;
-			// ModulID steht an Stelle 0, Versionsnummer an Stelle 1
+			// selectedModuleArray[0] = moduleID, selectedModuleArray[1] = version
 			String[] selectedModuleArray = new String[2];
 	
 			long moduleID = 0;

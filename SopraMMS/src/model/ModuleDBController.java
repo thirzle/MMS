@@ -31,10 +31,10 @@ import management.TextualEntry;
  */
 public class ModuleDBController {
 
-//	// local database
-//	 private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
-//	 private static final String USER = "root";
-//	 private static final String PASSWORD = "";
+	// // local database
+	// private static final String URL = "jdbc:mysql://127.0.0.1:3306/mms";
+	// private static final String USER = "root";
+	// private static final String PASSWORD = "";
 
 	// db4free.net database
 	private static final String URL = sysconfig.Config.system_database_url
@@ -45,7 +45,6 @@ public class ModuleDBController {
 			.getValue();
 	private static final String DRIVER = sysconfig.Config.system_database_driver
 			.getValue();
-
 
 	private static String query = null;
 	private static PreparedStatement pStatement = null;
@@ -672,7 +671,6 @@ public class ModuleDBController {
 		return module;
 	}
 
-
 	// tested: check
 	/**
 	 * Loads all unapproved modules by a chosen author.
@@ -807,8 +805,7 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-	
-	
+
 	/**
 	 * Loads all unapproved modules.
 	 * 
@@ -842,7 +839,6 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-	
 
 	/**
 	 * Gets the overview of unfinished modules for the coordinator.
@@ -876,7 +872,7 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-	
+
 	/**
 	 * Gets the overview of already finished modules for the coordinator.
 	 * 
@@ -910,7 +906,6 @@ public class ModuleDBController {
 		}
 		return moduleList;
 	}
-	
 
 	/**
 	 * Gets an overview of modules for the editor.
@@ -1120,11 +1115,13 @@ public class ModuleDBController {
 			pStatement.setBoolean(5, false);
 			pStatement.setBoolean(6, false);
 			pStatement.setBoolean(7, false);
+			System.out.println("!!!!!!!!!!!! " + entryList);
 			for (Entry entry : entryList) {
-				pStatement.setLong(1, entry.getEntryID());
-				pStatement.setString(8, entry.getTitle());
-				pStatement.setInt(9, entry.getOrder());
-				pStatement.execute();
+					System.out.println("enrty" + entry);
+					pStatement.setLong(1, entry.getEntryID());
+					pStatement.setString(8, entry.getTitle());
+					pStatement.setInt(9, entry.getOrder());
+					pStatement.execute();
 			}
 
 			// insert course entry
@@ -1234,32 +1231,32 @@ public class ModuleDBController {
 	public boolean finishNewModule(Module module) {
 		Connection connection = connect();
 		CourseEntry courseEntry = null;
-		long oldCourseEntry=0;
+		long oldCourseEntry = 0;
 		try {
 			// find existing course entry
-			query = "SELECT e.entryID FROM module AS m JOIN entry AS e ON " +
-					"m.moduleID = e.moduleID AND m.version = e.moduleversion " +
-					"JOIN courseentry AS ce ON e.entryID = ce.entryID " +
-					"WHERE m.moduleID = ? AND m.version = ?";
+			query = "SELECT e.entryID FROM module AS m JOIN entry AS e ON "
+					+ "m.moduleID = e.moduleID AND m.version = e.moduleversion "
+					+ "JOIN courseentry AS ce ON e.entryID = ce.entryID "
+					+ "WHERE m.moduleID = ? AND m.version = ?";
 			pStatement = connection.prepareStatement(query);
 			pStatement.setLong(1, module.getModuleID());
 			pStatement.setInt(2, module.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
-				oldCourseEntry = resultSet.getLong("entryID");	
+				oldCourseEntry = resultSet.getLong("entryID");
 			}
 			connection.setAutoCommit(false);
-			if(oldCourseEntry!=0) {
+			if (oldCourseEntry != 0) {
 				// delete existing course entry
-				query = "DELETE FROM entry WHERE moduleID = ? AND" +
-						" moduleversion = ? AND entryID = ?";
+				query = "DELETE FROM entry WHERE moduleID = ? AND"
+						+ " moduleversion = ? AND entryID = ?";
 				pStatement = connection.prepareStatement(query);
 				pStatement.setLong(1, module.getModuleID());
 				pStatement.setInt(2, module.getVersion());
 				pStatement.setLong(3, oldCourseEntry);
 				pStatement.execute();
 			}
-			
+
 			// set subject of unfinished module
 			query = "UPDATE module SET subject = ? WHERE moduleID = ? AND version = ?";
 			pStatement = connection.prepareStatement(query);
@@ -1267,7 +1264,7 @@ public class ModuleDBController {
 			pStatement.setLong(2, module.getModuleID());
 			pStatement.setInt(3, module.getVersion());
 			pStatement.execute();
-	
+
 			// find the course entry
 			for (Entry entry : module.getEntryList()) {
 				if (entry.getClass() == CourseEntry.class) {
@@ -1351,8 +1348,6 @@ public class ModuleDBController {
 		return pdfList;
 	}
 
-	
-
 	/**
 	 * Gets the course ID belonging to a specified course.
 	 * 
@@ -1379,8 +1374,6 @@ public class ModuleDBController {
 		}
 		return null;
 	}
-
-
 
 	/**
 	 * Gets the name of an institute refering to an unique ID.
@@ -1574,13 +1567,13 @@ public class ModuleDBController {
 		Connection connection = connect();
 		query = "DELETE FROM modulemanual WHERE versionnumber = ?";
 		try {
-			//delete modulemanual, that may already be created
+			// delete modulemanual, that may already be created
 			connection.setAutoCommit(false);
 			pStatement = connection.prepareStatement(query);
 			pStatement.setString(1, version);
 			pStatement.execute();
-			
-			//insert new modulemanual
+
+			// insert new modulemanual
 			query = "INSERT INTO modulemanual (versionnumber, url, courseID, degree, "
 					+ "creationdate, modificationdate, semester, examregulation) "
 					+ "VALUES (?,?,?,?,?,?,?,?)";
@@ -1594,7 +1587,7 @@ public class ModuleDBController {
 			pStatement.setString(7, semester);
 			pStatement.setInt(8, examregulation);
 			pStatement.execute();
-			
+
 			connection.commit();
 			return true;
 		} catch (SQLException e) {
