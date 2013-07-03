@@ -20,13 +20,6 @@
 				out.print(user.getMail());%>
 		</td>
 	</tr>
-	<!-- <tr>
-			<th align="left" colspan="2">Empfänger:</th>
-			<th align="left" colspan="4">
-				<input form="sendMailForm" type="email" name="mailto" size="60">
-			</th>
-		</tr> 		-->
-
 	<tr>
 		<td align="left" colspan="2">Empfänger:</td>
 		<td align="left">
@@ -68,9 +61,6 @@
 		<td><button form="sendMailForm" type="submit" value="Senden">Senden</button>
 		</td>
 	</tr>
-	<!--  	<td>
-				<input type="button" name="Cancel" value="Abbrechen" onclick="window.location = '/SopraMMS/guiElements/home.jsp?home=true' " />
-			</td>-->
 </table>
 <script>
 checkInput(null);

@@ -17,6 +17,8 @@ import user.UserAdministration;
 
 /**
  * Servlet implementation class CreateInstitute
+ * 
+ * @author Teresa Hirzle
  */
 @WebServlet("/CreateInstitute")
 public class CreateInstitute extends SessionCheck {
@@ -25,7 +27,7 @@ public class CreateInstitute extends SessionCheck {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 * 
-	 * @author Teresa Hirzle
+	 *
 	 */
 	public CreateInstitute() {
 		super();

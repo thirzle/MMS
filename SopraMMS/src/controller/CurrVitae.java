@@ -34,10 +34,6 @@ public class CurrVitae extends SessionCheck {
     }
 
 	/**
-	 * Stores the URL for the curriculum vitae and insert the event in the history.
-	 * <p>
-	 * Reads the user-entered URL of the request and stores it in the database.
-	 * This event is then entered under the user's name in the history. Finally, the main page is loaded.
 	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
