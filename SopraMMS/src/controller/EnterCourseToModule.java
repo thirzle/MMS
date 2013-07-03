@@ -47,11 +47,13 @@ public class EnterCourseToModule extends SessionCheck {
 				String button = request.getParameter("createModule");
 				if (button != null) {
 					if (button.equals("sendModule")) {
-
+						System.out.println("getParameter('obligatoryModulSelect')"+request.getParameter("obligatoryModulSelect"));
+						System.out.println("getParameter('voteModuleSelect')"+request.getParameter("voteModuleSelect"));
 						new ArrayList<Course>();
 						new ArrayList<Course>();
 						List<String> subjects = mAdmin.getSubjects();
 						List<Course> courses = mAdmin.getCourses();
+						List<Course> tobeholdcourses = new ArrayList<Course>();
 						List<Entry> entryList = (List<Entry>) session
 								.getAttribute("showEntryListFromModule");
 						String obligatoryModulSelect = (request
@@ -65,27 +67,23 @@ public class EnterCourseToModule extends SessionCheck {
 						System.out.println("voteModuleSelect: "+voteModuleSelect);
 						if (!obligatoryModulSelect.isEmpty()) {
 							for (int i = 0; i < obligatoryModulSelect.length(); i++) {
-								courses.get(
-										Character
-												.getNumericValue(obligatoryModulSelect
-														.charAt(i)))
-										.setObligatory(false);
+								Course tmp = courses.get(Character.getNumericValue(obligatoryModulSelect.charAt(i)));
+								tmp.setObligatory(false);
+								tobeholdcourses.add(tmp);
 							}
 						}
 						if (!voteModuleSelect.isEmpty()) {
 							for (int i = 0; i < voteModuleSelect.length(); i++) {
-								courses.get(
-										Character
-												.getNumericValue(voteModuleSelect
-														.charAt(i)))
-										.setObligatory(true);
+								Course tmp = courses.get(Character.getNumericValue(voteModuleSelect.charAt(i)));
+								tmp.setObligatory(true);
+								tobeholdcourses.add(tmp);
 							}
 						}
 						entryList.add(new TextualEntry("Fach", 5, subjects
 								.get(Character.getNumericValue(subject
 										.charAt(0)))));
 						entryList.add(new CourseEntry("Studiengänge", 6,
-								courses));
+								tobeholdcourses));
 
 						long moduleID = Long.parseLong(session.getAttribute(
 								"moduleID").toString());
