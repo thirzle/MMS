@@ -32,9 +32,9 @@ String institute = (String) session.getAttribute("instituteForViewModule");
 
 			<td class='entryModule'><notEditable> <%
  	String list[]=entry.getContent().split("\n");
-     									for(String s:list){
-     										out.println(""+s+"<br>");
-     									}
+      									for(String s:list){
+      										out.println(""+s+"<br>");
+      									}
  %> </notEditable></td>
 
 		</tr>
@@ -60,7 +60,13 @@ String institute = (String) session.getAttribute("instituteForViewModule");
 		<tr>
 			<td class='descriptionModule'>Fach</td>
 
-			<td class='entryModule'><notEditable><%=module.getSubject()%></notEditable></td>
+			<td class='entryModule'><notEditable>
+				<%
+					if(module.getSubject()!=null){out.println(module.getSubject());}else{
+						out.println("noch kein Fach eingetragen");
+					}
+				%>
+				</notEditable></td>
 
 		</tr>
 	</table>
@@ -77,9 +83,9 @@ String institute = (String) session.getAttribute("instituteForViewModule");
 
 			<td class='entryModule'><notEditable> <%
  	String list[]=entry.getContent().split("\n");
-    							for(String s:list){
-    								out.println(""+s+"<br>");
-    							}
+     							for(String s:list){
+     								out.println(""+s+"<br>");
+     							}
  %> </notEditable></td>
 
 		</tr>
