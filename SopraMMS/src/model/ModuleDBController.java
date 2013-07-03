@@ -1234,7 +1234,7 @@ public class ModuleDBController {
 	public boolean finishNewModule(Module module) {
 		Connection connection = connect();
 		CourseEntry courseEntry = null;
-		long oldCourseEntry;
+		long oldCourseEntry=0;
 		try {
 			// find existing course entry
 			query = "SELECT e.entryID FROM module AS m JOIN entry AS e ON " +
@@ -1245,8 +1245,9 @@ public class ModuleDBController {
 			pStatement.setLong(1, module.getModuleID());
 			pStatement.setInt(2, module.getVersion());
 			ResultSet resultSet = pStatement.executeQuery();
-			oldCourseEntry = resultSet.getLong("entryID");
-			
+			if (resultSet.next()) {
+				oldCourseEntry = resultSet.getLong("entryID");	
+			}
 			connection.setAutoCommit(false);
 			if(oldCourseEntry!=0) {
 				// delete existing course entry

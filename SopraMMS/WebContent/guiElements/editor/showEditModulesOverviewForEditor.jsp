@@ -24,6 +24,7 @@
 			<tr>
 				<th></th>
 				<th>Titel</th>
+				<th>Version</th>
 				<th>Autor</th>
 				<th>Fach</th>
 				<th>Erstellungsdatum</th>
@@ -39,6 +40,7 @@
 				<td><input type="radio" name="selectedModuleToEdit"
 					value='<%=module.getModuleID() + " " + module.getVersion()%>' /></td>
 				<td><%=module.getName()%></td>
+				<td><%=module.getVersion()%></td>
 				<td><%=module.getModificationauthor()%></td>
 				<td>
 					<%
