@@ -29,7 +29,6 @@ public class CreatePDF extends SessionCheck {
      */
     public CreatePDF() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -61,7 +60,6 @@ public class CreatePDF extends SessionCheck {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }
