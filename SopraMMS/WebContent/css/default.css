@@ -75,6 +75,12 @@ body {
 	font-size: 10pt;
 	color: #FFFFFF;
 	padding-left: 10px;
+	cursor: pointer;
+}
+
+.header a{
+	color: #FFFFFF;
+	text-decoration: none;
 }
 
 /*--------------*/
