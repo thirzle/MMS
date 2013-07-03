@@ -82,7 +82,7 @@ public class SelfStudy {
      * @return	An ID.
      */
     private long createSelfStudyID() {
-	return random.nextInt(1000) + 100 * Calendar.getInstance().getTimeInMillis();
+	return random.nextInt(1000)+1000*Calendar.getInstance().getTimeInMillis();
 
     }
 

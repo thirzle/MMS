@@ -74,21 +74,7 @@ public abstract class Entry {
 	
 	private boolean predefinedField=false;
 	
-	// use this when you import existing data
-//	public Entry(int version, String date, boolean classification,
-//			boolean approvalstatus, boolean declined, long entryID, String title) {
-//		random = new Random();
-//		this.version = version;
-//		this.timestamp = timestamp;
-//		this.classification = classification;
-//		this.approved = approved;
-//		this.rejected = rejected;
-//		this.title = title;
-//		this.entryID = entryID;
-//	}
 
-
-	// use this to create a new entry
 	/**
 	 * Constructor that initializes the extensions of this class. (Overloaded)
 	 * <p>
@@ -195,7 +181,7 @@ public abstract class Entry {
 	 * @return	An ID.
 	 */
 	private long createEntryID() {
-		return random.nextInt(1000)+100*Calendar.getInstance().getTimeInMillis();	
+		return random.nextInt(1000)+1000*Calendar.getInstance().getTimeInMillis();	
 	}
 	
 
