@@ -15,6 +15,10 @@ import user.User;
 import user.UserAdministration;
 
 /**
+ * This class receives information, calls provided functions
+ * and sends information to other classes like JSPs, FileExort
+ * and other servlets.
+ * <p> 
  * Servlet implementation class SessionCeck
  */
 @WebServlet("/SessionCeck")
