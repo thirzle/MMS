@@ -31,6 +31,11 @@
 	if (request.getParameter("text") != null) {
 		text = request.getParameter("text");
 	}
+	// load title if available
+	String title="";
+	if (request.getParameter("title") != null) {
+		title=request.getParameter("title");
+	}
 %>
 
 <form action="/SopraMMS/AddNews" method="get">
@@ -38,12 +43,7 @@
 		<tr>
 			<td>Titel:</td>
 			<td><input class="inputField" name="title" type="text" size="30"
-				maxlength="50"
-				value="<%
-					// load title if available
-					if (request.getParameter("title") != null) {
-						out.println(request.getParameter("title"));
-				}%>">
+				maxlength="50" value="<%=out.println(title)%>">
 			</td>
 		</tr>
 		<tr>
