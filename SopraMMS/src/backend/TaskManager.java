@@ -65,13 +65,13 @@ public class TaskManager {
 					text.append("Sehr geehrte/geehrter Frau/Herr " + user.getLastName()
 						+ ",");
 					text.append("\n\n");
-					text.append("Bis zum "+date+" mÃ¼ssen Ã„nderungen oder neue Module im MMS eingereicht werden,"
+					text.append("Bis zum "+date+" müssen Änderungen oder neue Module im MMS eingereicht werden,"
 						+" im kommenden Semester wirksam zu sein.");
 					text.append("\n\n");
-					text.append("Falls Sie diesen Termin nicht einhalten kÃ¶nnen, treten Sie bitte"
+					text.append("Falls Sie diesen Termin nicht einhalten können, treten Sie bitte"
 						+" mit dem Administrator in Kontakt.");
 					text.append("\n\n");
-					text.append("Mit freundlichen GrÃ¼ÃŸen");
+					text.append("Mit freundlichen Grüßen");
 					text.append("\n");
 					text.append("MMS-Team");
 					try {
