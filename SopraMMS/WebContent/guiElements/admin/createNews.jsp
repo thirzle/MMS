@@ -43,7 +43,7 @@
 		<tr>
 			<td>Titel:</td>
 			<td><input class="inputField" name="title" type="text" size="30"
-				maxlength="50" value="<%=out.println(title)%>">
+				maxlength="50" value="<%=title%>">
 			</td>
 		</tr>
 		<tr>
