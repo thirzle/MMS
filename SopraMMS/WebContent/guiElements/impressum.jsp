@@ -84,5 +84,6 @@
 <p>
 	<i>Quellenangaben: <a
 		href="http://www.e-recht24.de/muster-disclaimer.htm" target="_blank">Disclaimer
-			eRecht24</a></i>
+			eRecht24</a><br>
+			Stilelemente wurden aus der <a href="http://www.uni-ulm.de" target="_blank">www.uni-ulm.de</a> entnommen</i>
 </p>
