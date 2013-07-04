@@ -79,24 +79,22 @@ public class SaveUser extends SessionCheck {
 
 	protected User createUser(HttpServletRequest request) {
 		List<String> rootInstitutes = uAdmin.getAllInstitute();
-		// Die Liste wird ggf. mit den Feldnamen leeren Feldern gefuellt
+		// preparing variables to store parameters
 		String[] names = new String[6];
 		String[] paras = { "loginCellText", "firstnameCellText",
 				"lastnameCellText", "emailCellText", "rightsSelect",
 				"instituteSelect" };
-		// Die erhaltenen Institute und Rechte stehen in einem String
-		// gespeichert
+		// in names[] are all results stored
 		for (int i = 0; i < paras.length; i++) {
 			names[i] = request.getParameter(paras[i]);
 		}
-		// dieser wird hier getrennt und entsprechend Institute und Rechte
-		// extrahiert
+		// strings are splitet by character
 		char[] splitetInstitutes = names[5].toCharArray();
 		char[] splitetRights = names[4].toCharArray();
 		boolean[] finalRights = new boolean[7];
 		List<String> finalInstitutes = new ArrayList<String>();
 		try {
-			// Extrahiere Integer Werte um das Rechte boolean[] zu setzten
+			// extract indexes to set rights in a boolean array
 			for (char c : splitetRights) {
 				int tmp = Character.getNumericValue(c);
 				finalRights[tmp] = true;
@@ -112,7 +110,7 @@ public class SaveUser extends SessionCheck {
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("(SaveUser.java): Failed to parseInt(string).");
 		}
-		// Der Benutzer mit den erhaltenen Attributen kann erzeugt werden
+		// creating user with given parameters
 		User user = new User(names[0], names[1], names[2], names[3],
 				finalRights, finalInstitutes, "");
 		user.setPassword(names[0]);
