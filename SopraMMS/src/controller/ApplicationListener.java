@@ -21,7 +21,8 @@ import user.UserAdministration;
 
 /**
  * Application Lifecycle Listener implementation class ApplicationListener
- *
+ * 
+ * @author Max Reuter
  */
 @WebListener
 public class ApplicationListener implements ServletContextListener, HttpSessionListener {
@@ -30,24 +31,17 @@ public class ApplicationListener implements ServletContextListener, HttpSessionL
      * Default constructor. 
      */
     public ApplicationListener() {
-        // TODO Auto-generated constructor stub
     }
 
 	/**
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0) {
-	//AJ's system startup...
-        System.out.println("MMS starting...");
-        
-        
-        
-        Config conf = new Config();
-        conf.load_settings();
-        
-        
-        
-        
+    System.out.println("MMS starting...");
+  
+    Config conf = new Config();
+    conf.load_settings();
+
 	Timer caretaker = new Timer();
 	final UserAdministration uAdmin = new UserAdministration();
 	List<Deadline> deadlines = new LinkedList<Deadline>();
@@ -71,21 +65,18 @@ public class ApplicationListener implements ServletContextListener, HttpSessionL
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public void sessionCreated(HttpSessionEvent arg0) {
-        // TODO Auto-generated method stub
     }
 
 	/**
      * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
      */
     public void sessionDestroyed(HttpSessionEvent arg0) {
-        // TODO Auto-generated method stub
     }
 
 	/**
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0) {
-        // TODO Auto-generated method stub
     }
 	
 }
